@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../theme/app_colors.dart';
+import '../constants/home_assets.dart';
 
 enum AppNavItem { home, settings }
 
@@ -28,25 +30,18 @@ class AppNavbar extends StatelessWidget {
           height: 64,
           decoration: BoxDecoration(
             gradient: AppColors.navbarGradient,
-            borderRadius: BorderRadius.circular(24),
-            boxShadow: const [
-              BoxShadow(
-                color: AppColors.cardShadow,
-                blurRadius: 12,
-                offset: Offset(0, 4),
-              ),
-            ],
+            borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
             children: [
               _NavItem(
-                icon: Icons.home_rounded,
+                iconAsset: HomeAssets.navbariconn,
                 label: homeLabel,
                 isSelected: current == AppNavItem.home,
                 onTap: () => onChanged(AppNavItem.home),
               ),
               _NavItem(
-                icon: Icons.settings_rounded,
+                iconData: Icons.settings_rounded,
                 label: settingsLabel,
                 isSelected: current == AppNavItem.settings,
                 onTap: () => onChanged(AppNavItem.settings),
@@ -61,16 +56,35 @@ class AppNavbar extends StatelessWidget {
 
 class _NavItem extends StatelessWidget {
   const _NavItem({
-    required this.icon,
+    this.iconAsset,
+    this.iconData,
     required this.label,
     required this.isSelected,
     required this.onTap,
-  });
+  }) : assert(iconAsset != null || iconData != null);
 
-  final IconData icon;
+  final String? iconAsset;
+  final IconData? iconData;
   final String label;
   final bool isSelected;
   final VoidCallback onTap;
+
+  static const double _iconSize = 24;
+
+  Color get _iconColor =>
+      isSelected ? AppColors.white : AppColors.white.withValues(alpha: 0.7);
+
+  Widget _buildIcon() {
+    if (iconAsset != null) {
+      return SvgPicture.asset(
+        iconAsset!,
+        width: _iconSize,
+        height: _iconSize,
+        colorFilter: ColorFilter.mode(_iconColor, BlendMode.srcIn),
+      );
+    }
+    return Icon(iconData, size: _iconSize, color: _iconColor);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,22 +97,14 @@ class _NavItem extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                icon,
-                size: 24,
-                color: isSelected
-                    ? AppColors.white
-                    : AppColors.white.withValues(alpha: 0.7),
-              ),
+              _buildIcon(),
               const SizedBox(height: 2),
               Text(
                 label,
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                  color: isSelected
-                      ? AppColors.white
-                      : AppColors.white.withValues(alpha: 0.7),
+                  color: _iconColor,
                 ),
               ),
             ],

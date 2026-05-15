@@ -62,8 +62,8 @@ class _DrawerButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         child: Image.asset(
           HomeAssets.drawer,
-          width: 44,
-          height: 44,
+          width: 45,
+          height: 45,
           fit: BoxFit.contain,
         ),
       ),
@@ -81,15 +81,11 @@ class _ProButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label: label,
+
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(20),
-        child: Image.asset(
-          HomeAssets.pro,
-          height: 36,
-          fit: BoxFit.contain,
-        ),
+
+        child: Image.asset(HomeAssets.pro, height: 33, fit: BoxFit.contain),
       ),
     );
   }
@@ -117,11 +113,7 @@ class _HomeTitle extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 6),
-        Image.asset(
-          HomeAssets.scanner,
-          height: 36,
-          fit: BoxFit.contain,
-        ),
+        Image.asset(HomeAssets.scanner, height: 36, fit: BoxFit.contain),
       ],
     );
   }

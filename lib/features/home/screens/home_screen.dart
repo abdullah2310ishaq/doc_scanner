@@ -7,6 +7,7 @@ import '../widgets/home_header.dart';
 import '../widgets/home_hero_card.dart';
 import '../widgets/home_feature_card.dart';
 import '../widgets/home_search_bar.dart';
+import '../widgets/home_recent_documents.dart';
 import '../../../core/theme/app_colors.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -78,7 +79,7 @@ class HomeScreen extends StatelessWidget {
             title: l10n.homeFeatureChatbotTitle,
             subtitle: l10n.homeFeatureChatbotSubtitle,
             backgroundColor: AppColors.cardChatbotBg,
-            iconAsset: HomeAssets.aichat,
+            iconAsset: HomeAssets.aichatPng,
             onTap: () {},
           ),
           const SizedBox(height: 10),
@@ -88,6 +89,22 @@ class HomeScreen extends StatelessWidget {
             backgroundColor: AppColors.cardCropBg,
             iconAsset: HomeAssets.crop,
             onTap: () {},
+          ),
+          const SizedBox(height: 20),
+          HomeRecentDocuments(
+            title: l10n.homeRecentDocuments,
+            seeAllLabel: l10n.homeSeeAll,
+            documents: [
+              HomeDocumentItem(
+                name: l10n.homeSampleDocName,
+                meta: l10n.homeSampleDocMeta,
+              ),
+              HomeDocumentItem(
+                name: l10n.homeSampleDocName,
+                meta: l10n.homeSampleDocMeta,
+              ),
+            ],
+            onSeeAll: () {},
           ),
         ],
       ),

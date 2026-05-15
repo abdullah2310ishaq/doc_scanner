@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/home_assets.dart';
 import '../../../core/theme/app_colors.dart';
 
 class HomeRecentDocuments extends StatelessWidget {
@@ -100,18 +101,13 @@ class HomeDocumentTile extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              color: AppColors.pdfIconBg,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: const Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.picture_as_pdf, color: AppColors.pdfIconColor, size: 22),
-              ],
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.asset(
+              HomeAssets.recentDocs,
+              width: 44,
+              height: 44,
+              fit: BoxFit.cover,
             ),
           ),
           const SizedBox(width: 12),

@@ -31,14 +31,10 @@ class HomeFeatureCard extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(_radius),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
           child: Row(
             children: [
-              SvgPicture.asset(
-                iconAsset,
-                width: _iconSize,
-                height: _iconSize,
-              ),
+              _FeatureIcon(assetPath: iconAsset, size: _iconSize),
               const SizedBox(width: 14),
               Expanded(
                 child: Column(
@@ -68,6 +64,26 @@ class HomeFeatureCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _FeatureIcon extends StatelessWidget {
+  const _FeatureIcon({required this.assetPath, required this.size});
+
+  final String assetPath;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    if (assetPath.toLowerCase().endsWith('.svg')) {
+      return SvgPicture.asset(assetPath, width: size, height: size);
+    }
+    return Image.asset(
+      assetPath,
+      width: size,
+      height: size,
+      fit: BoxFit.contain,
     );
   }
 }
