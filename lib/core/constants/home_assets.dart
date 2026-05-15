@@ -1,4 +1,3 @@
-/// Asset paths under [assets/home/].
 abstract final class HomeAssets {
   static const String _base = 'assets/home';
 
@@ -8,6 +7,8 @@ abstract final class HomeAssets {
 
   static const String sparkles = '$_base/sparkles.svg';
   static const String ocr = '$_base/ocr.svg';
+  static const String pdf = '$_base/pdf.svg';
+  static const String aichat = '$_base/aichat.svg';
   static const String secure = '$_base/secure.svg';
   static const String crop = '$_base/crop.svg';
   static const String camera = '$_base/camera.png';

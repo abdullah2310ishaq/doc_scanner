@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../../core/theme/app_colors.dart';
 
 class HomeFeatureCard extends StatelessWidget {
   const HomeFeatureCard({
@@ -6,38 +9,35 @@ class HomeFeatureCard extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.backgroundColor,
-    required this.icon,
-    required this.iconColor,
+    required this.iconAsset,
     this.onTap,
   });
 
   final String title;
   final String subtitle;
   final Color backgroundColor;
-  final IconData icon;
-  final Color iconColor;
+  final String iconAsset;
   final VoidCallback? onTap;
+
+  static const double _radius = 6;
+  static const double _iconSize = 44;
 
   @override
   Widget build(BuildContext context) {
     return Material(
       color: backgroundColor,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(_radius),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(_radius),
         child: Padding(
-          padding: const EdgeInsets.all(14),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
           child: Row(
             children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: iconColor.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(icon, color: iconColor, size: 26),
+              SvgPicture.asset(
+                iconAsset,
+                width: _iconSize,
+                height: _iconSize,
               ),
               const SizedBox(width: 14),
               Expanded(
@@ -49,7 +49,7 @@ class HomeFeatureCard extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w700,
-                        color: Color(0xFF1A1D26),
+                        color: AppColors.textPrimary,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -57,17 +57,12 @@ class HomeFeatureCard extends StatelessWidget {
                       subtitle,
                       style: const TextStyle(
                         fontSize: 12,
-                        color: Color(0xFF6B7280),
-                        height: 1.3,
+                        color: AppColors.textSecondary,
+                        height: 1.35,
                       ),
                     ),
                   ],
                 ),
-              ),
-              const Icon(
-                Icons.chevron_right,
-                color: Color(0xFFBDBDBD),
-                size: 22,
               ),
             ],
           ),

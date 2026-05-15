@@ -52,16 +52,14 @@ abstract final class AppColors {
 
   static const Color searchFill = Color(0xFFFFFFFF);
   static const Color searchBorder = Color(0xFFE8EAED);
+  static const double searchRadius = 14;
 
-  static const Color cardOcrBg = Color(0xFFF1F0FF);
-  static const Color cardPdfBg = Color(0xFFFFF1E6);
-  static const Color cardChatbotBg = Color(0xFFF0EFFF);
-  static const Color cardCropBg = Color(0xFFE8F5E9);
+  static const Color cardOcrBg = Color(0xFFF2F1FD);
+  static const Color cardPdfBg = Color(0xFFFFEFE4);
+  static const Color cardChatbotBg = Color(0xFFECE7FB);
+  static const Color cardCropBg = Color(0xFFDCF0E0);
 
-  static const Color cardOcrIcon = Color(0xFF5B6CFF);
-  static const Color cardPdfIcon = Color(0xFFFF8A3D);
-  static const Color cardChatbotIcon = Color(0xFF7B61FF);
-  static const Color cardCropIcon = Color(0xFF43A047);
+  static const double featureCardRadius = 6;
 
   static const Color documentCardBg = Color(0xFFFFFFFF);
   static const Color documentCardBorder = Color(0xFFEEEEEE);

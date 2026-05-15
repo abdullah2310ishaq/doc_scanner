@@ -20,36 +20,39 @@ class AppNavbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-      child: Container(
-        height: 64,
-        decoration: BoxDecoration(
-          gradient: AppColors.navbarGradient,
-          borderRadius: BorderRadius.circular(24),
-          boxShadow: const [
-            BoxShadow(
-              color: AppColors.cardShadow,
-              blurRadius: 12,
-              offset: Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            _NavItem(
-              icon: Icons.home_rounded,
-              label: homeLabel,
-              isSelected: current == AppNavItem.home,
-              onTap: () => onChanged(AppNavItem.home),
-            ),
-            _NavItem(
-              icon: Icons.settings_rounded,
-              label: settingsLabel,
-              isSelected: current == AppNavItem.settings,
-              onTap: () => onChanged(AppNavItem.settings),
-            ),
-          ],
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        child: Container(
+          height: 64,
+          decoration: BoxDecoration(
+            gradient: AppColors.navbarGradient,
+            borderRadius: BorderRadius.circular(24),
+            boxShadow: const [
+              BoxShadow(
+                color: AppColors.cardShadow,
+                blurRadius: 12,
+                offset: Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              _NavItem(
+                icon: Icons.home_rounded,
+                label: homeLabel,
+                isSelected: current == AppNavItem.home,
+                onTap: () => onChanged(AppNavItem.home),
+              ),
+              _NavItem(
+                icon: Icons.settings_rounded,
+                label: settingsLabel,
+                isSelected: current == AppNavItem.settings,
+                onTap: () => onChanged(AppNavItem.settings),
+              ),
+            ],
+          ),
         ),
       ),
     );

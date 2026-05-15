@@ -5,6 +5,9 @@ import '../../../core/utils/l10n_extension.dart';
 import '../widgets/home_feature_tags.dart';
 import '../widgets/home_header.dart';
 import '../widgets/home_hero_card.dart';
+import '../widgets/home_feature_card.dart';
+import '../widgets/home_search_bar.dart';
+import '../../../core/theme/app_colors.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -51,6 +54,40 @@ class HomeScreen extends StatelessWidget {
             subtitle: l10n.homeHeroSubtitle,
             buttonLabel: l10n.homeHeroButton,
             onPressed: () {},
+          ),
+          const SizedBox(height: 16),
+          HomeSearchBar(hint: l10n.homeSearchHint),
+          const SizedBox(height: 16),
+          HomeFeatureCard(
+            title: l10n.homeFeatureOcrTitle,
+            subtitle: l10n.homeFeatureOcrSubtitle,
+            backgroundColor: AppColors.cardOcrBg,
+            iconAsset: HomeAssets.ocr,
+            onTap: () {},
+          ),
+          const SizedBox(height: 10),
+          HomeFeatureCard(
+            title: l10n.homeFeaturePdfTitle,
+            subtitle: l10n.homeFeaturePdfSubtitle,
+            backgroundColor: AppColors.cardPdfBg,
+            iconAsset: HomeAssets.pdf,
+            onTap: () {},
+          ),
+          const SizedBox(height: 10),
+          HomeFeatureCard(
+            title: l10n.homeFeatureChatbotTitle,
+            subtitle: l10n.homeFeatureChatbotSubtitle,
+            backgroundColor: AppColors.cardChatbotBg,
+            iconAsset: HomeAssets.aichat,
+            onTap: () {},
+          ),
+          const SizedBox(height: 10),
+          HomeFeatureCard(
+            title: l10n.homeFeatureCropTitle,
+            subtitle: l10n.homeFeatureCropSubtitle,
+            backgroundColor: AppColors.cardCropBg,
+            iconAsset: HomeAssets.crop,
+            onTap: () {},
           ),
         ],
       ),
