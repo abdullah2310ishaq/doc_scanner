@@ -1,0 +1,149 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Doc Scanner",
+  "@appTitle": { "description": "Application name shown in launcher and about" },
+
+  "commonOk": "OK",
+  "commonCancel": "Cancel",
+  "commonSave": "Save",
+  "commonDelete": "Delete",
+  "commonShare": "Share",
+  "commonCopy": "Copy",
+  "commonRetry": "Retry",
+  "commonClose": "Close",
+  "commonLoading": "Loading…",
+  "commonError": "Something went wrong",
+  "commonTryAgain": "Please try again",
+
+  "navHome": "Home",
+  "navScan": "Scan",
+  "navDocuments": "Documents",
+  "navTranslate": "Translate",
+  "navLive": "Live",
+  "navSettings": "Settings",
+
+  "homeGreeting": "Good Morning, {name} 👋",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "homeTitlePrefix": "AI Document",
+  "homeTitleHighlight": "Scanner",
+  "homeProBadge": "Pro",
+  "homeTagAiPowered": "AI Powered",
+  "homeTagFastOcr": "Fast OCR",
+  "homeTagSecure": "Secure",
+  "homeTagSmartCrop": "Smart Crop",
+  "homeHeroBadge": "AI POWERED",
+  "homeHeroTitle": "Smart AI OCR Scanner",
+  "homeHeroSubtitle": "AI-powered OCR with fast, accurate text recognition in seconds.",
+  "homeHeroButton": "OCR Scanner",
+  "homeSearchHint": "Search here",
+  "homeFeatureOcrTitle": "OCR Scanner",
+  "homeFeatureOcrSubtitle": "Scan text from image or documents",
+  "homeFeaturePdfTitle": "PDF Assistant",
+  "homeFeaturePdfSubtitle": "Translate & Transcribe PDF",
+  "homeFeatureChatbotTitle": "AI Chabot",
+  "homeFeatureChatbotSubtitle": "Upload PDF to ask questions",
+  "homeFeatureCropTitle": "Smart Crop",
+  "homeFeatureCropSubtitle": "Auto crop, clean and enhance",
+  "homeRecentDocuments": "Recent Documents",
+  "homeSeeAll": "See All",
+  "homeEmptyDocuments": "No documents yet. Tap Scan to start.",
+  "homeSampleDocName": "Invoice_2026.pdf",
+  "homeSampleDocMeta": "May 10, 2026 • 2.4 MB",
+
+  "scanTitle": "Scan",
+  "scanCapture": "Capture",
+  "scanImportGallery": "Import from gallery",
+  "scanImportFiles": "Import file",
+  "scanAddPage": "Add page",
+  "scanRetake": "Retake",
+  "scanCrop": "Crop",
+  "scanEnhance": "Enhance",
+  "scanDone": "Done",
+  "scanPageCount": "{count, plural, =1{1 page} other{{count} pages}}",
+  "@scanPageCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "scanSaving": "Saving scan…",
+  "scanSaved": "Document saved",
+
+  "ocrTitle": "Text recognition",
+  "ocrRun": "Recognize text",
+  "ocrRunning": "Reading text…",
+  "ocrEmpty": "No text found in this image",
+  "ocrCopySuccess": "Text copied",
+  "ocrEditHint": "Edit recognized text",
+
+  "translateTitle": "Translate",
+  "translateSourceLanguage": "From",
+  "translateTargetLanguage": "To",
+  "translateSwapLanguages": "Swap languages",
+  "translateButton": "Translate",
+  "translateRunning": "Translating…",
+  "translatePasteHint": "Paste or type text",
+  "translateCopyResult": "Copy translation",
+
+  "liveTitle": "Live translate",
+  "liveStart": "Start camera",
+  "liveStop": "Stop",
+  "liveListening": "Listening…",
+  "livePointAtText": "Point camera at text",
+  "livePermissionNeeded": "Camera access is required for live translate",
+
+  "documentsTitle": "My documents",
+  "documentRename": "Rename",
+  "documentDeleteConfirmTitle": "Delete document?",
+  "documentDeleteConfirmMessage": "This cannot be undone.",
+  "documentDeleted": "Document deleted",
+
+  "settingsTitle": "Settings",
+  "settingsLanguage": "App language",
+  "settingsTheme": "Theme",
+  "settingsAbout": "About",
+  "settingsPrivacy": "Privacy policy",
+  "settingsTerms": "Terms of use",
+
+  "permissionCameraTitle": "Camera permission",
+  "permissionCameraMessage": "Allow camera access to scan documents and use live translate.",
+  "permissionStorageTitle": "Storage permission",
+  "permissionStorageMessage": "Allow access to save and open your scans.",
+  "permissionOpenSettings": "Open settings",
+  "permissionDenied": "Permission denied",
+
+  "errorCameraUnavailable": "Camera is not available on this device",
+  "errorFileRead": "Could not read file",
+  "errorNetwork": "Check your internet connection",
+  "errorOcrFailed": "Text recognition failed",
+  "errorTranslateFailed": "Translation failed",
+
+  "proTitle": "Doc Scanner Pro",
+  "proSubtitle": "Unlimited scans, OCR, languages, and live translate",
+  "proUpgradeButton": "Upgrade to Pro",
+  "proRestorePurchases": "Restore purchases",
+  "proFeatureLocked": "Pro feature",
+  "proLimitPages": "Free plan allows up to {max} pages per document",
+  "@proLimitPages": {
+    "placeholders": {
+      "max": { "type": "int" }
+    }
+  },
+  "proLimitOcr": "Upgrade to Pro for unlimited OCR",
+  "proLimitTranslate": "Upgrade to Pro for all languages",
+  "proLimitLive": "Live translate is available in Pro",
+  "proPurchaseSuccess": "Welcome to Pro!",
+  "proPurchaseFailed": "Purchase could not be completed",
+
+  "exportPdf": "Export PDF",
+  "exportImage": "Export image",
+  "exportSuccess": "Export complete",
+  "exportFailed": "Export failed",
+
+  "languageSearchHint": "Search language",
+  "languageAuto": "Detect language"
+}
