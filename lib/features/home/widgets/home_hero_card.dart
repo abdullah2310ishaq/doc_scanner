@@ -23,21 +23,15 @@ class HomeHeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       decoration: BoxDecoration(
         gradient: AppColors.homeHeroGradient,
         borderRadius: BorderRadius.circular(AppColors.homeHeroRadius),
-        boxShadow: const [
-          BoxShadow(
-            color: AppColors.cardShadow,
-            blurRadius: 16,
-            offset: Offset(0, 6),
-          ),
-        ],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(AppColors.homeHeroRadius),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(14, 20, 2, 23),
+          padding: const EdgeInsets.fromLTRB(12, 16, 2, 23),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -118,7 +112,7 @@ class _OcrButton extends StatelessWidget {
         onTap: onPressed,
         borderRadius: BorderRadius.circular(AppColors.homeHeroButtonRadius),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
