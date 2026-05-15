@@ -9,6 +9,7 @@ class HomeHeader extends StatelessWidget {
     required this.greeting,
     required this.titlePrefix,
     required this.proSemanticsLabel,
+    required this.menuSemanticsLabel,
     this.onMenuTap,
     this.onProTap,
   });
@@ -16,6 +17,7 @@ class HomeHeader extends StatelessWidget {
   final String greeting;
   final String titlePrefix;
   final String proSemanticsLabel;
+  final String menuSemanticsLabel;
   final VoidCallback? onMenuTap;
   final VoidCallback? onProTap;
 
@@ -27,7 +29,10 @@ class HomeHeader extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _DrawerButton(onTap: onMenuTap),
+            _DrawerButton(
+              semanticsLabel: menuSemanticsLabel,
+              onTap: onMenuTap,
+            ),
             _ProButton(label: proSemanticsLabel, onTap: onProTap),
           ],
         ),
@@ -38,6 +43,7 @@ class HomeHeader extends StatelessWidget {
             fontSize: 15,
             fontWeight: FontWeight.w500,
             color: AppColors.textSecondary,
+            height: 1.25,
           ),
         ),
         const SizedBox(height: 8),
@@ -48,15 +54,16 @@ class HomeHeader extends StatelessWidget {
 }
 
 class _DrawerButton extends StatelessWidget {
-  const _DrawerButton({this.onTap});
+  const _DrawerButton({required this.semanticsLabel, this.onTap});
 
+  final String semanticsLabel;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label: 'Menu',
+      label: semanticsLabel,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(10),

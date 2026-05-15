@@ -77,6 +77,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeProBadge => 'Pro';
 
   @override
+  String get homeMenuButton => 'Open menu';
+
+  @override
   String get homeTagAiPowered => 'AI Powered';
 
   @override

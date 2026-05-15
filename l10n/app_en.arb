@@ -32,6 +32,7 @@
   "homeTitlePrefix": "AI Document",
   "homeTitleHighlight": "Scanner",
   "homeProBadge": "Pro",
+  "homeMenuButton": "Open menu",
   "homeTagAiPowered": "AI Powered",
   "homeTagFastOcr": "Fast OCR",
   "homeTagSecure": "Secure",

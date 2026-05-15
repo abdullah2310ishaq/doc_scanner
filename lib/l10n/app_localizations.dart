@@ -226,6 +226,12 @@ abstract class AppLocalizations {
   /// **'Pro'**
   String get homeProBadge;
 
+  /// No description provided for @homeMenuButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Open menu'**
+  String get homeMenuButton;
+
   /// No description provided for @homeTagAiPowered.
   ///
   /// In en, this message translates to:
