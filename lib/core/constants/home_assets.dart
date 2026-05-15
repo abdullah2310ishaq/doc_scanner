@@ -10,4 +10,7 @@ abstract final class HomeAssets {
   static const String ocr = '$_base/ocr.svg';
   static const String secure = '$_base/secure.svg';
   static const String crop = '$_base/crop.svg';
+  static const String camera = '$_base/camera.png';
+
+  static const String homeHeader = '$_base/home_header.png';
 }

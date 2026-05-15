@@ -92,7 +92,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeHeroBadge => 'AI POWERED';
 
   @override
-  String get homeHeroTitle => 'Smart AI OCR Scanner';
+  String get homeHeroTitle => 'Smart AI OCR\nScanner';
 
   @override
   String get homeHeroSubtitle =>

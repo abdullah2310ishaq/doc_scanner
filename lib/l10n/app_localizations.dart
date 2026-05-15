@@ -259,7 +259,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeHeroTitle.
   ///
   /// In en, this message translates to:
-  /// **'Smart AI OCR Scanner'**
+  /// **'Smart AI OCR\nScanner'**
   String get homeHeroTitle;
 
   /// No description provided for @homeHeroSubtitle.

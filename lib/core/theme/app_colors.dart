@@ -2,9 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-
 abstract final class AppColors {
-
   static const Color navbarGradientStart = Color(0xFF1567FF);
   static const Color navbarGradientEnd = Color(0xFF645CF1);
 
@@ -17,16 +15,19 @@ abstract final class AppColors {
 
   static const double navbarRadius = 8;
 
-  // —— Home hero card (CSS: 105.92deg, #205CDB → #1752C9) ——
+  // —— Home hero card (CSS: 108.97deg, #205CDB → #735CF3) ——
   static const Color homeHeroGradientStart = Color(0xFF205CDB);
-  static const Color homeHeroGradientEnd = Color(0xFF1752C9);
+  static const Color homeHeroGradientEnd = Color(0xFF735CF3);
 
   static const LinearGradient homeHeroGradient = LinearGradient(
-    begin: Alignment(-0.963, -0.270),
-    end: Alignment(0.963, 0.270),
+    begin: Alignment(-0.946, -0.325),
+    end: Alignment(0.946, 0.325),
     colors: [homeHeroGradientStart, homeHeroGradientEnd],
-    stops: [0.0111, 1.0],
+    stops: [0.0103, 1.0],
   );
+
+  static const double homeHeroRadius = 16;
+  static const double homeHeroButtonRadius = 8;
 
   static const Color white = Color(0xFFFFFFFF);
   static const Color textOnPrimary = white;

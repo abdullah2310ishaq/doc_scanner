@@ -4,8 +4,8 @@ import '../../../core/constants/home_assets.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../widgets/home_feature_tags.dart';
 import '../widgets/home_header.dart';
+import '../widgets/home_hero_card.dart';
 
-/// Home screen — section 1 (header) and section 2 (feature tags) for now.
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -43,6 +43,14 @@ class HomeScreen extends StatelessWidget {
                 iconAsset: HomeAssets.crop,
               ),
             ],
+          ),
+          const SizedBox(height: 16),
+          HomeHeroCard(
+            badge: l10n.homeHeroBadge,
+            title: l10n.homeHeroTitle,
+            subtitle: l10n.homeHeroSubtitle,
+            buttonLabel: l10n.homeHeroButton,
+            onPressed: () {},
           ),
         ],
       ),
