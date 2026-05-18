@@ -3,6 +3,7 @@ import 'package:google_mlkit_translation/google_mlkit_translation.dart' as mlkit
 
 import '../models/translate_language.dart';
 import '../utils/mlkit_language_mapper.dart';
+import 'translate_errors.dart';
 import 'translate_service.dart';
 
 class MlKitTranslateService implements TranslateService {
@@ -137,17 +138,4 @@ class MlKitTranslateService implements TranslateService {
     if (text.length <= max) return text;
     return '${text.substring(0, max)}…';
   }
-}
-
-enum TranslateFailure {
-  unsupportedLanguage,
-  noInternet,
-  modelDownloadFailed,
-  translationFailed,
-}
-
-class TranslateException implements Exception {
-  const TranslateException(this.failure);
-
-  final TranslateFailure failure;
 }

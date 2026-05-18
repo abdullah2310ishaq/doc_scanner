@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 
 import '../models/translate_language.dart';
 import '../services/mlkit_translate_service.dart';
+import '../services/openai_translate_service.dart';
+import '../services/translate_errors.dart';
 import '../services/translate_service.dart';
 
 class TranslateResultProvider extends ChangeNotifier {
@@ -10,7 +12,7 @@ class TranslateResultProvider extends ChangeNotifier {
     TranslateService? translateService,
     this.sourceLanguageCode = 'en',
     bool Function()? isOnline,
-  })  : _translateService = translateService ?? MlKitTranslateService(),
+  })  : _translateService = translateService ?? OpenAiTranslateService(),
         _isOnline = isOnline ?? (() => true);
 
   final String sourceText;

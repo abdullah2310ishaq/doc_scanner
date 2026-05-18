@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../../core/constants/chatbot_assets.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 
@@ -15,9 +14,7 @@ class AnalyzeScreen extends StatefulWidget {
 
   static Future<void> open(BuildContext context, {required String pdfPath}) {
     return Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => AnalyzeScreen(pdfPath: pdfPath),
-      ),
+      MaterialPageRoute<void>(builder: (_) => AnalyzeScreen(pdfPath: pdfPath)),
     );
   }
 
@@ -26,7 +23,7 @@ class AnalyzeScreen extends StatefulWidget {
 }
 
 class _AnalyzeScreenState extends State<AnalyzeScreen> {
-  static const Duration _totalDuration = Duration(minutes: 2);
+  static const Duration _totalDuration = Duration(minutes: 10);
   static const int _stepCount = 4;
 
   late final List<StepStatus> _stepStatuses;
@@ -74,8 +71,9 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
   }
 
   double get _progressFraction {
-    final completed =
-        _stepStatuses.where((s) => s == StepStatus.completed).length;
+    final completed = _stepStatuses
+        .where((s) => s == StepStatus.completed)
+        .length;
     return completed / _stepCount;
   }
 
@@ -113,26 +111,11 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
             children: [
               const Spacer(),
               Image.asset(
-                ChatbotAssets.analyzing,
+                'assets/chatbot/analyze.png',
                 height: 180,
                 fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    height: 180,
-                    width: 180,
-                    decoration: BoxDecoration(
-                      color: AppColors.cardChatbotBg,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.picture_as_pdf,
-                      size: 80,
-                      color: AppColors.chatbotAccent,
-                    ),
-                  );
-                },
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 25),
               Text(
                 l10n.chatbotAnalyzingTitle,
                 textAlign: TextAlign.center,
@@ -152,7 +135,7 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
                   height: 1.4,
                 ),
               ),
-              const Spacer(),
+              SizedBox(height: 25),
               Column(
                 children: List.generate(_stepCount, (index) {
                   return _StepItemRow(
@@ -161,7 +144,7 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
                   );
                 }),
               ),
-              const Spacer(flex: 2),
+              const Spacer(flex: 3),
               Row(
                 children: [
                   Expanded(
@@ -204,7 +187,7 @@ class _StepItemRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 14),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
           const Icon(Icons.circle, size: 6, color: AppColors.chatbotAccent),
@@ -214,7 +197,7 @@ class _StepItemRow extends StatelessWidget {
               title,
               style: TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w400,
                 color: status == StepStatus.pending
                     ? AppColors.textSecondary.withValues(alpha: 0.6)
                     : AppColors.textPrimary,

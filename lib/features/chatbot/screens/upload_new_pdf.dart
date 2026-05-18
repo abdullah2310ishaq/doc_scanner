@@ -78,8 +78,12 @@ class _UploadNewPdfScreenState extends State<UploadNewPdfScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              HistoryScreen.open(context);
+            onPressed: () async {
+              final openUploadSheet = await HistoryScreen.open(context);
+              if (!mounted || openUploadSheet != true) {
+                return;
+              }
+              _openUploadSheet();
             },
             tooltip: l10n.chatbotHistoryButton,
             icon: const Icon(Icons.history_rounded),

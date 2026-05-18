@@ -15,7 +15,7 @@ import '../constants/dummy_languages.dart';
 import '../models/translate_export_data.dart';
 import '../models/translate_export_scope.dart';
 import '../providers/translate_result_provider.dart';
-import '../services/mlkit_translate_service.dart';
+import '../services/translate_errors.dart';
 import '../services/translate_save_pdf_service.dart';
 import '../services/translate_save_png_service.dart';
 import '../widgets/translate_download_option_sheet.dart';
