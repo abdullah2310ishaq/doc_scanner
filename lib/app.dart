@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'core/navigation/app_navigator.dart';
 import 'core/theme/app_theme.dart';
+import 'core/widgets/app_exit_guard.dart';
+import 'core/widgets/connectivity_listener.dart';
 import 'features/home/screens/main_shell_screen.dart';
 import 'l10n/app_localizations.dart';
 
@@ -12,6 +15,7 @@ class DocScannerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      navigatorKey: appNavigatorKey,
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       theme: AppTheme.light,
       localizationsDelegates: const [
@@ -21,7 +25,14 @@ class DocScannerApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const MainShellScreen(),
+      builder: (context, child) {
+        return ConnectivityListener(
+          child: child ?? const SizedBox.shrink(),
+        );
+      },
+      home: const AppExitGuard(
+        child: MainShellScreen(),
+      ),
     );
   }
 }

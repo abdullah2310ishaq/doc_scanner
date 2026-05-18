@@ -20,17 +20,11 @@ class TranslateExportData {
     return text != null && text.isNotEmpty;
   }
 
-  String get translatedTextOnly {
-    final text = translatedText?.trim();
-    if (text == null || text.isEmpty) {
-      throw StateError('No translated text');
-    }
-    return text;
-  }
+  String get selectedTextOnly => sourceText.trim();
 
   String textForScope(TranslateExportScope scope) {
     return switch (scope) {
-      TranslateExportScope.selectedText => translatedTextOnly,
+      TranslateExportScope.selectedText => selectedTextOnly,
       TranslateExportScope.completeFile => _completeText(),
     };
   }

@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../navigation/app_navigator.dart';
+
 class AppToast {
+  static void showGlobal(String message) {
+    final context = appNavigatorKey.currentContext;
+    if (context == null || !context.mounted) return;
+    show(context, message);
+  }
+
   static void show(BuildContext context, String message) {
     final overlay = Overlay.of(context);
 

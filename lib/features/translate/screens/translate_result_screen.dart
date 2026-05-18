@@ -1,4 +1,6 @@
+import 'package:doc_scanner/core/providers/connectivity_provider.dart';
 import 'package:doc_scanner/core/services/permission_service.dart';
+import 'package:doc_scanner/core/utils/network_guard.dart';
 import 'package:doc_scanner/core/widgets/permission_dialog.dart';
 import 'package:doc_scanner/core/widgets/toast.dart';
 import 'package:doc_scanner/features/home/screens/main_shell_screen.dart';
@@ -32,8 +34,11 @@ class TranslateResultScreen extends StatelessWidget {
   static Future<void> open(BuildContext context, {required String sourceText}) {
     return Navigator.of(context).push(
       MaterialPageRoute<void>(
-        builder: (_) => ChangeNotifierProvider(
-          create: (_) => TranslateResultProvider(sourceText: sourceText),
+        builder: (routeContext) => ChangeNotifierProvider(
+          create: (_) => TranslateResultProvider(
+            sourceText: sourceText,
+            isOnline: () => routeContext.read<ConnectivityProvider>().isOnline,
+          ),
           child: TranslateResultScreen(sourceText: sourceText),
         ),
       ),
@@ -114,9 +119,10 @@ class TranslateResultScreen extends StatelessWidget {
     TranslateExportScope scope,
   ) async {
     final l10n = context.l10n;
+    final connectivity = context.read<ConnectivityProvider>();
 
-    if (scope == TranslateExportScope.selectedText && !provider.hasTranslation) {
-      AppToast.show(context, l10n.translateExportNeedsTranslation);
+    if (!NetworkGuard.canProceed(connectivity)) {
+      AppToast.show(context, l10n.errorNoInternetFeatures);
       return;
     }
 
@@ -159,7 +165,9 @@ class TranslateResultScreen extends StatelessWidget {
 
   String _translateErrorMessage(AppLocalizations l10n, TranslateFailure? failure) {
     return switch (failure) {
-      TranslateFailure.unsupportedLanguage => l10n.errorTranslateUnsupportedLanguage,
+      TranslateFailure.unsupportedLanguage =>
+        l10n.errorTranslateUnsupportedLanguage,
+      TranslateFailure.noInternet => l10n.errorNoInternetFeatures,
       TranslateFailure.modelDownloadFailed => l10n.errorTranslateModelDownload,
       TranslateFailure.translationFailed => l10n.errorTranslateFailed,
       null => l10n.errorTranslateFailed,

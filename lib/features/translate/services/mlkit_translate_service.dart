@@ -141,6 +141,7 @@ class MlKitTranslateService implements TranslateService {
 
 enum TranslateFailure {
   unsupportedLanguage,
+  noInternet,
   modelDownloadFailed,
   translationFailed,
 }

@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:media_store_plus/media_store_plus.dart';
+import 'package:provider/provider.dart';
 
 import 'app.dart';
+import 'core/providers/connectivity_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,6 +15,9 @@ Future<void> main() async {
     await MediaStore.ensureInitialized();
     MediaStore.appFolder = 'DocScanner';
   }
+
+  final connectivityProvider = ConnectivityProvider();
+  await connectivityProvider.initialize();
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   SystemChrome.setSystemUIOverlayStyle(
@@ -24,5 +29,11 @@ Future<void> main() async {
       statusBarBrightness: Brightness.light,
     ),
   );
-  runApp(const DocScannerApp());
+
+  runApp(
+    ChangeNotifierProvider.value(
+      value: connectivityProvider,
+      child: const DocScannerApp(),
+    ),
+  );
 }

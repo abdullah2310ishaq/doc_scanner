@@ -455,6 +455,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorNetwork => 'Check your internet connection';
 
   @override
+  String get errorNoInternetFeatures =>
+      'No internet connection. Some features may not work properly.';
+
+  @override
+  String get exitAppTitle => 'Exit App';
+
+  @override
+  String get exitAppMessage => 'Are you sure you want to exit?';
+
+  @override
+  String get exitAppConfirm => 'Exit';
+
+  @override
   String get errorOcrFailed => 'Text recognition failed';
 
   @override

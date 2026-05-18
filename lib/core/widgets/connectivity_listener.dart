@@ -1,0 +1,62 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/connectivity_provider.dart';
+import '../utils/l10n_extension.dart';
+import 'toast.dart';
+
+class ConnectivityListener extends StatefulWidget {
+  const ConnectivityListener({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  State<ConnectivityListener> createState() => _ConnectivityListenerState();
+}
+
+class _ConnectivityListenerState extends State<ConnectivityListener> {
+  ConnectivityProvider? _provider;
+  bool? _wasOnline;
+  bool _offlineToastShown = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      _provider = context.read<ConnectivityProvider>();
+      _wasOnline = _provider!.isOnline;
+      _provider!.addListener(_onConnectivityChanged);
+    });
+  }
+
+  @override
+  void dispose() {
+    _provider?.removeListener(_onConnectivityChanged);
+    super.dispose();
+  }
+
+  void _onConnectivityChanged() {
+    if (!mounted) return;
+
+    final provider = context.read<ConnectivityProvider>();
+    if (!provider.isInitialized) return;
+
+    final isOnline = provider.isOnline;
+    final wasOnline = _wasOnline;
+
+    if (wasOnline == true && isOnline == false && !_offlineToastShown) {
+      _offlineToastShown = true;
+      AppToast.showGlobal(context.l10n.errorNoInternetFeatures);
+    }
+
+    if (isOnline) {
+      _offlineToastShown = false;
+    }
+
+    _wasOnline = isOnline;
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.child;
+}

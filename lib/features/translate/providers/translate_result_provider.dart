@@ -9,11 +9,14 @@ class TranslateResultProvider extends ChangeNotifier {
     required this.sourceText,
     TranslateService? translateService,
     this.sourceLanguageCode = 'en',
-  }) : _translateService = translateService ?? MlKitTranslateService();
+    bool Function()? isOnline,
+  })  : _translateService = translateService ?? MlKitTranslateService(),
+        _isOnline = isOnline ?? (() => true);
 
   final String sourceText;
   final String sourceLanguageCode;
   final TranslateService _translateService;
+  final bool Function() _isOnline;
 
   TranslateLanguage? _selectedLanguage;
   String _translatedText = '';
@@ -52,6 +55,14 @@ class TranslateResultProvider extends ChangeNotifier {
   }
 
   Future<void> _runTranslation(TranslateLanguage language) async {
+    if (!_isOnline()) {
+      _translatedText = '';
+      _failure = TranslateFailure.noInternet;
+      notifyListeners();
+      _log('Skipped translation — no internet');
+      return;
+    }
+
     _isTranslating = true;
     _failure = null;
     notifyListeners();
