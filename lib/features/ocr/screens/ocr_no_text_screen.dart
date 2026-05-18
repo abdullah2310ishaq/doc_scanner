@@ -60,45 +60,48 @@ class OcrNoTextScreen extends StatelessWidget {
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            const Spacer(),
-            Image.asset(
-              HomeAssets.noTextFound,
-              width: 180,
-              height: 180,
-              fit: BoxFit.contain,
-            ),
-            const SizedBox(height: 24),
-            Text(
-              l10n.ocrNoTextTitle,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary,
+      body: SafeArea(
+        bottom: true,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              const Spacer(),
+              Image.asset(
+                HomeAssets.noTextFound,
+                width: 180,
+                height: 180,
+                fit: BoxFit.contain,
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              l10n.ocrNoTextHint,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 14,
-                height: 1.4,
-                color: AppColors.textSecondary,
+              const SizedBox(height: 24),
+              Text(
+                l10n.ocrNoTextTitle,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textPrimary,
+                ),
               ),
-            ),
-            const Spacer(),
-            OcrRetryActionButtons(
-              retakeLabel: l10n.ocrNoTextRetakePhoto,
-              galleryLabel: l10n.ocrNoTextChooseGallery,
-              onRetake: () => _retakePhoto(context),
-              onChooseGallery: () => _chooseFromGallery(context),
-            ),
-          ],
+              const SizedBox(height: 8),
+              Text(
+                l10n.ocrNoTextHint,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 14,
+                  height: 1.4,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+              const Spacer(),
+              OcrRetryActionButtons(
+                retakeLabel: l10n.ocrNoTextRetakePhoto,
+                galleryLabel: l10n.ocrNoTextChooseGallery,
+                onRetake: () => _retakePhoto(context),
+                onChooseGallery: () => _chooseFromGallery(context),
+              ),
+            ],
+          ),
         ),
       ),
     );

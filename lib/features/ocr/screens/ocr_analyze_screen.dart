@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:doc_scanner/core/widgets/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -30,11 +31,7 @@ class OcrAnalyzeScreen extends StatelessWidget {
       ),
     );
 
-    final navigator = Navigator.of(context);
-    if (replaceCurrentRoute) {
-      return navigator.pushReplacement(route);
-    }
-    return navigator.push(route);
+    return Navigator.of(context).push(route);
   }
 
   @override
@@ -156,24 +153,18 @@ class _OcrAnalyzeBody extends StatelessWidget {
 
   Future<void> _copyText(BuildContext context) async {
     if (fullText.isEmpty) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(emptyMessage)));
+      AppToast.show(context, emptyMessage);
       return;
     }
 
     await Clipboard.setData(ClipboardData(text: fullText));
     if (!context.mounted) return;
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(copySuccessMessage)));
+    AppToast.show(context, copySuccessMessage);
   }
 
   void _onTranslate(BuildContext context) {
     if (fullText.isEmpty) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(emptyMessage)));
+      AppToast.show(context, emptyMessage);
       return;
     }
 
