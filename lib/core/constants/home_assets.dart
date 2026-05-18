@@ -13,8 +13,11 @@ abstract final class HomeAssets {
   static const String secure = '$_base/secure.svg';
   static const String crop = '$_base/crop.svg';
   static const String camera = '$_base/camera.png';
+  static const String bottomSheetCamera = '$_base/bottom_sheet_camera.png';
+  static const String uploadImageBottom = '$_base/upload_image_bottom.png';
   static const String navbariconn = '$_base/home_shell.svg';
 
   static const String homeHeader = '$_base/home_header.png';
   static const String recentDocs = '$_base/recent_docs.png';
+  static const String noTextFound = '$_base/no_text_found.png';
 }

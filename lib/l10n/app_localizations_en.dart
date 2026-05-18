@@ -209,6 +209,70 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ocrEditHint => 'Edit recognized text';
 
   @override
+  String get ocrInputMethodTitle => 'Choose Input Method';
+
+  @override
+  String get ocrInputMethodSubtitle => 'Select how you want to extract text';
+
+  @override
+  String get ocrInputLiveCameraTitle => 'Live Camera';
+
+  @override
+  String get ocrInputLiveCameraDescription => 'Capture live image using camera';
+
+  @override
+  String get ocrInputUploadImageTitle => 'Upload Image';
+
+  @override
+  String get ocrInputUploadImageDescription => 'Upload image from gallery';
+
+  @override
+  String get ocrLiveCameraTitle => 'Live OCR Camera';
+
+  @override
+  String get ocrLiveCameraTip =>
+      'Tip: For better results, place the text in well-lit area';
+
+  @override
+  String get ocrLiveCameraClose => 'Close camera';
+
+  @override
+  String get ocrLiveCameraFlash => 'Toggle flash';
+
+  @override
+  String get ocrLiveCameraCapture => 'Capture image for text recognition';
+
+  @override
+  String get ocrLiveCameraInitializing => 'Starting camera…';
+
+  @override
+  String get ocrAnalyzeTitle => 'OCR Scanner';
+
+  @override
+  String get ocrAnalyzeCopy => 'Copy';
+
+  @override
+  String get ocrAnalyzeTranslate => 'Translate';
+
+  @override
+  String get ocrAnalyzeProcessing => 'Analyzing text…';
+
+  @override
+  String get ocrAnalyzeTranslateNext => 'Translate will open next';
+
+  @override
+  String get ocrNoTextTitle => 'No readable text detected';
+
+  @override
+  String get ocrNoTextHint => 'Try a clearer image';
+
+  @override
+  String get ocrNoTextRetakePhoto => 'Retake Photo';
+
+  @override
+  String get ocrNoTextChooseGallery => 'Choose from Gallery';
+
+  @override
   String get translateTitle => 'Translate';
 
   @override
@@ -231,6 +295,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get translateCopyResult => 'Copy translation';
+
+  @override
+  String get translateResultTitle => 'Translate Text';
+
+  @override
+  String get translateResultSubtitle =>
+      'Translate your selected text into any language';
+
+  @override
+  String get translateSelectedText => 'Selected Text';
+
+  @override
+  String get translateSelectedLanguage => 'Selected Language';
+
+  @override
+  String get translateSelectLanguage => 'Select Language';
+
+  @override
+  String get translateTranslatedText => 'Translated Text';
+
+  @override
+  String get translatePlaceholder => 'Translation will appear here..';
+
+  @override
+  String get translateSeeMore => 'See More';
+
+  @override
+  String get translateReadAloud => 'Read aloud';
+
+  @override
+  String get translateSavePdf => 'Save as PDF';
+
+  @override
+  String get translateSavePng => 'Save as PNG';
+
+  @override
+  String get translateSaveComingSoon => 'Save will be available soon';
 
   @override
   String get liveTitle => 'Live translate';

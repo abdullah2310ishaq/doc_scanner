@@ -59,6 +59,33 @@ abstract final class AppColors {
   static const Color cardChatbotBg = Color(0xFFECE7FB);
   static const Color cardCropBg = Color(0xFFDCF0E0);
 
+  static const Color ocrInputLiveBg = Color(0xFFE9F2FF);
+  static const Color ocrInputUploadBg = Color(0xFFE8F8F0);
+  static const double ocrInputSheetRadius = 24;
+  static const double ocrInputOptionRadius = 14;
+
+  static const Color liveCameraBackground = Color(0xFF000000);
+  static const Color liveCameraOverlay = Color(0x33FFFFFF);
+  static const Color liveCameraText = white;
+  static const Color liveCameraTextMuted = Color(0xB3FFFFFF);
+  static const Color liveCameraReticle = white;
+  static const Color liveCameraShutterRing = Color(0xFF7B61FF);
+  static const Color liveCameraTipBorder = Color(0x4DFFFFFF);
+
+  static const Color ocrHighlightFill = Color(0x661567FF);
+  static const Color ocrAnalyzeActionBg = white;
+  static const Color ocrAnalyzeActionText = textPrimary;
+
+  static const Color translateCardBorder = Color(0xFFE8EAED);
+  static const double translateCardRadius = 12;
+  static const Color translateSectionTitle = textLink;
+  static const Color translateSavePngBg = Color(0xFFEEF3FF);
+  static const Color translateSavePngBorder = Color(0xFFD6E4FF);
+
+  static const LinearGradient translatePrimaryGradient = LinearGradient(
+    colors: [navbarGradientStart, navbarGradientEnd],
+  );
+
   static const double featureCardRadius = 6;
 
   static const Color documentCardBg = Color(0xFFFFFFFF);

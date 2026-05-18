@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../core/constants/home_assets.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
+import '../../ocr/ocr_flow.dart';
+import '../../ocr/screens/live_ocr_camera_screen.dart';
+import '../../ocr/widgets/ocr_input_method_sheet.dart';
 import '../widgets/home_drawer.dart';
 import '../widgets/home_feature_card.dart';
 import '../widgets/home_feature_tags.dart';
@@ -15,6 +18,14 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key, this.onDrawerDestination});
 
   final ValueChanged<HomeDrawerDestination>? onDrawerDestination;
+
+  void _openOcrInputSheet(BuildContext context) {
+    showOcrInputMethodSheet(
+      context,
+      onLiveCamera: () => LiveOcrCameraScreen.open(context),
+      onUploadImage: () => OcrFlow.pickImageAndAnalyze(context),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +91,7 @@ class HomeScreen extends StatelessWidget {
                         title: l10n.homeHeroTitle,
                         subtitle: l10n.homeHeroSubtitle,
                         buttonLabel: l10n.homeHeroButton,
-                        onPressed: () {},
+                        onPressed: () => _openOcrInputSheet(scaffoldContext),
                       ),
                       const SizedBox(height: 16),
                       HomeSearchBar(hint: l10n.homeSearchHint),
@@ -90,7 +101,7 @@ class HomeScreen extends StatelessWidget {
                         subtitle: l10n.homeFeatureOcrSubtitle,
                         backgroundColor: AppColors.cardOcrBg,
                         iconAsset: HomeAssets.ocr,
-                        onTap: () {},
+                        onTap: () => _openOcrInputSheet(scaffoldContext),
                       ),
                       const SizedBox(height: 10),
                       HomeFeatureCard(

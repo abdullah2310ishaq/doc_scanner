@@ -40,7 +40,25 @@ import 'app_localizations_en.dart';
 ///
 ///   # Rest of dependencies
 /// ```
-
+///
+/// ## iOS Applications
+///
+/// iOS applications define key application metadata, including supported
+/// locales, in an Info.plist file that is built into the application bundle.
+/// To configure the locales supported by your app, you’ll need to edit this
+/// file.
+///
+/// First, open your project’s ios/Runner.xcworkspace Xcode workspace file.
+/// Then, in the Project Navigator, open the Info.plist file under the Runner
+/// project’s Runner folder.
+///
+/// Next, select the Information Property List item, select Add Item from the
+/// Editor menu, then select Localizations from the pop-up menu.
+///
+/// Select and expand the newly-created Localizations item then, for each
+/// locale your application supports, add a new item and select the locale
+/// you wish to add from the pop-up menu in the Value field. This list should
+/// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
   AppLocalizations(String locale)
@@ -454,6 +472,132 @@ abstract class AppLocalizations {
   /// **'Edit recognized text'**
   String get ocrEditHint;
 
+  /// No description provided for @ocrInputMethodTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Input Method'**
+  String get ocrInputMethodTitle;
+
+  /// No description provided for @ocrInputMethodSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select how you want to extract text'**
+  String get ocrInputMethodSubtitle;
+
+  /// No description provided for @ocrInputLiveCameraTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Live Camera'**
+  String get ocrInputLiveCameraTitle;
+
+  /// No description provided for @ocrInputLiveCameraDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture live image using camera'**
+  String get ocrInputLiveCameraDescription;
+
+  /// No description provided for @ocrInputUploadImageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Image'**
+  String get ocrInputUploadImageTitle;
+
+  /// No description provided for @ocrInputUploadImageDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload image from gallery'**
+  String get ocrInputUploadImageDescription;
+
+  /// No description provided for @ocrLiveCameraTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Live OCR Camera'**
+  String get ocrLiveCameraTitle;
+
+  /// No description provided for @ocrLiveCameraTip.
+  ///
+  /// In en, this message translates to:
+  /// **'Tip: For better results, place the text in well-lit area'**
+  String get ocrLiveCameraTip;
+
+  /// No description provided for @ocrLiveCameraClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close camera'**
+  String get ocrLiveCameraClose;
+
+  /// No description provided for @ocrLiveCameraFlash.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle flash'**
+  String get ocrLiveCameraFlash;
+
+  /// No description provided for @ocrLiveCameraCapture.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture image for text recognition'**
+  String get ocrLiveCameraCapture;
+
+  /// No description provided for @ocrLiveCameraInitializing.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting camera…'**
+  String get ocrLiveCameraInitializing;
+
+  /// No description provided for @ocrAnalyzeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'OCR Scanner'**
+  String get ocrAnalyzeTitle;
+
+  /// No description provided for @ocrAnalyzeCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get ocrAnalyzeCopy;
+
+  /// No description provided for @ocrAnalyzeTranslate.
+  ///
+  /// In en, this message translates to:
+  /// **'Translate'**
+  String get ocrAnalyzeTranslate;
+
+  /// No description provided for @ocrAnalyzeProcessing.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing text…'**
+  String get ocrAnalyzeProcessing;
+
+  /// No description provided for @ocrAnalyzeTranslateNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Translate will open next'**
+  String get ocrAnalyzeTranslateNext;
+
+  /// No description provided for @ocrNoTextTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No readable text detected'**
+  String get ocrNoTextTitle;
+
+  /// No description provided for @ocrNoTextHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Try a clearer image'**
+  String get ocrNoTextHint;
+
+  /// No description provided for @ocrNoTextRetakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Retake Photo'**
+  String get ocrNoTextRetakePhoto;
+
+  /// No description provided for @ocrNoTextChooseGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from Gallery'**
+  String get ocrNoTextChooseGallery;
+
   /// No description provided for @translateTitle.
   ///
   /// In en, this message translates to:
@@ -501,6 +645,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Copy translation'**
   String get translateCopyResult;
+
+  /// No description provided for @translateResultTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Translate Text'**
+  String get translateResultTitle;
+
+  /// No description provided for @translateResultSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Translate your selected text into any language'**
+  String get translateResultSubtitle;
+
+  /// No description provided for @translateSelectedText.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected Text'**
+  String get translateSelectedText;
+
+  /// No description provided for @translateSelectedLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected Language'**
+  String get translateSelectedLanguage;
+
+  /// No description provided for @translateSelectLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Language'**
+  String get translateSelectLanguage;
+
+  /// No description provided for @translateTranslatedText.
+  ///
+  /// In en, this message translates to:
+  /// **'Translated Text'**
+  String get translateTranslatedText;
+
+  /// No description provided for @translatePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Translation will appear here..'**
+  String get translatePlaceholder;
+
+  /// No description provided for @translateSeeMore.
+  ///
+  /// In en, this message translates to:
+  /// **'See More'**
+  String get translateSeeMore;
+
+  /// No description provided for @translateReadAloud.
+  ///
+  /// In en, this message translates to:
+  /// **'Read aloud'**
+  String get translateReadAloud;
+
+  /// No description provided for @translateSavePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Save as PDF'**
+  String get translateSavePdf;
+
+  /// No description provided for @translateSavePng.
+  ///
+  /// In en, this message translates to:
+  /// **'Save as PNG'**
+  String get translateSavePng;
+
+  /// No description provided for @translateSaveComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Save will be available soon'**
+  String get translateSaveComingSoon;
 
   /// No description provided for @liveTitle.
   ///
