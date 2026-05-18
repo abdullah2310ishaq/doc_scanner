@@ -197,5 +197,32 @@
   "exportFailed": "Export failed",
 
   "languageSearchHint": "Search language",
-  "languageAuto": "Detect language"
+  "languageAuto": "Detect language",
+
+  "chatbotTitle": "AI Chatbot",
+  "chatbotHistoryButton": "Chat history",
+  "chatbotBadge": "Your Smart AI Assistant",
+  "chatbotHeadlineChat": "Chat",
+  "chatbotHeadlineMiddle": " with your ",
+  "chatbotHeadlinePdf": "PDF",
+  "chatbotTryAsking": "Try asking",
+  "chatbotSuggestSummarize": "Summarize this PDF",
+  "chatbotSuggestKeyPoints": "Key Points of this PDF",
+  "chatbotSuggestExplain": "Explain in detail",
+  "chatbotSuggestTranslate": "Translate this PDF",
+  "chatbotUploadHint": "Upload a PDF...",
+  "chatbotSheetTitle": "Chat with your PDF",
+  "chatbotSheetSubtitle": "Upload a PDF and ask anything about it",
+  "chatbotChoosePdfTitle": "Choose PDF file",
+  "chatbotChoosePdfDescription": "Browse and select PDF from your device",
+  "chatbotRecentFilesTitle": "Recent Files",
+  "chatbotRecentFilesDescription": "Choose from your recent files",
+  "errorChatbotPdfPickFailed": "Could not open the selected PDF",
+
+  "chatbotAnalyzingTitle": "Analyzing Your Document...",
+  "chatbotAnalyzingSubtitle": "Please wait while we read and\nunderstand your PDF",
+  "chatbotStepReadingPdf": "Reading PDF",
+  "chatbotStepExtractingText": "Extracting Text",
+  "chatbotStepUnderstandingContent": "Understanding Content",
+  "chatbotStepPreparingChat": "Preparing AI Chat"
 }

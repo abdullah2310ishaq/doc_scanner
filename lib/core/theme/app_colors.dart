@@ -57,6 +57,11 @@ abstract final class AppColors {
   static const Color cardOcrBg = Color(0xFFF2F1FD);
   static const Color cardPdfBg = Color(0xFFFFEFE4);
   static const Color cardChatbotBg = Color(0xFFECE7FB);
+  static const Color chatbotAccent = proBadgeStart;
+  static const Color chatbotSheetPdfBg = Color(0xFFEEF3FF);
+  static const Color chatbotSheetRecentBg = Color(0xFFF2EEFB);
+  static const double chatbotSheetRadius = 24;
+  static const double chatbotSheetOptionRadius = 16;
   static const Color cardCropBg = Color(0xFFDCF0E0);
 
   static const Color ocrInputLiveBg = Color(0xFFE9F2FF);

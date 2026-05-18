@@ -534,4 +534,81 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get languageAuto => 'Detect language';
+
+  @override
+  String get chatbotTitle => 'AI Chatbot';
+
+  @override
+  String get chatbotHistoryButton => 'Chat history';
+
+  @override
+  String get chatbotBadge => 'Your Smart AI Assistant';
+
+  @override
+  String get chatbotHeadlineChat => 'Chat';
+
+  @override
+  String get chatbotHeadlineMiddle => ' with your ';
+
+  @override
+  String get chatbotHeadlinePdf => 'PDF';
+
+  @override
+  String get chatbotTryAsking => 'Try asking';
+
+  @override
+  String get chatbotSuggestSummarize => 'Summarize this PDF';
+
+  @override
+  String get chatbotSuggestKeyPoints => 'Key Points of this PDF';
+
+  @override
+  String get chatbotSuggestExplain => 'Explain in detail';
+
+  @override
+  String get chatbotSuggestTranslate => 'Translate this PDF';
+
+  @override
+  String get chatbotUploadHint => 'Upload a PDF...';
+
+  @override
+  String get chatbotSheetTitle => 'Chat with your PDF';
+
+  @override
+  String get chatbotSheetSubtitle => 'Upload a PDF and ask anything about it';
+
+  @override
+  String get chatbotChoosePdfTitle => 'Choose PDF file';
+
+  @override
+  String get chatbotChoosePdfDescription =>
+      'Browse and select PDF from your device';
+
+  @override
+  String get chatbotRecentFilesTitle => 'Recent Files';
+
+  @override
+  String get chatbotRecentFilesDescription => 'Choose from your recent files';
+
+  @override
+  String get errorChatbotPdfPickFailed => 'Could not open the selected PDF';
+
+  @override
+  String get chatbotAnalyzingTitle => 'Analyzing Your Document...';
+
+  @override
+  String get chatbotAnalyzingSubtitle =>
+      'Please wait while we read and\nunderstand your PDF';
+
+  @override
+  String get chatbotStepReadingPdf => 'Reading PDF';
+
+  @override
+  String get chatbotStepExtractingText => 'Extracting Text';
+
+  @override
+  String get chatbotStepUnderstandingContent => 'Understanding Content';
+
+  @override
+  String get chatbotStepPreparingChat => 'Preparing AI Chat';
 }

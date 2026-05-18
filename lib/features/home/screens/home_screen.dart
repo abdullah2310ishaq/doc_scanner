@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/constants/home_assets.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
+import '../../chatbot/screens/upload_new_pdf.dart';
 import '../../ocr/ocr_flow.dart';
 import '../../ocr/screens/live_ocr_camera_screen.dart';
 import '../../ocr/widgets/ocr_input_method_sheet.dart';
@@ -117,7 +118,7 @@ class HomeScreen extends StatelessWidget {
                         subtitle: l10n.homeFeatureChatbotSubtitle,
                         backgroundColor: AppColors.cardChatbotBg,
                         iconAsset: HomeAssets.aichatPng,
-                        onTap: () {},
+                        onTap: () => UploadNewPdfScreen.open(scaffoldContext),
                       ),
                       const SizedBox(height: 10),
                       HomeFeatureCard(

@@ -1095,6 +1095,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Detect language'**
   String get languageAuto;
+
+  /// No description provided for @chatbotTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Chatbot'**
+  String get chatbotTitle;
+
+  /// No description provided for @chatbotHistoryButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat history'**
+  String get chatbotHistoryButton;
+
+  /// No description provided for @chatbotBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Smart AI Assistant'**
+  String get chatbotBadge;
+
+  /// No description provided for @chatbotHeadlineChat.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat'**
+  String get chatbotHeadlineChat;
+
+  /// No description provided for @chatbotHeadlineMiddle.
+  ///
+  /// In en, this message translates to:
+  /// **' with your '**
+  String get chatbotHeadlineMiddle;
+
+  /// No description provided for @chatbotHeadlinePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF'**
+  String get chatbotHeadlinePdf;
+
+  /// No description provided for @chatbotTryAsking.
+  ///
+  /// In en, this message translates to:
+  /// **'Try asking'**
+  String get chatbotTryAsking;
+
+  /// No description provided for @chatbotSuggestSummarize.
+  ///
+  /// In en, this message translates to:
+  /// **'Summarize this PDF'**
+  String get chatbotSuggestSummarize;
+
+  /// No description provided for @chatbotSuggestKeyPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Key Points of this PDF'**
+  String get chatbotSuggestKeyPoints;
+
+  /// No description provided for @chatbotSuggestExplain.
+  ///
+  /// In en, this message translates to:
+  /// **'Explain in detail'**
+  String get chatbotSuggestExplain;
+
+  /// No description provided for @chatbotSuggestTranslate.
+  ///
+  /// In en, this message translates to:
+  /// **'Translate this PDF'**
+  String get chatbotSuggestTranslate;
+
+  /// No description provided for @chatbotUploadHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload a PDF...'**
+  String get chatbotUploadHint;
+
+  /// No description provided for @chatbotSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat with your PDF'**
+  String get chatbotSheetTitle;
+
+  /// No description provided for @chatbotSheetSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload a PDF and ask anything about it'**
+  String get chatbotSheetSubtitle;
+
+  /// No description provided for @chatbotChoosePdfTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose PDF file'**
+  String get chatbotChoosePdfTitle;
+
+  /// No description provided for @chatbotChoosePdfDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse and select PDF from your device'**
+  String get chatbotChoosePdfDescription;
+
+  /// No description provided for @chatbotRecentFilesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Files'**
+  String get chatbotRecentFilesTitle;
+
+  /// No description provided for @chatbotRecentFilesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from your recent files'**
+  String get chatbotRecentFilesDescription;
+
+  /// No description provided for @errorChatbotPdfPickFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the selected PDF'**
+  String get errorChatbotPdfPickFailed;
+
+  /// No description provided for @chatbotAnalyzingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing Your Document...'**
+  String get chatbotAnalyzingTitle;
+
+  /// No description provided for @chatbotAnalyzingSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Please wait while we read and\nunderstand your PDF'**
+  String get chatbotAnalyzingSubtitle;
+
+  /// No description provided for @chatbotStepReadingPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading PDF'**
+  String get chatbotStepReadingPdf;
+
+  /// No description provided for @chatbotStepExtractingText.
+  ///
+  /// In en, this message translates to:
+  /// **'Extracting Text'**
+  String get chatbotStepExtractingText;
+
+  /// No description provided for @chatbotStepUnderstandingContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Understanding Content'**
+  String get chatbotStepUnderstandingContent;
+
+  /// No description provided for @chatbotStepPreparingChat.
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing AI Chat'**
+  String get chatbotStepPreparingChat;
 }
 
 class _AppLocalizationsDelegate
