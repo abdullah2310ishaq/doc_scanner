@@ -74,7 +74,9 @@ abstract final class AppColors {
 
   static const Color ocrHighlightFill = Color(0x661567FF);
   static const Color ocrAnalyzeActionBg = white;
-  static const Color ocrAnalyzeActionText = textPrimary;
+  static const Color ocrAnalyzeActionText = Color(0xFF6E6A6A);
+  static const Color ocrAnalyzeActionBorder = Color(0xFF6E6A6A);
+  static const double ocrAnalyzeActionRadius = 24;
 
   static const Color translateCardBorder = Color(0xFFE8EAED);
   static const double translateCardRadius = 12;

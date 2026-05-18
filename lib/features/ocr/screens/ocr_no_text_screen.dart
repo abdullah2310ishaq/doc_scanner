@@ -13,18 +13,14 @@ class OcrNoTextScreen extends StatelessWidget {
   const OcrNoTextScreen({super.key});
 
   static Future<void> open(BuildContext context) {
-    return Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => const OcrNoTextScreen(),
-      ),
-    );
+    return Navigator.of(
+      context,
+    ).push(MaterialPageRoute<void>(builder: (_) => const OcrNoTextScreen()));
   }
 
   static Future<void> openReplacing(BuildContext context) {
     return Navigator.of(context).pushReplacement(
-      MaterialPageRoute<void>(
-        builder: (_) => const OcrNoTextScreen(),
-      ),
+      MaterialPageRoute<void>(builder: (_) => const OcrNoTextScreen()),
     );
   }
 
@@ -51,7 +47,15 @@ class OcrNoTextScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: AppBar(
-        title: Text(l10n.ocrAnalyzeTitle),
+        centerTitle: true,
+        title: Text(
+          l10n.ocrAnalyzeTitle,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: AppColors.textPrimary,
+          ),
+        ),
         backgroundColor: AppColors.white,
         foregroundColor: AppColors.textPrimary,
         elevation: 0,

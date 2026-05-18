@@ -15,10 +15,7 @@ class TranslateResultScreen extends StatelessWidget {
 
   final String sourceText;
 
-  static Future<void> open(
-    BuildContext context, {
-    required String sourceText,
-  }) {
+  static Future<void> open(BuildContext context, {required String sourceText}) {
     return Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => ChangeNotifierProvider(
@@ -29,19 +26,23 @@ class TranslateResultScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _copyText(BuildContext context, String text, String message) async {
+  Future<void> _copyText(
+    BuildContext context,
+    String text,
+    String message,
+  ) async {
     if (text.isEmpty) return;
     await Clipboard.setData(ClipboardData(text: text));
     if (!context.mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   void _showComingSoon(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -51,7 +52,14 @@ class TranslateResultScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
       appBar: AppBar(
-        title: Text(l10n.translateResultTitle),
+        title: Text(
+          l10n.translateResultTitle,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: AppColors.textPrimary,
+          ),
+        ),
         backgroundColor: AppColors.scaffoldBackground,
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
@@ -61,8 +69,8 @@ class TranslateResultScreen extends StatelessWidget {
           final translatedDisplay = provider.isTranslating
               ? ''
               : provider.hasTranslation
-                  ? provider.translatedText
-                  : '';
+              ? provider.translatedText
+              : '';
 
           return Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -84,11 +92,8 @@ class TranslateResultScreen extends StatelessWidget {
                   placeholder: l10n.translatePasteHint,
                   seeMoreLabel: l10n.translateSeeMore,
                   copySemanticsLabel: l10n.commonCopy,
-                  onCopy: () => _copyText(
-                    context,
-                    sourceText,
-                    l10n.ocrCopySuccess,
-                  ),
+                  onCopy: () =>
+                      _copyText(context, sourceText, l10n.ocrCopySuccess),
                 ),
                 const SizedBox(height: 16),
                 TranslateLanguageDropdown(
@@ -110,16 +115,16 @@ class TranslateResultScreen extends StatelessWidget {
                   isLoading: provider.isTranslating,
                   onCopy: provider.hasTranslation
                       ? () => _copyText(
-                            context,
-                            provider.translatedText,
-                            l10n.translateCopyResult,
-                          )
+                          context,
+                          provider.translatedText,
+                          l10n.translateCopyResult,
+                        )
                       : null,
                   onReadAloud: provider.hasTranslation
                       ? () => _showComingSoon(
-                            context,
-                            l10n.translateSaveComingSoon,
-                          )
+                          context,
+                          l10n.translateSaveComingSoon,
+                        )
                       : null,
                 ),
                 if (provider.errorMessage != null) ...[
@@ -137,14 +142,10 @@ class TranslateResultScreen extends StatelessWidget {
                 TranslateSaveButtons(
                   savePdfLabel: l10n.translateSavePdf,
                   savePngLabel: l10n.translateSavePng,
-                  onSavePdf: () => _showComingSoon(
-                    context,
-                    l10n.translateSaveComingSoon,
-                  ),
-                  onSavePng: () => _showComingSoon(
-                    context,
-                    l10n.translateSaveComingSoon,
-                  ),
+                  onSavePdf: () =>
+                      _showComingSoon(context, l10n.translateSaveComingSoon),
+                  onSavePng: () =>
+                      _showComingSoon(context, l10n.translateSaveComingSoon),
                 ),
               ],
             ),

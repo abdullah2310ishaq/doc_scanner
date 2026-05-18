@@ -37,22 +37,28 @@ class _ActionPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final radius = BorderRadius.circular(AppColors.ocrAnalyzeActionRadius);
+
     return Material(
       color: AppColors.ocrAnalyzeActionBg,
-      borderRadius: BorderRadius.circular(24),
-      elevation: 2,
-      shadowColor: AppColors.cardShadow,
+      borderRadius: radius,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(24),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
-          child: Text(
-            label,
-            style: const TextStyle(
-              color: AppColors.ocrAnalyzeActionText,
-              fontSize: 15,
-              fontWeight: FontWeight.w600,
+        borderRadius: radius,
+        child: Ink(
+          decoration: BoxDecoration(
+            borderRadius: radius,
+            border: Border.all(color: AppColors.ocrAnalyzeActionBorder),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
+            child: Text(
+              label,
+              style: const TextStyle(
+                color: AppColors.ocrAnalyzeActionText,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ),

@@ -50,7 +50,14 @@ class OcrAnalyzeScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor: AppColors.scaffoldBackground,
           appBar: AppBar(
-            title: Text(l10n.ocrAnalyzeTitle),
+            title: Text(
+              l10n.ocrAnalyzeTitle,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+              ),
+            ),
             backgroundColor: AppColors.scaffoldBackground,
             foregroundColor: AppColors.textPrimary,
             elevation: 0,
