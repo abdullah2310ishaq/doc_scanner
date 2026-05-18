@@ -1,14 +1,11 @@
-import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
 
 import '../models/translate_export_data.dart';
 import '../models/translate_export_scope.dart';
+import 'translate_export_storage.dart';
 
 class TranslateSavePdfService {
   Future<Uint8List> buildBytes({
@@ -25,20 +22,13 @@ class TranslateSavePdfService {
     );
   }
 
-  Future<void> save({
+  Future<String> save({
     required TranslateExportData data,
     required TranslateExportScope scope,
   }) async {
     final bytes = await buildBytes(data: data, scope: scope);
     final fileName = _fileName(scope);
-
-    await _writeToExportsFolder(bytes, fileName);
-
-    try {
-      await Printing.sharePdf(bytes: bytes, filename: fileName);
-    } catch (_) {
-      // File is already saved locally; share sheet cancel should not fail export.
-    }
+    return TranslateExportStorage.saveBytes(bytes: bytes, fileName: fileName);
   }
 
   Future<List<int>> _buildPdfBytes({
@@ -55,7 +45,7 @@ class TranslateSavePdfService {
           return switch (scope) {
             TranslateExportScope.selectedText => [
               pw.Text(
-                data.sourceText,
+                data.translatedTextOnly,
                 style: const pw.TextStyle(fontSize: 14, lineSpacing: 4),
               ),
             ],
@@ -85,8 +75,7 @@ class TranslateSavePdfService {
       ),
     ];
 
-    final translation = data.translatedText?.trim();
-    if (translation != null && translation.isNotEmpty) {
+    if (data.hasTranslatedText) {
       final title = data.targetLanguageName == null
           ? data.translatedTextLabel
           : '${data.translatedTextLabel} (${data.targetLanguageName})';
@@ -103,24 +92,13 @@ class TranslateSavePdfService {
         ),
         pw.SizedBox(height: 8),
         pw.Text(
-          translation,
+          data.translatedText!.trim(),
           style: const pw.TextStyle(fontSize: 14, lineSpacing: 4),
         ),
       ]);
     }
 
     return widgets;
-  }
-
-  Future<void> _writeToExportsFolder(Uint8List bytes, String fileName) async {
-    final dir = await getApplicationDocumentsDirectory();
-    final exportsDir = Directory(p.join(dir.path, 'exports'));
-    if (!await exportsDir.exists()) {
-      await exportsDir.create(recursive: true);
-    }
-
-    final file = File(p.join(exportsDir.path, fileName));
-    await file.writeAsBytes(bytes);
   }
 
   String _fileName(TranslateExportScope scope) {

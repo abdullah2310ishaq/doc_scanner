@@ -364,6 +364,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'Download the entire file';
 
   @override
+  String get translateSavePdfSuccess => 'PDF saved successfully';
+
+  @override
+  String get translateSavePngSuccess => 'Image saved successfully';
+
+  @override
+  String get translateExportNeedsTranslation =>
+      'Translate the text before downloading';
+
+  @override
   String get liveTitle => 'Live translate';
 
   @override

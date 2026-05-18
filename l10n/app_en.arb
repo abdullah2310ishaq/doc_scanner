@@ -131,6 +131,9 @@
   "translateDownloadSelectedTextDescription": "Download only the selected text",
   "translateDownloadCompleteFileTitle": "Download complete file",
   "translateDownloadCompleteFileDescription": "Download the entire file",
+  "translateSavePdfSuccess": "PDF saved successfully",
+  "translateSavePngSuccess": "Image saved successfully",
+  "translateExportNeedsTranslation": "Translate the text before downloading",
 
   "liveTitle": "Live translate",
   "liveStart": "Start camera",

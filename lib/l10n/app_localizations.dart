@@ -772,6 +772,24 @@ abstract class AppLocalizations {
   /// **'Download the entire file'**
   String get translateDownloadCompleteFileDescription;
 
+  /// No description provided for @translateSavePdfSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF saved successfully'**
+  String get translateSavePdfSuccess;
+
+  /// No description provided for @translateSavePngSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Image saved successfully'**
+  String get translateSavePngSuccess;
+
+  /// No description provided for @translateExportNeedsTranslation.
+  ///
+  /// In en, this message translates to:
+  /// **'Translate the text before downloading'**
+  String get translateExportNeedsTranslation;
+
   /// No description provided for @liveTitle.
   ///
   /// In en, this message translates to:

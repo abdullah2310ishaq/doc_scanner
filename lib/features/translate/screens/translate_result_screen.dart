@@ -1,3 +1,4 @@
+import 'package:doc_scanner/core/services/permission_service.dart';
 import 'package:doc_scanner/core/widgets/permission_dialog.dart';
 import 'package:doc_scanner/core/widgets/toast.dart';
 import 'package:doc_scanner/features/home/screens/main_shell_screen.dart';
@@ -113,11 +114,22 @@ class TranslateResultScreen extends StatelessWidget {
     TranslateExportScope scope,
   ) async {
     final l10n = context.l10n;
-    final hasPermission = await ensureStoragePermission(context);
-    if (!hasPermission) {
-      if (!context.mounted) return;
-      AppToast.show(context, l10n.permissionDenied);
+
+    if (scope == TranslateExportScope.selectedText && !provider.hasTranslation) {
+      AppToast.show(context, l10n.translateExportNeedsTranslation);
       return;
+    }
+
+    final needsPermission = await PermissionService().needsStoragePermission();
+    if (!context.mounted) return;
+
+    if (needsPermission) {
+      final hasPermission = await ensureStoragePermission(context);
+      if (!hasPermission) {
+        if (!context.mounted) return;
+        AppToast.show(context, l10n.permissionDenied);
+        return;
+      }
     }
 
     final data = _exportData(l10n, provider);
@@ -131,7 +143,11 @@ class TranslateResultScreen extends StatelessWidget {
       }
 
       if (!context.mounted) return;
-      AppToast.show(context, l10n.exportSuccess);
+      final successMessage = switch (format) {
+        _TranslateSaveFormat.pdf => l10n.translateSavePdfSuccess,
+        _TranslateSaveFormat.png => l10n.translateSavePngSuccess,
+      };
+      AppToast.show(context, successMessage);
     } catch (error, stack) {
       if (kDebugMode) {
         debugPrint('[TranslateExport] $error\n$stack');

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:media_store_plus/media_store_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class PermissionService {
@@ -13,52 +14,39 @@ class PermissionService {
     return status.isGranted;
   }
 
+  Future<bool> needsStoragePermission() async {
+    if (!Platform.isAndroid) {
+      return false;
+    }
+
+    final sdk = await MediaStore().getPlatformSDKInt();
+    return sdk <= 29;
+  }
+
   Future<bool> hasStoragePermission() async {
-    if (Platform.isAndroid) {
-      final storage = await Permission.storage.status;
-      if (storage.isGranted) {
-        return true;
-      }
-
-      final photos = await Permission.photos.status;
-      return photos.isGranted;
+    if (!Platform.isAndroid) {
+      return true;
     }
 
-    if (Platform.isIOS) {
-      final photosAddOnly = await Permission.photosAddOnly.status;
-      if (photosAddOnly.isGranted) {
-        return true;
-      }
-
-      final photos = await Permission.photos.status;
-      return photos.isGranted;
+    if (!await needsStoragePermission()) {
+      return true;
     }
 
-    return true;
+    final storage = await Permission.storage.status;
+    return storage.isGranted;
   }
 
   Future<bool> requestStoragePermission() async {
-    if (Platform.isAndroid) {
-      var status = await Permission.storage.request();
-      if (status.isGranted) {
-        return true;
-      }
-
-      status = await Permission.photos.request();
-      return status.isGranted;
+    if (!Platform.isAndroid) {
+      return true;
     }
 
-    if (Platform.isIOS) {
-      var status = await Permission.photosAddOnly.request();
-      if (status.isGranted) {
-        return true;
-      }
-
-      status = await Permission.photos.request();
-      return status.isGranted;
+    if (!await needsStoragePermission()) {
+      return true;
     }
 
-    return true;
+    final status = await Permission.storage.request();
+    return status.isGranted;
   }
 
   Future<bool> openSettings() => openAppSettings();

@@ -15,9 +15,22 @@ class TranslateExportData {
   final String? translatedText;
   final String? targetLanguageName;
 
+  bool get hasTranslatedText {
+    final text = translatedText?.trim();
+    return text != null && text.isNotEmpty;
+  }
+
+  String get translatedTextOnly {
+    final text = translatedText?.trim();
+    if (text == null || text.isEmpty) {
+      throw StateError('No translated text');
+    }
+    return text;
+  }
+
   String textForScope(TranslateExportScope scope) {
     return switch (scope) {
-      TranslateExportScope.selectedText => sourceText,
+      TranslateExportScope.selectedText => translatedTextOnly,
       TranslateExportScope.completeFile => _completeText(),
     };
   }
@@ -27,14 +40,13 @@ class TranslateExportData {
     buffer.writeln(selectedTextLabel);
     buffer.writeln(sourceText);
 
-    final translation = translatedText?.trim();
-    if (translation != null && translation.isNotEmpty) {
+    if (hasTranslatedText) {
       buffer.writeln();
       final title = targetLanguageName == null
           ? translatedTextLabel
           : '$translatedTextLabel ($targetLanguageName)';
       buffer.writeln(title);
-      buffer.writeln(translation);
+      buffer.writeln(translatedText!.trim());
     }
 
     return buffer.toString().trim();
