@@ -1,61 +1,109 @@
 import 'package:flutter/foundation.dart';
 
 import '../models/translate_language.dart';
-import '../services/dummy_translate_service.dart';
+import '../services/mlkit_translate_service.dart';
 import '../services/translate_service.dart';
 
 class TranslateResultProvider extends ChangeNotifier {
   TranslateResultProvider({
     required this.sourceText,
     TranslateService? translateService,
-  }) : _translateService = translateService ?? DummyTranslateService();
+    this.sourceLanguageCode = 'en',
+  }) : _translateService = translateService ?? MlKitTranslateService();
 
   final String sourceText;
+  final String sourceLanguageCode;
   final TranslateService _translateService;
 
   TranslateLanguage? _selectedLanguage;
   String _translatedText = '';
   bool _isTranslating = false;
-  String? _errorMessage;
+  TranslateFailure? _failure;
 
   TranslateLanguage? get selectedLanguage => _selectedLanguage;
   String get translatedText => _translatedText;
   bool get isTranslating => _isTranslating;
-  String? get errorMessage => _errorMessage;
+  TranslateFailure? get translateFailure => _failure;
+  String? get errorMessage => _failure?.name;
   bool get hasTranslation => _translatedText.isNotEmpty;
 
   Future<void> selectLanguage(TranslateLanguage? language) async {
     _selectedLanguage = language;
     _translatedText = '';
-    _errorMessage = null;
+    _failure = null;
     notifyListeners();
 
-    if (language == null || sourceText.trim().isEmpty) return;
+    if (language == null) {
+      _log('Language cleared');
+      return;
+    }
+    if (sourceText.trim().isEmpty) {
+      _log('Skipped translation — source text is empty');
+      return;
+    }
     await _runTranslation(language);
   }
 
   Future<void> retryTranslation() async {
     final language = _selectedLanguage;
     if (language == null) return;
+    _log('Retry translation → ${language.name} (${language.code})');
     await _runTranslation(language);
   }
 
   Future<void> _runTranslation(TranslateLanguage language) async {
     _isTranslating = true;
-    _errorMessage = null;
+    _failure = null;
     notifyListeners();
+
+    final startedAt = DateTime.now();
+    _log(
+      'Started — target: ${language.name} (${language.code}), '
+      'source: $sourceLanguageCode, chars: ${sourceText.length}',
+    );
 
     try {
       _translatedText = await _translateService.translate(
         text: sourceText,
         targetLanguage: language,
+        sourceLanguageCode: sourceLanguageCode,
       );
-    } catch (error) {
+      final ms = DateTime.now().difference(startedAt).inMilliseconds;
+      _log(
+        'Success in ${ms}ms — result chars: ${_translatedText.length}, '
+        'preview: ${_preview(_translatedText)}',
+      );
+    } on TranslateException catch (error) {
       _translatedText = '';
-      _errorMessage = error.toString();
+      _failure = error.failure;
+      _log('Failed — ${error.failure.name}');
+    } catch (error, stack) {
+      _translatedText = '';
+      _failure = TranslateFailure.translationFailed;
+      _log('Failed — unexpected: $error\n$stack');
     }
 
     _isTranslating = false;
     notifyListeners();
+  }
+
+  void _log(String message) {
+    if (kDebugMode) {
+      debugPrint('[TranslateProvider] $message');
+    }
+  }
+
+  String _preview(String text, [int max = 80]) {
+    if (text.length <= max) return text;
+    return '${text.substring(0, max)}…';
+  }
+
+  @override
+  void dispose() {
+    final service = _translateService;
+    if (service is MlKitTranslateService) {
+      service.dispose();
+    }
+    super.dispose();
   }
 }

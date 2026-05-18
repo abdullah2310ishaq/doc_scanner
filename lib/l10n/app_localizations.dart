@@ -676,6 +676,24 @@ abstract class AppLocalizations {
   /// **'Select Language'**
   String get translateSelectLanguage;
 
+  /// No description provided for @translateSearchLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Search languages'**
+  String get translateSearchLanguage;
+
+  /// No description provided for @translateRecentLanguages.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get translateRecentLanguages;
+
+  /// No description provided for @translateNoLanguagesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No languages found'**
+  String get translateNoLanguagesFound;
+
   /// No description provided for @translateTranslatedText.
   ///
   /// In en, this message translates to:
@@ -885,6 +903,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Translation failed'**
   String get errorTranslateFailed;
+
+  /// No description provided for @errorTranslateModelDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not download the language pack. Check your connection and try again.'**
+  String get errorTranslateModelDownload;
+
+  /// No description provided for @errorTranslateUnsupportedLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'This language is not available for offline translation.'**
+  String get errorTranslateUnsupportedLanguage;
 
   /// No description provided for @proTitle.
   ///

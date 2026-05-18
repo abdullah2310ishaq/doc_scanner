@@ -15,9 +15,11 @@ class TranslateTextCard extends StatefulWidget {
     this.onCopy,
     this.onReadAloud,
     this.isLoading = false,
+    this.subtitle,
   });
 
   final String title;
+  final String? subtitle;
   final String text;
   final String placeholder;
   final String seeMoreLabel;
@@ -30,7 +32,8 @@ class TranslateTextCard extends StatefulWidget {
   static const int _maxLines = 2;
   static const TextStyle _bodyStyle = TextStyle(
     fontSize: 14,
-    height: 1.45,
+    height:
+        1.4, // Increased to 1.4 to ensure stable, reliable text layout rendering metrics
     color: AppColors.textSecondary,
   );
 
@@ -48,7 +51,7 @@ class _TranslateTextCardState extends State<TranslateTextCard> {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.fromLTRB(12, 6, 12, 12),
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(AppColors.translateCardRadius),
@@ -60,7 +63,9 @@ class _TranslateTextCardState extends State<TranslateTextCard> {
           Row(
             children: [
               Text(
-                widget.title,
+                widget.subtitle == null
+                    ? widget.title
+                    : "${widget.title} (${widget.subtitle})",
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
@@ -84,7 +89,7 @@ class _TranslateTextCardState extends State<TranslateTextCard> {
               ],
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 2),
           if (widget.isLoading)
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 8),
@@ -99,36 +104,60 @@ class _TranslateTextCardState extends State<TranslateTextCard> {
           else
             LayoutBuilder(
               builder: (context, constraints) {
-                _updateSeeMore(displayText, constraints.maxWidth, isPlaceholder);
+                // Perform layout measurement calculations
+                _updateSeeMore(
+                  displayText,
+                  constraints.maxWidth,
+                  isPlaceholder,
+                );
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      displayText,
-                      maxLines: isPlaceholder ? null : TranslateTextCard._maxLines,
-                      overflow: isPlaceholder
-                          ? TextOverflow.visible
-                          : TextOverflow.ellipsis,
-                      style: isPlaceholder
-                          ? TranslateTextCard._bodyStyle.copyWith(
-                              color: AppColors.textSecondary.withValues(
-                                alpha: 0.7,
-                              ),
-                            )
-                          : TranslateTextCard._bodyStyle,
+                    SizedBox(
+                      width: constraints
+                          .maxWidth, // Explicit boundary lock to maximize block coverage
+                      child: Text(
+                        displayText,
+                        maxLines: isPlaceholder
+                            ? null
+                            : TranslateTextCard._maxLines,
+                        overflow: isPlaceholder
+                            ? TextOverflow.visible
+                            : TextOverflow.ellipsis,
+                        textAlign: TextAlign.start,
+                        style: isPlaceholder
+                            ? TranslateTextCard._bodyStyle.copyWith(
+                                color: AppColors.textSecondary.withValues(
+                                  alpha: 0.7,
+                                ),
+                              )
+                            : TranslateTextCard._bodyStyle,
+                      ),
                     ),
-                    if (_showSeeMore && !isPlaceholder)
+                    if (_showSeeMore && !isPlaceholder) ...[
+                      const SizedBox(
+                        height: 6,
+                      ), // Give separation below line baseline
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
                           onPressed: () => showTranslateFullTextSheet(
                             context,
-                            title: widget.title,
+                            title: widget.subtitle == null
+                                ? widget.title
+                                : '${widget.title} (${widget.subtitle})',
                             body: widget.text,
+                            copyLabel: widget.onCopy != null
+                                ? widget.copySemanticsLabel
+                                : null,
+                            onCopy: widget.onCopy,
                           ),
                           style: TextButton.styleFrom(
-                            padding: const EdgeInsets.only(top: 4),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 4,
+                              horizontal: 8,
+                            ),
                             minimumSize: Size.zero,
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
@@ -141,6 +170,7 @@ class _TranslateTextCardState extends State<TranslateTextCard> {
                           ),
                         ),
                       ),
+                    ],
                   ],
                 );
               },

@@ -6,10 +6,13 @@ import 'package:provider/provider.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
+import '../../../l10n/app_localizations.dart';
 import '../constants/dummy_languages.dart';
 import '../providers/translate_result_provider.dart';
-import '../widgets/translate_language_dropdown.dart';
+import '../services/mlkit_translate_service.dart';
+import '../widgets/translate_language_sheet.dart';
 import '../widgets/translate_save_buttons.dart';
+import '../widgets/translate_select_language_button.dart';
 import '../widgets/translate_text_card.dart';
 
 class TranslateResultScreen extends StatelessWidget {
@@ -28,7 +31,6 @@ class TranslateResultScreen extends StatelessWidget {
     );
   }
 
-  //going back to home
   void gobacktohome(BuildContext context) {
     Navigator.pushReplacement(
       context,
@@ -48,9 +50,31 @@ class TranslateResultScreen extends StatelessWidget {
   }
 
   void _showComingSoon(BuildContext context, String message) {
-    ScaffoldMessenger.of(
+    AppToast.show(context, message);
+  }
+
+  String _translateErrorMessage(AppLocalizations l10n, TranslateFailure? failure) {
+    return switch (failure) {
+      TranslateFailure.unsupportedLanguage => l10n.errorTranslateUnsupportedLanguage,
+      TranslateFailure.modelDownloadFailed => l10n.errorTranslateModelDownload,
+      TranslateFailure.translationFailed => l10n.errorTranslateFailed,
+      null => l10n.errorTranslateFailed,
+    };
+  }
+
+  void _openLanguageSheet(BuildContext context, TranslateResultProvider provider) {
+    final l10n = context.l10n;
+
+    showTranslateLanguageSheet(
       context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+      title: l10n.translateSelectLanguage,
+      searchHint: l10n.translateSearchLanguage,
+      recentLabel: l10n.translateRecentLanguages,
+      emptyLabel: l10n.translateNoLanguagesFound,
+      languages: DummyLanguages.all,
+      selected: provider.selectedLanguage,
+      onSelected: provider.selectLanguage,
+    );
   }
 
   @override
@@ -110,17 +134,16 @@ class TranslateResultScreen extends StatelessWidget {
                         _copyText(context, sourceText, l10n.ocrCopySuccess),
                   ),
                   const SizedBox(height: 16),
-                  TranslateLanguageDropdown(
-                    key: ValueKey(provider.selectedLanguage?.code ?? 'none'),
+                  TranslateSelectLanguageButton(
                     label: l10n.translateSelectedLanguage,
                     hint: l10n.translateSelectLanguage,
-                    languages: DummyLanguages.all,
-                    value: provider.selectedLanguage,
-                    onChanged: provider.selectLanguage,
+                    selectedLanguage: provider.selectedLanguage,
+                    onTap: () => _openLanguageSheet(context, provider),
                   ),
                   const SizedBox(height: 16),
                   TranslateTextCard(
                     title: l10n.translateTranslatedText,
+                    subtitle: provider.selectedLanguage?.name,
                     text: translatedDisplay,
                     placeholder: l10n.translatePlaceholder,
                     seeMoreLabel: l10n.translateSeeMore,
@@ -141,10 +164,10 @@ class TranslateResultScreen extends StatelessWidget {
                           )
                         : null,
                   ),
-                  if (provider.errorMessage != null) ...[
+                  if (provider.translateFailure != null) ...[
                     const SizedBox(height: 8),
                     Text(
-                      l10n.errorTranslateFailed,
+                      _translateErrorMessage(l10n, provider.translateFailure),
                       style: const TextStyle(color: AppColors.textSecondary),
                     ),
                     TextButton(

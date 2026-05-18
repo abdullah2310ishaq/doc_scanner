@@ -6,6 +6,8 @@ Future<void> showTranslateFullTextSheet(
   BuildContext context, {
   required String title,
   required String body,
+  String? copyLabel,
+  VoidCallback? onCopy,
 }) {
   return showModalBottomSheet<void>(
     context: context,
@@ -24,7 +26,7 @@ Future<void> showTranslateFullTextSheet(
         maxChildSize: 0.92,
         builder: (context, scrollController) {
           return Padding(
-            padding: EdgeInsets.fromLTRB(20, 12, 20, 16 + bottomInset),
+            padding: EdgeInsets.fromLTRB(16, 12, 16, 16 + bottomInset),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -39,23 +41,39 @@ Future<void> showTranslateFullTextSheet(
                   ),
                 ),
                 const SizedBox(height: 16),
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.translateSectionTitle,
-                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.translateSectionTitle,
+                        ),
+                      ),
+                    ),
+                    if (onCopy != null && copyLabel != null)
+                      TextButton.icon(
+                        onPressed: onCopy,
+                        icon: const Icon(Icons.copy_rounded, size: 18),
+                        label: Text(copyLabel),
+                        style: TextButton.styleFrom(
+                          foregroundColor: AppColors.textLink,
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                        ),
+                      ),
+                  ],
                 ),
                 const SizedBox(height: 12),
                 Expanded(
                   child: SingleChildScrollView(
                     controller: scrollController,
-                    child: Text(
+                    child: SelectableText(
                       body,
                       style: const TextStyle(
-                        fontSize: 15,
-                        height: 1.5,
+                        fontSize: 16,
+                        height: 1.55,
                         color: AppColors.textPrimary,
                       ),
                     ),

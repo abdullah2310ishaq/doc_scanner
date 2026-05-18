@@ -115,6 +115,9 @@
   "translateSelectedText": "Selected Text",
   "translateSelectedLanguage": "Selected Language",
   "translateSelectLanguage": "Select Language",
+  "translateSearchLanguage": "Search languages",
+  "translateRecentLanguages": "Recent",
+  "translateNoLanguagesFound": "No languages found",
   "translateTranslatedText": "Translated Text",
   "translatePlaceholder": "Translation will appear here..",
   "translateSeeMore": "See More",
@@ -155,6 +158,8 @@
   "errorNetwork": "Check your internet connection",
   "errorOcrFailed": "Text recognition failed",
   "errorTranslateFailed": "Translation failed",
+  "errorTranslateModelDownload": "Could not download the language pack. Check your connection and try again.",
+  "errorTranslateUnsupportedLanguage": "This language is not available for offline translation.",
 
   "proTitle": "Doc Scanner Pro",
   "proSubtitle": "Unlimited scans, OCR, languages, and live translate",

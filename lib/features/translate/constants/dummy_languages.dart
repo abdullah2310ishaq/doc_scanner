@@ -1,16 +1,12 @@
+import '../../../language_model.dart';
 import '../models/translate_language.dart';
+import '../utils/mlkit_language_mapper.dart';
 
 abstract final class DummyLanguages {
-  static const List<TranslateLanguage> all = [
-    TranslateLanguage(code: 'en', name: 'English'),
-    TranslateLanguage(code: 'es', name: 'Spanish'),
-    TranslateLanguage(code: 'fr', name: 'French'),
-    TranslateLanguage(code: 'de', name: 'German'),
-    TranslateLanguage(code: 'zh', name: 'Chinese'),
-    TranslateLanguage(code: 'hi', name: 'Hindi'),
-    TranslateLanguage(code: 'ar', name: 'Arabic'),
-    TranslateLanguage(code: 'pt', name: 'Portuguese'),
-    TranslateLanguage(code: 'ru', name: 'Russian'),
-    TranslateLanguage(code: 'ja', name: 'Japanese'),
-  ];
+  static final List<TranslateLanguage> all = languages
+      .map(
+        (language) => TranslateLanguage(code: language.code, name: language.name),
+      )
+      .where((language) => MlKitLanguageMapper.isSupported(language.code))
+      .toList();
 }

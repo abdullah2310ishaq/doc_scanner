@@ -313,6 +313,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get translateSelectLanguage => 'Select Language';
 
   @override
+  String get translateSearchLanguage => 'Search languages';
+
+  @override
+  String get translateRecentLanguages => 'Recent';
+
+  @override
+  String get translateNoLanguagesFound => 'No languages found';
+
+  @override
   String get translateTranslatedText => 'Translated Text';
 
   @override
@@ -419,6 +428,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorTranslateFailed => 'Translation failed';
+
+  @override
+  String get errorTranslateModelDownload =>
+      'Could not download the language pack. Check your connection and try again.';
+
+  @override
+  String get errorTranslateUnsupportedLanguage =>
+      'This language is not available for offline translation.';
 
   @override
   String get proTitle => 'Doc Scanner Pro';

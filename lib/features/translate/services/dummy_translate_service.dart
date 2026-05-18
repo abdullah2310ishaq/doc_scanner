@@ -6,6 +6,7 @@ class DummyTranslateService implements TranslateService {
   Future<String> translate({
     required String text,
     required TranslateLanguage targetLanguage,
+    String? sourceLanguageCode,
   }) async {
     await Future<void>.delayed(const Duration(milliseconds: 400));
     if (text.trim().isEmpty) return '';
