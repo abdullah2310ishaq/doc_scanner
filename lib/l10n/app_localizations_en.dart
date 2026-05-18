@@ -343,6 +343,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get translateSaveComingSoon => 'Save will be available soon';
 
   @override
+  String get translateDownloadOptionTitle => 'Choose Download Option';
+
+  @override
+  String get translateDownloadOptionSubtitle =>
+      'Select what you want to download';
+
+  @override
+  String get translateDownloadSelectedTextTitle => 'Download selected text';
+
+  @override
+  String get translateDownloadSelectedTextDescription =>
+      'Download only the selected text';
+
+  @override
+  String get translateDownloadCompleteFileTitle => 'Download complete file';
+
+  @override
+  String get translateDownloadCompleteFileDescription =>
+      'Download the entire file';
+
+  @override
   String get liveTitle => 'Live translate';
 
   @override

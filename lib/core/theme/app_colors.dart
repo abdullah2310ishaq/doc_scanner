@@ -83,6 +83,10 @@ abstract final class AppColors {
   static const Color translateSectionTitle = textLink;
   static const Color translateSavePngBg = Color(0xFFEEF3FF);
   static const Color translateSavePngBorder = Color(0xFFD6E4FF);
+  static const Color translateDownloadSelectedBg = Color(0xFFE9F2FF);
+  static const Color translateDownloadCompleteBg = Color(0xFFF2EEFB);
+  static const double translateDownloadSheetRadius = 24;
+  static const double translateDownloadOptionRadius = 16;
 
   static const LinearGradient translatePrimaryGradient = LinearGradient(
     colors: [navbarGradientStart, navbarGradientEnd],

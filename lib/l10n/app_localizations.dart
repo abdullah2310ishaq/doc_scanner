@@ -736,6 +736,42 @@ abstract class AppLocalizations {
   /// **'Save will be available soon'**
   String get translateSaveComingSoon;
 
+  /// No description provided for @translateDownloadOptionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Download Option'**
+  String get translateDownloadOptionTitle;
+
+  /// No description provided for @translateDownloadOptionSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Select what you want to download'**
+  String get translateDownloadOptionSubtitle;
+
+  /// No description provided for @translateDownloadSelectedTextTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Download selected text'**
+  String get translateDownloadSelectedTextTitle;
+
+  /// No description provided for @translateDownloadSelectedTextDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Download only the selected text'**
+  String get translateDownloadSelectedTextDescription;
+
+  /// No description provided for @translateDownloadCompleteFileTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Download complete file'**
+  String get translateDownloadCompleteFileTitle;
+
+  /// No description provided for @translateDownloadCompleteFileDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Download the entire file'**
+  String get translateDownloadCompleteFileDescription;
+
   /// No description provided for @liveTitle.
   ///
   /// In en, this message translates to:

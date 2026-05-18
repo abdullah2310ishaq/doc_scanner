@@ -1,19 +1,27 @@
+import 'package:doc_scanner/core/widgets/permission_dialog.dart';
 import 'package:doc_scanner/core/widgets/toast.dart';
 import 'package:doc_scanner/features/home/screens/main_shell_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../l10n/app_localizations.dart';
 import '../constants/dummy_languages.dart';
+import '../models/translate_export_data.dart';
+import '../models/translate_export_scope.dart';
 import '../providers/translate_result_provider.dart';
 import '../services/mlkit_translate_service.dart';
+import '../services/translate_save_pdf_service.dart';
+import '../services/translate_save_png_service.dart';
+import '../widgets/translate_download_option_sheet.dart';
 import '../widgets/translate_language_sheet.dart';
 import '../widgets/translate_save_buttons.dart';
 import '../widgets/translate_select_language_button.dart';
 import '../widgets/translate_text_card.dart';
+
+enum _TranslateSaveFormat { pdf, png }
 
 class TranslateResultScreen extends StatelessWidget {
   const TranslateResultScreen({super.key, required this.sourceText});
@@ -51,6 +59,86 @@ class TranslateResultScreen extends StatelessWidget {
 
   void _showComingSoon(BuildContext context, String message) {
     AppToast.show(context, message);
+  }
+
+  TranslateExportData _exportData(
+    AppLocalizations l10n,
+    TranslateResultProvider provider,
+  ) {
+    return TranslateExportData(
+      sourceText: sourceText,
+      selectedTextLabel: l10n.translateSelectedText,
+      translatedTextLabel: l10n.translateTranslatedText,
+      translatedText: provider.hasTranslation ? provider.translatedText : null,
+      targetLanguageName: provider.selectedLanguage?.name,
+    );
+  }
+
+  void _showDownloadOptionSheet(
+    BuildContext context,
+    TranslateResultProvider provider,
+    _TranslateSaveFormat format,
+  ) {
+    if (sourceText.trim().isEmpty) return;
+
+    final l10n = context.l10n;
+
+    showTranslateDownloadOptionSheet(
+      context,
+      title: l10n.translateDownloadOptionTitle,
+      subtitle: l10n.translateDownloadOptionSubtitle,
+      selectedTextTitle: l10n.translateDownloadSelectedTextTitle,
+      selectedTextDescription: l10n.translateDownloadSelectedTextDescription,
+      completeFileTitle: l10n.translateDownloadCompleteFileTitle,
+      completeFileDescription: l10n.translateDownloadCompleteFileDescription,
+      onSelectedText: () => _export(
+        context,
+        provider,
+        format,
+        TranslateExportScope.selectedText,
+      ),
+      onCompleteFile: () => _export(
+        context,
+        provider,
+        format,
+        TranslateExportScope.completeFile,
+      ),
+    );
+  }
+
+  Future<void> _export(
+    BuildContext context,
+    TranslateResultProvider provider,
+    _TranslateSaveFormat format,
+    TranslateExportScope scope,
+  ) async {
+    final l10n = context.l10n;
+    final hasPermission = await ensureStoragePermission(context);
+    if (!hasPermission) {
+      if (!context.mounted) return;
+      AppToast.show(context, l10n.permissionDenied);
+      return;
+    }
+
+    final data = _exportData(l10n, provider);
+
+    try {
+      switch (format) {
+        case _TranslateSaveFormat.pdf:
+          await TranslateSavePdfService().save(data: data, scope: scope);
+        case _TranslateSaveFormat.png:
+          await TranslateSavePngService().save(data: data, scope: scope);
+      }
+
+      if (!context.mounted) return;
+      AppToast.show(context, l10n.exportSuccess);
+    } catch (error, stack) {
+      if (kDebugMode) {
+        debugPrint('[TranslateExport] $error\n$stack');
+      }
+      if (!context.mounted) return;
+      AppToast.show(context, l10n.exportFailed);
+    }
   }
 
   String _translateErrorMessage(AppLocalizations l10n, TranslateFailure? failure) {
@@ -179,10 +267,16 @@ class TranslateResultScreen extends StatelessWidget {
                   TranslateSaveButtons(
                     savePdfLabel: l10n.translateSavePdf,
                     savePngLabel: l10n.translateSavePng,
-                    onSavePdf: () =>
-                        _showComingSoon(context, l10n.translateSaveComingSoon),
-                    onSavePng: () =>
-                        _showComingSoon(context, l10n.translateSaveComingSoon),
+                    onSavePdf: () => _showDownloadOptionSheet(
+                      context,
+                      provider,
+                      _TranslateSaveFormat.pdf,
+                    ),
+                    onSavePng: () => _showDownloadOptionSheet(
+                      context,
+                      provider,
+                      _TranslateSaveFormat.png,
+                    ),
                   ),
                 ],
               ),

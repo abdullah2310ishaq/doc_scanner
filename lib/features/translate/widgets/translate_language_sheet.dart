@@ -55,7 +55,8 @@ class _TranslateLanguageSheet extends StatefulWidget {
   final ValueChanged<TranslateLanguage> onSelected;
 
   @override
-  State<_TranslateLanguageSheet> createState() => _TranslateLanguageSheetState();
+  State<_TranslateLanguageSheet> createState() =>
+      _TranslateLanguageSheetState();
 }
 
 class _TranslateLanguageSheetState extends State<_TranslateLanguageSheet> {
@@ -87,7 +88,9 @@ class _TranslateLanguageSheetState extends State<_TranslateLanguageSheet> {
     final filtered = _filteredLanguages;
     if (_query.trim().isNotEmpty) return filtered;
 
-    final recentCodes = _recentLanguages.map((language) => language.code).toSet();
+    final recentCodes = _recentLanguages
+        .map((language) => language.code)
+        .toSet();
     if (recentCodes.isEmpty) return filtered;
 
     return filtered
@@ -118,46 +121,65 @@ class _TranslateLanguageSheetState extends State<_TranslateLanguageSheet> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              // 1. Premium Grab Handle + Title Grouping
               Center(
-                child: Container(
-                  width: 40,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: AppColors.tagBorder,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 44,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        color: AppColors.tagBorder.withOpacity(0.6),
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                    Text(
+                      widget.title,
+                      style: const TextStyle(
+                        fontSize: 19,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                  ],
                 ),
               ),
-              const SizedBox(height: 16),
-              Text(
-                widget.title,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: _searchController,
-                onChanged: (value) => setState(() => _query = value),
-                decoration: InputDecoration(
-                  hintText: widget.searchHint,
-                  hintStyle: const TextStyle(
-                    color: AppColors.textSecondary,
-                    fontSize: 14,
+
+              // 2. Modern & Cleaner Search Box
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColors.scaffoldBackground,
+                  borderRadius: BorderRadius.circular(
+                    AppColors.translateCardRadius,
                   ),
-                  prefixIcon: const Icon(Icons.search, color: AppColors.textSecondary),
-                  filled: true,
-                  fillColor: AppColors.scaffoldBackground,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 12),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(AppColors.translateCardRadius),
-                    borderSide: BorderSide.none,
+                  border: Border.all(
+                    color: AppColors.translateCardBorder.withOpacity(0.4),
+                  ),
+                ),
+                child: TextField(
+                  controller: _searchController,
+                  onChanged: (value) => setState(() => _query = value),
+                  style: const TextStyle(fontSize: 15),
+                  decoration: InputDecoration(
+                    hintText: widget.searchHint,
+                    hintStyle: const TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 14,
+                    ),
+                    border: InputBorder.none,
+                    prefixIcon: const Icon(
+                      Icons.search,
+                      color: AppColors.textSecondary,
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 14),
                   ),
                 ),
               ),
               const SizedBox(height: 8),
+
               Expanded(
                 child: ListView(
                   controller: scrollController,
@@ -171,17 +193,39 @@ class _TranslateLanguageSheetState extends State<_TranslateLanguageSheet> {
                           onTap: () => _selectLanguage(language),
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      const Divider(height: 1, color: AppColors.translateCardBorder),
-                      const SizedBox(height: 8),
-                    ],
-                    if (listLanguages.isEmpty && recentLanguages.isEmpty)
+
+                      // 3. Polished Soft Divider
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 24),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Divider(
+                          height: 1,
+                          thickness: 0.6,
+                          color: AppColors.translateCardBorder.withOpacity(0.5),
+                        ),
+                      ),
+                    ],
+
+                    if (listLanguages.isEmpty && recentLanguages.isEmpty)
+                      // 6. Nicer & Cleaner Empty State
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 32),
                         child: Center(
-                          child: Text(
-                            widget.emptyLabel,
-                            style: const TextStyle(color: AppColors.textSecondary),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.language,
+                                size: 34,
+                                color: AppColors.textSecondary.withOpacity(0.5),
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                widget.emptyLabel,
+                                style: const TextStyle(
+                                  color: AppColors.textSecondary,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       )
@@ -204,6 +248,7 @@ class _TranslateLanguageSheetState extends State<_TranslateLanguageSheet> {
   }
 }
 
+// 4. Elegant Capitalized Section Header
 class _SectionHeader extends StatelessWidget {
   const _SectionHeader({required this.label});
 
@@ -212,12 +257,13 @@ class _SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(4, 8, 4, 4),
+      padding: const EdgeInsets.fromLTRB(6, 10, 6, 6),
       child: Text(
-        label,
+        label.toUpperCase(),
         style: const TextStyle(
-          fontSize: 13,
+          fontSize: 12,
           fontWeight: FontWeight.w600,
+          letterSpacing: 0.8,
           color: AppColors.textSecondary,
         ),
       ),
@@ -225,6 +271,7 @@ class _SectionHeader extends StatelessWidget {
   }
 }
 
+// 5. Modern & Breathable Language Tile
 class _LanguageTile extends StatelessWidget {
   const _LanguageTile({
     required this.language,
@@ -240,18 +287,23 @@ class _LanguageTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: onTap,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 4),
+      dense: true,
+      visualDensity: const VisualDensity(vertical: -1),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 6),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       title: Text(
         language.name,
         style: TextStyle(
           fontSize: 15,
-          fontWeight: isSelected ? FontWeight.w700 : FontWeight.w400,
+          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
           color: AppColors.textPrimary,
         ),
       ),
       trailing: isSelected
-          ? const Icon(Icons.check, color: AppColors.textLink, size: 22)
-          : null,
+          ? const Icon(Icons.check_circle, color: AppColors.textLink, size: 20)
+          : const SizedBox(
+              width: 20,
+            ), // Kept consistent space for alignment stability
     );
   }
 }

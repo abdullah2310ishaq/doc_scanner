@@ -1,0 +1,4 @@
+enum TranslateExportScope {
+  selectedText,
+  completeFile,
+}

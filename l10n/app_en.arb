@@ -125,6 +125,12 @@
   "translateSavePdf": "Save as PDF",
   "translateSavePng": "Save as PNG",
   "translateSaveComingSoon": "Save will be available soon",
+  "translateDownloadOptionTitle": "Choose Download Option",
+  "translateDownloadOptionSubtitle": "Select what you want to download",
+  "translateDownloadSelectedTextTitle": "Download selected text",
+  "translateDownloadSelectedTextDescription": "Download only the selected text",
+  "translateDownloadCompleteFileTitle": "Download complete file",
+  "translateDownloadCompleteFileDescription": "Download the entire file",
 
   "liveTitle": "Live translate",
   "liveStart": "Start camera",
