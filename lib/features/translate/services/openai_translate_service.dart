@@ -70,8 +70,9 @@ class OpenAiTranslateService implements TranslateService {
                 {
                   'role': 'user',
                   'content':
-                      'Translate the following text from language code "$sourceCode" '
-                      'to ${targetLanguage.name} (${targetLanguage.code}):\n\n$trimmed',
+                      'Detect the source language of the text below, then translate it '
+                      'into ${targetLanguage.name} (${targetLanguage.code}). '
+                      'Preserve meaning, names, and line breaks.\n\n$trimmed',
                 },
               ],
             }),

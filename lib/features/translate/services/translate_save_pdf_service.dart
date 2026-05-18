@@ -6,6 +6,7 @@ import 'package:pdf/widgets.dart' as pw;
 import '../models/translate_export_data.dart';
 import '../models/translate_export_scope.dart';
 import 'translate_export_storage.dart';
+import 'translate_pdf_fonts.dart';
 
 class TranslateSavePdfService {
   Future<Uint8List> buildBytes({
@@ -17,6 +18,7 @@ class TranslateSavePdfService {
       throw StateError('Nothing to export');
     }
 
+    await TranslatePdfFonts.ensureLoaded();
     return Uint8List.fromList(await _buildPdfBytes(data: data, scope: scope));
   }
 
@@ -33,18 +35,16 @@ class TranslateSavePdfService {
     required TranslateExportData data,
     required TranslateExportScope scope,
   }) async {
-    final doc = pw.Document();
+    const primaryColor = PdfColor.fromInt(0xFF1E3A8A);
+    const secondaryColor = PdfColor.fromInt(0xFF475569);
+    const dividerColor = PdfColor.fromInt(0xFFE2E8F0);
 
-    // Define premium color palette
-    const primaryColor = PdfColor.fromInt(0xFF1E3A8A); // Deep Premium Blue
-    const secondaryColor = PdfColor.fromInt(0xFF475569); // Elegant Slate
-    const dividerColor = PdfColor.fromInt(0xFFE2E8F0); // Subtle Border Gray
+    final doc = pw.Document();
 
     doc.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
         margin: const pw.EdgeInsets.symmetric(horizontal: 48, vertical: 48),
-        // Premium touch: Add a thin accent bar and page numbers dynamically
         header: (context) => pw.Container(
           alignment: pw.Alignment.topRight,
           margin: const pw.EdgeInsets.only(bottom: 24),
@@ -55,7 +55,11 @@ class TranslateSavePdfService {
           margin: const pw.EdgeInsets.only(top: 24),
           child: pw.Text(
             'Page ${context.pageNumber} of ${context.pagesCount}',
-            style: const pw.TextStyle(fontSize: 10, color: secondaryColor),
+            style: pw.TextStyle(
+              fontSize: 10,
+              color: secondaryColor,
+              font: TranslatePdfFonts.bodyStyle('Page').font,
+            ),
           ),
         ),
         build: (context) {
@@ -66,12 +70,11 @@ class TranslateSavePdfService {
                 primaryColor: primaryColor,
               ),
               pw.SizedBox(height: 16),
-              _buildBodyText(data.sourceText),
+              _buildBodyText(data.selectedTextOnly),
             ],
             TranslateExportScope.completeFile => _completeFileWidgets(
               data,
               primaryColor,
-              secondaryColor,
               dividerColor,
             ),
           };
@@ -85,13 +88,12 @@ class TranslateSavePdfService {
   List<pw.Widget> _completeFileWidgets(
     TranslateExportData data,
     PdfColor primaryColor,
-    PdfColor secondaryColor,
     PdfColor dividerColor,
   ) {
     final widgets = <pw.Widget>[
       _buildHeader(title: data.selectedTextLabel, primaryColor: primaryColor),
       pw.SizedBox(height: 16),
-      _buildBodyText(data.sourceText),
+      _buildBodyText(data.sourceText.trim()),
     ];
 
     if (data.hasTranslatedText) {
@@ -101,7 +103,6 @@ class TranslateSavePdfService {
 
       widgets.addAll([
         pw.SizedBox(height: 32),
-        // Premium divider line separating sections
         pw.Divider(color: dividerColor, height: 1, thickness: 1),
         pw.SizedBox(height: 24),
         _buildHeader(title: title, primaryColor: primaryColor),
@@ -113,34 +114,18 @@ class TranslateSavePdfService {
     return widgets;
   }
 
-  // Reusable header component for consistency
   pw.Widget _buildHeader({
     required String title,
     required PdfColor primaryColor,
   }) {
     return pw.Text(
       title.toUpperCase(),
-      style: pw.TextStyle(
-        fontSize: 12,
-        letterSpacing: 1.5,
-        fontWeight: pw.FontWeight.bold,
-        color: primaryColor,
-      ),
+      style: TranslatePdfFonts.headerStyle(title).copyWith(color: primaryColor),
     );
   }
 
-  // Reusable text body component optimized for readability
   pw.Widget _buildBodyText(String text) {
-    return pw.Text(
-      text,
-      style: const pw.TextStyle(
-        fontSize: 12,
-        lineSpacing: 6, // Generous line spacing for premium Editorial feel
-        color: PdfColor.fromInt(
-          0xFF1F2937,
-        ), // Dark Charcoal instead of harsh solid black
-      ),
-    );
+    return pw.Text(text, style: TranslatePdfFonts.bodyStyle(text));
   }
 
   String _fileName(TranslateExportScope scope) {

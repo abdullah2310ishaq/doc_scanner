@@ -126,6 +126,11 @@ class TranslateResultScreen extends StatelessWidget {
       return;
     }
 
+    if (scope == TranslateExportScope.completeFile && !provider.hasTranslation) {
+      AppToast.show(context, l10n.translateExportNeedsTranslation);
+      return;
+    }
+
     final needsPermission = await PermissionService().needsStoragePermission();
     if (!context.mounted) return;
 

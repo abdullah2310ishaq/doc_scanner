@@ -20,6 +20,7 @@ class TranslateExportData {
     return text != null && text.isNotEmpty;
   }
 
+  /// Original OCR / selected text from the scan.
   String get selectedTextOnly => sourceText.trim();
 
   String textForScope(TranslateExportScope scope) {
