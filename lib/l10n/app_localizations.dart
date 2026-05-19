@@ -100,7 +100,7 @@ abstract class AppLocalizations {
   /// **'Doc Scanner'**
   String get appTitle;
 
-  /// No description provided for @commonOk.
+  /// OK button text
   ///
   /// In en, this message translates to:
   /// **'OK'**
@@ -1245,6 +1245,336 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Preparing AI Chat'**
   String get chatbotStepPreparingChat;
+
+  /// No description provided for @chatbotHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get chatbotHistoryTitle;
+
+  /// No description provided for @chatbotNoConversationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No conversations yet'**
+  String get chatbotNoConversationsTitle;
+
+  /// No description provided for @chatbotNoConversationsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload a PDF to start chatting with your AI assistant.'**
+  String get chatbotNoConversationsSubtitle;
+
+  /// No description provided for @chatbotUploadPdfButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload a PDF'**
+  String get chatbotUploadPdfButton;
+
+  /// No description provided for @chatbotDocumentReadyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Document Ready'**
+  String get chatbotDocumentReadyTitle;
+
+  /// No description provided for @chatbotDocumentReadySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your PDF has been analyzed. Here\'s a quick summary.'**
+  String get chatbotDocumentReadySubtitle;
+
+  /// No description provided for @chatbotCurrentSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Summary'**
+  String get chatbotCurrentSummary;
+
+  /// No description provided for @chatbotStartChatting.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Chatting'**
+  String get chatbotStartChatting;
+
+  /// No description provided for @chatbotChatGreeting.
+  ///
+  /// In en, this message translates to:
+  /// **'👋🏻 Hi! I\'m your AI assistant. Ask me anything about this PDF and I\'ll help you.'**
+  String get chatbotChatGreeting;
+
+  /// No description provided for @chatbotChatYouCanAsk.
+  ///
+  /// In en, this message translates to:
+  /// **'You can ask me:'**
+  String get chatbotChatYouCanAsk;
+
+  /// No description provided for @chatbotChatPromptSummarize.
+  ///
+  /// In en, this message translates to:
+  /// **'Summarize this document'**
+  String get chatbotChatPromptSummarize;
+
+  /// No description provided for @chatbotChatPromptHighlights.
+  ///
+  /// In en, this message translates to:
+  /// **'What are the key highlights?'**
+  String get chatbotChatPromptHighlights;
+
+  /// No description provided for @chatbotChatPromptFinancial.
+  ///
+  /// In en, this message translates to:
+  /// **'Show me financial data'**
+  String get chatbotChatPromptFinancial;
+
+  /// No description provided for @chatbotChatPromptDates.
+  ///
+  /// In en, this message translates to:
+  /// **'Extract important dates'**
+  String get chatbotChatPromptDates;
+
+  /// No description provided for @chatbotChatInputHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask about this PDF...'**
+  String get chatbotChatInputHint;
+
+  /// No description provided for @chatbotDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete chat?'**
+  String get chatbotDeleteTitle;
+
+  /// No description provided for @chatbotDeleteMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This will remove the chat and PDF from your history. This cannot be undone.'**
+  String get chatbotDeleteMessage;
+
+  /// No description provided for @chatbotRenameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename PDF'**
+  String get chatbotRenameTitle;
+
+  /// No description provided for @chatbotRenameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a name'**
+  String get chatbotRenameHint;
+
+  /// No description provided for @chatbotAnalyzeFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not analyze this PDF. Please try again.'**
+  String get chatbotAnalyzeFailed;
+
+  /// No description provided for @chatbotChatFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not get a response. Try again.'**
+  String get chatbotChatFailed;
+
+  /// No description provided for @errorChatbotPdfEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No text found in this PDF'**
+  String get errorChatbotPdfEmpty;
+
+  /// No description provided for @pdfAssistantTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF Assistant'**
+  String get pdfAssistantTitle;
+
+  /// No description provided for @pdfAssistantSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF Assistant'**
+  String get pdfAssistantSheetTitle;
+
+  /// No description provided for @pdfAssistantSheetSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Translate your PDF to any language'**
+  String get pdfAssistantSheetSubtitle;
+
+  /// No description provided for @pdfAssistantChoosePdfTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose PDF file'**
+  String get pdfAssistantChoosePdfTitle;
+
+  /// No description provided for @pdfAssistantChoosePdfDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse and select PDF from your device'**
+  String get pdfAssistantChoosePdfDescription;
+
+  /// No description provided for @pdfAssistantLinkTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add PDF from link'**
+  String get pdfAssistantLinkTitle;
+
+  /// No description provided for @pdfAssistantLinkHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste PDF URL'**
+  String get pdfAssistantLinkHint;
+
+  /// No description provided for @pdfAssistantLinkButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Download PDF'**
+  String get pdfAssistantLinkButton;
+
+  /// No description provided for @pdfAssistantTranslateTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Translate To'**
+  String get pdfAssistantTranslateTo;
+
+  /// No description provided for @pdfAssistantStartProcessing.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Processing'**
+  String get pdfAssistantStartProcessing;
+
+  /// No description provided for @pdfAssistantNoFileSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'No file selected'**
+  String get pdfAssistantNoFileSelected;
+
+  /// No description provided for @pdfAssistantSelectLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a target language'**
+  String get pdfAssistantSelectLanguage;
+
+  /// No description provided for @pdfAssistantProcessingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing your PDF…'**
+  String get pdfAssistantProcessingTitle;
+
+  /// No description provided for @pdfAssistantProcessingSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Please wait.'**
+  String get pdfAssistantProcessingSubtitle;
+
+  /// No description provided for @pdfAssistantStepExtracting.
+  ///
+  /// In en, this message translates to:
+  /// **'Extracting text…'**
+  String get pdfAssistantStepExtracting;
+
+  /// No description provided for @pdfAssistantStepTranslating.
+  ///
+  /// In en, this message translates to:
+  /// **'Translating content…'**
+  String get pdfAssistantStepTranslating;
+
+  /// No description provided for @pdfAssistantStepGeneratingPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating translated PDF…'**
+  String get pdfAssistantStepGeneratingPdf;
+
+  /// No description provided for @pdfAssistantStepFinalizing.
+  ///
+  /// In en, this message translates to:
+  /// **'Finalizing…'**
+  String get pdfAssistantStepFinalizing;
+
+  /// No description provided for @pdfAssistantResultTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Results'**
+  String get pdfAssistantResultTitle;
+
+  /// No description provided for @pdfAssistantTranslatedPdfTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Translated PDF'**
+  String get pdfAssistantTranslatedPdfTitle;
+
+  /// No description provided for @pdfAssistantTranslatedPdfDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Original layout with translated text overlay'**
+  String get pdfAssistantTranslatedPdfDescription;
+
+  /// No description provided for @pdfAssistantExtractedTextTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Extracted translated text'**
+  String get pdfAssistantExtractedTextTitle;
+
+  /// No description provided for @pdfAssistantExtractedTextDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Simple A4 text document'**
+  String get pdfAssistantExtractedTextDescription;
+
+  /// No description provided for @pdfAssistantActionOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get pdfAssistantActionOpen;
+
+  /// No description provided for @pdfAssistantActionDownload.
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get pdfAssistantActionDownload;
+
+  /// No description provided for @pdfAssistantDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete results?'**
+  String get pdfAssistantDeleteTitle;
+
+  /// No description provided for @pdfAssistantDeleteMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This will remove the translated files from your device.'**
+  String get pdfAssistantDeleteMessage;
+
+  /// No description provided for @pdfAssistantDownloadSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved to Downloads'**
+  String get pdfAssistantDownloadSuccess;
+
+  /// No description provided for @pdfAssistantOpenFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open file'**
+  String get pdfAssistantOpenFailed;
+
+  /// No description provided for @pdfAssistantProcessFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not process this PDF'**
+  String get pdfAssistantProcessFailed;
+
+  /// No description provided for @errorPdfAssistantPickFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the selected PDF'**
+  String get errorPdfAssistantPickFailed;
+
+  /// No description provided for @errorPdfAssistantLinkFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not download PDF from this link'**
+  String get errorPdfAssistantLinkFailed;
+
+  /// No description provided for @errorPdfAssistantPdfEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No text found in this PDF'**
+  String get errorPdfAssistantPdfEmpty;
 }
 
 class _AppLocalizationsDelegate

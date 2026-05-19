@@ -4,6 +4,7 @@ import '../../../core/constants/home_assets.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../chatbot/screens/upload_new_pdf.dart';
+import '../../pdf_assistant/widgets/pdf_assistant_source_sheet.dart';
 import '../../ocr/ocr_flow.dart';
 import '../../ocr/screens/live_ocr_camera_screen.dart';
 import '../../ocr/widgets/ocr_input_method_sheet.dart';
@@ -110,7 +111,7 @@ class HomeScreen extends StatelessWidget {
                         subtitle: l10n.homeFeaturePdfSubtitle,
                         backgroundColor: AppColors.cardPdfBg,
                         iconAsset: HomeAssets.pdf,
-                        onTap: () {},
+                        onTap: () => showPdfAssistantSourceSheet(scaffoldContext),
                       ),
                       const SizedBox(height: 10),
                       HomeFeatureCard(

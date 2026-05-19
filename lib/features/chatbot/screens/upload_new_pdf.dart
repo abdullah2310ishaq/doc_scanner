@@ -32,7 +32,7 @@ class _UploadNewPdfScreenState extends State<UploadNewPdfScreen> {
     showChatbotUploadOptionsSheet(
       context,
       onChoosePdf: _pickPdfFromDevice,
-      onRecentFiles: () {},
+      onRecentFiles: () => HistoryScreen.open(context),
     );
   }
 

@@ -611,4 +611,178 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chatbotStepPreparingChat => 'Preparing AI Chat';
+
+  @override
+  String get chatbotHistoryTitle => 'History';
+
+  @override
+  String get chatbotNoConversationsTitle => 'No conversations yet';
+
+  @override
+  String get chatbotNoConversationsSubtitle =>
+      'Upload a PDF to start chatting with your AI assistant.';
+
+  @override
+  String get chatbotUploadPdfButton => 'Upload a PDF';
+
+  @override
+  String get chatbotDocumentReadyTitle => 'Document Ready';
+
+  @override
+  String get chatbotDocumentReadySubtitle =>
+      'Your PDF has been analyzed. Here\'s a quick summary.';
+
+  @override
+  String get chatbotCurrentSummary => 'Current Summary';
+
+  @override
+  String get chatbotStartChatting => 'Start Chatting';
+
+  @override
+  String get chatbotChatGreeting =>
+      '👋🏻 Hi! I\'m your AI assistant. Ask me anything about this PDF and I\'ll help you.';
+
+  @override
+  String get chatbotChatYouCanAsk => 'You can ask me:';
+
+  @override
+  String get chatbotChatPromptSummarize => 'Summarize this document';
+
+  @override
+  String get chatbotChatPromptHighlights => 'What are the key highlights?';
+
+  @override
+  String get chatbotChatPromptFinancial => 'Show me financial data';
+
+  @override
+  String get chatbotChatPromptDates => 'Extract important dates';
+
+  @override
+  String get chatbotChatInputHint => 'Ask about this PDF...';
+
+  @override
+  String get chatbotDeleteTitle => 'Delete chat?';
+
+  @override
+  String get chatbotDeleteMessage =>
+      'This will remove the chat and PDF from your history. This cannot be undone.';
+
+  @override
+  String get chatbotRenameTitle => 'Rename PDF';
+
+  @override
+  String get chatbotRenameHint => 'Enter a name';
+
+  @override
+  String get chatbotAnalyzeFailed =>
+      'Could not analyze this PDF. Please try again.';
+
+  @override
+  String get chatbotChatFailed => 'Could not get a response. Try again.';
+
+  @override
+  String get errorChatbotPdfEmpty => 'No text found in this PDF';
+
+  @override
+  String get pdfAssistantTitle => 'PDF Assistant';
+
+  @override
+  String get pdfAssistantSheetTitle => 'PDF Assistant';
+
+  @override
+  String get pdfAssistantSheetSubtitle => 'Translate your PDF to any language';
+
+  @override
+  String get pdfAssistantChoosePdfTitle => 'Choose PDF file';
+
+  @override
+  String get pdfAssistantChoosePdfDescription =>
+      'Browse and select PDF from your device';
+
+  @override
+  String get pdfAssistantLinkTitle => 'Add PDF from link';
+
+  @override
+  String get pdfAssistantLinkHint => 'Paste PDF URL';
+
+  @override
+  String get pdfAssistantLinkButton => 'Download PDF';
+
+  @override
+  String get pdfAssistantTranslateTo => 'Translate To';
+
+  @override
+  String get pdfAssistantStartProcessing => 'Start Processing';
+
+  @override
+  String get pdfAssistantNoFileSelected => 'No file selected';
+
+  @override
+  String get pdfAssistantSelectLanguage => 'Please select a target language';
+
+  @override
+  String get pdfAssistantProcessingTitle => 'Processing your PDF…';
+
+  @override
+  String get pdfAssistantProcessingSubtitle => 'Please wait.';
+
+  @override
+  String get pdfAssistantStepExtracting => 'Extracting text…';
+
+  @override
+  String get pdfAssistantStepTranslating => 'Translating content…';
+
+  @override
+  String get pdfAssistantStepGeneratingPdf => 'Generating translated PDF…';
+
+  @override
+  String get pdfAssistantStepFinalizing => 'Finalizing…';
+
+  @override
+  String get pdfAssistantResultTitle => 'Results';
+
+  @override
+  String get pdfAssistantTranslatedPdfTitle => 'Translated PDF';
+
+  @override
+  String get pdfAssistantTranslatedPdfDescription =>
+      'Original layout with translated text overlay';
+
+  @override
+  String get pdfAssistantExtractedTextTitle => 'Extracted translated text';
+
+  @override
+  String get pdfAssistantExtractedTextDescription => 'Simple A4 text document';
+
+  @override
+  String get pdfAssistantActionOpen => 'Open';
+
+  @override
+  String get pdfAssistantActionDownload => 'Download';
+
+  @override
+  String get pdfAssistantDeleteTitle => 'Delete results?';
+
+  @override
+  String get pdfAssistantDeleteMessage =>
+      'This will remove the translated files from your device.';
+
+  @override
+  String get pdfAssistantDownloadSuccess => 'Saved to Downloads';
+
+  @override
+  String get pdfAssistantOpenFailed => 'Could not open file';
+
+  @override
+  String get pdfAssistantProcessFailed => 'Could not process this PDF';
+
+  @override
+  String get errorPdfAssistantPickFailed => 'Could not open the selected PDF';
+
+  @override
+  String get errorPdfAssistantLinkFailed =>
+      'Could not download PDF from this link';
+
+  @override
+  String get errorPdfAssistantPdfEmpty => 'No text found in this PDF';
 }
