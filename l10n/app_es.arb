@@ -266,6 +266,12 @@
   "errorPdfAssistantPickFailed": "No se pudo abrir el PDF seleccionado",
   "errorPdfAssistantLinkFailed": "No se pudo descargar el PDF de este enlace",
   "errorPdfAssistantPdfEmpty": "No se encontró texto en este PDF",
+  "pdfAssistantLinkDescription": "Pega un enlace de PDF para subir directamente",
+  "pdfAssistantRemoveTitle": "Eliminar PDF",
+  "pdfAssistantRemoveWarning": "Esto eliminará el PDF de tu dispositivo.",
+  "pdfAssistantUploadPdf": "Subir PDF",
+  "cancel": "Cancelar",
+  "remove": "Eliminar",
 
   "commonNext": "Siguiente",
   "commonSkip": "Saltar",

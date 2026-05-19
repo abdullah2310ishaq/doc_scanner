@@ -282,6 +282,12 @@
     "errorPdfAssistantPickFailed": "선택 실패",
     "errorPdfAssistantLinkFailed": "링크 오류",
     "errorPdfAssistantPdfEmpty": "빈 PDF",
+    "pdfAssistantLinkDescription": "PDF 링크를 붙여넣어 직접 업로드하세요",
+    "pdfAssistantRemoveTitle": "PDF 삭제",
+    "pdfAssistantRemoveWarning": "기기에서 PDF가 삭제됩니다.",
+    "pdfAssistantUploadPdf": "PDF 업로드",
+    "cancel": "취소",
+    "remove": "삭제",
   
     "commonNext": "다음",
     "commonSkip": "건너뛰기",

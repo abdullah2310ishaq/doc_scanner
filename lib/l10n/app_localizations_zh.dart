@@ -681,8 +681,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get pdfAssistantLinkTitle => '添加PDF链接';
 
   @override
-  String get pdfAssistantLinkDescription =>
-      'Paste a PDF link to upload directly';
+  String get pdfAssistantLinkDescription => '粘贴PDF链接直接上传';
 
   @override
   String get pdfAssistantLinkHint => '粘贴URL';
@@ -764,6 +763,21 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get errorPdfAssistantPdfEmpty => '空PDF';
+
+  @override
+  String get pdfAssistantRemoveTitle => '移除 PDF';
+
+  @override
+  String get pdfAssistantRemoveWarning => '这将从您的设备中移除该 PDF。';
+
+  @override
+  String get pdfAssistantUploadPdf => '上传 PDF';
+
+  @override
+  String get cancel => '取消';
+
+  @override
+  String get remove => '移除';
 
   @override
   String get commonNext => '下一步';

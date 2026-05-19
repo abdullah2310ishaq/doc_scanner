@@ -282,6 +282,12 @@
   "errorPdfAssistantPickFailed": "Auswahl fehlgeschlagen",
   "errorPdfAssistantLinkFailed": "Link ungültig",
   "errorPdfAssistantPdfEmpty": "Leeres PDF",
+  "pdfAssistantLinkDescription": "PDF-Link einfügen zum direkten Hochladen",
+  "pdfAssistantRemoveTitle": "PDF entfernen",
+  "pdfAssistantRemoveWarning": "Dadurch wird das PDF von Ihrem Gerät entfernt.",
+  "pdfAssistantUploadPdf": "PDF hochladen",
+  "cancel": "Abbrechen",
+  "remove": "Entfernen",
 
   "commonNext": "Weiter",
   "commonSkip": "Überspringen",

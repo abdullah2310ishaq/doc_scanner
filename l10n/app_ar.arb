@@ -282,6 +282,12 @@
     "errorPdfAssistantPickFailed": "فشل الاختيار",
     "errorPdfAssistantLinkFailed": "رابط غير صالح",
     "errorPdfAssistantPdfEmpty": "ملف PDF فارغ",
+    "pdfAssistantLinkDescription": "الصق رابط PDF للتحميل المباشر",
+    "pdfAssistantRemoveTitle": "إزالة ملف PDF",
+    "pdfAssistantRemoveWarning": "سيؤدي هذا إلى إزالة ملف PDF من جهازك.",
+    "pdfAssistantUploadPdf": "تحميل ملف PDF",
+    "cancel": "إلغاء",
+    "remove": "إزالة",
   
     "commonNext": "التالي",
     "commonSkip": "تخطي",

@@ -791,6 +791,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorPdfAssistantPdfEmpty => 'No text found in this PDF';
 
   @override
+  String get pdfAssistantRemoveTitle => 'Remove PDF';
+
+  @override
+  String get pdfAssistantRemoveWarning =>
+      'This will remove the PDF from your device.';
+
+  @override
+  String get pdfAssistantUploadPdf => 'Upload PDF';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get remove => 'Remove';
+
+  @override
   String get commonNext => 'Next';
 
   @override

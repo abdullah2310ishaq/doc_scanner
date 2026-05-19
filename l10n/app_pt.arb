@@ -282,6 +282,12 @@
     "errorPdfAssistantPickFailed": "Falha ao selecionar",
     "errorPdfAssistantLinkFailed": "Link inválido",
     "errorPdfAssistantPdfEmpty": "PDF vazio",
+    "pdfAssistantLinkDescription": "Cole um link de PDF para enviar diretamente",
+    "pdfAssistantRemoveTitle": "Remover PDF",
+    "pdfAssistantRemoveWarning": "Isso removerá o PDF do seu dispositivo.",
+    "pdfAssistantUploadPdf": "Enviar PDF",
+    "cancel": "Cancelar",
+    "remove": "Remover",
   
     "commonNext": "Próximo",
     "commonSkip": "Pular",

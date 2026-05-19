@@ -681,8 +681,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get pdfAssistantLinkTitle => 'PDFリンク追加';
 
   @override
-  String get pdfAssistantLinkDescription =>
-      'Paste a PDF link to upload directly';
+  String get pdfAssistantLinkDescription => 'PDFリンクを貼り付けて直接アップロード';
 
   @override
   String get pdfAssistantLinkHint => 'URL貼り付け';
@@ -764,6 +763,21 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get errorPdfAssistantPdfEmpty => '空のPDF';
+
+  @override
+  String get pdfAssistantRemoveTitle => 'PDFを削除';
+
+  @override
+  String get pdfAssistantRemoveWarning => 'デバイスからPDFが削除されます。';
+
+  @override
+  String get pdfAssistantUploadPdf => 'PDFをアップロード';
+
+  @override
+  String get cancel => 'キャンセル';
+
+  @override
+  String get remove => '削除';
 
   @override
   String get commonNext => '次へ';

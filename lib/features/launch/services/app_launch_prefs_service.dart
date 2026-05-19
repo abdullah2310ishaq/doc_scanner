@@ -2,7 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/constants/prefs_keys.dart';
 
-/// Reads and writes first-launch and onboarding flags.
+
 class AppLaunchPrefsService {
   Future<SharedPreferences> get _prefs async =>
       SharedPreferences.getInstance();

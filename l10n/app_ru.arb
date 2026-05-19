@@ -282,6 +282,12 @@
     "errorPdfAssistantPickFailed": "Ошибка выбора",
     "errorPdfAssistantLinkFailed": "Неверная ссылка",
     "errorPdfAssistantPdfEmpty": "Пустой PDF",
+    "pdfAssistantLinkDescription": "Вставьте ссылку на PDF для прямой загрузки",
+    "pdfAssistantRemoveTitle": "Удалить PDF",
+    "pdfAssistantRemoveWarning": "Это приведет к удалению PDF с вашего устройства.",
+    "pdfAssistantUploadPdf": "Загрузить PDF",
+    "cancel": "Отмена",
+    "remove": "Удалить",
   
     "commonNext": "Далее",
     "commonSkip": "Пропустить",

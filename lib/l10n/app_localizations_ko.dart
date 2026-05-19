@@ -681,8 +681,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get pdfAssistantLinkTitle => 'PDF 링크 추가';
 
   @override
-  String get pdfAssistantLinkDescription =>
-      'Paste a PDF link to upload directly';
+  String get pdfAssistantLinkDescription => 'PDF 링크를 붙여넣어 직접 업로드하세요';
 
   @override
   String get pdfAssistantLinkHint => 'URL 붙여넣기';
@@ -764,6 +763,21 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get errorPdfAssistantPdfEmpty => '빈 PDF';
+
+  @override
+  String get pdfAssistantRemoveTitle => 'PDF 삭제';
+
+  @override
+  String get pdfAssistantRemoveWarning => '기기에서 PDF가 삭제됩니다.';
+
+  @override
+  String get pdfAssistantUploadPdf => 'PDF 업로드';
+
+  @override
+  String get cancel => '취소';
+
+  @override
+  String get remove => '삭제';
 
   @override
   String get commonNext => '다음';

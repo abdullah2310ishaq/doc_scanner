@@ -1,4 +1,4 @@
-/// SharedPreferences keys for app launch and onboarding.
+
 abstract final class PrefsKeys {
   static const String isFirstLaunch = 'isFirstLaunch';
   static const String hasCompletedOnboarding = 'hasCompletedOnboarding';

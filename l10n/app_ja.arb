@@ -282,6 +282,12 @@
     "errorPdfAssistantPickFailed": "選択失敗",
     "errorPdfAssistantLinkFailed": "リンクエラー",
     "errorPdfAssistantPdfEmpty": "空のPDF",
+    "pdfAssistantLinkDescription": "PDFリンクを貼り付けて直接アップロード",
+    "pdfAssistantRemoveTitle": "PDFを削除",
+    "pdfAssistantRemoveWarning": "デバイスからPDFが削除されます。",
+    "pdfAssistantUploadPdf": "PDFをアップロード",
+    "cancel": "キャンセル",
+    "remove": "削除",
   
     "commonNext": "次へ",
     "commonSkip": "スキップ",

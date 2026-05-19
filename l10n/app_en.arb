@@ -285,6 +285,12 @@
   "errorPdfAssistantLinkFailed": "Could not download PDF from this link",
   "errorPdfAssistantPdfEmpty": "No text found in this PDF",
 
+  "pdfAssistantRemoveTitle": "Remove PDF",
+  "pdfAssistantRemoveWarning": "This will remove the PDF from your device.",
+  "pdfAssistantUploadPdf": "Upload PDF",
+  "cancel": "Cancel",
+  "remove": "Remove",
+
   "commonNext": "Next",
   "commonSkip": "Skip",
   "commonContinue": "Continue",

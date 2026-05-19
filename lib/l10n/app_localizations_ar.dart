@@ -682,8 +682,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pdfAssistantLinkTitle => 'إضافة رابط PDF';
 
   @override
-  String get pdfAssistantLinkDescription =>
-      'Paste a PDF link to upload directly';
+  String get pdfAssistantLinkDescription => 'الصق رابط PDF للتحميل المباشر';
 
   @override
   String get pdfAssistantLinkHint => 'الصق الرابط';
@@ -765,6 +764,22 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get errorPdfAssistantPdfEmpty => 'ملف PDF فارغ';
+
+  @override
+  String get pdfAssistantRemoveTitle => 'إزالة ملف PDF';
+
+  @override
+  String get pdfAssistantRemoveWarning =>
+      'سيؤدي هذا إلى إزالة ملف PDF من جهازك.';
+
+  @override
+  String get pdfAssistantUploadPdf => 'تحميل ملف PDF';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get remove => 'إزالة';
 
   @override
   String get commonNext => 'التالي';

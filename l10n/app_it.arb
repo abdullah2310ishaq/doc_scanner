@@ -282,6 +282,12 @@
   "errorPdfAssistantPickFailed": "Selezione fallita",
   "errorPdfAssistantLinkFailed": "Link non valido",
   "errorPdfAssistantPdfEmpty": "PDF vuoto",
+  "pdfAssistantLinkDescription": "Incolla un link PDF per caricarlo direttamente",
+  "pdfAssistantRemoveTitle": "Rimuovi PDF",
+  "pdfAssistantRemoveWarning": "Questo rimuoverà il PDF dal tuo dispositivo.",
+  "pdfAssistantUploadPdf": "Carica PDF",
+  "cancel": "Annulla",
+  "remove": "Rimuovi",
 
   "commonNext": "Avanti",
   "commonSkip": "Salta",

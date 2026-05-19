@@ -686,7 +686,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get pdfAssistantLinkDescription =>
-      'Paste a PDF link to upload directly';
+      'Incolla un link PDF per caricarlo direttamente';
 
   @override
   String get pdfAssistantLinkHint => 'Incolla URL';
@@ -768,6 +768,22 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get errorPdfAssistantPdfEmpty => 'PDF vuoto';
+
+  @override
+  String get pdfAssistantRemoveTitle => 'Rimuovi PDF';
+
+  @override
+  String get pdfAssistantRemoveWarning =>
+      'Questo rimuoverà il PDF dal tuo dispositivo.';
+
+  @override
+  String get pdfAssistantUploadPdf => 'Carica PDF';
+
+  @override
+  String get cancel => 'Annulla';
+
+  @override
+  String get remove => 'Rimuovi';
 
   @override
   String get commonNext => 'Avanti';

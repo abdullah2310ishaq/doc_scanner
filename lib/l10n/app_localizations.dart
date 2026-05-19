@@ -1604,6 +1604,36 @@ abstract class AppLocalizations {
   /// **'No text found in this PDF'**
   String get errorPdfAssistantPdfEmpty;
 
+  /// No description provided for @pdfAssistantRemoveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove PDF'**
+  String get pdfAssistantRemoveTitle;
+
+  /// No description provided for @pdfAssistantRemoveWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'This will remove the PDF from your device.'**
+  String get pdfAssistantRemoveWarning;
+
+  /// No description provided for @pdfAssistantUploadPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload PDF'**
+  String get pdfAssistantUploadPdf;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
+
   /// No description provided for @commonNext.
   ///
   /// In en, this message translates to:

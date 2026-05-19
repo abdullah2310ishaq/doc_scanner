@@ -282,6 +282,12 @@
     "errorPdfAssistantPickFailed": "选择失败",
     "errorPdfAssistantLinkFailed": "链接无效",
     "errorPdfAssistantPdfEmpty": "空PDF",
+    "pdfAssistantLinkDescription": "粘贴PDF链接直接上传",
+    "pdfAssistantRemoveTitle": "移除 PDF",
+    "pdfAssistantRemoveWarning": "这将从您的设备中移除该 PDF。",
+    "pdfAssistantUploadPdf": "上传 PDF",
+    "cancel": "取消",
+    "remove": "移除",
   
     "commonNext": "下一步",
     "commonSkip": "跳过",
