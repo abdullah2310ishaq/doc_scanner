@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import 'core/navigation/app_navigator.dart';
@@ -16,25 +17,32 @@ class DocScannerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<LocaleService>(
       builder: (context, localeService, _) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          navigatorKey: appNavigatorKey,
-          locale: localeService.locale,
-          onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
-          theme: AppTheme.light,
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: AppLocalizations.supportedLocales,
+        return ScreenUtilInit(
+          designSize: const Size(375, 812),
+          minTextAdapt: true,
+          splitScreenMode: true,
           builder: (context, child) {
-            return ConnectivityListener(
-              child: child ?? const SizedBox.shrink(),
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              navigatorKey: appNavigatorKey,
+              locale: localeService.locale,
+              onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
+              theme: AppTheme.light,
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: AppLocalizations.supportedLocales,
+              builder: (context, child) {
+                return ConnectivityListener(
+                  child: child ?? const SizedBox.shrink(),
+                );
+              },
+              home: const SplashScreen(),
             );
           },
-          home: const SplashScreen(),
         );
       },
     );
