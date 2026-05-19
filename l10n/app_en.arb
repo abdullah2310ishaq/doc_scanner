@@ -256,6 +256,7 @@
   "pdfAssistantChoosePdfTitle": "Choose PDF file",
   "pdfAssistantChoosePdfDescription": "Browse and select PDF from your device",
   "pdfAssistantLinkTitle": "Add PDF from link",
+  "pdfAssistantLinkDescription": "Paste a PDF link to upload directly",
   "pdfAssistantLinkHint": "Paste PDF URL",
   "pdfAssistantLinkButton": "Download PDF",
   "pdfAssistantTranslateTo": "Translate To",

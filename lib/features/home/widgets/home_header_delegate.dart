@@ -20,8 +20,8 @@ class HomeHeaderSliverDelegate extends SliverPersistentHeaderDelegate {
   final VoidCallback? onMenuTap;
   final VoidCallback? onProTap;
 
-  /// Toolbar row (45) + gaps + greeting (21) + title row (36) + vertical padding (20).
-  static const double extent = 152;
+  /// Increased extent to allow multi-line text wrapping without overflow.
+  static const double extent = 180;
 
   @override
   double get minExtent => extent;

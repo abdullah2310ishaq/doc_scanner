@@ -715,6 +715,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get pdfAssistantLinkTitle => 'Añadir PDF desde enlace';
 
   @override
+  String get pdfAssistantLinkDescription =>
+      'Paste a PDF link to upload directly';
+
+  @override
   String get pdfAssistantLinkHint => 'Pegar URL del PDF';
 
   @override

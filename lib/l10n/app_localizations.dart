@@ -1436,6 +1436,12 @@ abstract class AppLocalizations {
   /// **'Add PDF from link'**
   String get pdfAssistantLinkTitle;
 
+  /// No description provided for @pdfAssistantLinkDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste a PDF link to upload directly'**
+  String get pdfAssistantLinkDescription;
+
   /// No description provided for @pdfAssistantLinkHint.
   ///
   /// In en, this message translates to:

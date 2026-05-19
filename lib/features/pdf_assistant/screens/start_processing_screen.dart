@@ -11,11 +11,7 @@ import '../services/pdf_assistant_storage_service.dart';
 import 'pdf_assistant_processing_screen.dart';
 
 class StartProcessingScreen extends StatefulWidget {
-  const StartProcessingScreen({
-    super.key,
-    this.pdfPath,
-    this.displayName,
-  });
+  const StartProcessingScreen({super.key, this.pdfPath, this.displayName});
 
   final String? pdfPath;
   final String? displayName;
@@ -27,10 +23,8 @@ class StartProcessingScreen extends StatefulWidget {
   }) {
     return Navigator.of(context).push(
       MaterialPageRoute<void>(
-        builder: (_) => StartProcessingScreen(
-          pdfPath: pdfPath,
-          displayName: displayName,
-        ),
+        builder: (_) =>
+            StartProcessingScreen(pdfPath: pdfPath, displayName: displayName),
       ),
     );
   }
@@ -91,16 +85,16 @@ class _StartProcessingScreenState extends State<StartProcessingScreen> {
     final l10n = context.l10n;
 
     if (path == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.pdfAssistantNoFileSelected)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.pdfAssistantNoFileSelected)));
       return;
     }
 
     if (language == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.pdfAssistantSelectLanguage)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.pdfAssistantSelectLanguage)));
       return;
     }
 
@@ -228,58 +222,92 @@ class _PdfPreviewCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.searchBorder),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 52,
-            height: 52,
-            decoration: BoxDecoration(
-              color: AppColors.cardPdfBg,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            alignment: Alignment.center,
-            child: SvgPicture.asset(HomeAssets.pdf, width: 28, height: 28),
+    return Stack(
+      // CRITICAL: Isko none rkhna zaroori hai taake baahir nikla hua part cut na ho
+      clipBehavior: Clip.none,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: AppColors.searchBorder),
           ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  hasFile ? (displayName ?? 'PDF') : noFileLabel,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
+          child: Row(
+            children: [
+              Container(
+                width: 52,
+                height: 52,
+                decoration: BoxDecoration(
+                  color: AppColors.cardPdfBg,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                alignment: Alignment.center,
+                child: SvgPicture.asset(HomeAssets.pdf, width: 28, height: 28),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(right: onClear != null ? 24.0 : 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        hasFile ? (displayName ?? 'PDF') : noFileLabel,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      if (hasFile && fileSizeLabel.isNotEmpty) ...[
+                        const SizedBox(height: 4),
+                        Text(
+                          fileSizeLabel,
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                 ),
-                if (hasFile && fileSizeLabel.isNotEmpty) ...[
-                  const SizedBox(height: 4),
-                  Text(
-                    fileSizeLabel,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: AppColors.textSecondary,
-                    ),
+              ),
+            ],
+          ),
+        ),
+        if (onClear != null)
+          Positioned(
+            // Negative values se button bilkul top-right corner ke uper float krega
+            top: -11,
+            right: -10,
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: onClear,
+                borderRadius: BorderRadius.circular(100),
+                child: Container(
+                  width: 28,
+                  height: 28,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.12),
+                    // Optional: Agar transparent bg pr maza nhi aa rha, tu isko use kr sakte hain:
+                    // color: AppColors.white,
+                    // boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2))],
+                    shape: BoxShape.circle,
                   ),
-                ],
-              ],
+                  child: const Icon(
+                    Icons.close_rounded,
+                    size: 16,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+              ),
             ),
           ),
-          if (onClear != null)
-            IconButton(
-              onPressed: onClear,
-              icon: const Icon(Icons.close_rounded),
-              tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
-            ),
-        ],
-      ),
+      ],
     );
   }
 }

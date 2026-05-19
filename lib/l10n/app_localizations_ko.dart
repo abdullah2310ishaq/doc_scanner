@@ -681,6 +681,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get pdfAssistantLinkTitle => 'PDF 링크 추가';
 
   @override
+  String get pdfAssistantLinkDescription =>
+      'Paste a PDF link to upload directly';
+
+  @override
   String get pdfAssistantLinkHint => 'URL 붙여넣기';
 
   @override

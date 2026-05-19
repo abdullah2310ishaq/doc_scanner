@@ -681,6 +681,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get pdfAssistantLinkTitle => '添加PDF链接';
 
   @override
+  String get pdfAssistantLinkDescription =>
+      'Paste a PDF link to upload directly';
+
+  @override
   String get pdfAssistantLinkHint => '粘贴URL';
 
   @override

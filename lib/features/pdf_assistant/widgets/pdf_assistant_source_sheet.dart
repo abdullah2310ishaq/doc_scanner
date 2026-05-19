@@ -70,11 +70,11 @@ class _PdfAssistantSourceSheetState extends State<_PdfAssistantSourceSheet> {
     }
   }
 
-  Future<void> _downloadFromLink() async {
+  Future<void> _downloadFromLink(StateSetter setModalState) async {
     final url = _urlController.text.trim();
     if (url.isEmpty || _isDownloading) return;
 
-    setState(() => _isDownloading = true);
+    setModalState(() => _isDownloading = true);
 
     try {
       final tempId = DateTime.now().millisecondsSinceEpoch.toString();
@@ -85,7 +85,9 @@ class _PdfAssistantSourceSheetState extends State<_PdfAssistantSourceSheet> {
       final file = await _download.downloadPdf(url, savePath);
       if (!mounted) return;
 
-      Navigator.of(context).pop();
+      Navigator.of(context).pop(); // pop link modal
+      Navigator.of(context).pop(); // pop main sheet
+      
       if (!widget.parentContext.mounted) return;
 
       StartProcessingScreen.open(
@@ -99,8 +101,87 @@ class _PdfAssistantSourceSheetState extends State<_PdfAssistantSourceSheet> {
         SnackBar(content: Text(context.l10n.errorPdfAssistantLinkFailed)),
       );
     } finally {
-      if (mounted) setState(() => _isDownloading = false);
+      if (mounted) setModalState(() => _isDownloading = false);
     }
+  }
+
+  void _showLinkInputModal() {
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: AppColors.white,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(AppColors.chatbotSheetRadius),
+        ),
+      ),
+      builder: (sheetContext) => StatefulBuilder(
+        builder: (context, setModalState) {
+          final l10n = context.l10n;
+          return Padding(
+            padding: EdgeInsets.fromLTRB(
+              24,
+              24,
+              24,
+              24 + MediaQuery.viewInsetsOf(context).bottom,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  l10n.pdfAssistantLinkTitle,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: _urlController,
+                  decoration: InputDecoration(
+                    hintText: l10n.pdfAssistantLinkHint,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  keyboardType: TextInputType.url,
+                  autofocus: true,
+                  onSubmitted: (_) => _downloadFromLink(setModalState),
+                ),
+                const SizedBox(height: 16),
+                SizedBox(
+                  height: 48,
+                  child: ElevatedButton(
+                    onPressed: _isDownloading
+                        ? null
+                        : () => _downloadFromLink(setModalState),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.chatbotAccent,
+                      foregroundColor: AppColors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: _isDownloading
+                        ? const SizedBox(
+                            width: 22,
+                            height: 22,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: AppColors.white,
+                            ),
+                          )
+                        : Text(l10n.pdfAssistantLinkButton),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
   }
 
   @override
@@ -146,48 +227,12 @@ class _PdfAssistantSourceSheetState extends State<_PdfAssistantSourceSheet> {
             onTap: _pickPdf,
           ),
           const SizedBox(height: 16),
-          Text(
-            l10n.pdfAssistantLinkTitle,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
-          ),
-          const SizedBox(height: 8),
-          TextField(
-            controller: _urlController,
-            decoration: InputDecoration(
-              hintText: l10n.pdfAssistantLinkHint,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            keyboardType: TextInputType.url,
-          ),
-          const SizedBox(height: 12),
-          SizedBox(
-            height: 48,
-            child: ElevatedButton(
-              onPressed: _isDownloading ? null : _downloadFromLink,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.chatbotAccent,
-                foregroundColor: AppColors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              child: _isDownloading
-                  ? const SizedBox(
-                      width: 22,
-                      height: 22,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: AppColors.white,
-                      ),
-                    )
-                  : Text(l10n.pdfAssistantLinkButton),
-            ),
+          _OptionCard(
+            backgroundColor: const Color(0xFFFBF4FF),
+            iconAsset: HomeAssets.link,
+            title: l10n.pdfAssistantLinkTitle,
+            description: l10n.pdfAssistantLinkDescription,
+            onTap: _showLinkInputModal,
           ),
         ],
       ),
