@@ -65,7 +65,7 @@ class _DrawerButton extends StatelessWidget {
       button: true,
       label: semanticsLabel,
       child: InkWell(
-        onTap: onTap,
+        onTap: onTap, 
         borderRadius: BorderRadius.circular(10),
         child: Image.asset(
           HomeAssets.drawer,
