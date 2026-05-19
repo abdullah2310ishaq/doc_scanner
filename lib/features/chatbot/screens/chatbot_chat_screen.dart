@@ -5,8 +5,9 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../core/widgets/delete_dialog.dart';
 import '../../../core/widgets/toast.dart';
+import '../../../l10n/app_localizations.dart';
 import '../models/chatbot_message_model.dart';
 import '../providers/chatbot_chat_provider.dart';
 import '../providers/chatbot_history_provider.dart';
@@ -31,7 +32,8 @@ class ChatbotChatScreen extends StatefulWidget {
     return Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => ChangeNotifierProvider(
-          create: (_) => ChatbotChatProvider(sessionId: sessionId)..loadSession(),
+          create: (_) =>
+              ChatbotChatProvider(sessionId: sessionId)..loadSession(),
           child: ChatbotChatScreen(
             sessionId: sessionId,
             displayName: displayName,
@@ -68,7 +70,8 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
   }
 
   Future<void> _sendMessage(ChatbotChatProvider provider, String text) async {
-    await provider.sendMessage(text);
+    if (text.trim().isEmpty) return;
+    await provider.sendMessage(text.trim());
     _inputController.clear();
     _scrollToBottom();
   }
@@ -81,7 +84,10 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
     );
   }
 
-  Future<void> _copyChat(BuildContext context, ChatbotChatProvider provider) async {
+  Future<void> _copyChat(
+    BuildContext context,
+    ChatbotChatProvider provider,
+  ) async {
     final text = provider.buildShareText();
     if (text.isEmpty) return;
     await Clipboard.setData(ClipboardData(text: text));
@@ -91,22 +97,10 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
 
   Future<void> _confirmDelete(BuildContext context) async {
     final l10n = context.l10n;
-    final confirmed = await showDialog<bool>(
+    final confirmed = await DeleteDialog.show(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.chatbotDeleteTitle),
-        content: Text(l10n.chatbotDeleteMessage),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(l10n.commonCancel),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext, true),
-            child: Text(l10n.commonDelete),
-          ),
-        ],
-      ),
+      title: l10n.chatbotDeleteTitle,
+      message: l10n.chatbotDeleteMessage,
     );
 
     if (confirmed != true || !context.mounted) return;
@@ -134,17 +128,20 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
         final title = provider.session?.displayName ?? widget.displayName;
 
         return Scaffold(
-          backgroundColor: AppColors.scaffoldBackground,
+          backgroundColor: const Color(
+            0xFFF8F9FA,
+          ), // Clean UI background light grey
           appBar: AppBar(
-            backgroundColor: AppColors.white,
+            backgroundColor: const Color(0xFFF8F9FA),
             elevation: 0,
             foregroundColor: AppColors.textPrimary,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
             title: Text(
               title,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-              ),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
             actions: [
               PopupMenuButton<String>(
@@ -159,14 +156,8 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
                   }
                 },
                 itemBuilder: (context) => [
-                  PopupMenuItem(
-                    value: 'share',
-                    child: Text(l10n.commonShare),
-                  ),
-                  PopupMenuItem(
-                    value: 'copy',
-                    child: Text(l10n.commonCopy),
-                  ),
+                  PopupMenuItem(value: 'share', child: Text(l10n.commonShare)),
+                  PopupMenuItem(value: 'copy', child: Text(l10n.commonCopy)),
                   PopupMenuItem(
                     value: 'delete',
                     child: Text(l10n.commonDelete),
@@ -182,21 +173,28 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
                     Expanded(
                       child: ListView(
                         controller: _scrollController,
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
                         children: [
-                          _WelcomeCard(l10n: l10n),
+                          if (provider.messages.isEmpty)
+                            _WelcomeCard(l10n: l10n),
                           ...provider.messages.map(
                             (message) => _MessageBubble(message: message),
                           ),
                           if (provider.isSending)
                             const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 8),
+                              padding: EdgeInsets.symmetric(vertical: 12),
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: SizedBox(
-                                  width: 24,
-                                  height: 24,
-                                  child: CircularProgressIndicator(strokeWidth: 2),
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: AppColors.chatbotAccent,
+                                  ),
                                 ),
                               ),
                             ),
@@ -205,23 +203,29 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
                     ),
                     if (provider.errorMessage != null)
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 4,
+                        ),
                         child: Text(
                           l10n.chatbotChatFailed,
-                          style: const TextStyle(color: AppColors.textSecondary),
+                          style: const TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 13,
+                          ),
                         ),
                       ),
                     _ChatInputBar(
                       controller: _inputController,
-                      hint: l10n.chatbotChatInputHint,
+                      hint: 'Ask anything about this PDF...',
                       isSending: provider.isSending,
                       onSend: (text) => _sendMessage(provider, text),
                       onSuggestionTap: (text) => _sendMessage(provider, text),
                       suggestions: [
-                        l10n.chatbotChatPromptSummarize,
-                        l10n.chatbotChatPromptHighlights,
-                        l10n.chatbotChatPromptFinancial,
-                        l10n.chatbotChatPromptDates,
+                        l10n.chatbotChatPromptSummarize, // "Summarize this document"
+                        l10n.chatbotChatPromptHighlights, // "What are the key highlights?"
+                        l10n.chatbotChatPromptFinancial, // "Show me financial data"
+                        l10n.chatbotChatPromptDates, // "Extract important dates"
                       ],
                     ),
                   ],
@@ -239,31 +243,101 @@ class _WelcomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.cardChatbotBg,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // AI Bot Avatar Icon Accent
+        Container(
+          margin: const EdgeInsets.only(bottom: 12, top: 8),
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: const Color(0xFFEEEEFF), // Light purple shade
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: const Icon(
+            Icons.android_rounded,
+            color: AppColors.chatbotAccent,
+            size: 24,
+          ),
+        ),
+
+        // Greeting Card Box
+        Container(
+          width: double.infinity,
+          margin: const EdgeInsets.only(bottom: 16),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.black.withOpacity(0.04)),
+          ),
+          child: const Text.rich(
+            TextSpan(
+              text: '👋🏻 Hi! I’m your AI assistant.\n',
+              style: TextStyle(fontWeight: FontWeight.bold, height: 1.5),
+              children: [
+                TextSpan(
+                  text: 'Ask me anything about this PDF and I’ll help you.',
+                  style: TextStyle(fontWeight: FontWeight.normal),
+                ),
+              ],
+            ),
+            style: TextStyle(fontSize: 15, color: AppColors.textPrimary),
+          ),
+        ),
+
+        // "You can ask me" Onboarding Suggestions Card
+        Container(
+          width: double.infinity,
+          margin: const EdgeInsets.only(bottom: 16),
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.black.withOpacity(0.04)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'You can ask me:',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              const SizedBox(height: 16),
+              _buildBulletItem(l10n.chatbotChatPromptSummarize),
+              _buildBulletItem(l10n.chatbotChatPromptHighlights),
+              _buildBulletItem(l10n.chatbotChatPromptFinancial),
+              _buildBulletItem(l10n.chatbotChatPromptDates),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBulletItem(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            l10n.chatbotChatGreeting,
-            style: const TextStyle(
-              fontSize: 15,
-              height: 1.5,
-              color: AppColors.textPrimary,
-            ),
+          const Padding(
+            padding: EdgeInsets.only(top: 6),
+            child: Icon(Icons.circle, size: 6, color: AppColors.textSecondary),
           ),
-          const SizedBox(height: 12),
-          Text(
-            l10n.chatbotChatYouCanAsk,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textSecondary,
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontSize: 15,
+                color: AppColors.textSecondary,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         ],
@@ -277,28 +351,50 @@ class _MessageBubble extends StatelessWidget {
 
   final ChatbotMessageModel message;
 
+  // AI response clean helper structure
+  String _cleanResponseText(String source) {
+    // Is dynamic formatter se saare markdown '*' aur multiple inline hash headers filter clean ho jayenge
+    return source.replaceAll(RegExp(r'\*+'), '').trim();
+  }
+
   @override
   Widget build(BuildContext context) {
     final isUser = message.role == ChatbotMessageRole.user;
+    final cleanedText = _cleanResponseText(message.content);
 
     return Align(
       alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        margin: const EdgeInsets.only(bottom: 10),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        margin: const EdgeInsets.only(bottom: 14),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         constraints: BoxConstraints(
           maxWidth: MediaQuery.sizeOf(context).width * 0.8,
         ),
         decoration: BoxDecoration(
           color: isUser ? AppColors.chatbotAccent : AppColors.white,
-          borderRadius: BorderRadius.circular(12),
-          border: isUser ? null : Border.all(color: AppColors.searchBorder),
+          borderRadius: BorderRadius.only(
+            topLeft: const Radius.circular(16),
+            topRight: const Radius.circular(16),
+            bottomLeft: Radius.circular(isUser ? 16 : 4),
+            bottomRight: Radius.circular(isUser ? 4 : 16),
+          ),
+          border: isUser
+              ? null
+              : Border.all(color: Colors.black.withOpacity(0.04)),
+          boxShadow: [
+            if (!isUser)
+              BoxShadow(
+                color: Colors.black.withOpacity(0.01),
+                blurRadius: 5,
+                offset: const Offset(0, 2),
+              ),
+          ],
         ),
         child: Text(
-          message.content,
+          cleanedText,
           style: TextStyle(
             fontSize: 15,
-            height: 1.4,
+            height: 1.45,
             color: isUser ? AppColors.white : AppColors.textPrimary,
           ),
         ),
@@ -331,55 +427,94 @@ class _ChatInputBar extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          // Bottom Horizontal Tiles
           SizedBox(
-            height: 36,
+            height: 38,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               itemCount: suggestions.length,
               separatorBuilder: (_, __) => const SizedBox(width: 8),
               itemBuilder: (context, index) {
                 final text = suggestions[index];
-                return ActionChip(
-                  label: Text(text, style: const TextStyle(fontSize: 12)),
-                  onPressed: isSending ? null : () => onSuggestionTap(text),
+                return InkWell(
+                  onTap: isSending ? null : () => onSuggestionTap(text),
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.black.withOpacity(0.06)),
+                    ),
+                    child: Center(
+                      child: Text(
+                        text,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                    ),
+                  ),
                 );
               },
             ),
           ),
+
+          // Main Chat Text Field & Send Action Floating Button
           Padding(
-            padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
             child: Row(
               children: [
                 Expanded(
-                  child: TextField(
-                    controller: controller,
-                    minLines: 1,
-                    maxLines: 4,
-                    decoration: InputDecoration(
-                      hintText: hint,
-                      filled: true,
-                      fillColor: AppColors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(color: AppColors.searchBorder),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(color: AppColors.searchBorder),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.circular(28),
+                      border: Border.all(color: Colors.black.withOpacity(0.06)),
+                    ),
+                    child: TextField(
+                      controller: controller,
+                      minLines: 1,
+                      maxLines: 4,
+                      style: const TextStyle(fontSize: 15),
+                      decoration: InputDecoration(
+                        hintText: hint,
+                        hintStyle: TextStyle(
+                          color: Colors.grey.shade400,
+                          fontSize: 15,
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
+                        border: InputBorder.none,
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(width: 8),
-                IconButton.filled(
+                IconButton(
                   onPressed: isSending
                       ? null
-                      : () => onSend(controller.text),
-                  icon: const Icon(Icons.send_rounded),
+                      : () {
+                          if (controller.text.trim().isNotEmpty) {
+                            onSend(controller.text);
+                          }
+                        },
+                  icon: const Icon(Icons.send_rounded, size: 22),
                   color: AppColors.white,
                   style: IconButton.styleFrom(
                     backgroundColor: AppColors.chatbotAccent,
+                    minimumSize: const Size(48, 48),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
+                    ),
                   ),
                 ),
               ],

@@ -1,14 +1,24 @@
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:syncfusion_flutter_pdf/pdf.dart' as sf;
 
 import '../../translate/services/translate_pdf_fonts.dart';
+import 'pdf_assistant_overlay_service.dart';
+import 'pdf_assistant_translate_service.dart';
 
-/// Builds translated PDF outputs (simple layout; not pixel-perfect overlay).
+/// Coordinates PDF output generation:
+///  • Translated PDF → produced via in-place overlay on the original.
+///  • Extracted-text PDF → clean text document using package:pdf.
 class PdfAssistantPdfBuilderService {
+  PdfAssistantPdfBuilderService({PdfAssistantTranslateService? translateService})
+      : _overlayService = PdfAssistantOverlayService(
+          translateService: translateService,
+        );
+
+  final PdfAssistantOverlayService _overlayService;
+
+  /// Builds the extracted-text PDF (a fresh text layout — no original images).
   Future<void> buildExtractedTextPdf({
     required String outputPath,
     required String title,
@@ -41,76 +51,24 @@ class PdfAssistantPdfBuilderService {
     await File(outputPath).writeAsBytes(bytes);
   }
 
-  /// Per-page translated text; keeps page count similar to source.
+  /// Builds the translated PDF by overlaying translations directly onto the
+  /// original PDF pages — preserving layout, images, and visual structure.
   Future<void> buildTranslatedPagesPdf({
     required String outputPath,
     required String sourcePdfPath,
+    // Kept for API compatibility — overlay service re-translates per line.
+    // These pre-translated page texts are used only for the extracted-text PDF.
     required List<String> translatedPageTexts,
     required String languageName,
+    required String languageCode,
+    void Function(double progress)? onProgress,
   }) async {
-    final sourceBytes = await File(sourcePdfPath).readAsBytes();
-    final sourceDoc = sf.PdfDocument(inputBytes: sourceBytes);
-
-    try {
-      final outDoc = sf.PdfDocument();
-      final pageCount = sourceDoc.pages.count;
-
-      for (var i = 0; i < pageCount; i++) {
-        final template = sourceDoc.pages[i].createTemplate();
-        final pageText = i < translatedPageTexts.length
-            ? translatedPageTexts[i].trim()
-            : '';
-
-        final newPage = outDoc.pages.add();
-        final graphics = newPage.graphics;
-        final pageSize = newPage.size;
-
-        graphics.drawPdfTemplate(template, Offset.zero);
-
-        if (pageText.isNotEmpty) {
-          final overlayBrush = sf.PdfSolidBrush(sf.PdfColor(255, 255, 255, 220));
-          final textHeight = pageSize.height * 0.35;
-          graphics.drawRectangle(
-            brush: overlayBrush,
-            bounds: Rect.fromLTWH(
-              0,
-              pageSize.height - textHeight,
-              pageSize.width,
-              textHeight,
-            ),
-          );
-
-          final font = sf.PdfStandardFont(
-            sf.PdfFontFamily.helvetica,
-            10,
-          );
-          final brush = sf.PdfSolidBrush(sf.PdfColor(0, 0, 0));
-          final format = sf.PdfStringFormat(
-            alignment: sf.PdfTextAlignment.left,
-            lineAlignment: sf.PdfVerticalAlignment.top,
-            wordWrap: sf.PdfWordWrapType.word,
-          );
-
-          graphics.drawString(
-            pageText,
-            font,
-            brush: brush,
-            bounds: Rect.fromLTWH(
-              24,
-              pageSize.height - textHeight + 12,
-              pageSize.width - 48,
-              textHeight - 24,
-            ),
-            format: format,
-          );
-        }
-      }
-
-      final outBytes = await outDoc.save();
-      await File(outputPath).writeAsBytes(outBytes);
-      outDoc.dispose();
-    } finally {
-      sourceDoc.dispose();
-    }
+    final resultBytes = await _overlayService.translateInPlace(
+      sourcePdfPath: sourcePdfPath,
+      targetLanguageName: languageName,
+      targetLanguageCode: languageCode,
+      onProgress: onProgress,
+    );
+    await File(outputPath).writeAsBytes(resultBytes);
   }
 }

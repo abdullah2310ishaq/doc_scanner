@@ -1,24 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
+import '../../../core/widgets/delete_dialog.dart';
 import '../../../core/widgets/toast.dart';
 import '../models/pdf_assistant_session_model.dart';
 import '../services/pdf_assistant_file_actions_service.dart';
 import '../services/pdf_assistant_storage_service.dart';
+import 'pdf_assistant_detail_screen.dart';
+import 'pdf_assistant_extracted_text_screen.dart';
 
 class PdfAssistantResultScreen extends StatelessWidget {
   const PdfAssistantResultScreen({super.key, required this.session});
 
   final PdfAssistantSessionModel session;
 
-  Future<void> _open(BuildContext context, String path) async {
-    try {
-      await PdfAssistantFileActionsService().openFile(path);
-    } catch (_) {
-      if (!context.mounted) return;
-      AppToast.show(context, context.l10n.pdfAssistantOpenFailed);
-    }
+  void _openDetailedView(
+    BuildContext context,
+    String title,
+    String pdfPath,
+    String downloadName,
+  ) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => PdfAssistantDetailScreen(
+          title: title,
+          pdfPath: pdfPath,
+          onShare: () => _share(context, pdfPath),
+          onDownload: () => _download(context, pdfPath, downloadName),
+          onDelete: () => _deleteSession(context),
+        ),
+      ),
+    );
+  }
+
+  void _openExtractedTextScreen(BuildContext context, String title, String pdfPath) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => PdfAssistantExtractedTextScreen(
+          title: title,
+          pdfPath: pdfPath,
+          onDelete: () => _deleteSession(context),
+        ),
+      ),
+    );
   }
 
   Future<void> _share(BuildContext context, String path) async {
@@ -46,22 +72,10 @@ class PdfAssistantResultScreen extends StatelessWidget {
 
   Future<void> _deleteSession(BuildContext context) async {
     final l10n = context.l10n;
-    final confirmed = await showDialog<bool>(
+    final confirmed = await DeleteDialog.show(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.pdfAssistantDeleteTitle),
-        content: Text(l10n.pdfAssistantDeleteMessage),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext, false),
-            child: Text(l10n.commonCancel),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext, true),
-            child: Text(l10n.commonDelete),
-          ),
-        ],
-      ),
+      title: l10n.pdfAssistantDeleteTitle,
+      message: l10n.pdfAssistantDeleteMessage,
     );
 
     if (confirmed != true || !context.mounted) return;
@@ -103,15 +117,9 @@ class PdfAssistantResultScreen extends StatelessWidget {
                     '${l10n.pdfAssistantTranslatedPdfDescription} ${session.targetLanguageName}',
                 backgroundColor: const Color(0xffF2F2FC),
                 iconAsset: 'assets/translated_pdf.svg',
-                fallbackIcon: const Icon(
-                  Icons.picture_as_pdf,
-                  color: Color(0xff4A55E7),
-                  size: 32,
-                ),
-                onOpen: () => _open(context, session.translatedPdfPath),
-                onShare: () => _share(context, session.translatedPdfPath),
-                onDownload: () => _download(
+                onTap: () => _openDetailedView(
                   context,
+                  l10n.pdfAssistantTranslatedPdfTitle,
                   session.translatedPdfPath,
                   '${session.displayName}_translated.pdf',
                 ),
@@ -122,32 +130,13 @@ class PdfAssistantResultScreen extends StatelessWidget {
                 subtitle: l10n.pdfAssistantExtractedTextDescription,
                 backgroundColor: const Color(0xffDCF0E0),
                 iconAsset: 'assets/extracted_text.svg',
-                fallbackIcon: const Icon(
-                  Icons.text_fields,
-                  color: Color(0xff2E7D32),
-                  size: 32,
-                ),
-                onOpen: () => _open(context, session.extractedTextPdfPath),
-                onShare: () => _share(context, session.extractedTextPdfPath),
-                onDownload: () => _download(
+                onTap: () => _openExtractedTextScreen(
                   context,
+                  l10n.pdfAssistantExtractedTextTitle,
                   session.extractedTextPdfPath,
-                  '${session.displayName}_text.pdf',
                 ),
               ),
               const Spacer(),
-              OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.red,
-                  side: const BorderSide(color: Colors.redAccent),
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                onPressed: () => _deleteSession(context),
-                child: Text(l10n.commonDelete),
-              ),
             ],
           ),
         ),
@@ -162,39 +151,33 @@ class _ResultCard extends StatelessWidget {
     required this.subtitle,
     required this.backgroundColor,
     required this.iconAsset,
-    required this.fallbackIcon,
-    required this.onOpen,
-    required this.onShare,
-    required this.onDownload,
+    required this.onTap,
   });
 
   final String title;
   final String subtitle;
   final Color backgroundColor;
   final String iconAsset;
-  final Widget fallbackIcon;
-  final VoidCallback onOpen;
-  final VoidCallback onShare;
-  final VoidCallback onDownload;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
-
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+    return Material(
+      color: backgroundColor,
+      borderRadius: BorderRadius.circular(16),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // You can substitute this with SvgPicture.asset(iconAsset) from flutter_svg
-              fallbackIcon,
+              SvgPicture.asset(
+                iconAsset,
+                width: 32,
+                height: 32,
+              ),
               const SizedBox(width: 16),
               Expanded(
                 child: Column(
@@ -221,41 +204,8 @@ class _ResultCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
-          // Action Buttons
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              _ActionChip(label: l10n.pdfAssistantActionOpen, onTap: onOpen),
-              _ActionChip(label: l10n.commonShare, onTap: onShare),
-              _ActionChip(
-                label: l10n.pdfAssistantActionDownload,
-                onTap: onDownload,
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
-    );
-  }
-}
-
-class _ActionChip extends StatelessWidget {
-  const _ActionChip({required this.label, required this.onTap});
-
-  final String label;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return ActionChip(
-      backgroundColor: Colors.white.withOpacity(0.8),
-      label: Text(
-        label,
-        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-      ),
-      onPressed: onTap,
     );
   }
 }

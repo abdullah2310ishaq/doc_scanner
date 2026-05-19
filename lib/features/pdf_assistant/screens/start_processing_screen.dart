@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/constants/home_assets.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
+import '../../../core/widgets/delete_dialog.dart';
 import '../../translate/models/translate_language.dart';
 import '../../translate/widgets/translate_language_sheet.dart';
 import '../constants/pdf_assistant_languages.dart';
@@ -86,105 +87,11 @@ class _StartProcessingScreenState extends State<StartProcessingScreen> {
   Future<void> _confirmAndClearFile() async {
     final l10n = context.l10n;
 
-    final proceedWithRemoval = await showDialog<bool>(
+    final proceedWithRemoval = await DeleteDialog.show(
       context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          insetPadding: const EdgeInsets.symmetric(
-            horizontal: 32,
-            vertical: 24,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          elevation: 8,
-          backgroundColor: AppColors.white,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Dialog Title
-                Text(
-                  l10n.pdfAssistantRemoveTitle,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: AppColors.textPrimary,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: -0.2,
-                  ),
-                ),
-                const SizedBox(height: 8),
-
-                // Dialog Description Message
-                Text(
-                  l10n.pdfAssistantRemoveWarning,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: AppColors.textSecondary,
-                    fontSize: 14,
-                    height: 1.4,
-                  ),
-                ),
-                const SizedBox(height: 24),
-
-                // Action Buttons Group
-                Row(
-                  children: [
-                    // Cancel Button
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () => Navigator.of(context).pop(false),
-                        style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          side: const BorderSide(color: AppColors.searchBorder),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: Text(
-                          l10n.cancel,
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.textPrimary,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-
-                    // Confirm Remove Button
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () => Navigator.of(context).pop(true),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.redAccent,
-                          foregroundColor: AppColors.white,
-                          elevation: 0,
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: Text(
-                          l10n.remove,
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+      title: l10n.pdfAssistantRemoveTitle,
+      message: l10n.pdfAssistantRemoveWarning,
+      confirmButtonText: l10n.remove,
     );
 
     if (proceedWithRemoval == true) {

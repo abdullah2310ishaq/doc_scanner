@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 
@@ -42,11 +44,11 @@ class PdfAssistantProcessProvider extends ChangeNotifier {
 
   PdfAssistantProcessStatus status = PdfAssistantProcessStatus.idle;
   PdfAssistantProcessStep currentStep = PdfAssistantProcessStep.extracting;
-  int completedSteps = 0;
+  double completedSteps = 0;
   String? errorCode;
   PdfAssistantSessionModel? session;
 
-  static const int totalSteps = 4;
+  static const double totalSteps = 4;
 
   double get progressFraction {
     if (status == PdfAssistantProcessStatus.success) return 1;
@@ -95,6 +97,12 @@ class PdfAssistantProcessProvider extends ChangeNotifier {
         sourcePdfPath: storedOriginal,
         translatedPageTexts: translatedPages,
         languageName: targetLanguage.name,
+        languageCode: targetLanguage.code,
+        onProgress: (pageProgress) {
+          // Surface per-page overlay progress inside the generatingPdf step
+          completedSteps = 2 + pageProgress.clamp(0.0, 1.0);
+          notifyListeners();
+        },
       );
 
       await _pdfBuilderService.buildExtractedTextPdf(
@@ -102,6 +110,9 @@ class PdfAssistantProcessProvider extends ChangeNotifier {
         title: '$displayName (${targetLanguage.name})',
         translatedText: translatedFull,
       );
+
+      final extractedTxtPath = extractedPath.replaceAll('.pdf', '.txt');
+      await File(extractedTxtPath).writeAsString(translatedFull);
 
       _advance(PdfAssistantProcessStep.finalizing);
 
