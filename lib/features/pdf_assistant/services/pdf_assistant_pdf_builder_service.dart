@@ -4,19 +4,12 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../../translate/services/translate_pdf_fonts.dart';
-import 'pdf_assistant_overlay_service.dart';
-import 'pdf_assistant_translate_service.dart';
 
 /// Coordinates PDF output generation:
-///  • Translated PDF → produced via in-place overlay on the original.
+///  • Translated PDF → produced as a text document using package:pdf.
 ///  • Extracted-text PDF → clean text document using package:pdf.
 class PdfAssistantPdfBuilderService {
-  PdfAssistantPdfBuilderService({PdfAssistantTranslateService? translateService})
-      : _overlayService = PdfAssistantOverlayService(
-          translateService: translateService,
-        );
-
-  final PdfAssistantOverlayService _overlayService;
+  const PdfAssistantPdfBuilderService();
 
   /// Builds the extracted-text PDF (a fresh text layout — no original images).
   Future<void> buildExtractedTextPdf({
@@ -51,24 +44,60 @@ class PdfAssistantPdfBuilderService {
     await File(outputPath).writeAsBytes(bytes);
   }
 
-  /// Builds the translated PDF by overlaying translations directly onto the
-  /// original PDF pages — preserving layout, images, and visual structure.
+  /// Builds the translated PDF by creating a new document from pre-translated pages.
   Future<void> buildTranslatedPagesPdf({
     required String outputPath,
-    required String sourcePdfPath,
-    // Kept for API compatibility — overlay service re-translates per line.
-    // These pre-translated page texts are used only for the extracted-text PDF.
     required List<String> translatedPageTexts,
-    required String languageName,
-    required String languageCode,
     void Function(double progress)? onProgress,
   }) async {
-    final resultBytes = await _overlayService.translateInPlace(
-      sourcePdfPath: sourcePdfPath,
-      targetLanguageName: languageName,
-      targetLanguageCode: languageCode,
-      onProgress: onProgress,
-    );
-    await File(outputPath).writeAsBytes(resultBytes);
+    await TranslatePdfFonts.ensureLoaded();
+
+    final doc = pw.Document();
+    final totalPages = translatedPageTexts.length;
+
+    for (var i = 0; i < totalPages; i++) {
+      // Capture loop variable before entering the builder closure.
+      final pageIndex = i;
+      final pageText = translatedPageTexts[pageIndex].trim();
+      final pageLabel = 'Page ${pageIndex + 1}';
+
+      doc.addPage(
+        pw.MultiPage(
+          pageFormat: PdfPageFormat.a4,
+          margin: const pw.EdgeInsets.all(48),
+          build: (context) => [
+            pw.Text(
+              pageLabel,
+              style: TranslatePdfFonts.headerStyle(pageLabel).copyWith(
+                color: const PdfColor.fromInt(0xFF6366F1),
+                fontSize: 9,
+              ),
+            ),
+            pw.SizedBox(height: 6),
+            pw.Divider(color: const PdfColor.fromInt(0xFFE5E7EB)),
+            pw.SizedBox(height: 10),
+            if (pageText.isEmpty)
+              pw.Text(
+                '[No translatable text on this page]',
+                style: pw.TextStyle(
+                  fontSize: 11,
+                  color: const PdfColor.fromInt(0xFF9CA3AF),
+                  fontStyle: pw.FontStyle.italic,
+                ),
+              )
+            else
+              pw.Text(
+                pageText,
+                style: TranslatePdfFonts.bodyStyle(pageText),
+              ),
+          ],
+        ),
+      );
+
+      onProgress?.call((pageIndex + 1) / totalPages);
+    }
+
+    final bytes = await doc.save();
+    await File(outputPath).writeAsBytes(bytes);
   }
 }

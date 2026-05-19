@@ -13,8 +13,8 @@ class AppToast {
     final overlay = Overlay.of(context);
 
     final entry = OverlayEntry(
-      builder: (_) => Positioned(
-        top: MediaQuery.of(context).padding.top + 130,
+      builder: (overlayContext) => Positioned(
+        top: MediaQuery.paddingOf(overlayContext).top + 130,
         left: 16,
         right: 16,
         child: _ToastWidget(message: message),

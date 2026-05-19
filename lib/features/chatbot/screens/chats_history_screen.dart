@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
+import '../../../core/widgets/delete_dialog.dart';
+import '../../../core/widgets/rename_dialog.dart';
+import '../../../core/widgets/toast.dart';
 import '../providers/chatbot_history_provider.dart';
 import 'chatbot_chat_screen.dart';
 
@@ -26,6 +30,8 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
+  final TextEditingController _searchController = TextEditingController();
+
   void _returnToUploadAndOpenSheet() {
     Navigator.of(context).pop(true);
   }
@@ -37,32 +43,44 @@ class _HistoryScreenState extends State<HistoryScreen> {
     String currentName,
   ) async {
     final l10n = context.l10n;
-    final controller = TextEditingController(text: currentName);
 
-    final newName = await showDialog<String>(
+    final newName = await RenameDialog.show(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.chatbotRenameTitle),
-        content: TextField(
-          controller: controller,
-          decoration: InputDecoration(hintText: l10n.chatbotRenameHint),
-          autofocus: true,
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: Text(l10n.commonCancel),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext, controller.text),
-            child: Text(l10n.commonSave),
-          ),
-        ],
-      ),
+      title: l10n.chatbotRenameTitle,
+      currentName: currentName,
     );
 
     if (newName == null || !context.mounted) return;
     await provider.renameSession(sessionId: sessionId, newName: newName);
+
+    if (!context.mounted) return;
+    AppToast.show(context, 'Renamed successfully');
+  }
+
+  Future<void> _deleteSession(
+    BuildContext context,
+    ChatbotHistoryProvider provider,
+    String sessionId,
+  ) async {
+    final l10n = context.l10n;
+
+    final confirmed = await DeleteDialog.show(
+      context: context,
+      title: l10n.chatbotDeleteTitle,
+      message: l10n.chatbotDeleteMessage,
+    );
+
+    if (confirmed != true || !context.mounted) return;
+    await provider.deleteSession(sessionId);
+
+    if (!context.mounted) return;
+    AppToast.show(context, 'Deleted successfully');
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -86,6 +104,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         ),
         backgroundColor: AppColors.white,
         elevation: 0,
+        centerTitle: false,
       ),
       body: Consumer<ChatbotHistoryProvider>(
         builder: (context, provider, _) {
@@ -94,50 +113,188 @@ class _HistoryScreenState extends State<HistoryScreen> {
           }
 
           if (provider.sessions.isEmpty) {
-            return _EmptyState(
-              onUpload: _returnToUploadAndOpenSheet,
-            );
+            return _EmptyState(onUpload: _returnToUploadAndOpenSheet);
           }
 
-          return ListView.separated(
-            padding: const EdgeInsets.all(16),
-            itemCount: provider.sessions.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 8),
-            itemBuilder: (context, index) {
-              final session = provider.sessions[index];
-              return ListTile(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  side: const BorderSide(color: AppColors.searchBorder),
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
                 ),
-                tileColor: AppColors.white,
-                title: Text(
-                  session.displayName,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
-                ),
-                subtitle: Text(
-                  session.previewText,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                trailing: IconButton(
-                  icon: const Icon(Icons.edit_outlined),
-                  onPressed: () => _renameSession(
-                    context,
-                    provider,
-                    session.id,
-                    session.displayName,
+                child: Container(
+                  height: 54,
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: AppColors.searchBorder.withValues(alpha: 0.6),
+                    ),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.search,
+                        color: AppColors.textSecondary.withValues(alpha: 0.7),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: TextField(
+                          controller: _searchController,
+                          decoration: const InputDecoration(
+                            hintText: 'Search your conversations..',
+                            hintStyle: TextStyle(
+                              color: AppColors.textSecondary,
+                              fontSize: 15,
+                            ),
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                onTap: () {
-                  ChatbotChatScreen.open(
-                    context,
-                    sessionId: session.id,
-                    displayName: session.displayName,
-                  );
-                },
-              );
-            },
+              ),
+              const SizedBox(height: 8),
+              // Conversations List View
+              Expanded(
+                child: ListView.separated(
+                  padding: const EdgeInsets.only(
+                    left: 16,
+                    right: 16,
+                    bottom: 16,
+                  ),
+                  itemCount: provider.sessions.length,
+                  separatorBuilder: (_, _) => const SizedBox(
+                    height: 12,
+                  ), // Fix: Single underscore use kiya taaki warning na aaye
+                  itemBuilder: (context, index) {
+                    final session = provider.sessions[index];
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: AppColors.searchBorder.withValues(alpha: 0.5),
+                        ),
+                      ),
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
+                        onTap: () {
+                          ChatbotChatScreen.open(
+                            context,
+                            sessionId: session.id,
+                            displayName: session.displayName,
+                          );
+                        },
+                        leading: Container(
+                          width: 48,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFFECEF),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: const EdgeInsets.all(10),
+                          child: SvgPicture.asset('assets/home/pdf.svg'),
+                        ),
+                        title: Text(
+                          session.displayName,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                        subtitle: Padding(
+                          padding: const EdgeInsets.only(top: 4),
+                          child: Text(
+                            session.previewText,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: AppColors.textSecondary,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                        trailing: SizedBox(
+                          height:
+                              56, // Column ko bound karne ke liye explicit height
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisSize:
+                                MainAxisSize.min, // Extra space occupy na kare
+                            children: [
+                              Expanded(
+                                child: PopupMenuButton<String>(
+                                  icon: const Icon(
+                                    Icons.more_vert,
+                                    color: AppColors.textSecondary,
+                                  ),
+                                  padding: EdgeInsets.zero,
+                                  constraints: const BoxConstraints(),
+                                  onSelected: (value) {
+                                    if (value == 'rename') {
+                                      _renameSession(
+                                        context,
+                                        provider,
+                                        session.id,
+                                        session.displayName,
+                                      );
+                                    } else if (value == 'delete') {
+                                      _deleteSession(
+                                        context,
+                                        provider,
+                                        session.id,
+                                      );
+                                    }
+                                  },
+                                  itemBuilder: (BuildContext context) => [
+                                    const PopupMenuItem(
+                                      value: 'rename',
+                                      child: Row(children: [Text('Rename')]),
+                                    ),
+                                    const PopupMenuItem(
+                                      value: 'delete',
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            'Delete',
+                                            style: TextStyle(color: Colors.red),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 2,
+                              ), // Chota sa gap drop-down aur text ke beech
+                              const Text(
+                                '9:20 AM',
+                                style: TextStyle(
+                                  color: AppColors.textSecondary,
+                                  fontSize: 11,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           );
         },
       ),

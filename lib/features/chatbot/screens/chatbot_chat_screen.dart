@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -188,14 +189,7 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
                               padding: EdgeInsets.symmetric(vertical: 12),
                               child: Align(
                                 alignment: Alignment.centerLeft,
-                                child: SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: AppColors.chatbotAccent,
-                                  ),
-                                ),
+                                child: _ThinkingLoader(),
                               ),
                             ),
                         ],
@@ -248,17 +242,10 @@ class _WelcomeCard extends StatelessWidget {
       children: [
         // AI Bot Avatar Icon Accent
         Container(
-          margin: const EdgeInsets.only(bottom: 12, top: 8),
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: const Color(0xFFEEEEFF), // Light purple shade
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: const Icon(
-            Icons.android_rounded,
-            color: AppColors.chatbotAccent,
-            size: 24,
-          ),
+          margin: const EdgeInsets.only(bottom: 6, top: 4),
+          width: 32,
+          height: 32,
+          child: Image.asset('assets/chatbot/robot.png', fit: BoxFit.contain),
         ),
 
         // Greeting Card Box
@@ -351,9 +338,8 @@ class _MessageBubble extends StatelessWidget {
 
   final ChatbotMessageModel message;
 
-  // AI response clean helper structure
   String _cleanResponseText(String source) {
-    // Is dynamic formatter se saare markdown '*' aur multiple inline hash headers filter clean ho jayenge
+    // Markdown ke bad markers (*) filter clean karne ke liye helper regex
     return source.replaceAll(RegExp(r'\*+'), '').trim();
   }
 
@@ -362,44 +348,83 @@ class _MessageBubble extends StatelessWidget {
     final isUser = message.role == ChatbotMessageRole.user;
     final cleanedText = _cleanResponseText(message.content);
 
-    return Align(
-      alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 14),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        constraints: BoxConstraints(
-          maxWidth: MediaQuery.sizeOf(context).width * 0.8,
-        ),
-        decoration: BoxDecoration(
-          color: isUser ? AppColors.chatbotAccent : AppColors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(16),
-            topRight: const Radius.circular(16),
-            bottomLeft: Radius.circular(isUser ? 16 : 4),
-            bottomRight: Radius.circular(isUser ? 4 : 16),
+    if (isUser) {
+      // User Message (Right Side Blue Bubble)
+      return Align(
+        alignment: Alignment.centerRight,
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.sizeOf(context).width * 0.8,
           ),
-          border: isUser
-              ? null
-              : Border.all(color: Colors.black.withOpacity(0.04)),
-          boxShadow: [
-            if (!isUser)
-              BoxShadow(
-                color: Colors.black.withOpacity(0.01),
-                blurRadius: 5,
-                offset: const Offset(0, 2),
+          decoration: const BoxDecoration(
+            color: AppColors.chatbotAccent, // Image primary blue/purple accent
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+              bottomLeft: Radius.circular(16),
+              bottomRight: Radius.circular(4),
+            ),
+          ),
+          child: Text(
+            cleanedText,
+            style: const TextStyle(
+              fontSize: 15,
+              height: 1.4,
+              color: AppColors.white,
+            ),
+          ),
+        ),
+      );
+    } else {
+      // AI Message (Left Side Layout with Bot Avatar + White Box Card)
+      return Align(
+        alignment: Alignment.centerLeft,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Fixed Bot Avatar Icon Container 👇
+            Container(
+              margin: const EdgeInsets.only(bottom: 6, top: 4),
+              width: 32,
+              height: 32,
+              child: Image.asset(
+                'assets/chatbot/robot.png',
+                fit: BoxFit.contain,
               ),
+            ),
+
+            // White Card Content Box
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.only(bottom: 16),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.black.withOpacity(0.04)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.01),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Text(
+                cleanedText,
+                style: const TextStyle(
+                  fontSize: 15,
+                  height: 1.55,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ),
           ],
         ),
-        child: Text(
-          cleanedText,
-          style: TextStyle(
-            fontSize: 15,
-            height: 1.45,
-            color: isUser ? AppColors.white : AppColors.textPrimary,
-          ),
-        ),
-      ),
-    );
+      );
+    }
   }
 }
 
@@ -522,6 +547,86 @@ class _ChatInputBar extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _ThinkingLoader extends StatefulWidget {
+  const _ThinkingLoader();
+
+  @override
+  State<_ThinkingLoader> createState() => _ThinkingLoaderState();
+}
+
+class _ThinkingLoaderState extends State<_ThinkingLoader>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'AI is thinking',
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: Color(0xFF555555),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: List.generate(3, (index) {
+            return AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) {
+                // Har dot ka delay alag karne ke liye math equation
+                final delay = index * 0.2;
+                final animValue = (_controller.value - delay).clamp(0.0, 1.0);
+
+                // Opacity aur size change animation cycle
+                double scale = 1.0;
+                double opacity = 0.3;
+
+                if (_controller.value > delay &&
+                    _controller.value < delay + 0.4) {
+                  scale = 1.4;
+                  opacity = 1.0;
+                }
+
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 3),
+                  width: 6 * scale,
+                  height: 6 * scale,
+                  decoration: BoxDecoration(
+                    color: const Color(
+                      0xFF6366F1,
+                    ).withOpacity(opacity), // Accent purple dot
+                    shape: BoxShape.circle,
+                  ),
+                );
+              },
+            );
+          }),
+        ),
+      ],
     );
   }
 }

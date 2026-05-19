@@ -1301,7 +1301,7 @@ abstract class AppLocalizations {
   /// No description provided for @chatbotDocumentReadySubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Your PDF has been analyzed. Here\'s a quick summary.'**
+  /// **'You can now chat with your PDF'**
   String get chatbotDocumentReadySubtitle;
 
   /// No description provided for @chatbotCurrentSummary.

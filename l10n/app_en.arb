@@ -232,7 +232,7 @@
   "chatbotNoConversationsSubtitle": "Upload a PDF to start chatting with your AI assistant.",
   "chatbotUploadPdfButton": "Upload a PDF",
   "chatbotDocumentReadyTitle": "Document Ready",
-  "chatbotDocumentReadySubtitle": "Your PDF has been analyzed. Here's a quick summary.",
+  "chatbotDocumentReadySubtitle": "You can now chat with your PDF",
   "chatbotCurrentSummary": "Current Summary",
   "chatbotStartChatting": "Start Chatting",
   "chatbotChatGreeting": "👋🏻 Hi! I'm your AI assistant. Ask me anything about this PDF and I'll help you.",

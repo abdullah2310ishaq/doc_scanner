@@ -94,12 +94,8 @@ class PdfAssistantProcessProvider extends ChangeNotifier {
 
       await _pdfBuilderService.buildTranslatedPagesPdf(
         outputPath: translatedPath,
-        sourcePdfPath: storedOriginal,
         translatedPageTexts: translatedPages,
-        languageName: targetLanguage.name,
-        languageCode: targetLanguage.code,
         onProgress: (pageProgress) {
-          // Surface per-page overlay progress inside the generatingPdf step
           completedSteps = 2 + pageProgress.clamp(0.0, 1.0);
           notifyListeners();
         },

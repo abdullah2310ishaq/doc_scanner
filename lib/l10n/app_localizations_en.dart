@@ -629,8 +629,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatbotDocumentReadyTitle => 'Document Ready';
 
   @override
-  String get chatbotDocumentReadySubtitle =>
-      'Your PDF has been analyzed. Here\'s a quick summary.';
+  String get chatbotDocumentReadySubtitle => 'You can now chat with your PDF';
 
   @override
   String get chatbotCurrentSummary => 'Current Summary';
