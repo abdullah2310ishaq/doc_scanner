@@ -37,7 +37,8 @@ class StartProcessingScreen extends StatefulWidget {
 
 class _StartProcessingScreenState extends State<StartProcessingScreen> {
   final PdfAssistantStorageService _storage = PdfAssistantStorageService();
-  final PdfAssistantPickerService _picker = PdfAssistantPickerService(); // Instantiated here
+  final PdfAssistantPickerService _picker =
+      PdfAssistantPickerService(); // Instantiated here
 
   String? _pdfPath;
   String? _displayName;
@@ -63,7 +64,7 @@ class _StartProcessingScreenState extends State<StartProcessingScreen> {
   Future<void> _pickPdfFile() async {
     try {
       final File? file = await _picker.pickPdf();
-      
+
       // If user cancels picking or back-navigates from directory browser
       if (file == null) return;
 
@@ -84,24 +85,104 @@ class _StartProcessingScreenState extends State<StartProcessingScreen> {
 
   Future<void> _confirmAndClearFile() async {
     final l10n = context.l10n;
-    
+
     final proceedWithRemoval = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(l10n.pdfAssistantRemoveTitle),
-          content: Text(l10n.pdfAssistantRemoveWarning),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: Text(l10n.cancel),
+        return Dialog(
+          insetPadding: const EdgeInsets.symmetric(
+            horizontal: 32,
+            vertical: 24,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          elevation: 8,
+          backgroundColor: AppColors.white,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Dialog Title
+                Text(
+                  l10n.pdfAssistantRemoveTitle,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: AppColors.textPrimary,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -0.2,
+                  ),
+                ),
+                const SizedBox(height: 8),
+
+                // Dialog Description Message
+                Text(
+                  l10n.pdfAssistantRemoveWarning,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: AppColors.textSecondary,
+                    fontSize: 14,
+                    height: 1.4,
+                  ),
+                ),
+                const SizedBox(height: 24),
+
+                // Action Buttons Group
+                Row(
+                  children: [
+                    // Cancel Button
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () => Navigator.of(context).pop(false),
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          side: const BorderSide(color: AppColors.searchBorder),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: Text(
+                          l10n.cancel,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+
+                    // Confirm Remove Button
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.of(context).pop(true),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.redAccent,
+                          foregroundColor: AppColors.white,
+                          elevation: 0,
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: Text(
+                          l10n.remove,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(true),
-              style: TextButton.styleFrom(foregroundColor: Colors.redAccent),
-              child: Text(l10n.remove),
-            ),
-          ],
+          ),
         );
       },
     );
@@ -287,7 +368,9 @@ class _PdfPreviewCard extends StatelessWidget {
               color: AppColors.white,
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
-                color: hasFile ? AppColors.searchBorder : AppColors.chatbotAccent.withValues(alpha: 0.5),
+                color: hasFile
+                    ? AppColors.searchBorder
+                    : AppColors.chatbotAccent.withValues(alpha: 0.5),
                 width: hasFile ? 1 : 1.5,
               ),
             ),
@@ -297,16 +380,21 @@ class _PdfPreviewCard extends StatelessWidget {
                   width: 52,
                   height: 52,
                   decoration: BoxDecoration(
-                    color: hasFile ? AppColors.cardPdfBg : AppColors.chatbotAccent.withValues(alpha: 0.08),
+                    color: hasFile
+                        ? AppColors.cardPdfBg
+                        : AppColors.chatbotAccent.withValues(alpha: 0.08),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   alignment: Alignment.center,
                   child: SvgPicture.asset(
-                    HomeAssets.pdf, 
-                    width: 28, 
+                    HomeAssets.pdf,
+                    width: 28,
                     height: 28,
-                    colorFilter: !hasFile 
-                        ? const ColorFilter.mode(AppColors.chatbotAccent, BlendMode.srcIn) 
+                    colorFilter: !hasFile
+                        ? const ColorFilter.mode(
+                            AppColors.chatbotAccent,
+                            BlendMode.srcIn,
+                          )
                         : null,
                   ),
                 ),
@@ -322,7 +410,9 @@ class _PdfPreviewCard extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
-                            color: hasFile ? AppColors.textPrimary : AppColors.chatbotAccent,
+                            color: hasFile
+                                ? AppColors.textPrimary
+                                : AppColors.chatbotAccent,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,

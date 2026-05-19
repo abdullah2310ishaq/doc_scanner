@@ -23,8 +23,10 @@ class PdfAssistantResultScreen extends StatelessWidget {
 
   Future<void> _share(BuildContext context, String path) async {
     try {
-      await PdfAssistantFileActionsService()
-          .shareFile(path, subject: session.displayName);
+      await PdfAssistantFileActionsService().shareFile(
+        path,
+        subject: session.displayName,
+      );
     } catch (_) {
       if (!context.mounted) return;
       AppToast.show(context, context.l10n.exportFailed);
@@ -74,34 +76,38 @@ class PdfAssistantResultScreen extends StatelessWidget {
     final l10n = context.l10n;
 
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor:
+          AppColors.white, // Matches clean white background in screenshot
       appBar: AppBar(
-        title: Text(l10n.pdfAssistantResultTitle),
-        backgroundColor: AppColors.scaffoldBackground,
+        title: Text(
+          l10n.pdfAssistantResultTitle,
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+        ),
+        backgroundColor: AppColors.white,
         elevation: 0,
         foregroundColor: AppColors.textPrimary,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.maybePop(context),
+        ),
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                session.displayName,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Text(
-                session.targetLanguageName,
-                style: const TextStyle(color: AppColors.textSecondary),
-              ),
-              const SizedBox(height: 20),
               _ResultCard(
                 title: l10n.pdfAssistantTranslatedPdfTitle,
-                subtitle: l10n.pdfAssistantTranslatedPdfDescription,
+                subtitle:
+                    '${l10n.pdfAssistantTranslatedPdfDescription} ${session.targetLanguageName}',
+                backgroundColor: const Color(0xffF2F2FC),
+                iconAsset: 'assets/translated_pdf.svg',
+                fallbackIcon: const Icon(
+                  Icons.picture_as_pdf,
+                  color: Color(0xff4A55E7),
+                  size: 32,
+                ),
                 onOpen: () => _open(context, session.translatedPdfPath),
                 onShare: () => _share(context, session.translatedPdfPath),
                 onDownload: () => _download(
@@ -110,10 +116,17 @@ class PdfAssistantResultScreen extends StatelessWidget {
                   '${session.displayName}_translated.pdf',
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 16),
               _ResultCard(
                 title: l10n.pdfAssistantExtractedTextTitle,
                 subtitle: l10n.pdfAssistantExtractedTextDescription,
+                backgroundColor: const Color(0xffDCF0E0),
+                iconAsset: 'assets/extracted_text.svg',
+                fallbackIcon: const Icon(
+                  Icons.text_fields,
+                  color: Color(0xff2E7D32),
+                  size: 32,
+                ),
                 onOpen: () => _open(context, session.extractedTextPdfPath),
                 onShare: () => _share(context, session.extractedTextPdfPath),
                 onDownload: () => _download(
@@ -124,6 +137,14 @@ class PdfAssistantResultScreen extends StatelessWidget {
               ),
               const Spacer(),
               OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: Colors.red,
+                  side: const BorderSide(color: Colors.redAccent),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
                 onPressed: () => _deleteSession(context),
                 child: Text(l10n.commonDelete),
               ),
@@ -139,6 +160,9 @@ class _ResultCard extends StatelessWidget {
   const _ResultCard({
     required this.title,
     required this.subtitle,
+    required this.backgroundColor,
+    required this.iconAsset,
+    required this.fallbackIcon,
     required this.onOpen,
     required this.onShare,
     required this.onDownload,
@@ -146,6 +170,9 @@ class _ResultCard extends StatelessWidget {
 
   final String title;
   final String subtitle;
+  final Color backgroundColor;
+  final String iconAsset;
+  final Widget fallbackIcon;
   final VoidCallback onOpen;
   final VoidCallback onShare;
   final VoidCallback onDownload;
@@ -155,28 +182,47 @@ class _ResultCard extends StatelessWidget {
     final l10n = context.l10n;
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: backgroundColor,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.searchBorder),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // You can substitute this with SvgPicture.asset(iconAsset) from flutter_svg
+              fallbackIcon,
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      subtitle,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 4),
-          Text(
-            subtitle,
-            style: const TextStyle(
-              fontSize: 13,
-              color: AppColors.textSecondary,
-            ),
-          ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 16),
+          // Action Buttons
           Wrap(
             spacing: 8,
             runSpacing: 8,
@@ -204,7 +250,11 @@ class _ActionChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ActionChip(
-      label: Text(label),
+      backgroundColor: Colors.white.withOpacity(0.8),
+      label: Text(
+        label,
+        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+      ),
       onPressed: onTap,
     );
   }
