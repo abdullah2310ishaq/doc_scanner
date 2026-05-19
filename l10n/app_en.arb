@@ -282,5 +282,21 @@
   "pdfAssistantProcessFailed": "Could not process this PDF",
   "errorPdfAssistantPickFailed": "Could not open the selected PDF",
   "errorPdfAssistantLinkFailed": "Could not download PDF from this link",
-  "errorPdfAssistantPdfEmpty": "No text found in this PDF"
+  "errorPdfAssistantPdfEmpty": "No text found in this PDF",
+
+  "commonNext": "Next",
+  "commonSkip": "Skip",
+  "commonContinue": "Continue",
+
+  "splashTagline": "AI-powered document scanning",
+
+  "onboardingPage1Title": "Scan any document",
+  "onboardingPage1Description": "Capture receipts, notes, and papers with your camera in seconds.",
+  "onboardingPage2Title": "Smart OCR & translate",
+  "onboardingPage2Description": "Extract text instantly and translate it into your preferred language.",
+  "onboardingPage3Title": "Organize & export",
+  "onboardingPage3Description": "Save scans, export PDFs, and keep your documents in one place.",
+
+  "settingsChooseLanguage": "Choose a language",
+  "settingsLanguageApply": "Apply"
 }

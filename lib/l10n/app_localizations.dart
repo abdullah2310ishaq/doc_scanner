@@ -1575,6 +1575,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No text found in this PDF'**
   String get errorPdfAssistantPdfEmpty;
+
+  /// No description provided for @commonNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get commonNext;
+
+  /// No description provided for @commonSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get commonSkip;
+
+  /// No description provided for @commonContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get commonContinue;
+
+  /// No description provided for @splashTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'AI-powered document scanning'**
+  String get splashTagline;
+
+  /// No description provided for @onboardingPage1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan any document'**
+  String get onboardingPage1Title;
+
+  /// No description provided for @onboardingPage1Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture receipts, notes, and papers with your camera in seconds.'**
+  String get onboardingPage1Description;
+
+  /// No description provided for @onboardingPage2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart OCR & translate'**
+  String get onboardingPage2Title;
+
+  /// No description provided for @onboardingPage2Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Extract text instantly and translate it into your preferred language.'**
+  String get onboardingPage2Description;
+
+  /// No description provided for @onboardingPage3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Organize & export'**
+  String get onboardingPage3Title;
+
+  /// No description provided for @onboardingPage3Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Save scans, export PDFs, and keep your documents in one place.'**
+  String get onboardingPage3Description;
+
+  /// No description provided for @settingsChooseLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a language'**
+  String get settingsChooseLanguage;
+
+  /// No description provided for @settingsLanguageApply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get settingsLanguageApply;
 }
 
 class _AppLocalizationsDelegate

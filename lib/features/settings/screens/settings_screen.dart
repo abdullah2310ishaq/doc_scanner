@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart'; // Assuming you use this for your custom SVGs
+import 'package:provider/provider.dart';
+
+import '../../../core/services/locale_service.dart';
 import '../../../core/utils/l10n_extension.dart';
+import '../models/app_language_option.dart';
+import 'language.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -8,6 +12,10 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final localeService = context.watch<LocaleService>();
+    final languageCode = localeService.getCurrentLocale().languageCode;
+    final languageLabel =
+        nativeNameForLanguageCode(languageCode) ?? languageCode;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -15,7 +23,6 @@ class SettingsScreen extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.all(16.0),
           children: [
-            // Header Section: Greeting & Pro Badge
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,47 +31,35 @@ class SettingsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Good Morning,',
+                      l10n.settingsTitle,
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey[600],
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    Row(
-                      children: const [
-                        Text(
-                          'Angrew Heubru',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black87,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(width: 4),
-                        Text('👋', style: TextStyle(fontSize: 18)),
-                      ],
-                    ),
                   ],
                 ),
-                // Pro Badge
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xff7C4DFF), // Purple accent color
+                    color: const Color(0xff7C4DFF),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
                     children: [
-                      Image.asset('assets/home/pro.png', width: 20, height: 20),
-                      SizedBox(width: 6),
+                      Image.asset(
+                        'assets/home/pro.png',
+                        width: 20,
+                        height: 20,
+                      ),
+                      const SizedBox(width: 6),
                       Text(
-                        'Pro',
-                        style: TextStyle(
+                        l10n.homeProBadge,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
@@ -76,65 +71,33 @@ class SettingsScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 32),
-
-            // Settings Options List
             _buildSettingsTile(
-              icon: Icons
-                  .language_rounded, // Replace with SvgPicture.asset('assets/language.svg')
+              icon: Icons.language_rounded,
               iconColor: const Color(0xff5C6BC0),
-              title: 'Language',
+              title: l10n.settingsLanguage,
               trailing: Text(
-                'English',
+                languageLabel,
                 style: TextStyle(color: Colors.grey[600], fontSize: 14),
               ),
               onTap: () {
-                // Handle Language Selection
+                Navigator.push<void>(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (_) => const LanguageSelectionScreen(),
+                  ),
+                );
               },
             ),
             _buildDivider(),
-
             _buildSettingsTile(
-              icon: Icons
-                  .verified_user_rounded, // Replace with SvgPicture.asset('assets/privacy.svg')
+              icon: Icons.verified_user_rounded,
               iconColor: const Color(0xff3F51B5),
-              title: 'Privacy Policy',
+              title: l10n.settingsPrivacy,
               trailing: const Icon(
                 Icons.chevron_right_rounded,
                 color: Colors.black87,
               ),
-              onTap: () {
-                // Handle Privacy Policy Tap
-              },
-            ),
-            _buildDivider(),
-
-            _buildSettingsTile(
-              icon: Icons
-                  .star_rounded, // Replace with SvgPicture.asset('assets/rate.svg')
-              iconColor: const Color(0xff5C6BC0),
-              title: 'Rate App',
-              trailing: const Icon(
-                Icons.chevron_right_rounded,
-                color: Colors.black87,
-              ),
-              onTap: () {
-                // Handle Rate App Tap
-              },
-            ),
-            _buildDivider(),
-
-            _buildSettingsTile(
-              icon: Icons
-                  .share_rounded, // Replace with SvgPicture.asset('assets/share.svg')
-              iconColor: const Color(0xff5C6BC0),
-              title: 'Share App',
-              trailing: const Icon(
-                Icons.chevron_right_rounded,
-                color: Colors.black87,
-              ),
-              onTap: () {
-                // Handle Share App Tap
-              },
+              onTap: () {},
             ),
             _buildDivider(),
           ],
@@ -143,7 +106,6 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  // Helper method to build consistent tiles
   Widget _buildSettingsTile({
     required IconData icon,
     required Color iconColor,
@@ -157,11 +119,7 @@ class SettingsScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 4.0),
         child: Row(
           children: [
-            Icon(
-              icon,
-              color: iconColor,
-              size: 26,
-            ), // Swap this with your SvgPicture.asset when ready
+            Icon(icon, color: iconColor, size: 26),
             const SizedBox(width: 16),
             Expanded(
               child: Text(
@@ -180,7 +138,6 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  // Thin custom divider to match the design style
   Widget _buildDivider() {
     return Divider(color: Colors.grey[200], height: 1, thickness: 1);
   }

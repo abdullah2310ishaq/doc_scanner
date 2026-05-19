@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import 'app.dart';
 import 'core/providers/connectivity_provider.dart';
+import 'core/services/locale_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +19,9 @@ Future<void> main() async {
 
   final connectivityProvider = ConnectivityProvider();
   await connectivityProvider.initialize();
+
+  final localeService = LocaleService();
+  await localeService.initialize();
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   SystemChrome.setSystemUIOverlayStyle(
@@ -31,8 +35,11 @@ Future<void> main() async {
   );
 
   runApp(
-    ChangeNotifierProvider.value(
-      value: connectivityProvider,
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: connectivityProvider),
+        ChangeNotifierProvider.value(value: localeService),
+      ],
       child: const DocScannerApp(),
     ),
   );

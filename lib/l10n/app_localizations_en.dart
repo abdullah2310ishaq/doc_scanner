@@ -785,4 +785,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorPdfAssistantPdfEmpty => 'No text found in this PDF';
+
+  @override
+  String get commonNext => 'Next';
+
+  @override
+  String get commonSkip => 'Skip';
+
+  @override
+  String get commonContinue => 'Continue';
+
+  @override
+  String get splashTagline => 'AI-powered document scanning';
+
+  @override
+  String get onboardingPage1Title => 'Scan any document';
+
+  @override
+  String get onboardingPage1Description =>
+      'Capture receipts, notes, and papers with your camera in seconds.';
+
+  @override
+  String get onboardingPage2Title => 'Smart OCR & translate';
+
+  @override
+  String get onboardingPage2Description =>
+      'Extract text instantly and translate it into your preferred language.';
+
+  @override
+  String get onboardingPage3Title => 'Organize & export';
+
+  @override
+  String get onboardingPage3Description =>
+      'Save scans, export PDFs, and keep your documents in one place.';
+
+  @override
+  String get settingsChooseLanguage => 'Choose a language';
+
+  @override
+  String get settingsLanguageApply => 'Apply';
 }
