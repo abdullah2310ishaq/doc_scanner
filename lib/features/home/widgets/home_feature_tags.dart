@@ -16,12 +16,12 @@ class HomeFeatureTags extends StatelessWidget {
   final List<HomeFeatureTag> tags;
 
   static const double _tagRadius = 6;
-  static const double _iconSize = 14;
+  static const double _iconSize = 12;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 34,
+      height: 26,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: tags.length,
@@ -47,7 +47,7 @@ class _TagChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
       decoration: BoxDecoration(
         color: AppColors.tagBackground,
         borderRadius: BorderRadius.circular(HomeFeatureTags._tagRadius),
@@ -65,7 +65,7 @@ class _TagChip extends StatelessWidget {
           Text(
             label,
             style: const TextStyle(
-              fontSize: 12,
+              fontSize: 11,
               fontWeight: FontWeight.w500,
               color: AppColors.textSecondary,
             ),

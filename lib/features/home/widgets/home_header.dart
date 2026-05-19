@@ -12,6 +12,7 @@ class HomeHeader extends StatelessWidget {
     required this.menuSemanticsLabel,
     this.onMenuTap,
     this.onProTap,
+    this.tags,
   });
 
   final String greeting;
@@ -20,6 +21,7 @@ class HomeHeader extends StatelessWidget {
   final String menuSemanticsLabel;
   final VoidCallback? onMenuTap;
   final VoidCallback? onProTap;
+  final Widget? tags;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class HomeHeader extends StatelessWidget {
         Text(
           greeting,
           style: const TextStyle(
-            fontSize: 15,
+            fontSize: 13,
             fontWeight: FontWeight.w500,
             color: AppColors.textSecondary,
             height: 1.25,
@@ -48,6 +50,10 @@ class HomeHeader extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         _HomeTitle(prefix: titlePrefix),
+        if (tags != null) ...[
+          const SizedBox(height: 16),
+          tags!,
+        ],
       ],
     );
   }
@@ -69,8 +75,8 @@ class _DrawerButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         child: Image.asset(
           HomeAssets.drawer,
-          width: 45,
-          height: 45,
+          width: 36,
+          height: 36,
           fit: BoxFit.contain,
         ),
       ),
@@ -92,7 +98,7 @@ class _ProButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
 
-        child: Image.asset(HomeAssets.pro, height: 33, fit: BoxFit.contain),
+        child: Image.asset(HomeAssets.pro, height: 26, fit: BoxFit.contain),
       ),
     );
   }
@@ -112,7 +118,7 @@ class _HomeTitle extends StatelessWidget {
           child: Text(
             prefix,
             style: const TextStyle(
-              fontSize: 28,
+              fontSize: 22,
               fontWeight: FontWeight.w800,
               color: AppColors.textPrimary,
               height: 1.2,
@@ -120,7 +126,7 @@ class _HomeTitle extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 6),
-        Image.asset(HomeAssets.scanner, height: 36, fit: BoxFit.contain),
+        Image.asset(HomeAssets.scanner, height: 26, fit: BoxFit.contain),
       ],
     );
   }

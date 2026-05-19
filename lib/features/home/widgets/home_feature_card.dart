@@ -20,7 +20,7 @@ class HomeFeatureCard extends StatelessWidget {
   final VoidCallback? onTap;
 
   static const double _radius = 6;
-  static const double _iconSize = 44;
+  static const double _iconSize = 32;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class HomeFeatureCard extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(_radius),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
           child: Row(
             children: [
               _FeatureIcon(assetPath: iconAsset, size: _iconSize),
@@ -43,7 +43,7 @@ class HomeFeatureCard extends StatelessWidget {
                     Text(
                       title,
                       style: const TextStyle(
-                        fontSize: 15,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700,
                         color: AppColors.textPrimary,
                       ),
@@ -52,7 +52,7 @@ class HomeFeatureCard extends StatelessWidget {
                     Text(
                       subtitle,
                       style: const TextStyle(
-                        fontSize: 12,
+                        fontSize: 11,
                         color: AppColors.textSecondary,
                         height: 1.35,
                       ),

@@ -61,33 +61,32 @@ class HomeScreen extends StatelessWidget {
                     menuSemanticsLabel: l10n.homeMenuButton,
                     onMenuTap: () =>
                         Scaffold.of(scaffoldContext).openDrawer(),
+                    tags: HomeFeatureTags(
+                      tags: [
+                        HomeFeatureTag(
+                          label: l10n.homeTagAiPowered,
+                          iconAsset: HomeAssets.sparkles,
+                        ),
+                        HomeFeatureTag(
+                          label: l10n.homeTagFastOcr,
+                          iconAsset: HomeAssets.ocr,
+                        ),
+                        HomeFeatureTag(
+                          label: l10n.homeTagSecure,
+                          iconAsset: HomeAssets.secure,
+                        ),
+                        HomeFeatureTag(
+                          label: l10n.homeTagSmartCrop,
+                          iconAsset: HomeAssets.crop,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 SliverPadding(
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                   sliver: SliverList(
                     delegate: SliverChildListDelegate([
-                      HomeFeatureTags(
-                        tags: [
-                          HomeFeatureTag(
-                            label: l10n.homeTagAiPowered,
-                            iconAsset: HomeAssets.sparkles,
-                          ),
-                          HomeFeatureTag(
-                            label: l10n.homeTagFastOcr,
-                            iconAsset: HomeAssets.ocr,
-                          ),
-                          HomeFeatureTag(
-                            label: l10n.homeTagSecure,
-                            iconAsset: HomeAssets.secure,
-                          ),
-                          HomeFeatureTag(
-                            label: l10n.homeTagSmartCrop,
-                            iconAsset: HomeAssets.crop,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
                       HomeHeroCard(
                         badge: l10n.homeHeroBadge,
                         title: l10n.homeHeroTitle,

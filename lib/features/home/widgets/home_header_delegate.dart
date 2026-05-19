@@ -11,6 +11,7 @@ class HomeHeaderSliverDelegate extends SliverPersistentHeaderDelegate {
     required this.menuSemanticsLabel,
     this.onMenuTap,
     this.onProTap,
+    this.tags,
   });
 
   final String greeting;
@@ -19,9 +20,10 @@ class HomeHeaderSliverDelegate extends SliverPersistentHeaderDelegate {
   final String menuSemanticsLabel;
   final VoidCallback? onMenuTap;
   final VoidCallback? onProTap;
+  final Widget? tags;
 
   /// Increased extent to allow multi-line text wrapping without overflow.
-  static const double extent = 180;
+  static const double extent = 170;
 
   @override
   double get minExtent => extent;
@@ -46,6 +48,7 @@ class HomeHeaderSliverDelegate extends SliverPersistentHeaderDelegate {
           menuSemanticsLabel: menuSemanticsLabel,
           onMenuTap: onMenuTap,
           onProTap: onProTap,
+          tags: tags,
         ),
       ),
     );
