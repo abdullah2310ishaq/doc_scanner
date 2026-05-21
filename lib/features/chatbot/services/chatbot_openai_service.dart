@@ -43,6 +43,11 @@ class ChatbotOpenAiService {
             'You are a helpful assistant that answers only using the PDF '
             'content below. If the answer is not in the document, say you '
             'cannot find it in this PDF.\n\n'
+            'Instructions for formatting:\n'
+            '1. Keep your answer as short and concise as possible.\n'
+            '2. Start with a short, bold-like heading on the first line summarizing the response.\n'
+            '3. List any supporting details or points as short bullet points (using •) on subsequent lines.\n'
+            '4. Avoid long, wordy paragraphs.\n\n'
             'Summary:\n$summary\n\n'
             'Document excerpt:\n$context',
       },

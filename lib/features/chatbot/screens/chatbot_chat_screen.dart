@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../../../core/constants/chatbot_assets.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/delete_dialog.dart';
@@ -134,9 +133,9 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
         final title = provider.session?.displayName ?? widget.displayName;
 
         return Scaffold(
-          backgroundColor: const Color(0xFFF8FAFC),
+          backgroundColor: const Color(0xFFF9FAFD),
           appBar: AppBar(
-            backgroundColor: const Color(0xFFF8FAFC),
+            backgroundColor: const Color(0xFFF9FAFD),
             elevation: 0,
             foregroundColor: AppColors.textPrimary,
             centerTitle: true,
@@ -194,10 +193,26 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
                               onActionTap: (promptText) =>
                                   _sendMessage(provider, promptText),
                             )
-                          else
+                          else ...[
+                            if ((widget.initialSummary ??
+                                    provider.session?.summary ??
+                                    '')
+                                .trim()
+                                .isNotEmpty)
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 16),
+                                child: _DocumentSummaryBox(
+                                  l10n: l10n,
+                                  summary:
+                                      widget.initialSummary ??
+                                      provider.session?.summary ??
+                                      '',
+                                ),
+                              ),
                             ...provider.messages.map(
                               (message) => _MessageBubble(message: message),
                             ),
+                          ],
                           if (provider.isSending)
                             const Padding(
                               padding: EdgeInsets.symmetric(
@@ -365,43 +380,55 @@ class _DocumentReadyWelcomeView extends StatelessWidget {
 
         // 4. Compact Structural Document Summary Panel
         if (summary.trim().isNotEmpty)
-          Container(
-            height: 150,
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.black.withOpacity(0.02)),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  l10n.chatbotCurrentSummary,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Expanded(
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Text(
-                      summary,
-                      style: TextStyle(
-                        fontSize: 13,
-                        height: 1.4,
-                        color: AppColors.textPrimary.withOpacity(0.7),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+          _DocumentSummaryBox(l10n: l10n, summary: summary),
+      ],
+    );
+  }
+}
+
+class _DocumentSummaryBox extends StatelessWidget {
+  const _DocumentSummaryBox({required this.l10n, required this.summary});
+
+  final AppLocalizations l10n;
+  final String summary;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 260,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.black.withOpacity(0.02)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            l10n.chatbotCurrentSummary,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: AppColors.textPrimary,
             ),
           ),
-      ],
+          const SizedBox(height: 8),
+          Expanded(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Text(
+                summary,
+                style: TextStyle(
+                  fontSize: 13,
+                  height: 1.4,
+                  color: AppColors.textPrimary.withOpacity(0.7),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -510,6 +537,57 @@ class _MessageBubble extends StatelessWidget {
         ),
       );
     } else {
+      final lines = cleanedText
+          .split('\n')
+          .map((l) => l.trim())
+          .where((l) => l.isNotEmpty)
+          .toList();
+
+      Widget contentWidget;
+      if (lines.length > 1) {
+        final heading = lines.first;
+        final points = lines.sublist(1);
+
+        contentWidget = Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              heading,
+              style: const TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+                height: 1.3,
+              ),
+            ),
+            const SizedBox(height: 12),
+            ...points.map((point) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Text(
+                  point,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    height: 1.45,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+              );
+            }),
+          ],
+        );
+      } else {
+        contentWidget = Text(
+          cleanedText,
+          style: const TextStyle(
+            fontSize: 15,
+            height: 1.55,
+            color: AppColors.textPrimary,
+          ),
+        );
+      }
+
       return Align(
         alignment: Alignment.centerLeft,
         child: Column(
@@ -525,7 +603,9 @@ class _MessageBubble extends StatelessWidget {
               ),
             ),
             Container(
-              width: double.infinity,
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.sizeOf(context).width * 0.8,
+              ),
               margin: const EdgeInsets.only(bottom: 16),
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -533,14 +613,7 @@ class _MessageBubble extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: Colors.black.withOpacity(0.04)),
               ),
-              child: Text(
-                cleanedText,
-                style: const TextStyle(
-                  fontSize: 15,
-                  height: 1.55,
-                  color: AppColors.textPrimary,
-                ),
-              ),
+              child: contentWidget,
             ),
           ],
         ),
@@ -568,56 +641,73 @@ class _ChatInputBar extends StatelessWidget {
       top: false,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-        child: Row(
-          children: [
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: const Color(0xFFE2E8F0)),
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 4,
-                ),
+        child: Container(
+          // Pura input bar aik hi container hai jaisa image mein hai
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(16), // Rounded capsule edges
+            border: Border.all(color: const Color(0xFFE2E8F0)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.02),
+                blurRadius: 6,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.fromLTRB(
+            16,
+            4,
+            8,
+            4,
+          ), // Right padding kam ki taake button sahi adjust ho
+          child: Row(
+            children: [
+              Expanded(
                 child: TextField(
                   controller: controller,
                   minLines: 1,
                   maxLines: 4,
-                  style: const TextStyle(fontSize: 14),
+                  style: const TextStyle(
+                    fontSize: 15,
+                    color: AppColors.textPrimary,
+                  ),
                   decoration: InputDecoration(
                     hintText: hint,
-                    hintStyle: const TextStyle(
-                      color: Colors.grey,
-                      fontSize: 14,
+                    hintStyle: TextStyle(
+                      color: Colors.grey.shade500,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
                     ),
                     border: InputBorder.none,
                     isDense: true,
                   ),
                 ),
               ),
-            ),
-            const SizedBox(width: 8),
-            IconButton(
-              onPressed: isSending
-                  ? null
-                  : () {
-                      if (controller.text.trim().isNotEmpty) {
-                        onSend(controller.text);
-                      }
-                    },
-              icon: const Icon(Icons.send_rounded, size: 22),
-              color: AppColors.white,
-              style: IconButton.styleFrom(
-                backgroundColor: const Color(0xFF4F46E5),
-                minimumSize: const Size(44, 44),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+              // Button ko Row ke andar TextField ke sath hi rakha hai taake boundary ke andar show ho
+              IconButton(
+                onPressed: isSending
+                    ? null
+                    : () {
+                        if (controller.text.trim().isNotEmpty) {
+                          onSend(controller.text);
+                        }
+                      },
+                icon: const Icon(Icons.send_rounded, size: 20),
+                color: AppColors.white,
+                style: IconButton.styleFrom(
+                  backgroundColor: const Color(
+                    0xFF4F56FF,
+                  ), // Blue/purple tint matches image perfectly
+                  minimumSize: const Size(40, 40),
+                  maximumSize: const Size(40, 40),
+                  shape:
+                      const CircleBorder(), // Circular floating action button effect inside bar
+                  elevation: 0,
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
