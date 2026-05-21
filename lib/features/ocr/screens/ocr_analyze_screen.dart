@@ -202,11 +202,7 @@ class _OcrAnalyzeBody extends StatelessWidget {
                     height: layout.displaySize.height,
                     child: Image.file(File(imagePath), fit: BoxFit.fill),
                   ),
-                  Positioned(
-                    left: layout.offset.dx,
-                    top: layout.offset.dy,
-                    width: layout.displaySize.width,
-                    height: layout.displaySize.height,
+                  Positioned.fill(
                     child: OcrTextHighlightOverlay(
                       blocks: blocks,
                       layout: layout,

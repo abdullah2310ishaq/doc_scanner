@@ -10,6 +10,7 @@ import '../providers/live_ocr_camera_provider.dart';
 import '../widgets/live_ocr_camera_overlay_button.dart';
 import '../widgets/live_ocr_camera_shutter.dart';
 import '../widgets/live_ocr_camera_tip_banner.dart';
+import '../widgets/live_ocr_text_painter.dart';
 import '../widgets/ocr_scan_reticle.dart';
 import '../ocr_flow.dart';
 
@@ -233,7 +234,17 @@ class _CameraPreviewLayer extends StatelessWidget {
               child: SizedBox(
                 width: previewWidth,
                 height: previewHeight,
-                child: CameraPreview(controller),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    CameraPreview(controller),
+                    CustomPaint(
+                      painter: LiveOcrTextPainter(
+                        blocks: provider.detectedBlocks,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );

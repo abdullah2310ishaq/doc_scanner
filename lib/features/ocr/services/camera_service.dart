@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
 
@@ -27,11 +28,18 @@ class CameraService {
       backCamera,
       ResolutionPreset.max,
       enableAudio: false,
-      imageFormatGroup: ImageFormatGroup.jpeg,
+      imageFormatGroup: Platform.isIOS
+          ? ImageFormatGroup.bgra8888
+          : ImageFormatGroup.yuv420,
     );
 
     await controller.initialize();
     await controller.setFlashMode(FlashMode.off);
+    try {
+      // In the Flutter camera package, FocusMode.auto enables continuous autofocus 
+      // under the hood (FocusMode only contains 'auto' and 'locked').
+      await controller.setFocusMode(FocusMode.auto);
+    } catch (_) {}
     try {
       await controller.lockCaptureOrientation(DeviceOrientation.portraitUp);
     } catch (_) {}
@@ -60,14 +68,26 @@ class CameraService {
       // Ignore if focus mode is unsupported
     }
 
-    final file = await controller.takePicture();
-    return file.path;
+    try {
+      final file = await controller.takePicture();
+      return file.path;
+    } finally {
+      // Restore continuous focus mode after capture
+      try {
+        await controller.setFocusMode(FocusMode.auto);
+      } catch (_) {}
+    }
   }
 
   Future<void> dispose() async {
     final controller = _controller;
     _controller = null;
     if (controller != null) {
+      if (controller.value.isStreamingImages) {
+        try {
+          await controller.stopImageStream();
+        } catch (_) {}
+      }
       await controller.dispose();
     }
   }
