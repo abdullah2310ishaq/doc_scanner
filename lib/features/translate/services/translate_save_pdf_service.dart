@@ -107,7 +107,7 @@ class TranslateSavePdfService {
         pw.SizedBox(height: 24),
         _buildHeader(title: title, primaryColor: primaryColor),
         pw.SizedBox(height: 16),
-        _buildBodyText(data.translatedText!.trim()),
+        _buildBodyText((data.translatedText ?? '').trim()),
       ]);
     }
 
@@ -118,8 +118,9 @@ class TranslateSavePdfService {
     required String title,
     required PdfColor primaryColor,
   }) {
+    // Do NOT call toUpperCase() — it breaks CJK, Arabic, and Urdu glyphs.
     return pw.Text(
-      title.toUpperCase(),
+      title,
       style: TranslatePdfFonts.headerStyle(title).copyWith(color: primaryColor),
     );
   }
