@@ -35,7 +35,11 @@ class PdfAssistantResultScreen extends StatelessWidget {
     );
   }
 
-  void _openExtractedTextScreen(BuildContext context, String title, String pdfPath) {
+  void _openExtractedTextScreen(
+    BuildContext context,
+    String title,
+    String pdfPath,
+  ) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => PdfAssistantExtractedTextScreen(
@@ -90,9 +94,9 @@ class PdfAssistantResultScreen extends StatelessWidget {
     final l10n = context.l10n;
 
     return Scaffold(
-      backgroundColor:
-          AppColors.white, // Matches clean white background in screenshot
+      backgroundColor: AppColors.white,
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           l10n.pdfAssistantResultTitle,
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
@@ -106,16 +110,19 @@ class PdfAssistantResultScreen extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 100),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
+
             children: [
               _ResultCard(
                 title: l10n.pdfAssistantTranslatedPdfTitle,
                 subtitle:
                     '${l10n.pdfAssistantTranslatedPdfDescription} ${session.targetLanguageName}',
-                backgroundColor: const Color(0xffF2F2FC),
+                backgroundColor: const Color(
+                  0xffF4F3FF,
+                ), // Soft purple tint matching screenshot
                 iconAsset: 'assets/translated_pdf.svg',
                 onTap: () => _openDetailedView(
                   context,
@@ -124,19 +131,20 @@ class PdfAssistantResultScreen extends StatelessWidget {
                   '${session.displayName}_translated.pdf',
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 24),
               _ResultCard(
                 title: l10n.pdfAssistantExtractedTextTitle,
                 subtitle: l10n.pdfAssistantExtractedTextDescription,
-                backgroundColor: const Color(0xffDCF0E0),
-                iconAsset: 'assets/extracted_text.svg',
+                backgroundColor: const Color(
+                  0xffE4F4E8,
+                ), // Soft green tint matching screenshot
+                iconAsset: 'assets/extracted_texxt.svg',
                 onTap: () => _openExtractedTextScreen(
                   context,
                   l10n.pdfAssistantExtractedTextTitle,
                   session.extractedTextPdfPath,
                 ),
               ),
-              const Spacer(),
             ],
           ),
         ),
@@ -164,42 +172,45 @@ class _ResultCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: backgroundColor,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(
+        8,
+      ), // Matches rounded corners in image
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Row(
+          padding: const EdgeInsets.symmetric(
+            vertical: 40,
+            horizontal: 30,
+          ), // Tall padding for large square look
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SvgPicture.asset(
                 iconAsset,
-                width: 32,
-                height: 32,
+                width: 50, // Large prominent icons as shown in screenshot
+                height: 50,
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black87,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      subtitle,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: Colors.black54,
-                      ),
-                    ),
-                  ],
+              const SizedBox(height: 20),
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF2D3142), // Dark slate gray text color
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                subtitle,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF9094A6), // Muted label color
                 ),
               ),
             ],

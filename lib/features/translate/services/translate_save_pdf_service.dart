@@ -112,11 +112,7 @@ class TranslateSavePdfService {
                 isRtl: _isRtl(data.selectedTextOnly),
               ),
               pw.SizedBox(height: 12),
-              _buildBodyCard(
-                data.selectedTextOnly,
-                backgroundColor,
-                borderColor,
-              ),
+              ..._buildParagraphs(data.selectedTextOnly),
             ],
             TranslateExportScope.translatedText => [
               _buildHeader(
@@ -125,11 +121,7 @@ class TranslateSavePdfService {
                 isRtl: _isRtl(data.translatedText ?? ''),
               ),
               pw.SizedBox(height: 12),
-              _buildBodyCard(
-                data.translatedText?.trim() ?? '',
-                backgroundColor,
-                borderColor,
-              ),
+              ..._buildParagraphs(data.translatedText ?? ''),
             ],
             TranslateExportScope.completeFile => _completeFileWidgets(
               data,
@@ -161,7 +153,7 @@ class TranslateSavePdfService {
         isRtl: isSourceRtl,
       ),
       pw.SizedBox(height: 12),
-      _buildBodyCard(sourceText, backgroundColor, borderColor),
+      ..._buildParagraphs(sourceText),
     ];
 
     if (data.hasTranslatedText) {
@@ -179,11 +171,7 @@ class TranslateSavePdfService {
           isRtl: isTranslatedRtl,
         ),
         pw.SizedBox(height: 12),
-        _buildBodyCard(
-          translatedText,
-          backgroundColor,
-          borderColor,
-        ),
+        ..._buildParagraphs(translatedText),
       ]);
     }
 
@@ -222,31 +210,64 @@ class TranslateSavePdfService {
     );
   }
 
-  pw.Widget _buildBodyCard(
-    String text,
-    PdfColor bgColor,
-    PdfColor borderColor,
-  ) {
-    final isRtl = _isRtl(text);
-    return pw.Container(
-      width: double.infinity,
-      padding: const pw.EdgeInsets.all(14),
-      decoration: pw.BoxDecoration(
-        color: bgColor,
-        borderRadius: const pw.BorderRadius.all(pw.Radius.circular(6)),
-        border: pw.Border.all(color: borderColor, width: 0.5),
-      ),
-      child: pw.Directionality(
-        textDirection: isRtl ? pw.TextDirection.rtl : pw.TextDirection.ltr,
-        child: pw.Text(
-          text,
-          textAlign: isRtl ? pw.TextAlign.right : pw.TextAlign.left,
-          style: TranslatePdfFonts.bodyStyle(
-            text,
-          ).copyWith(fontSize: 10.5, lineSpacing: 4),
+  List<pw.Widget> _buildParagraphs(String text) {
+    final normalized = text.replaceAll('\r\n', '\n').replaceAll('\r', '\n');
+    final paragraphs = _splitIntoParagraphs(normalized);
+    final widgets = <pw.Widget>[];
+
+    for (var i = 0; i < paragraphs.length; i++) {
+      final para = paragraphs[i];
+      if (para.trim().isEmpty) {
+        widgets.add(pw.SizedBox(height: 6));
+        continue;
+      }
+      final isParaRtl = _isRtl(para);
+      widgets.add(
+        pw.Text(
+          para,
+          textAlign: isParaRtl ? pw.TextAlign.right : pw.TextAlign.left,
+          textDirection: isParaRtl ? pw.TextDirection.rtl : pw.TextDirection.ltr,
+          style: TranslatePdfFonts.bodyStyle(para).copyWith(
+            fontSize: 10.5,
+            lineSpacing: 4,
+          ),
         ),
-      ),
-    );
+      );
+      if (i < paragraphs.length - 1) {
+        widgets.add(pw.SizedBox(height: 8));
+      }
+    }
+    return widgets;
+  }
+
+  List<String> _splitIntoParagraphs(String text) {
+    final result = <String>[];
+    for (final line in text.split('\n')) {
+      if (line.length <= 800) {
+        result.add(line);
+      } else {
+        // Split long line into chunks of max 800 chars, trying to break on space
+        var start = 0;
+        while (start < line.length) {
+          var end = start + 800;
+          if (end >= line.length) {
+            result.add(line.substring(start));
+            break;
+          }
+          // Find last space in the chunk
+          var lastSpace = line.lastIndexOf(' ', end);
+          if (lastSpace > start) {
+            result.add(line.substring(start, lastSpace));
+            start = lastSpace + 1;
+          } else {
+            // No space found, hard cut
+            result.add(line.substring(start, end));
+            start = end;
+          }
+        }
+      }
+    }
+    return result;
   }
 
   bool _isRtl(String text) {
