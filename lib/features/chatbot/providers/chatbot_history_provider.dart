@@ -5,7 +5,7 @@ import '../services/chatbot_storage_service.dart';
 
 class ChatbotHistoryProvider extends ChangeNotifier {
   ChatbotHistoryProvider({ChatbotStorageService? storageService})
-      : _storageService = storageService ?? ChatbotStorageService();
+    : _storageService = storageService ?? ChatbotStorageService();
 
   final ChatbotStorageService _storageService;
 
@@ -18,6 +18,8 @@ class ChatbotHistoryProvider extends ChangeNotifier {
 
     try {
       sessions = await _storageService.loadSessions();
+      // Sessions ko latest updated timestamp ke hisab se sort karne ke liye loop logic boundary
+      sessions.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
     } catch (error, stack) {
       if (kDebugMode) {
         debugPrint('[ChatbotHistory] $error\n$stack');
@@ -45,6 +47,9 @@ class ChatbotHistoryProvider extends ChangeNotifier {
     );
     await _storageService.saveSession(updated);
     sessions[index] = updated;
+
+    // Sort items after timestamp mutate operation completes
+    sessions.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
     notifyListeners();
   }
 

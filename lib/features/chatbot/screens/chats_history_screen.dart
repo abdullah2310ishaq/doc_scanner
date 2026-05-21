@@ -77,6 +77,22 @@ class _HistoryScreenState extends State<HistoryScreen> {
     AppToast.show(context, 'Deleted successfully');
   }
 
+  // Markdown characters aur extra formatting cleanup helper method
+  String _cleanPreviewText(String source) {
+    String cleanStr = source.replaceAll(RegExp(r'\*+'), '').trim();
+    if (cleanStr.length > 60) {
+      return '${cleanStr.substring(0, 60).trim()}...';
+    }
+    return cleanStr.isEmpty ? 'Empty conversation...' : '$cleanStr...';
+  }
+
+  // Real-time calculation matrix helper for dynamic leading timestamp formatting
+  String _formatSessionTime(DateTime dateTime) {
+    final hour = dateTime.hour.toString().padLeft(2, '0');
+    final minute = dateTime.minute.toString().padLeft(2, '0');
+    return '$hour:$minute';
+  }
+
   @override
   void dispose() {
     _searchController.dispose();
@@ -116,185 +132,184 @@ class _HistoryScreenState extends State<HistoryScreen> {
             return _EmptyState(onUpload: _returnToUploadAndOpenSheet);
           }
 
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                child: Container(
-                  height: 54,
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: AppColors.searchBorder.withValues(alpha: 0.6),
+          return SafeArea(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
+                  child: Container(
+                    height: 54,
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: AppColors.searchBorder.withValues(alpha: 0.6),
+                      ),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.search,
+                          color: AppColors.textSecondary.withValues(alpha: 0.7),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: TextField(
+                            controller: _searchController,
+                            decoration: const InputDecoration(
+                              hintText: 'Search your conversations..',
+                              hintStyle: TextStyle(
+                                color: AppColors.textSecondary,
+                                fontSize: 15,
+                              ),
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.search,
-                        color: AppColors.textSecondary.withValues(alpha: 0.7),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: TextField(
-                          controller: _searchController,
-                          decoration: const InputDecoration(
-                            hintText: 'Search your conversations..',
-                            hintStyle: TextStyle(
-                              color: AppColors.textSecondary,
-                              fontSize: 15,
-                            ),
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              // Conversations List View
-              Expanded(
-                child: ListView.separated(
-                  padding: const EdgeInsets.only(
-                    left: 16,
-                    right: 16,
-                    bottom: 16,
-                  ),
-                  itemCount: provider.sessions.length,
-                  separatorBuilder: (_, _) => const SizedBox(
-                    height: 12,
-                  ), // Fix: Single underscore use kiya taaki warning na aaye
-                  itemBuilder: (context, index) {
-                    final session = provider.sessions[index];
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: AppColors.searchBorder.withValues(alpha: 0.5),
-                        ),
-                      ),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
-                        ),
-                        onTap: () {
-                          ChatbotChatScreen.open(
-                            context,
-                            sessionId: session.id,
-                            displayName: session.displayName,
-                          );
-                        },
-                        leading: Container(
-                          width: 48,
-                          height: 48,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFFFECEF),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          padding: const EdgeInsets.all(10),
-                          child: SvgPicture.asset('assets/home/pdf.svg'),
-                        ),
-                        title: Text(
-                          session.displayName,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            color: AppColors.textPrimary,
+                const SizedBox(height: 8),
+                Expanded(
+                  child: ListView.separated(
+                    padding: const EdgeInsets.only(
+                      left: 16,
+                      right: 16,
+                      bottom: 16,
+                    ),
+                    itemCount: provider.sessions.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 12),
+                    itemBuilder: (context, index) {
+                      final session = provider.sessions[index];
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: AppColors.searchBorder.withValues(
+                              alpha: 0.5,
+                            ),
                           ),
                         ),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.only(top: 4),
-                          child: Text(
-                            session.previewText,
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
+                          onTap: () {
+                            ChatbotChatScreen.open(
+                              context,
+                              sessionId: session.id,
+                              displayName: session.displayName,
+                            );
+                          },
+                          leading: Container(
+                            width: 48,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFFFECEF),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            padding: const EdgeInsets.all(10),
+                            child: SvgPicture.asset('assets/home/pdf.svg'),
+                          ),
+                          title: Text(
+                            session.displayName,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
-                              color: AppColors.textSecondary,
-                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                          subtitle: Padding(
+                            padding: const EdgeInsets.only(top: 4),
+                            child: Text(
+                              _cleanPreviewText(session.previewText),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: AppColors.textSecondary,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                          trailing: SizedBox(
+                            height: 56,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Expanded(
+                                  child: PopupMenuButton<String>(
+                                    icon: const Icon(
+                                      Icons.more_vert,
+                                      color: AppColors.textSecondary,
+                                    ),
+                                    padding: EdgeInsets.zero,
+                                    constraints: const BoxConstraints(),
+                                    onSelected: (value) {
+                                      if (value == 'rename') {
+                                        _renameSession(
+                                          context,
+                                          provider,
+                                          session.id,
+                                          session.displayName,
+                                        );
+                                      } else if (value == 'delete') {
+                                        _deleteSession(
+                                          context,
+                                          provider,
+                                          session.id,
+                                        );
+                                      }
+                                    },
+                                    itemBuilder: (BuildContext context) => [
+                                      const PopupMenuItem(
+                                        value: 'rename',
+                                        child: Row(children: [Text('Rename')]),
+                                      ),
+                                      const PopupMenuItem(
+                                        value: 'delete',
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              'Delete',
+                                              style: TextStyle(
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  _formatSessionTime(session.updatedAt),
+                                  style: const TextStyle(
+                                    color: AppColors.textSecondary,
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                        trailing: SizedBox(
-                          height:
-                              56, // Column ko bound karne ke liye explicit height
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisSize:
-                                MainAxisSize.min, // Extra space occupy na kare
-                            children: [
-                              Expanded(
-                                child: PopupMenuButton<String>(
-                                  icon: const Icon(
-                                    Icons.more_vert,
-                                    color: AppColors.textSecondary,
-                                  ),
-                                  padding: EdgeInsets.zero,
-                                  constraints: const BoxConstraints(),
-                                  onSelected: (value) {
-                                    if (value == 'rename') {
-                                      _renameSession(
-                                        context,
-                                        provider,
-                                        session.id,
-                                        session.displayName,
-                                      );
-                                    } else if (value == 'delete') {
-                                      _deleteSession(
-                                        context,
-                                        provider,
-                                        session.id,
-                                      );
-                                    }
-                                  },
-                                  itemBuilder: (BuildContext context) => [
-                                    const PopupMenuItem(
-                                      value: 'rename',
-                                      child: Row(children: [Text('Rename')]),
-                                    ),
-                                    const PopupMenuItem(
-                                      value: 'delete',
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            'Delete',
-                                            style: TextStyle(color: Colors.red),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 2,
-                              ), // Chota sa gap drop-down aur text ke beech
-                              const Text(
-                                '9:20 AM',
-                                style: TextStyle(
-                                  color: AppColors.textSecondary,
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       ),

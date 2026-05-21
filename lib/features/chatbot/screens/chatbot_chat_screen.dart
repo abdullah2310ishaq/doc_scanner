@@ -76,8 +76,20 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
 
   Future<void> _sendMessage(ChatbotChatProvider provider, String text) async {
     if (text.trim().isEmpty) return;
-    await provider.sendMessage(text.trim());
+    final messageText = text.trim();
     _inputController.clear();
+
+    // Trigger the asynchronous send operation.
+    // ChatbotChatProvider will immediately add the user message and set isSending = true.
+    final sendFuture = provider.sendMessage(messageText);
+
+    // Scroll to the bottom immediately to show the user's message and the "AI is thinking" loader.
+    _scrollToBottom();
+
+    // Wait for the chatbot service to fetch the OpenAI reply and save it.
+    await sendFuture;
+
+    // Scroll to bottom again to show the complete AI reply.
     _scrollToBottom();
   }
 
@@ -394,16 +406,21 @@ class _DocumentSummaryBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 260,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.black.withOpacity(0.02)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.sizeOf(context).width * 0.8,
+        ),
+        height: 260,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.black.withOpacity(0.02)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             l10n.chatbotCurrentSummary,
@@ -429,8 +446,9 @@ class _DocumentSummaryBox extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 }
 
 class _QuickActionWelcomeChip extends StatelessWidget {
