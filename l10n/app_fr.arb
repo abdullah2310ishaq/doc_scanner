@@ -303,5 +303,6 @@
   "onboardingPage3Description": "Enregistrez et exportez facilement.",
 
   "settingsChooseLanguage": "Choisir une langue",
-  "settingsLanguageApply": "Appliquer"
+  "settingsLanguageApply": "Appliquer",
+  "commonSaving": "Enregistrement…"
 }

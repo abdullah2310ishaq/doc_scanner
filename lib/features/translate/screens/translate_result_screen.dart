@@ -3,6 +3,7 @@ import 'package:doc_scanner/core/services/permission_service.dart';
 import 'package:doc_scanner/core/utils/network_guard.dart';
 import 'package:doc_scanner/core/widgets/permission_dialog.dart';
 import 'package:doc_scanner/core/widgets/toast.dart';
+import 'package:doc_scanner/core/widgets/loading_dialog.dart';
 import 'package:doc_scanner/features/home/screens/main_shell_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -143,7 +144,12 @@ class TranslateResultScreen extends StatelessWidget {
       }
     }
 
+    if (!context.mounted) return;
+
     final data = _exportData(l10n, provider);
+
+    // Show loading dialog
+    LoadingDialog.show(context, message: l10n.commonSaving);
 
     try {
       switch (format) {
@@ -154,6 +160,8 @@ class TranslateResultScreen extends StatelessWidget {
       }
 
       if (!context.mounted) return;
+      LoadingDialog.hide(context);
+
       final successMessage = switch (format) {
         _TranslateSaveFormat.pdf => l10n.translateSavePdfSuccess,
         _TranslateSaveFormat.png => l10n.translateSavePngSuccess,
@@ -164,6 +172,7 @@ class TranslateResultScreen extends StatelessWidget {
         debugPrint('[TranslateExport] $error\n$stack');
       }
       if (!context.mounted) return;
+      LoadingDialog.hide(context);
       AppToast.show(context, l10n.exportFailed);
     }
   }

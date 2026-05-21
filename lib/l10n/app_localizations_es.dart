@@ -859,4 +859,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get settingsLanguageApply => 'Aplicar';
+
+  @override
+  String get commonSaving => 'Guardando…';
 }

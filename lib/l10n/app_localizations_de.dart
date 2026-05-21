@@ -830,4 +830,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingsLanguageApply => 'Anwenden';
+
+  @override
+  String get commonSaving => 'Wird gespeichert…';
 }

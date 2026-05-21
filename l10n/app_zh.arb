@@ -303,5 +303,6 @@
     "onboardingPage3Description": "集中管理文件。",
   
     "settingsChooseLanguage": "选择语言",
-    "settingsLanguageApply": "应用"
-  }
+    "settingsLanguageApply": "应用",
+    "commonSaving": "正在保存…"
+}

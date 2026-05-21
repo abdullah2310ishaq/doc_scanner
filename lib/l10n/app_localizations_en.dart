@@ -843,4 +843,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsLanguageApply => 'Apply';
+
+  @override
+  String get commonSaving => 'Saving…';
 }

@@ -838,4 +838,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingsLanguageApply => 'Appliquer';
+
+  @override
+  String get commonSaving => 'Enregistrement…';
 }

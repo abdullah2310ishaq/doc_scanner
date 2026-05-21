@@ -303,5 +303,6 @@
     "onboardingPage3Description": "문서를 쉽게 관리하세요.",
   
     "settingsChooseLanguage": "언어 선택",
-    "settingsLanguageApply": "적용"
+    "settingsLanguageApply": "적용",
+    "commonSaving": "저장 중…"
   }

@@ -22,7 +22,6 @@ class HomeHeaderSliverDelegate extends SliverPersistentHeaderDelegate {
   final VoidCallback? onProTap;
   final Widget? tags;
 
-  /// Increased extent to allow multi-line text wrapping without overflow.
   static const double extent = 170;
 
   @override

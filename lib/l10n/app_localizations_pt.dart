@@ -823,4 +823,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get settingsLanguageApply => 'Aplicar';
+
+  @override
+  String get commonSaving => 'Salvando…';
 }

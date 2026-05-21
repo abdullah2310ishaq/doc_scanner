@@ -303,5 +303,6 @@
   "onboardingPage3Description": "Alles an einem Ort speichern.",
 
   "settingsChooseLanguage": "Sprache wählen",
-  "settingsLanguageApply": "Anwenden"
+  "settingsLanguageApply": "Anwenden",
+  "commonSaving": "Wird gespeichert…"
 }

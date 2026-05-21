@@ -35,17 +35,17 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
-      drawer: HomeDrawer(
-        appTitle: l10n.appTitle,
-        homeLabel: l10n.navHome,
-        scanLabel: l10n.navScan,
-        documentsLabel: l10n.navDocuments,
-        translateLabel: l10n.navTranslate,
-        liveLabel: l10n.navLive,
-        settingsLabel: l10n.navSettings,
-        proTitle: l10n.proTitle,
-        onDestinationSelected: onDrawerDestination,
-      ),
+      // drawer: HomeDrawer(
+      //   appTitle: l10n.appTitle,
+      //   homeLabel: l10n.navHome,
+      //   scanLabel: l10n.navScan,
+      //   documentsLabel: l10n.navDocuments,
+      //   translateLabel: l10n.navTranslate,
+      //   liveLabel: l10n.navLive,
+      //   settingsLabel: l10n.navSettings,
+      //   proTitle: l10n.proTitle,
+      //   onDestinationSelected: onDrawerDestination,
+      // ),
       body: Builder(
         builder: (scaffoldContext) {
           return SafeArea(
@@ -59,8 +59,7 @@ class HomeScreen extends StatelessWidget {
                     titlePrefix: l10n.homeTitlePrefix,
                     proSemanticsLabel: l10n.homeProBadge,
                     menuSemanticsLabel: l10n.homeMenuButton,
-                    onMenuTap: () =>
-                        Scaffold.of(scaffoldContext).openDrawer(),
+                    onMenuTap: () => Scaffold.of(scaffoldContext).openDrawer(),
                     tags: HomeFeatureTags(
                       tags: [
                         HomeFeatureTag(
@@ -110,7 +109,8 @@ class HomeScreen extends StatelessWidget {
                         subtitle: l10n.homeFeaturePdfSubtitle,
                         backgroundColor: AppColors.cardPdfBg,
                         iconAsset: HomeAssets.pdf,
-                        onTap: () => showPdfAssistantSourceSheet(scaffoldContext),
+                        onTap: () =>
+                            showPdfAssistantSourceSheet(scaffoldContext),
                       ),
                       const SizedBox(height: 10),
                       HomeFeatureCard(

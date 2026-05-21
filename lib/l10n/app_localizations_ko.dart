@@ -814,4 +814,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get settingsLanguageApply => '적용';
+
+  @override
+  String get commonSaving => '저장 중…';
 }

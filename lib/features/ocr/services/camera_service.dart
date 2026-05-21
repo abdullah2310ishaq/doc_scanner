@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:flutter/services.dart';
 
 class CameraService {
   CameraController? _controller;
@@ -24,13 +25,16 @@ class CameraService {
 
     final controller = CameraController(
       backCamera,
-      ResolutionPreset.high,
+      ResolutionPreset.max,
       enableAudio: false,
       imageFormatGroup: ImageFormatGroup.jpeg,
     );
 
     await controller.initialize();
     await controller.setFlashMode(FlashMode.off);
+    try {
+      await controller.lockCaptureOrientation(DeviceOrientation.portraitUp);
+    } catch (_) {}
     _controller = controller;
   }
 
@@ -46,6 +50,14 @@ class CameraService {
     final controller = _controller;
     if (controller == null || !controller.value.isInitialized) {
       throw CameraException('not_ready', 'Camera is not ready');
+    }
+
+    try {
+      // Force auto focus and wait for it to settle for sharp text OCR
+      await controller.setFocusMode(FocusMode.auto);
+      await Future.delayed(const Duration(milliseconds: 800));
+    } catch (_) {
+      // Ignore if focus mode is unsupported
     }
 
     final file = await controller.takePicture();

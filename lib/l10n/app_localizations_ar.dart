@@ -816,4 +816,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get settingsLanguageApply => 'تطبيق';
+
+  @override
+  String get commonSaving => 'جارٍ الحفظ…';
 }

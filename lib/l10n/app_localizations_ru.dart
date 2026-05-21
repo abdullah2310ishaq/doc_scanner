@@ -823,4 +823,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get settingsLanguageApply => 'Применить';
+
+  @override
+  String get commonSaving => 'Сохранение…';
 }

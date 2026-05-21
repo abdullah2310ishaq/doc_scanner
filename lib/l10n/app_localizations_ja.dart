@@ -814,4 +814,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get settingsLanguageApply => '適用';
+
+  @override
+  String get commonSaving => '保存中…';
 }

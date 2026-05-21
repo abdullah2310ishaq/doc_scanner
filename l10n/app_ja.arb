@@ -303,5 +303,6 @@
     "onboardingPage3Description": "簡単に管理できます。",
   
     "settingsChooseLanguage": "言語選択",
-    "settingsLanguageApply": "適用"
+    "settingsLanguageApply": "適用",
+    "commonSaving": "保存中…"
   }

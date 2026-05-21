@@ -305,5 +305,6 @@
   "onboardingPage3Description": "Save scans, export PDFs, and keep your documents in one place.",
 
   "settingsChooseLanguage": "Choose a language",
-  "settingsLanguageApply": "Apply"
+  "settingsLanguageApply": "Apply",
+  "commonSaving": "Saving…"
 }

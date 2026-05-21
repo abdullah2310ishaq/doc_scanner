@@ -821,4 +821,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settingsLanguageApply => 'Applica';
+
+  @override
+  String get commonSaving => 'Salvataggio…';
 }

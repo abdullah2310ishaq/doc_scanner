@@ -287,5 +287,6 @@
   "onboardingPage3Description": "Guarda escaneos, exporta PDFs y mantén tus documentos en un solo lugar.",
 
   "settingsChooseLanguage": "Elige un idioma",
-  "settingsLanguageApply": "Aplicar"
+  "settingsLanguageApply": "Aplicar",
+  "commonSaving": "Guardando…"
 }

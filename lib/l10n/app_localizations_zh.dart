@@ -814,4 +814,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get settingsLanguageApply => '应用';
+
+  @override
+  String get commonSaving => '正在保存…';
 }

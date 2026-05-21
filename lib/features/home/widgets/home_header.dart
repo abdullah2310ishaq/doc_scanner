@@ -31,10 +31,7 @@ class HomeHeader extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _DrawerButton(
-              semanticsLabel: menuSemanticsLabel,
-              onTap: onMenuTap,
-            ),
+            _DrawerButton(semanticsLabel: menuSemanticsLabel, onTap: onMenuTap),
             _ProButton(label: proSemanticsLabel, onTap: onProTap),
           ],
         ),
@@ -50,10 +47,7 @@ class HomeHeader extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         _HomeTitle(prefix: titlePrefix),
-        if (tags != null) ...[
-          const SizedBox(height: 16),
-          tags!,
-        ],
+        if (tags != null) ...[const SizedBox(height: 16), tags!],
       ],
     );
   }
@@ -71,7 +65,7 @@ class _DrawerButton extends StatelessWidget {
       button: true,
       label: semanticsLabel,
       child: InkWell(
-        onTap: onTap, 
+        onTap: onTap,
         borderRadius: BorderRadius.circular(10),
         child: Image.asset(
           HomeAssets.drawer,
