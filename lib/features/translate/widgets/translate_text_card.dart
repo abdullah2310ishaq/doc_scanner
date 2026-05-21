@@ -111,6 +111,7 @@ class _TranslateTextCardState extends State<TranslateTextCard> {
                   isPlaceholder,
                 );
 
+                final isRtl = _isRtl(displayText);
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -126,6 +127,7 @@ class _TranslateTextCardState extends State<TranslateTextCard> {
                             ? TextOverflow.visible
                             : TextOverflow.ellipsis,
                         textAlign: TextAlign.start,
+                        textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
                         style: isPlaceholder
                             ? TranslateTextCard._bodyStyle.copyWith(
                                 color: AppColors.textSecondary.withValues(
@@ -202,6 +204,18 @@ class _TranslateTextCardState extends State<TranslateTextCard> {
         if (mounted) setState(() => _showSeeMore = shouldShow);
       });
     }
+  }
+
+  bool _isRtl(String text) {
+    return text.runes.any(
+      (code) =>
+          (code >= 0x0590 && code <= 0x05FF) || // Hebrew
+          (code >= 0x0600 && code <= 0x06FF) || // Arabic, Urdu, Persian
+          (code >= 0x0750 && code <= 0x077F) || // Arabic Supplement
+          (code >= 0x08A0 && code <= 0x08FF) || // Arabic Extended-A
+          (code >= 0xFB50 && code <= 0xFDFF) || // Arabic Presentation Forms-A
+          (code >= 0xFE70 && code <= 0xFEFF),   // Arabic Presentation Forms-B
+    );
   }
 }
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -599,7 +598,7 @@ class _ThinkingLoaderState extends State<_ThinkingLoader>
               builder: (context, child) {
                 // Har dot ka delay alag karne ke liye math equation
                 final delay = index * 0.2;
-                final animValue = (_controller.value - delay).clamp(0.0, 1.0);
+                (_controller.value - delay).clamp(0.0, 1.0);
 
                 // Opacity aur size change animation cycle
                 double scale = 1.0;

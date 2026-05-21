@@ -26,6 +26,7 @@ class TranslateExportData {
   String textForScope(TranslateExportScope scope) {
     return switch (scope) {
       TranslateExportScope.selectedText => selectedTextOnly,
+      TranslateExportScope.translatedText => translatedText?.trim() ?? '',
       TranslateExportScope.completeFile => _completeText(),
     };
   }

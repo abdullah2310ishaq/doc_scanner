@@ -3,12 +3,10 @@ description: "A new Flutter project."
 
 publish_to: 'none' 
 
-
 version: 1.0.0+1
 
 environment:
   sdk: ^3.10.0
-
 
 dependencies:
   flutter_skill: ^0.2.6
@@ -43,16 +41,13 @@ dependencies:
   flutter_screenutil: ^5.9.3
   syncfusion_flutter_pdfviewer: ^33.2.6
   google_mlkit_document_scanner: ^0.4.1
-
-
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
   flutter_lints: ^6.0.0
-
 
 flutter:
   uses-material-design: true
@@ -66,4 +61,10 @@ flutter:
     - assets/settings/
     - assets/fonts/
 
- 
+  fonts:
+    - family: NotoSans
+      fonts:
+        - asset: assets/fonts/NotoSans-Regular.ttf
+    - family: NotoNaskhArabic
+      fonts:
+        - asset: assets/fonts/NotoNaskhArabic-Regular.ttf

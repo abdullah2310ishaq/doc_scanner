@@ -371,6 +371,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Télécharger tout le fichier';
 
   @override
+  String get translateDownloadTranslatedTextTitle => 'Download translated text';
+
+  @override
+  String get translateDownloadTranslatedTextDescription =>
+      'Download only the translated text';
+
+  @override
   String get translateSavePdfSuccess => 'PDF enregistré avec succès';
 
   @override

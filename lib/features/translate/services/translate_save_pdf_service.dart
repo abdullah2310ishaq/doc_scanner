@@ -35,31 +35,72 @@ class TranslateSavePdfService {
     required TranslateExportData data,
     required TranslateExportScope scope,
   }) async {
-    const primaryColor = PdfColor.fromInt(0xFF1E3A8A);
-    const secondaryColor = PdfColor.fromInt(0xFF475569);
-    const dividerColor = PdfColor.fromInt(0xFFE2E8F0);
+    // Professional Corporate Color Palette
+    const primaryColor = PdfColor.fromInt(0xFF0F172A); // Deep Slate / Navy
+    const secondaryColor = PdfColor.fromInt(0xFF475569); // Muted Slate
+    const borderColor = PdfColor.fromInt(0xFFE2E8F0); // Light Border Gray
+    const backgroundColor = PdfColor.fromInt(
+      0xFFF8FAFC,
+    ); // Soft Background White
 
     final doc = pw.Document();
 
     doc.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
-        margin: const pw.EdgeInsets.symmetric(horizontal: 48, vertical: 48),
+        margin: const pw.EdgeInsets.all(40), // Standard corporate margins
         header: (context) => pw.Container(
-          alignment: pw.Alignment.topRight,
-          margin: const pw.EdgeInsets.only(bottom: 24),
-          child: pw.Container(height: 3, color: primaryColor),
+          margin: const pw.EdgeInsets.only(bottom: 20),
+          padding: const pw.EdgeInsets.only(bottom: 8),
+          decoration: const pw.BoxDecoration(
+            border: pw.Border(
+              bottom: pw.BorderSide(color: borderColor, width: 0.5),
+            ),
+          ),
+          child: pw.Row(
+            mainAxisAlignment:
+                pw.MainAxisAlignment.spaceBetween, // Fixed typo here
+            children: [
+              pw.Text(
+                'Translation Export',
+                style: pw.TextStyle(
+                  fontSize: 9,
+                  color: secondaryColor,
+                  fontWeight: pw.FontWeight.bold,
+                ),
+              ),
+              pw.Text(
+                _getFormattedDate(),
+                style: const pw.TextStyle(fontSize: 9, color: secondaryColor),
+              ),
+            ],
+          ),
         ),
         footer: (context) => pw.Container(
-          alignment: pw.Alignment.centerRight,
-          margin: const pw.EdgeInsets.only(top: 24),
-          child: pw.Text(
-            'Page ${context.pageNumber} of ${context.pagesCount}',
-            style: pw.TextStyle(
-              fontSize: 10,
-              color: secondaryColor,
-              font: TranslatePdfFonts.bodyStyle('Page').font,
+          margin: const pw.EdgeInsets.only(top: 20),
+          padding: const pw.EdgeInsets.only(top: 8),
+          decoration: const pw.BoxDecoration(
+            border: pw.Border(
+              top: pw.BorderSide(color: borderColor, width: 0.5),
             ),
+          ),
+          child: pw.Row(
+            mainAxisAlignment:
+                pw.MainAxisAlignment.spaceBetween, // Fixed typo here
+            children: [
+              pw.Text(
+                'Confidential Document',
+                style: const pw.TextStyle(fontSize: 9, color: secondaryColor),
+              ),
+              pw.Text(
+                'Page ${context.pageNumber} of ${context.pagesCount}',
+                style: pw.TextStyle(
+                  fontSize: 9,
+                  color: secondaryColor,
+                  font: TranslatePdfFonts.bodyStyle('Page').font,
+                ),
+              ),
+            ],
           ),
         ),
         build: (context) {
@@ -68,14 +109,33 @@ class TranslateSavePdfService {
               _buildHeader(
                 title: data.selectedTextLabel,
                 primaryColor: primaryColor,
+                isRtl: _isRtl(data.selectedTextOnly),
               ),
-              pw.SizedBox(height: 16),
-              _buildBodyText(data.selectedTextOnly),
+              pw.SizedBox(height: 12),
+              _buildBodyCard(
+                data.selectedTextOnly,
+                backgroundColor,
+                borderColor,
+              ),
+            ],
+            TranslateExportScope.translatedText => [
+              _buildHeader(
+                title: data.translatedTextLabel,
+                primaryColor: primaryColor,
+                isRtl: _isRtl(data.translatedText ?? ''),
+              ),
+              pw.SizedBox(height: 12),
+              _buildBodyCard(
+                data.translatedText?.trim() ?? '',
+                backgroundColor,
+                borderColor,
+              ),
             ],
             TranslateExportScope.completeFile => _completeFileWidgets(
               data,
               primaryColor,
-              dividerColor,
+              borderColor,
+              backgroundColor,
             ),
           };
         },
@@ -88,26 +148,42 @@ class TranslateSavePdfService {
   List<pw.Widget> _completeFileWidgets(
     TranslateExportData data,
     PdfColor primaryColor,
-    PdfColor dividerColor,
+    PdfColor borderColor,
+    PdfColor backgroundColor,
   ) {
+    final sourceText = data.sourceText.trim();
+    final isSourceRtl = _isRtl(sourceText);
+
     final widgets = <pw.Widget>[
-      _buildHeader(title: data.selectedTextLabel, primaryColor: primaryColor),
-      pw.SizedBox(height: 16),
-      _buildBodyText(data.sourceText.trim()),
+      _buildHeader(
+        title: data.selectedTextLabel,
+        primaryColor: primaryColor,
+        isRtl: isSourceRtl,
+      ),
+      pw.SizedBox(height: 12),
+      _buildBodyCard(sourceText, backgroundColor, borderColor),
     ];
 
     if (data.hasTranslatedText) {
+      final translatedText = (data.translatedText ?? '').trim();
+      final isTranslatedRtl = _isRtl(translatedText);
       final title = data.targetLanguageName == null
           ? data.translatedTextLabel
           : '${data.translatedTextLabel} (${data.targetLanguageName})';
 
       widgets.addAll([
-        pw.SizedBox(height: 32),
-        pw.Divider(color: dividerColor, height: 1, thickness: 1),
-        pw.SizedBox(height: 24),
-        _buildHeader(title: title, primaryColor: primaryColor),
-        pw.SizedBox(height: 16),
-        _buildBodyText((data.translatedText ?? '').trim()),
+        pw.SizedBox(height: 28),
+        _buildHeader(
+          title: title,
+          primaryColor: primaryColor,
+          isRtl: isTranslatedRtl,
+        ),
+        pw.SizedBox(height: 12),
+        _buildBodyCard(
+          translatedText,
+          backgroundColor,
+          borderColor,
+        ),
       ]);
     }
 
@@ -117,21 +193,83 @@ class TranslateSavePdfService {
   pw.Widget _buildHeader({
     required String title,
     required PdfColor primaryColor,
+    bool isRtl = false,
   }) {
-    // Do NOT call toUpperCase() — it breaks CJK, Arabic, and Urdu glyphs.
-    return pw.Text(
-      title,
-      style: TranslatePdfFonts.headerStyle(title).copyWith(color: primaryColor),
+    return pw.Directionality(
+      textDirection: isRtl ? pw.TextDirection.rtl : pw.TextDirection.ltr,
+      child: pw.Row(
+        crossAxisAlignment: pw.CrossAxisAlignment.center,
+        children: [
+          pw.Container(
+            width: 4,
+            height: 16,
+            decoration: pw.BoxDecoration(
+              color: primaryColor,
+              borderRadius: const pw.BorderRadius.all(pw.Radius.circular(2)),
+            ),
+          ),
+          pw.SizedBox(width: 8),
+          pw.Text(
+            title,
+            style: TranslatePdfFonts.headerStyle(title).copyWith(
+              color: primaryColor,
+              fontSize: 15,
+              fontWeight: pw.FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  pw.Widget _buildBodyText(String text) {
-    return pw.Text(text, style: TranslatePdfFonts.bodyStyle(text));
+  pw.Widget _buildBodyCard(
+    String text,
+    PdfColor bgColor,
+    PdfColor borderColor,
+  ) {
+    final isRtl = _isRtl(text);
+    return pw.Container(
+      width: double.infinity,
+      padding: const pw.EdgeInsets.all(14),
+      decoration: pw.BoxDecoration(
+        color: bgColor,
+        borderRadius: const pw.BorderRadius.all(pw.Radius.circular(6)),
+        border: pw.Border.all(color: borderColor, width: 0.5),
+      ),
+      child: pw.Directionality(
+        textDirection: isRtl ? pw.TextDirection.rtl : pw.TextDirection.ltr,
+        child: pw.Text(
+          text,
+          textAlign: isRtl ? pw.TextAlign.right : pw.TextAlign.left,
+          style: TranslatePdfFonts.bodyStyle(
+            text,
+          ).copyWith(fontSize: 10.5, lineSpacing: 4),
+        ),
+      ),
+    );
+  }
+
+  bool _isRtl(String text) {
+    return text.runes.any(
+      (code) =>
+          (code >= 0x0590 && code <= 0x05FF) || // Hebrew
+          (code >= 0x0600 && code <= 0x06FF) || // Arabic, Urdu, Persian
+          (code >= 0x0750 && code <= 0x077F) || // Arabic Supplement
+          (code >= 0x08A0 && code <= 0x08FF) || // Arabic Extended-A
+          (code >= 0xFB50 && code <= 0xFDFF) || // Arabic Presentation Forms-A
+          (code >= 0xFE70 && code <= 0xFEFF),   // Arabic Presentation Forms-B
+    );
+  }
+
+  String _getFormattedDate() {
+    final now = DateTime.now();
+    return '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
   }
 
   String _fileName(TranslateExportScope scope) {
     final suffix = switch (scope) {
       TranslateExportScope.selectedText => 'selected',
+      TranslateExportScope.translatedText => 'translated',
       TranslateExportScope.completeFile => 'complete',
     };
     final timestamp = DateTime.now().millisecondsSinceEpoch;

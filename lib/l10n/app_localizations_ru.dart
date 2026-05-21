@@ -363,6 +363,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get translateDownloadCompleteFileDescription => 'Полный файл';
 
   @override
+  String get translateDownloadTranslatedTextTitle => 'Download translated text';
+
+  @override
+  String get translateDownloadTranslatedTextDescription =>
+      'Download only the translated text';
+
+  @override
   String get translateSavePdfSuccess => 'PDF сохранён';
 
   @override

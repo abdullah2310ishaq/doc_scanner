@@ -18,17 +18,20 @@ class TranslateExportStorage {
 
     if (Platform.isAndroid) {
       try {
+        final isPng = fileName.toLowerCase().endsWith('.png');
         final saveInfo = await _mediaStore.saveFile(
           tempFilePath: tempPath,
-          dirType: DirType.download,
-          dirName: DirName.download,
+          dirType: isPng ? DirType.photo : DirType.download,
+          dirName: isPng ? DirName.pictures : DirName.download,
         );
 
         if (saveInfo != null) {
           final savedPath = await _mediaStore.getFilePathFromUri(
             uriString: saveInfo.uri.toString(),
           );
-          return savedPath ?? 'Download/${MediaStore.appFolder}/$fileName';
+          return savedPath ?? (isPng
+              ? 'Pictures/${MediaStore.appFolder}/$fileName'
+              : 'Download/${MediaStore.appFolder}/$fileName');
         }
       } catch (error, stack) {
         if (kDebugMode) {

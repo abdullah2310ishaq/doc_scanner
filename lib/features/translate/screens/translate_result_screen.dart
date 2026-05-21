@@ -89,6 +89,7 @@ class TranslateResultScreen extends StatelessWidget {
     if (sourceText.trim().isEmpty) return;
 
     final l10n = context.l10n;
+    final isPng = format == _TranslateSaveFormat.png;
 
     showTranslateDownloadOptionSheet(
       context,
@@ -96,8 +97,12 @@ class TranslateResultScreen extends StatelessWidget {
       subtitle: l10n.translateDownloadOptionSubtitle,
       selectedTextTitle: l10n.translateDownloadSelectedTextTitle,
       selectedTextDescription: l10n.translateDownloadSelectedTextDescription,
-      completeFileTitle: l10n.translateDownloadCompleteFileTitle,
-      completeFileDescription: l10n.translateDownloadCompleteFileDescription,
+      completeFileTitle: isPng
+          ? l10n.translateDownloadTranslatedTextTitle
+          : l10n.translateDownloadCompleteFileTitle,
+      completeFileDescription: isPng
+          ? l10n.translateDownloadTranslatedTextDescription
+          : l10n.translateDownloadCompleteFileDescription,
       onSelectedText: () => _export(
         context,
         provider,
@@ -108,7 +113,7 @@ class TranslateResultScreen extends StatelessWidget {
         context,
         provider,
         format,
-        TranslateExportScope.completeFile,
+        isPng ? TranslateExportScope.translatedText : TranslateExportScope.completeFile,
       ),
     );
   }
@@ -127,7 +132,8 @@ class TranslateResultScreen extends StatelessWidget {
       return;
     }
 
-    if (scope == TranslateExportScope.completeFile && !provider.hasTranslation) {
+    final needsTranslation = scope == TranslateExportScope.completeFile || scope == TranslateExportScope.translatedText;
+    if (needsTranslation && !provider.hasTranslation) {
       AppToast.show(context, l10n.translateExportNeedsTranslation);
       return;
     }

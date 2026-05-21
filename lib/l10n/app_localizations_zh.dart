@@ -358,6 +358,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get translateDownloadCompleteFileDescription => '下载整个文件';
 
   @override
+  String get translateDownloadTranslatedTextTitle => 'Download translated text';
+
+  @override
+  String get translateDownloadTranslatedTextDescription =>
+      'Download only the translated text';
+
+  @override
   String get translateSavePdfSuccess => 'PDF保存成功';
 
   @override
