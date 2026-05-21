@@ -250,8 +250,8 @@
     "errorChatbotPdfEmpty": "텍스트 없음",
   
     "pdfAssistantTitle": "PDF 도우미",
-    "pdfAssistantSheetTitle": "PDF 도우미",
-    "pdfAssistantSheetSubtitle": "PDF 번역",
+    "pdfAssistantSheetTitle": "PDF 업로드",
+    "pdfAssistantSheetSubtitle": "PDF 파일을 추가할 방법을 선택하세요",
     "pdfAssistantChoosePdfTitle": "PDF 선택",
     "pdfAssistantChoosePdfDescription": "기기에서 선택",
     "pdfAssistantLinkTitle": "PDF 링크 추가",

@@ -5,7 +5,6 @@ import '../../../core/constants/home_assets.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../screens/start_processing_screen.dart';
-import '../services/pdf_assistant_download_service.dart';
 import '../services/pdf_assistant_picker_service.dart';
 import '../services/pdf_assistant_storage_service.dart';
 
@@ -20,9 +19,7 @@ Future<void> showPdfAssistantSourceSheet(BuildContext context) {
         top: Radius.circular(AppColors.chatbotSheetRadius),
       ),
     ),
-    builder: (sheetContext) => _PdfAssistantSourceSheet(
-      parentContext: context,
-    ),
+    builder: (sheetContext) => _PdfAssistantSourceSheet(parentContext: context),
   );
 }
 
@@ -37,24 +34,18 @@ class _PdfAssistantSourceSheet extends StatefulWidget {
 }
 
 class _PdfAssistantSourceSheetState extends State<_PdfAssistantSourceSheet> {
-  final TextEditingController _urlController = TextEditingController();
   final PdfAssistantPickerService _picker = PdfAssistantPickerService();
-  final PdfAssistantDownloadService _download = PdfAssistantDownloadService();
-  final PdfAssistantStorageService _storage = PdfAssistantStorageService();
-  bool _isDownloading = false;
 
-  @override
-  void dispose() {
-    _urlController.dispose();
-    super.dispose();
-  }
+  final PdfAssistantStorageService _storage = PdfAssistantStorageService();
 
   Future<void> _pickPdf() async {
     try {
       final file = await _picker.pickPdf();
+
       if (!mounted || file == null) return;
 
       Navigator.of(context).pop();
+
       if (!widget.parentContext.mounted) return;
 
       StartProcessingScreen.open(
@@ -64,124 +55,11 @@ class _PdfAssistantSourceSheetState extends State<_PdfAssistantSourceSheet> {
       );
     } catch (_) {
       if (!mounted) return;
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(context.l10n.errorPdfAssistantPickFailed)),
       );
     }
-  }
-
-  Future<void> _downloadFromLink(StateSetter setModalState) async {
-    final url = _urlController.text.trim();
-    if (url.isEmpty || _isDownloading) return;
-
-    setModalState(() => _isDownloading = true);
-
-    try {
-      final tempId = DateTime.now().millisecondsSinceEpoch.toString();
-      final dir = await _storage.sessionDirectory(tempId);
-      final fileName = _download.fileNameFromUrl(url);
-      final savePath = '${dir.path}/$fileName';
-
-      final file = await _download.downloadPdf(url, savePath);
-      if (!mounted) return;
-
-      Navigator.of(context).pop(); // pop link modal
-      Navigator.of(context).pop(); // pop main sheet
-      
-      if (!widget.parentContext.mounted) return;
-
-      StartProcessingScreen.open(
-        widget.parentContext,
-        pdfPath: file.path,
-        displayName: _storage.displayNameFromPath(file.path),
-      );
-    } catch (_) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.errorPdfAssistantLinkFailed)),
-      );
-    } finally {
-      if (mounted) setModalState(() => _isDownloading = false);
-    }
-  }
-
-  void _showLinkInputModal() {
-    showModalBottomSheet<void>(
-      context: context,
-      backgroundColor: AppColors.white,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(AppColors.chatbotSheetRadius),
-        ),
-      ),
-      builder: (sheetContext) => StatefulBuilder(
-        builder: (context, setModalState) {
-          final l10n = context.l10n;
-          return Padding(
-            padding: EdgeInsets.fromLTRB(
-              24,
-              24,
-              24,
-              24 + MediaQuery.viewInsetsOf(context).bottom,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  l10n.pdfAssistantLinkTitle,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: _urlController,
-                  decoration: InputDecoration(
-                    hintText: l10n.pdfAssistantLinkHint,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  keyboardType: TextInputType.url,
-                  autofocus: true,
-                  onSubmitted: (_) => _downloadFromLink(setModalState),
-                ),
-                const SizedBox(height: 16),
-                SizedBox(
-                  height: 48,
-                  child: ElevatedButton(
-                    onPressed: _isDownloading
-                        ? null
-                        : () => _downloadFromLink(setModalState),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.chatbotAccent,
-                      foregroundColor: AppColors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: _isDownloading
-                        ? const SizedBox(
-                            width: 22,
-                            height: 22,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: AppColors.white,
-                            ),
-                          )
-                        : Text(l10n.pdfAssistantLinkButton),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
   }
 
   @override
@@ -225,14 +103,6 @@ class _PdfAssistantSourceSheetState extends State<_PdfAssistantSourceSheet> {
             title: l10n.pdfAssistantChoosePdfTitle,
             description: l10n.pdfAssistantChoosePdfDescription,
             onTap: _pickPdf,
-          ),
-          const SizedBox(height: 16),
-          _OptionCard(
-            backgroundColor: const Color(0xFFFBF4FF),
-            iconAsset: HomeAssets.link,
-            title: l10n.pdfAssistantLinkTitle,
-            description: l10n.pdfAssistantLinkDescription,
-            onTap: _showLinkInputModal,
           ),
         ],
       ),

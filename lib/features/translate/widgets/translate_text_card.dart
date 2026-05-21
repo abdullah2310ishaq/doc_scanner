@@ -74,19 +74,19 @@ class _TranslateTextCardState extends State<TranslateTextCard> {
               ),
               const Spacer(),
               if (widget.onReadAloud != null && widget.text.isNotEmpty)
-                _CardIconButton(
-                  icon: Icons.volume_up_outlined,
-                  semanticsLabel: widget.readAloudSemanticsLabel!,
-                  onTap: widget.onReadAloud!,
-                ),
-              if (widget.onCopy != null && widget.text.isNotEmpty) ...[
-                if (widget.onReadAloud != null) const SizedBox(width: 4),
-                _CardIconButton(
-                  icon: Icons.copy_rounded,
-                  semanticsLabel: widget.copySemanticsLabel,
-                  onTap: widget.onCopy!,
-                ),
-              ],
+                // _CardIconButton(
+                //   icon: Icons.volume_up_outlined,
+                //   semanticsLabel: widget.readAloudSemanticsLabel!,
+                //   onTap: widget.onReadAloud!,
+                // ),
+                if (widget.onCopy != null && widget.text.isNotEmpty) ...[
+                  if (widget.onReadAloud != null) const SizedBox(width: 4),
+                  _CardIconButton(
+                    icon: Icons.copy_rounded,
+                    semanticsLabel: widget.copySemanticsLabel,
+                    onTap: widget.onCopy!,
+                  ),
+                ],
             ],
           ),
           const SizedBox(height: 2),

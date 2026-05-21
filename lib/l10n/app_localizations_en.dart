@@ -686,10 +686,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pdfAssistantTitle => 'PDF Assistant';
 
   @override
-  String get pdfAssistantSheetTitle => 'PDF Assistant';
+  String get pdfAssistantSheetTitle => 'Upload PDF';
 
   @override
-  String get pdfAssistantSheetSubtitle => 'Translate your PDF to any language';
+  String get pdfAssistantSheetSubtitle =>
+      'Choose how you want to add your PDF file';
 
   @override
   String get pdfAssistantChoosePdfTitle => 'Choose PDF file';

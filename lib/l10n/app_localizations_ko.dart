@@ -666,10 +666,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get pdfAssistantTitle => 'PDF 도우미';
 
   @override
-  String get pdfAssistantSheetTitle => 'PDF 도우미';
+  String get pdfAssistantSheetTitle => 'PDF 업로드';
 
   @override
-  String get pdfAssistantSheetSubtitle => 'PDF 번역';
+  String get pdfAssistantSheetSubtitle => 'PDF 파일을 추가할 방법을 선택하세요';
 
   @override
   String get pdfAssistantChoosePdfTitle => 'PDF 선택';

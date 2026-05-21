@@ -234,8 +234,8 @@
   "errorChatbotPdfEmpty": "No se encontró texto en este PDF",
 
   "pdfAssistantTitle": "Asistente PDF",
-  "pdfAssistantSheetTitle": "Asistente PDF",
-  "pdfAssistantSheetSubtitle": "Traduce tu PDF a cualquier idioma",
+  "pdfAssistantSheetTitle": "Subir PDF",
+  "pdfAssistantSheetSubtitle": "Elige cómo quieres añadir tu archivo PDF",
   "pdfAssistantChoosePdfTitle": "Elegir archivo PDF",
   "pdfAssistantChoosePdfDescription": "Busca y selecciona un PDF de tu dispositivo",
   "pdfAssistantLinkTitle": "Añadir PDF desde enlace",

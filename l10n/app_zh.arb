@@ -250,8 +250,8 @@
     "errorChatbotPdfEmpty": "未找到文本",
   
     "pdfAssistantTitle": "PDF助手",
-    "pdfAssistantSheetTitle": "PDF助手",
-    "pdfAssistantSheetSubtitle": "翻译PDF",
+    "pdfAssistantSheetTitle": "上传 PDF",
+    "pdfAssistantSheetSubtitle": "选择您想要添加 PDF 文件的方式",
     "pdfAssistantChoosePdfTitle": "选择PDF",
     "pdfAssistantChoosePdfDescription": "从设备选择",
     "pdfAssistantLinkTitle": "添加PDF链接",

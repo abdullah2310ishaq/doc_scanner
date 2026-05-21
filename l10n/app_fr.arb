@@ -250,8 +250,8 @@
   "errorChatbotPdfEmpty": "Aucun texte trouvé",
 
   "pdfAssistantTitle": "Assistant PDF",
-  "pdfAssistantSheetTitle": "Assistant PDF",
-  "pdfAssistantSheetSubtitle": "Traduire votre PDF",
+  "pdfAssistantSheetTitle": "Importer un PDF",
+  "pdfAssistantSheetSubtitle": "Choisissez comment vous souhaitez ajouter votre fichier PDF",
   "pdfAssistantChoosePdfTitle": "Choisir un PDF",
   "pdfAssistantChoosePdfDescription": "Sélectionner depuis l'appareil",
   "pdfAssistantLinkTitle": "Ajouter un lien PDF",

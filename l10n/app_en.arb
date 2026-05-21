@@ -251,8 +251,8 @@
   "errorChatbotPdfEmpty": "No text found in this PDF",
 
   "pdfAssistantTitle": "PDF Assistant",
-  "pdfAssistantSheetTitle": "PDF Assistant",
-  "pdfAssistantSheetSubtitle": "Translate your PDF to any language",
+  "pdfAssistantSheetTitle": "Upload PDF",
+  "pdfAssistantSheetSubtitle": "Choose how you want to add your PDF file",
   "pdfAssistantChoosePdfTitle": "Choose PDF file",
   "pdfAssistantChoosePdfDescription": "Browse and select PDF from your device",
   "pdfAssistantLinkTitle": "Add PDF from link",

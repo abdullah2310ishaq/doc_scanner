@@ -672,10 +672,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get pdfAssistantTitle => 'PDF ассистент';
 
   @override
-  String get pdfAssistantSheetTitle => 'PDF ассистент';
+  String get pdfAssistantSheetTitle => 'Загрузить PDF';
 
   @override
-  String get pdfAssistantSheetSubtitle => 'Перевод PDF';
+  String get pdfAssistantSheetSubtitle =>
+      'Выберите, как вы хотите добавить свой PDF-файл';
 
   @override
   String get pdfAssistantChoosePdfTitle => 'Выбрать PDF';

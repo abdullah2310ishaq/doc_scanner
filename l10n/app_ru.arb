@@ -250,8 +250,8 @@
     "errorChatbotPdfEmpty": "Текст не найден",
   
     "pdfAssistantTitle": "PDF ассистент",
-    "pdfAssistantSheetTitle": "PDF ассистент",
-    "pdfAssistantSheetSubtitle": "Перевод PDF",
+    "pdfAssistantSheetTitle": "Загрузить PDF",
+    "pdfAssistantSheetSubtitle": "Выберите, как вы хотите добавить свой PDF-файл",
     "pdfAssistantChoosePdfTitle": "Выбрать PDF",
     "pdfAssistantChoosePdfDescription": "С устройства",
     "pdfAssistantLinkTitle": "Добавить ссылку PDF",

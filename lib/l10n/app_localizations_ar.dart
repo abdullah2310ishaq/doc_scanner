@@ -667,10 +667,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pdfAssistantTitle => 'مساعد PDF';
 
   @override
-  String get pdfAssistantSheetTitle => 'مساعد PDF';
+  String get pdfAssistantSheetTitle => 'تحميل ملف PDF';
 
   @override
-  String get pdfAssistantSheetSubtitle => 'ترجمة PDF';
+  String get pdfAssistantSheetSubtitle =>
+      'اختر كيف تريد إضافة ملف PDF الخاص بك';
 
   @override
   String get pdfAssistantChoosePdfTitle => 'اختر PDF';

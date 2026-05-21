@@ -666,10 +666,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get pdfAssistantTitle => 'PDF助手';
 
   @override
-  String get pdfAssistantSheetTitle => 'PDF助手';
+  String get pdfAssistantSheetTitle => '上传 PDF';
 
   @override
-  String get pdfAssistantSheetSubtitle => '翻译PDF';
+  String get pdfAssistantSheetSubtitle => '选择您想要添加 PDF 文件的方式';
 
   @override
   String get pdfAssistantChoosePdfTitle => '选择PDF';

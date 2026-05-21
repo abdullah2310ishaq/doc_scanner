@@ -250,8 +250,8 @@
     "errorChatbotPdfEmpty": "テキストなし",
   
     "pdfAssistantTitle": "PDFアシスタント",
-    "pdfAssistantSheetTitle": "PDFアシスタント",
-    "pdfAssistantSheetSubtitle": "PDF翻訳",
+    "pdfAssistantSheetTitle": "PDFをアップロード",
+    "pdfAssistantSheetSubtitle": "PDFファイルの追加方法を選択してください",
     "pdfAssistantChoosePdfTitle": "PDF選択",
     "pdfAssistantChoosePdfDescription": "端末から選択",
     "pdfAssistantLinkTitle": "PDFリンク追加",

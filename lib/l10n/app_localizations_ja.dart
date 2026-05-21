@@ -666,10 +666,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get pdfAssistantTitle => 'PDFアシスタント';
 
   @override
-  String get pdfAssistantSheetTitle => 'PDFアシスタント';
+  String get pdfAssistantSheetTitle => 'PDFをアップロード';
 
   @override
-  String get pdfAssistantSheetSubtitle => 'PDF翻訳';
+  String get pdfAssistantSheetSubtitle => 'PDFファイルの追加方法を選択してください';
 
   @override
   String get pdfAssistantChoosePdfTitle => 'PDF選択';

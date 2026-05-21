@@ -251,8 +251,8 @@
     "errorChatbotPdfEmpty": "لا يوجد نص",
   
     "pdfAssistantTitle": "مساعد PDF",
-    "pdfAssistantSheetTitle": "مساعد PDF",
-    "pdfAssistantSheetSubtitle": "ترجمة PDF",
+    "pdfAssistantSheetTitle": "تحميل ملف PDF",
+    "pdfAssistantSheetSubtitle": "اختر كيف تريد إضافة ملف PDF الخاص بك",
     "pdfAssistantChoosePdfTitle": "اختر PDF",
     "pdfAssistantChoosePdfDescription": "من الجهاز",
     "pdfAssistantLinkTitle": "إضافة رابط PDF",

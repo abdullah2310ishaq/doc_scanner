@@ -1409,13 +1409,13 @@ abstract class AppLocalizations {
   /// No description provided for @pdfAssistantSheetTitle.
   ///
   /// In en, this message translates to:
-  /// **'PDF Assistant'**
+  /// **'Upload PDF'**
   String get pdfAssistantSheetTitle;
 
   /// No description provided for @pdfAssistantSheetSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Translate your PDF to any language'**
+  /// **'Choose how you want to add your PDF file'**
   String get pdfAssistantSheetSubtitle;
 
   /// No description provided for @pdfAssistantChoosePdfTitle.

@@ -671,10 +671,11 @@ class AppLocalizationsPt extends AppLocalizations {
   String get pdfAssistantTitle => 'Assistente PDF';
 
   @override
-  String get pdfAssistantSheetTitle => 'Assistente PDF';
+  String get pdfAssistantSheetTitle => 'Carregar PDF';
 
   @override
-  String get pdfAssistantSheetSubtitle => 'Traduzir PDF';
+  String get pdfAssistantSheetSubtitle =>
+      'Escolha como deseja adicionar seu arquivo PDF';
 
   @override
   String get pdfAssistantChoosePdfTitle => 'Escolher PDF';
