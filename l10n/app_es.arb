@@ -1,8 +1,6 @@
 {
   "@@locale": "es",
-
   "appTitle": "Doc Scanner",
-
   "commonOk": "Aceptar",
   "commonCancel": "Cancelar",
   "commonSave": "Guardar",
@@ -14,14 +12,12 @@
   "commonLoading": "Cargando…",
   "commonError": "Algo salió mal",
   "commonTryAgain": "Por favor, inténtalo de nuevo",
-
   "navHome": "Inicio",
   "navScan": "Escanear",
   "navDocuments": "Documentos",
   "navTranslate": "Traducir",
   "navLive": "En vivo",
   "navSettings": "Ajustes",
-
   "homeGreeting": "Buenos días, {name} 👋",
   "homeTitlePrefix": "Documento con",
   "homeTitleHighlight": "IA",
@@ -49,7 +45,6 @@
   "homeEmptyDocuments": "Aún no hay documentos. Toca Escanear para comenzar.",
   "homeSampleDocName": "Factura_2026.pdf",
   "homeSampleDocMeta": "10 may. 2026 • 2.4 MB",
-
   "scanTitle": "Escanear",
   "scanCapture": "Capturar",
   "scanImportGallery": "Importar de galería",
@@ -62,7 +57,6 @@
   "scanPageCount": "{count, plural, =1{1 página} other{{count} páginas}}",
   "scanSaving": "Guardando escaneo…",
   "scanSaved": "Documento guardado",
-
   "ocrTitle": "Reconocimiento de texto",
   "ocrRun": "Reconocer texto",
   "ocrRunning": "Leyendo texto…",
@@ -90,7 +84,6 @@
   "ocrNoTextHint": "Intenta con una imagen más clara",
   "ocrNoTextRetakePhoto": "Volver a tomar foto",
   "ocrNoTextChooseGallery": "Elegir de la galería",
-
   "translateTitle": "Traducir",
   "translateSourceLanguage": "De",
   "translateTargetLanguage": "A",
@@ -123,34 +116,29 @@
   "translateSavePdfSuccess": "PDF guardado con éxito",
   "translateSavePngSuccess": "Imagen guardada con éxito",
   "translateExportNeedsTranslation": "Traduce el texto antes de descargar",
-
   "liveTitle": "Traducción en vivo",
   "liveStart": "Iniciar cámara",
   "liveStop": "Detener",
   "liveListening": "Escuchando…",
   "livePointAtText": "Apunta la cámara al texto",
   "livePermissionNeeded": "Se requiere acceso a la cámara para la traducción en vivo",
-
   "documentsTitle": "Mis documentos",
   "documentRename": "Renombrar",
   "documentDeleteConfirmTitle": "¿Eliminar documento?",
   "documentDeleteConfirmMessage": "Esto no se puede deshacer.",
   "documentDeleted": "Documento eliminado",
-
   "settingsTitle": "Ajustes",
   "settingsLanguage": "Idioma de la app",
   "settingsTheme": "Tema",
   "settingsAbout": "Acerca de",
   "settingsPrivacy": "Política de privacidad",
   "settingsTerms": "Términos de uso",
-
   "permissionCameraTitle": "Permiso de cámara",
   "permissionCameraMessage": "Permite el acceso a la cámara para escanear documentos y usar la traducción en vivo.",
   "permissionStorageTitle": "Permiso de almacenamiento",
   "permissionStorageMessage": "Permite el acceso para guardar y abrir tus escaneos.",
   "permissionOpenSettings": "Abrir ajustes",
   "permissionDenied": "Permiso denegado",
-
   "errorCameraUnavailable": "La cámara no está disponible en este dispositivo",
   "errorFileRead": "No se pudo leer el archivo",
   "errorNetwork": "Comprueba tu conexión a internet",
@@ -162,7 +150,6 @@
   "errorTranslateFailed": "Falló la traducción",
   "errorTranslateModelDownload": "No se pudo descargar el paquete de idioma. Comprueba tu conexión e inténtalo de nuevo.",
   "errorTranslateUnsupportedLanguage": "Este idioma no está disponible para traducción sin conexión.",
-
   "proTitle": "Doc Scanner Pro",
   "proSubtitle": "Escaneos, OCR, idiomas y traducción en vivo ilimitados",
   "proUpgradeButton": "Mejorar a Pro",
@@ -174,15 +161,12 @@
   "proLimitLive": "La traducción en vivo está disponible en Pro",
   "proPurchaseSuccess": "¡Bienvenido a Pro!",
   "proPurchaseFailed": "No se pudo completar la compra",
-
   "exportPdf": "Exportar PDF",
   "exportImage": "Exportar imagen",
   "exportSuccess": "Exportación completada",
   "exportFailed": "Exportación fallida",
-
   "languageSearchHint": "Buscar idioma",
   "languageAuto": "Detectar idioma",
-
   "chatbotTitle": "Chatbot IA",
   "chatbotHistoryButton": "Historial de chat",
   "chatbotBadge": "Tu Asistente IA Inteligente",
@@ -194,6 +178,7 @@
   "chatbotSuggestKeyPoints": "Puntos clave de este PDF",
   "chatbotSuggestExplain": "Explica en detalle",
   "chatbotSuggestTranslate": "Traduce este PDF",
+  "chatbotAskQuestions": "Hacer preguntas sobre este PDF",
   "chatbotUploadHint": "Sube un PDF...",
   "chatbotSheetTitle": "Chatea con tu PDF",
   "chatbotSheetSubtitle": "Sube un PDF y pregunta lo que sea sobre él",
@@ -202,14 +187,12 @@
   "chatbotRecentFilesTitle": "Archivos recientes",
   "chatbotRecentFilesDescription": "Elige de tus archivos recientes",
   "errorChatbotPdfPickFailed": "No se pudo abrir el PDF seleccionado",
-
   "chatbotAnalyzingTitle": "Analizando tu documento...",
   "chatbotAnalyzingSubtitle": "Por favor, espera mientras leemos y\nentendemos tu PDF",
   "chatbotStepReadingPdf": "Leyendo PDF",
   "chatbotStepExtractingText": "Extrayendo texto",
   "chatbotStepUnderstandingContent": "Entendiendo contenido",
   "chatbotStepPreparingChat": "Preparando Chat IA",
-
   "chatbotHistoryTitle": "Historial",
   "chatbotNoConversationsTitle": "Aún no hay conversaciones",
   "chatbotNoConversationsSubtitle": "Sube un PDF para empezar a chatear con tu asistente IA.",
@@ -232,7 +215,6 @@
   "chatbotAnalyzeFailed": "No se pudo analizar este PDF. Por favor, inténtalo de nuevo.",
   "chatbotChatFailed": "No se pudo obtener una respuesta. Inténtalo de nuevo.",
   "errorChatbotPdfEmpty": "No se encontró texto en este PDF",
-
   "pdfAssistantTitle": "Asistente PDF",
   "pdfAssistantSheetTitle": "Subir PDF",
   "pdfAssistantSheetSubtitle": "Elige cómo quieres añadir tu archivo PDF",
@@ -272,21 +254,19 @@
   "pdfAssistantUploadPdf": "Subir PDF",
   "cancel": "Cancelar",
   "remove": "Eliminar",
-
   "commonNext": "Siguiente",
   "commonSkip": "Saltar",
   "commonContinue": "Continuar",
-
   "splashTagline": "Escaneo de documentos con IA",
-
   "onboardingPage1Title": "Escanea cualquier documento",
   "onboardingPage1Description": "Captura recibos, notas y papeles con tu cámara en segundos.",
   "onboardingPage2Title": "OCR y traducción inteligente",
   "onboardingPage2Description": "Extrae texto al instante y tradúcelo a tu idioma preferido.",
   "onboardingPage3Title": "Organiza y exporta",
   "onboardingPage3Description": "Guarda escaneos, exporta PDFs y mantén tus documentos en un solo lugar.",
-
   "settingsChooseLanguage": "Elige un idioma",
   "settingsLanguageApply": "Aplicar",
-  "commonSaving": "Guardando…"
+  "commonSaving": "Guardando…",
+  "translateDownloadTranslatedTextTitle": "Descargar texto traducido",
+  "translateDownloadTranslatedTextDescription": "Descargar solo el texto traducido"
 }

@@ -1196,6 +1196,12 @@ abstract class AppLocalizations {
   /// **'Translate this PDF'**
   String get chatbotSuggestTranslate;
 
+  /// No description provided for @chatbotAskQuestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask Questions About this PDF'**
+  String get chatbotAskQuestions;
+
   /// No description provided for @chatbotUploadHint.
   ///
   /// In en, this message translates to:

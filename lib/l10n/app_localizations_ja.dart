@@ -358,11 +358,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get translateDownloadCompleteFileDescription => '全文書';
 
   @override
-  String get translateDownloadTranslatedTextTitle => 'Download translated text';
+  String get translateDownloadTranslatedTextTitle => '翻訳テキストをダウンロード';
 
   @override
-  String get translateDownloadTranslatedTextDescription =>
-      'Download only the translated text';
+  String get translateDownloadTranslatedTextDescription => '翻訳テキストのみダウンロード';
 
   @override
   String get translateSavePdfSuccess => 'PDFを保存しました';
@@ -560,6 +559,9 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get chatbotSuggestTranslate => 'PDF翻訳';
+
+  @override
+  String get chatbotAskQuestions => 'このPDFについて質問する';
 
   @override
   String get chatbotUploadHint => 'PDFをアップロード...';

@@ -213,6 +213,7 @@
   "chatbotSuggestKeyPoints": "Key Points of this PDF",
   "chatbotSuggestExplain": "Explain in detail",
   "chatbotSuggestTranslate": "Translate this PDF",
+  "chatbotAskQuestions": "Ask Questions About this PDF",
   "chatbotUploadHint": "Upload a PDF...",
   "chatbotSheetTitle": "Chat with your PDF",
   "chatbotSheetSubtitle": "Upload a PDF and ask anything about it",

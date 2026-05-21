@@ -568,6 +568,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get chatbotSuggestTranslate => 'Перевести PDF';
 
   @override
+  String get chatbotAskQuestions => 'Задать вопросы по этому PDF';
+
+  @override
   String get chatbotUploadHint => 'Загрузите PDF...';
 
   @override

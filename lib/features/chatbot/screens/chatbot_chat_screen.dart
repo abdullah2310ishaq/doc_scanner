@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../core/constants/chatbot_assets.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/delete_dialog.dart';
@@ -19,15 +21,18 @@ class ChatbotChatScreen extends StatefulWidget {
     super.key,
     required this.sessionId,
     required this.displayName,
+    this.initialSummary, // Summary capture karne ke liye option variable
   });
 
   final String sessionId;
   final String displayName;
+  final String? initialSummary;
 
   static Future<void> open(
     BuildContext context, {
     required String sessionId,
     required String displayName,
+    String? summary,
   }) {
     return Navigator.of(context).push(
       MaterialPageRoute<void>(
@@ -37,6 +42,7 @@ class ChatbotChatScreen extends StatefulWidget {
           child: ChatbotChatScreen(
             sessionId: sessionId,
             displayName: displayName,
+            initialSummary: summary,
           ),
         ),
       ),
@@ -128,20 +134,19 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
         final title = provider.session?.displayName ?? widget.displayName;
 
         return Scaffold(
-          backgroundColor: const Color(
-            0xFFF8F9FA,
-          ), // Clean UI background light grey
+          backgroundColor: const Color(0xFFF8FAFC),
           appBar: AppBar(
-            backgroundColor: const Color(0xFFF8F9FA),
+            backgroundColor: const Color(0xFFF8FAFC),
             elevation: 0,
             foregroundColor: AppColors.textPrimary,
+            centerTitle: true,
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () => Navigator.of(context).pop(),
             ),
             title: Text(
               title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
             ),
             actions: [
               PopupMenuButton<String>(
@@ -173,19 +178,32 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
                     Expanded(
                       child: ListView(
                         controller: _scrollController,
+                        physics: const BouncingScrollPhysics(),
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
+                          horizontal: 16,
                           vertical: 10,
                         ),
                         children: [
                           if (provider.messages.isEmpty)
-                            _WelcomeCard(l10n: l10n),
-                          ...provider.messages.map(
-                            (message) => _MessageBubble(message: message),
-                          ),
+                            _DocumentReadyWelcomeView(
+                              l10n: l10n,
+                              summary:
+                                  widget.initialSummary ??
+                                  provider.session?.summary ??
+                                  '',
+                              onActionTap: (promptText) =>
+                                  _sendMessage(provider, promptText),
+                            )
+                          else
+                            ...provider.messages.map(
+                              (message) => _MessageBubble(message: message),
+                            ),
                           if (provider.isSending)
                             const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 12),
+                              padding: EdgeInsets.symmetric(
+                                vertical: 12,
+                                horizontal: 4,
+                              ),
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: _ThinkingLoader(),
@@ -213,13 +231,6 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
                       hint: 'Ask anything about this PDF...',
                       isSending: provider.isSending,
                       onSend: (text) => _sendMessage(provider, text),
-                      onSuggestionTap: (text) => _sendMessage(provider, text),
-                      suggestions: [
-                        l10n.chatbotChatPromptSummarize, // "Summarize this document"
-                        l10n.chatbotChatPromptHighlights, // "What are the key highlights?"
-                        l10n.chatbotChatPromptFinancial, // "Show me financial data"
-                        l10n.chatbotChatPromptDates, // "Extract important dates"
-                      ],
                     ),
                   ],
                 ),
@@ -229,104 +240,228 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
   }
 }
 
-class _WelcomeCard extends StatelessWidget {
-  const _WelcomeCard({required this.l10n});
+// Merged Screen State: Dashboard elements inside Chat Empty Welcome Context
+class _DocumentReadyWelcomeView extends StatelessWidget {
+  const _DocumentReadyWelcomeView({
+    required this.l10n,
+    required this.summary,
+    required this.onActionTap,
+  });
 
   final AppLocalizations l10n;
+  final String summary;
+  final ValueChanged<String> onActionTap;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // AI Bot Avatar Icon Accent
+        // 1. Success Message Banner Box
         Container(
-          margin: const EdgeInsets.only(bottom: 6, top: 4),
-          width: 32,
-          height: 32,
-          child: Image.asset('assets/chatbot/robot.png', fit: BoxFit.contain),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          decoration: BoxDecoration(
+            color: const Color(0xFFF4FBF7),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: const Color(0xFFE2F3EB)),
+          ),
+          child: Row(
+            children: [
+              const Icon(
+                Icons.check_circle_rounded,
+                color: Color(0xFF2ECC71),
+                size: 24,
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.chatbotDocumentReadyTitle,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF27AE60),
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      l10n.chatbotDocumentReadySubtitle,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF27AE60),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
+        const SizedBox(height: 12),
 
-        // Greeting Card Box
+        // 2. Ask Questions Large Main Promo Widget
         Container(
-          width: double.infinity,
-          margin: const EdgeInsets.only(bottom: 16),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.black.withOpacity(0.04)),
+            border: Border.all(color: Colors.black.withOpacity(0.02)),
           ),
-          child: const Text.rich(
-            TextSpan(
-              text: '👋🏻 Hi! I’m your AI assistant.\n',
-              style: TextStyle(fontWeight: FontWeight.bold, height: 1.5),
-              children: [
-                TextSpan(
-                  text: 'Ask me anything about this PDF and I’ll help you.',
-                  style: TextStyle(fontWeight: FontWeight.normal),
-                ),
-              ],
-            ),
-            style: TextStyle(fontSize: 15, color: AppColors.textPrimary),
-          ),
-        ),
-
-        // "You can ask me" Onboarding Suggestions Card
-        Container(
-          width: double.infinity,
-          margin: const EdgeInsets.only(bottom: 16),
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.black.withOpacity(0.04)),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
             children: [
-              const Text(
-                'You can ask me:',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
+              Container(child: SvgPicture.asset('assets/q.svg')),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Text(
+                  l10n.chatbotAskQuestions,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary,
+                  ),
                 ),
               ),
-              const SizedBox(height: 16),
-              _buildBulletItem(l10n.chatbotChatPromptSummarize),
-              _buildBulletItem(l10n.chatbotChatPromptHighlights),
-              _buildBulletItem(l10n.chatbotChatPromptFinancial),
-              _buildBulletItem(l10n.chatbotChatPromptDates),
             ],
           ),
         ),
+        const SizedBox(height: 16),
+
+        // 3. Four Quick Action Interactive Chips Grid
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _QuickActionWelcomeChip(
+              iconAsset: 'assets/chatbot/up1.svg',
+              label: 'Summarize\nthis PDF',
+
+              onTap: () => onActionTap(l10n.chatbotChatPromptSummarize),
+            ),
+            _QuickActionWelcomeChip(
+              iconAsset: 'assets/chatbot/up2.svg',
+              label: 'Key Points\nof this PDF',
+
+              onTap: () => onActionTap(l10n.chatbotChatPromptHighlights),
+            ),
+            _QuickActionWelcomeChip(
+              iconAsset: 'assets/chatbot/up3.svg',
+              label: 'Explain\nin detail',
+              onTap: () => onActionTap(
+                l10n.chatbotChatPromptHighlights,
+              ), // Ya context clear prompt string
+            ),
+            _QuickActionWelcomeChip(
+              iconAsset: 'assets/chatbot/up1.svg',
+              label: 'Translate\nthis PDF',
+              onTap: () => onActionTap(
+                l10n.chatbotChatPromptSummarize,
+              ), // Map translation prompt if any
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+
+        // 4. Compact Structural Document Summary Panel
+        if (summary.trim().isNotEmpty)
+          Container(
+            height: 150,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.black.withOpacity(0.02)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n.chatbotCurrentSummary,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Expanded(
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Text(
+                      summary,
+                      style: TextStyle(
+                        fontSize: 13,
+                        height: 1.4,
+                        color: AppColors.textPrimary.withOpacity(0.7),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
       ],
     );
   }
+}
 
-  Widget _buildBulletItem(String text) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 6),
-            child: Icon(Icons.circle, size: 6, color: AppColors.textSecondary),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              text,
-              style: const TextStyle(
-                fontSize: 15,
-                color: AppColors.textSecondary,
-                fontWeight: FontWeight.w500,
-              ),
+class _QuickActionWelcomeChip extends StatelessWidget {
+  const _QuickActionWelcomeChip({
+    required this.iconAsset,
+    required this.label,
+
+    required this.onTap,
+  });
+
+  final String iconAsset;
+  final String label;
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Card(
+        margin: const EdgeInsets.symmetric(horizontal: 4),
+        elevation: 0,
+        color: AppColors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: BorderSide(color: Colors.black.withOpacity(0.02)),
+        ),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(10),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 32,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  padding: const EdgeInsets.all(6),
+                  child: SvgPicture.asset(iconAsset),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.textPrimary,
+                    height: 1.2,
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -338,7 +473,6 @@ class _MessageBubble extends StatelessWidget {
   final ChatbotMessageModel message;
 
   String _cleanResponseText(String source) {
-    // Markdown ke bad markers (*) filter clean karne ke liye helper regex
     return source.replaceAll(RegExp(r'\*+'), '').trim();
   }
 
@@ -348,7 +482,6 @@ class _MessageBubble extends StatelessWidget {
     final cleanedText = _cleanResponseText(message.content);
 
     if (isUser) {
-      // User Message (Right Side Blue Bubble)
       return Align(
         alignment: Alignment.centerRight,
         child: Container(
@@ -358,7 +491,7 @@ class _MessageBubble extends StatelessWidget {
             maxWidth: MediaQuery.sizeOf(context).width * 0.8,
           ),
           decoration: const BoxDecoration(
-            color: AppColors.chatbotAccent, // Image primary blue/purple accent
+            color: AppColors.chatbotAccent,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
@@ -377,13 +510,11 @@ class _MessageBubble extends StatelessWidget {
         ),
       );
     } else {
-      // AI Message (Left Side Layout with Bot Avatar + White Box Card)
       return Align(
         alignment: Alignment.centerLeft,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Fixed Bot Avatar Icon Container 👇
             Container(
               margin: const EdgeInsets.only(bottom: 6, top: 4),
               width: 32,
@@ -393,8 +524,6 @@ class _MessageBubble extends StatelessWidget {
                 fit: BoxFit.contain,
               ),
             ),
-
-            // White Card Content Box
             Container(
               width: double.infinity,
               margin: const EdgeInsets.only(bottom: 16),
@@ -403,13 +532,6 @@ class _MessageBubble extends StatelessWidget {
                 color: AppColors.white,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: Colors.black.withOpacity(0.04)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.01),
-                    blurRadius: 6,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
               ),
               child: Text(
                 cleanedText,
@@ -433,118 +555,70 @@ class _ChatInputBar extends StatelessWidget {
     required this.hint,
     required this.isSending,
     required this.onSend,
-    required this.onSuggestionTap,
-    required this.suggestions,
   });
 
   final TextEditingController controller;
   final String hint;
   final bool isSending;
   final ValueChanged<String> onSend;
-  final ValueChanged<String> onSuggestionTap;
-  final List<String> suggestions;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Bottom Horizontal Tiles
-          SizedBox(
-            height: 38,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: suggestions.length,
-              separatorBuilder: (_, __) => const SizedBox(width: 8),
-              itemBuilder: (context, index) {
-                final text = suggestions[index];
-                return InkWell(
-                  onTap: isSending ? null : () => onSuggestionTap(text),
-                  borderRadius: BorderRadius.circular(20),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.black.withOpacity(0.06)),
-                    ),
-                    child: Center(
-                      child: Text(
-                        text,
-                        style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-
-          // Main Chat Text Field & Send Action Floating Button
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(28),
-                      border: Border.all(color: Colors.black.withOpacity(0.06)),
-                    ),
-                    child: TextField(
-                      controller: controller,
-                      minLines: 1,
-                      maxLines: 4,
-                      style: const TextStyle(fontSize: 15),
-                      decoration: InputDecoration(
-                        hintText: hint,
-                        hintStyle: TextStyle(
-                          color: Colors.grey.shade400,
-                          fontSize: 15,
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 12,
-                        ),
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                IconButton(
-                  onPressed: isSending
-                      ? null
-                      : () {
-                          if (controller.text.trim().isNotEmpty) {
-                            onSend(controller.text);
-                          }
-                        },
-                  icon: const Icon(Icons.send_rounded, size: 22),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
                   color: AppColors.white,
-                  style: IconButton.styleFrom(
-                    backgroundColor: AppColors.chatbotAccent,
-                    minimumSize: const Size(48, 48),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: const Color(0xFFE2E8F0)),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 4,
+                ),
+                child: TextField(
+                  controller: controller,
+                  minLines: 1,
+                  maxLines: 4,
+                  style: const TextStyle(fontSize: 14),
+                  decoration: InputDecoration(
+                    hintText: hint,
+                    hintStyle: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
                     ),
+                    border: InputBorder.none,
+                    isDense: true,
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
-        ],
+            const SizedBox(width: 8),
+            IconButton(
+              onPressed: isSending
+                  ? null
+                  : () {
+                      if (controller.text.trim().isNotEmpty) {
+                        onSend(controller.text);
+                      }
+                    },
+              icon: const Icon(Icons.send_rounded, size: 22),
+              color: AppColors.white,
+              style: IconButton.styleFrom(
+                backgroundColor: const Color(0xFF4F46E5),
+                minimumSize: const Size(44, 44),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -596,11 +670,7 @@ class _ThinkingLoaderState extends State<_ThinkingLoader>
             return AnimatedBuilder(
               animation: _controller,
               builder: (context, child) {
-                // Har dot ka delay alag karne ke liye math equation
                 final delay = index * 0.2;
-                (_controller.value - delay).clamp(0.0, 1.0);
-
-                // Opacity aur size change animation cycle
                 double scale = 1.0;
                 double opacity = 0.3;
 
@@ -615,9 +685,7 @@ class _ThinkingLoaderState extends State<_ThinkingLoader>
                   width: 6 * scale,
                   height: 6 * scale,
                   decoration: BoxDecoration(
-                    color: const Color(
-                      0xFF6366F1,
-                    ).withOpacity(opacity), // Accent purple dot
+                    color: const Color(0xFF6366F1).withOpacity(opacity),
                     shape: BoxShape.circle,
                   ),
                 );

@@ -576,6 +576,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatbotSuggestTranslate => 'Translate this PDF';
 
   @override
+  String get chatbotAskQuestions => 'Ask Questions About this PDF';
+
+  @override
   String get chatbotUploadHint => 'Upload a PDF...';
 
   @override

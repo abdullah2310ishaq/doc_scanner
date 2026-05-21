@@ -210,6 +210,7 @@
     "chatbotSuggestKeyPoints": "关键点",
     "chatbotSuggestExplain": "详细解释",
     "chatbotSuggestTranslate": "翻译PDF",
+    "chatbotAskQuestions": "针对此PDF提问",
     "chatbotUploadHint": "上传PDF...",
     "chatbotSheetTitle": "PDF聊天",
     "chatbotSheetSubtitle": "上传PDF并提问",

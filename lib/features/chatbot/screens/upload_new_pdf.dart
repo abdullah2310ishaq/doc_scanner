@@ -95,57 +95,35 @@ class _UploadNewPdfScreenState extends State<UploadNewPdfScreen> {
           children: [
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
                   children: [
                     const SizedBox(height: 8),
                     _ChatbotBadge(label: l10n.chatbotBadge),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 24),
                     _ChatbotHeadline(
                       chatLabel: l10n.chatbotHeadlineChat,
                       middleLabel: l10n.chatbotHeadlineMiddle,
                       pdfLabel: l10n.chatbotHeadlinePdf,
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 24),
                     Image.asset(
                       ChatbotAssets.illustration,
                       fit: BoxFit.contain,
-                      height: 240,
+                      height: 220,
                     ),
                     const SizedBox(height: 24),
-                    _TryAskingDivider(label: l10n.chatbotTryAsking),
+                    const _TipsDivider(),
                     const SizedBox(height: 16),
-
-                    // Unbounded constraints error fix karne ke liye explicitly SizedBox diya hai
-                    SizedBox(
-                      // Parent padding (20 + 20 = 40) ko double kar ke compensation di hai taake cards bahar nikal saken
-                      width: MediaQuery.of(context).size.width,
-                      child: Padding(
-                        // Left aur Right par screen ke edge se halka sa (8px) gap rakhne ke liye padding adjust ki hai
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: _SuggestionCardsGrid(
-                          items: [
-                            _SuggestionItem(
-                              iconAsset: ChatbotAssets.suggestSummarize,
-                              label: l10n.chatbotSuggestSummarize,
-                            ),
-                            _SuggestionItem(
-                              iconAsset: ChatbotAssets.suggestKeyPoints,
-                              label: l10n.chatbotSuggestKeyPoints,
-                            ),
-                            _SuggestionItem(
-                              iconAsset: ChatbotAssets.suggestExplain,
-                              label: l10n.chatbotSuggestExplain,
-                            ),
-                            _SuggestionItem(
-                              iconAsset: ChatbotAssets.suggestTranslate,
-                              label: l10n.chatbotSuggestTranslate,
-                            ),
-                          ],
-                        ),
-                      ),
+                    _TipsList(
+                      tips: [
+                        l10n.chatbotSuggestSummarize,
+                        l10n.chatbotSuggestKeyPoints,
+                        l10n.chatbotSuggestExplain,
+                        l10n.chatbotSuggestTranslate,
+                        l10n.chatbotAskQuestions, // Make sure this key exists or map your relevant l10n string
+                      ],
                     ),
-
                     const SizedBox(height: 24),
                   ],
                 ),
@@ -153,8 +131,8 @@ class _UploadNewPdfScreenState extends State<UploadNewPdfScreen> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
-              child: _UploadPdfBar(
-                hint: l10n.chatbotUploadHint,
+              child: _UploadPdfButton(
+                label: l10n.chatbotUploadHint, // E.g., "Upload a PDF"
                 onTap: _openUploadSheet,
               ),
             ),
@@ -222,16 +200,16 @@ class _ChatbotHeadline extends StatelessWidget {
       TextSpan(
         style: const TextStyle(
           fontSize: 28,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w700,
           height: 1.2,
           color: AppColors.textPrimary,
         ),
         children: [
           TextSpan(
-            text: chatLabel,
+            text: '$chatLabel ',
             style: const TextStyle(color: AppColors.chatbotAccent),
           ),
-          TextSpan(text: middleLabel),
+          TextSpan(text: '$middleLabel '),
           TextSpan(
             text: pdfLabel,
             style: const TextStyle(color: AppColors.chatbotAccent),
@@ -243,59 +221,59 @@ class _ChatbotHeadline extends StatelessWidget {
   }
 }
 
-class _TryAskingDivider extends StatelessWidget {
-  const _TryAskingDivider({required this.label});
-
-  final String label;
+class _TipsDivider extends StatelessWidget {
+  const _TipsDivider();
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       children: [
-        const Expanded(child: Divider(color: AppColors.searchBorder)),
+        Expanded(child: Divider(color: AppColors.searchBorder)),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding: EdgeInsets.symmetric(horizontal: 12),
           child: Text(
-            label,
-            style: const TextStyle(
+            'Tips',
+            style: TextStyle(
               fontSize: 14,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
               color: AppColors.textSecondary,
             ),
           ),
         ),
-        const Expanded(child: Divider(color: AppColors.searchBorder)),
+        Expanded(child: Divider(color: AppColors.searchBorder)),
       ],
     );
   }
 }
 
-class _SuggestionItem {
-  const _SuggestionItem({required this.iconAsset, required this.label});
+class _TipsList extends StatelessWidget {
+  const _TipsList({required this.tips});
 
-  final String iconAsset;
-  final String label;
-}
-
-// ListView ko Wrap se replace kiya taake scroll khatam ho aur aik hi dafa show ho saken
-class _SuggestionCardsGrid extends StatelessWidget {
-  const _SuggestionCardsGrid({required this.items});
-
-  final List<_SuggestionItem> items;
+  final List<String> tips;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: items.map((item) {
-        return Expanded(
-          child: Padding(
-            // Cards ke aapas ka gap handle karne ke liye
-            padding: const EdgeInsets.symmetric(horizontal: 3),
-            child: _SuggestionCard(
-              iconAsset: item.iconAsset,
-              label: item.label,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: tips.map((tip) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Icon(Icons.circle, size: 6, color: AppColors.chatbotAccent),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  tip,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       }).toList(),
@@ -303,102 +281,46 @@ class _SuggestionCardsGrid extends StatelessWidget {
   }
 }
 
-class _SuggestionCard extends StatelessWidget {
-  const _SuggestionCard({required this.iconAsset, required this.label});
+class _UploadPdfButton extends StatelessWidget {
+  const _UploadPdfButton({required this.label, required this.onTap});
 
-  final String iconAsset;
   final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-
-      child: InkWell(
-        onTap: () {},
-        borderRadius: BorderRadius.circular(12),
-        child: Container(
-          height:
-              110, // Width badhne ke sath height ko 110 kiya taake card square aur perfect dikhe
-          // Internal padding kam ki taake content ko zyada jagah mile
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                iconAsset,
-                width:
-                    32, // Card bada hone ki wajah se icon size thoda increase kiya
-                height: 32,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                label,
-                textAlign: TextAlign.center,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 11, // Font thoda clear kiya
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.textPrimary,
-                  height: 1.2,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _UploadPdfBar extends StatelessWidget {
-  const _UploadPdfBar({required this.hint, required this.onTap});
-
-  final String hint;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.white,
-      borderRadius: BorderRadius.circular(16),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
-        child: Ink(
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppColors.searchBorder),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+    return Container(
+      width: double.infinity,
+      height: 54,
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFF2F69FF), Color(0xFF6B58FF)],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(6),
+          child: Center(
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: AppColors.cardChatbotBg,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  alignment: Alignment.center,
-                  child: const Icon(
-                    Icons.attach_file_rounded,
-                    color: AppColors.chatbotAccent,
-                    size: 22,
-                  ),
+                const Icon(
+                  Icons.attach_file_rounded,
+                  color: AppColors.white,
+                  size: 20,
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    hint,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.textSecondary,
-                    ),
+                const SizedBox(width: 8),
+                Text(
+                  label,
+                  style: const TextStyle(
+                    color: AppColors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ],

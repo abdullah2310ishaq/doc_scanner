@@ -562,6 +562,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get chatbotSuggestTranslate => 'PDF 번역';
 
   @override
+  String get chatbotAskQuestions => '이 PDF에 대해 질문하기';
+
+  @override
   String get chatbotUploadHint => 'PDF 업로드...';
 
   @override

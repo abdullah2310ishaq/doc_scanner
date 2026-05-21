@@ -1,9 +1,9 @@
 {
   "@@locale": "fr",
-
   "appTitle": "Scanner de Documents",
-  "@appTitle": { "description": "Nom de l'application affiché dans le lanceur et à propos" },
-
+  "@appTitle": {
+    "description": "Nom de l'application affiché dans le lanceur et à propos"
+  },
   "commonOk": "OK",
   "commonCancel": "Annuler",
   "commonSave": "Enregistrer",
@@ -15,18 +15,18 @@
   "commonLoading": "Chargement…",
   "commonError": "Une erreur s'est produite",
   "commonTryAgain": "Veuillez réessayer",
-
   "navHome": "Accueil",
   "navScan": "Scanner",
   "navDocuments": "Documents",
   "navTranslate": "Traduire",
   "navLive": "En direct",
   "navSettings": "Paramètres",
-
   "homeGreeting": "Bonjour, {name} 👋",
   "@homeGreeting": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "homeTitlePrefix": "Document IA",
@@ -55,7 +55,6 @@
   "homeEmptyDocuments": "Aucun document. Appuyez sur Scanner pour commencer.",
   "homeSampleDocName": "Facture_2026.pdf",
   "homeSampleDocMeta": "10 mai 2026 • 2,4 Mo",
-
   "scanTitle": "Scanner",
   "scanCapture": "Capturer",
   "scanImportGallery": "Importer depuis la galerie",
@@ -68,12 +67,13 @@
   "scanPageCount": "{count, plural, =1{1 page} other{{count} pages}}",
   "@scanPageCount": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "scanSaving": "Enregistrement du scan…",
   "scanSaved": "Document enregistré",
-
   "ocrTitle": "Reconnaissance de texte",
   "ocrRun": "Reconnaître le texte",
   "ocrRunning": "Lecture du texte…",
@@ -101,7 +101,6 @@
   "ocrNoTextHint": "Essayez une image plus claire",
   "ocrNoTextRetakePhoto": "Reprendre la photo",
   "ocrNoTextChooseGallery": "Choisir depuis la galerie",
-
   "translateTitle": "Traduire",
   "translateSourceLanguage": "De",
   "translateTargetLanguage": "Vers",
@@ -134,34 +133,29 @@
   "translateSavePdfSuccess": "PDF enregistré avec succès",
   "translateSavePngSuccess": "Image enregistrée avec succès",
   "translateExportNeedsTranslation": "Veuillez traduire le texte avant de télécharger",
-
   "liveTitle": "Traduction en direct",
   "liveStart": "Démarrer la caméra",
   "liveStop": "Arrêter",
   "liveListening": "Écoute…",
   "livePointAtText": "Pointez la caméra vers le texte",
   "livePermissionNeeded": "L'accès à la caméra est requis",
-
   "documentsTitle": "Mes documents",
   "documentRename": "Renommer",
   "documentDeleteConfirmTitle": "Supprimer le document ?",
   "documentDeleteConfirmMessage": "Cette action est irréversible.",
   "documentDeleted": "Document supprimé",
-
   "settingsTitle": "Paramètres",
   "settingsLanguage": "Langue de l'application",
   "settingsTheme": "Thème",
   "settingsAbout": "À propos",
   "settingsPrivacy": "Politique de confidentialité",
   "settingsTerms": "Conditions d'utilisation",
-
   "permissionCameraTitle": "Autorisation caméra",
   "permissionCameraMessage": "Autorisez l'accès à la caméra pour scanner et traduire.",
   "permissionStorageTitle": "Autorisation stockage",
   "permissionStorageMessage": "Autorisez l'accès pour enregistrer vos scans.",
   "permissionOpenSettings": "Ouvrir les paramètres",
   "permissionDenied": "Permission refusée",
-
   "errorCameraUnavailable": "Caméra non disponible",
   "errorFileRead": "Impossible de lire le fichier",
   "errorNetwork": "Vérifiez votre connexion internet",
@@ -173,7 +167,6 @@
   "errorTranslateFailed": "Échec de la traduction",
   "errorTranslateModelDownload": "Impossible de télécharger le pack de langue",
   "errorTranslateUnsupportedLanguage": "Langue non supportée",
-
   "proTitle": "Doc Scanner Pro",
   "proSubtitle": "Scans illimités, OCR et traduction",
   "proUpgradeButton": "Passer à Pro",
@@ -182,7 +175,9 @@
   "proLimitPages": "La version gratuite permet {max} pages",
   "@proLimitPages": {
     "placeholders": {
-      "max": { "type": "int" }
+      "max": {
+        "type": "int"
+      }
     }
   },
   "proLimitOcr": "Passez à Pro pour OCR illimité",
@@ -190,15 +185,12 @@
   "proLimitLive": "Traduction en direct Pro uniquement",
   "proPurchaseSuccess": "Bienvenue Pro !",
   "proPurchaseFailed": "Achat échoué",
-
   "exportPdf": "Exporter en PDF",
   "exportImage": "Exporter en image",
   "exportSuccess": "Export terminé",
   "exportFailed": "Échec de l'export",
-
   "languageSearchHint": "Rechercher une langue",
   "languageAuto": "Détection automatique",
-
   "chatbotTitle": "Chatbot IA",
   "chatbotHistoryButton": "Historique",
   "chatbotBadge": "Votre assistant IA",
@@ -210,6 +202,7 @@
   "chatbotSuggestKeyPoints": "Points clés",
   "chatbotSuggestExplain": "Expliquer en détail",
   "chatbotSuggestTranslate": "Traduire ce PDF",
+  "chatbotAskQuestions": "Poser des questions sur ce PDF",
   "chatbotUploadHint": "Importer un PDF...",
   "chatbotSheetTitle": "Chat avec votre PDF",
   "chatbotSheetSubtitle": "Importez un PDF et posez vos questions",
@@ -218,14 +211,12 @@
   "chatbotRecentFilesTitle": "Fichiers récents",
   "chatbotRecentFilesDescription": "Choisir un fichier récent",
   "errorChatbotPdfPickFailed": "Impossible d'ouvrir le PDF",
-
   "chatbotAnalyzingTitle": "Analyse du document...",
   "chatbotAnalyzingSubtitle": "Veuillez patienter",
   "chatbotStepReadingPdf": "Lecture du PDF",
   "chatbotStepExtractingText": "Extraction du texte",
   "chatbotStepUnderstandingContent": "Compréhension",
   "chatbotStepPreparingChat": "Préparation du chat",
-
   "chatbotHistoryTitle": "Historique",
   "chatbotNoConversationsTitle": "Aucune conversation",
   "chatbotNoConversationsSubtitle": "Importez un PDF pour commencer",
@@ -248,7 +239,6 @@
   "chatbotAnalyzeFailed": "Analyse impossible",
   "chatbotChatFailed": "Réponse impossible",
   "errorChatbotPdfEmpty": "Aucun texte trouvé",
-
   "pdfAssistantTitle": "Assistant PDF",
   "pdfAssistantSheetTitle": "Importer un PDF",
   "pdfAssistantSheetSubtitle": "Choisissez comment vous souhaitez ajouter votre fichier PDF",
@@ -288,21 +278,19 @@
   "pdfAssistantUploadPdf": "Importer PDF",
   "cancel": "Annuler",
   "remove": "Supprimer",
-
   "commonNext": "Suivant",
   "commonSkip": "Passer",
   "commonContinue": "Continuer",
-
   "splashTagline": "Scanner intelligent alimenté par IA",
-
   "onboardingPage1Title": "Scanner n'importe quel document",
   "onboardingPage1Description": "Capturez reçus et papiers en quelques secondes.",
   "onboardingPage2Title": "OCR et traduction",
   "onboardingPage2Description": "Extraction et traduction instantanées.",
   "onboardingPage3Title": "Organisation et export",
   "onboardingPage3Description": "Enregistrez et exportez facilement.",
-
   "settingsChooseLanguage": "Choisir une langue",
   "settingsLanguageApply": "Appliquer",
-  "commonSaving": "Enregistrement…"
+  "commonSaving": "Enregistrement…",
+  "translateDownloadTranslatedTextTitle": "Télécharger le texte traduit",
+  "translateDownloadTranslatedTextDescription": "Télécharger uniquement le texte traduit"
 }

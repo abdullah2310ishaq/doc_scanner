@@ -1,9 +1,9 @@
 {
   "@@locale": "de",
-
   "appTitle": "Dokumentenscanner",
-  "@appTitle": { "description": "Anwendungsname im Launcher und Info-Bereich" },
-
+  "@appTitle": {
+    "description": "Anwendungsname im Launcher und Info-Bereich"
+  },
   "commonOk": "OK",
   "commonCancel": "Abbrechen",
   "commonSave": "Speichern",
@@ -15,18 +15,18 @@
   "commonLoading": "Wird geladen…",
   "commonError": "Etwas ist schiefgelaufen",
   "commonTryAgain": "Bitte erneut versuchen",
-
   "navHome": "Startseite",
   "navScan": "Scannen",
   "navDocuments": "Dokumente",
   "navTranslate": "Übersetzen",
   "navLive": "Live",
   "navSettings": "Einstellungen",
-
   "homeGreeting": "Guten Morgen, {name} 👋",
   "@homeGreeting": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "homeTitlePrefix": "KI-Dokumenten",
@@ -55,7 +55,6 @@
   "homeEmptyDocuments": "Keine Dokumente vorhanden. Tippe auf Scannen.",
   "homeSampleDocName": "Rechnung_2026.pdf",
   "homeSampleDocMeta": "10. Mai 2026 • 2,4 MB",
-
   "scanTitle": "Scannen",
   "scanCapture": "Aufnehmen",
   "scanImportGallery": "Aus Galerie importieren",
@@ -68,12 +67,13 @@
   "scanPageCount": "{count, plural, =1{1 Seite} other{{count} Seiten}}",
   "@scanPageCount": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "scanSaving": "Scan wird gespeichert…",
   "scanSaved": "Dokument gespeichert",
-
   "ocrTitle": "Texterkennung",
   "ocrRun": "Text erkennen",
   "ocrRunning": "Text wird gelesen…",
@@ -101,7 +101,6 @@
   "ocrNoTextHint": "Versuche ein klareres Bild",
   "ocrNoTextRetakePhoto": "Foto neu aufnehmen",
   "ocrNoTextChooseGallery": "Aus Galerie wählen",
-
   "translateTitle": "Übersetzen",
   "translateSourceLanguage": "Von",
   "translateTargetLanguage": "Nach",
@@ -134,34 +133,29 @@
   "translateSavePdfSuccess": "PDF erfolgreich gespeichert",
   "translateSavePngSuccess": "Bild erfolgreich gespeichert",
   "translateExportNeedsTranslation": "Bitte zuerst übersetzen",
-
   "liveTitle": "Live Übersetzung",
   "liveStart": "Kamera starten",
   "liveStop": "Stopp",
   "liveListening": "Erkennung läuft…",
   "livePointAtText": "Kamera auf Text richten",
   "livePermissionNeeded": "Kamerazugriff erforderlich",
-
   "documentsTitle": "Meine Dokumente",
   "documentRename": "Umbenennen",
   "documentDeleteConfirmTitle": "Dokument löschen?",
   "documentDeleteConfirmMessage": "Diese Aktion kann nicht rückgängig gemacht werden.",
   "documentDeleted": "Dokument gelöscht",
-
   "settingsTitle": "Einstellungen",
   "settingsLanguage": "App-Sprache",
   "settingsTheme": "Design",
   "settingsAbout": "Über",
   "settingsPrivacy": "Datenschutz",
   "settingsTerms": "Nutzungsbedingungen",
-
   "permissionCameraTitle": "Kameraberechtigung",
   "permissionCameraMessage": "Zugriff auf Kamera erlauben zum Scannen.",
   "permissionStorageTitle": "Speicherberechtigung",
   "permissionStorageMessage": "Zugriff zum Speichern erlauben.",
   "permissionOpenSettings": "Einstellungen öffnen",
   "permissionDenied": "Berechtigung verweigert",
-
   "errorCameraUnavailable": "Kamera nicht verfügbar",
   "errorFileRead": "Datei konnte nicht gelesen werden",
   "errorNetwork": "Internetverbindung prüfen",
@@ -173,7 +167,6 @@
   "errorTranslateFailed": "Übersetzung fehlgeschlagen",
   "errorTranslateModelDownload": "Sprachpaket konnte nicht geladen werden",
   "errorTranslateUnsupportedLanguage": "Sprache nicht unterstützt",
-
   "proTitle": "Doc Scanner Pro",
   "proSubtitle": "Unbegrenzte Scans und OCR",
   "proUpgradeButton": "Auf Pro upgraden",
@@ -182,7 +175,9 @@
   "proLimitPages": "Kostenlos: bis {max} Seiten",
   "@proLimitPages": {
     "placeholders": {
-      "max": { "type": "int" }
+      "max": {
+        "type": "int"
+      }
     }
   },
   "proLimitOcr": "Unbegrenztes OCR nur mit Pro",
@@ -190,15 +185,12 @@
   "proLimitLive": "Live Übersetzung nur Pro",
   "proPurchaseSuccess": "Willkommen bei Pro!",
   "proPurchaseFailed": "Kauf fehlgeschlagen",
-
   "exportPdf": "PDF exportieren",
   "exportImage": "Bild exportieren",
   "exportSuccess": "Export abgeschlossen",
   "exportFailed": "Export fehlgeschlagen",
-
   "languageSearchHint": "Sprache suchen",
   "languageAuto": "Automatische Erkennung",
-
   "chatbotTitle": "KI Chatbot",
   "chatbotHistoryButton": "Verlauf",
   "chatbotBadge": "Dein KI-Assistent",
@@ -210,6 +202,7 @@
   "chatbotSuggestKeyPoints": "Wichtige Punkte",
   "chatbotSuggestExplain": "Detailliert erklären",
   "chatbotSuggestTranslate": "PDF übersetzen",
+  "chatbotAskQuestions": "Fragen zu dieser PDF-Datei stellen",
   "chatbotUploadHint": "PDF hochladen...",
   "chatbotSheetTitle": "Chat mit PDF",
   "chatbotSheetSubtitle": "PDF hochladen und Fragen stellen",
@@ -218,14 +211,12 @@
   "chatbotRecentFilesTitle": "Letzte Dateien",
   "chatbotRecentFilesDescription": "Aus Verlauf wählen",
   "errorChatbotPdfPickFailed": "PDF konnte nicht geöffnet werden",
-
   "chatbotAnalyzingTitle": "Dokument wird analysiert...",
   "chatbotAnalyzingSubtitle": "Bitte warten",
   "chatbotStepReadingPdf": "PDF lesen",
   "chatbotStepExtractingText": "Text extrahieren",
   "chatbotStepUnderstandingContent": "Inhalt verstehen",
   "chatbotStepPreparingChat": "Chat vorbereiten",
-
   "chatbotHistoryTitle": "Verlauf",
   "chatbotNoConversationsTitle": "Keine Chats",
   "chatbotNoConversationsSubtitle": "PDF hochladen zum Starten",
@@ -248,7 +239,6 @@
   "chatbotAnalyzeFailed": "Analyse fehlgeschlagen",
   "chatbotChatFailed": "Antwort fehlgeschlagen",
   "errorChatbotPdfEmpty": "Kein Text gefunden",
-
   "pdfAssistantTitle": "PDF Assistent",
   "pdfAssistantSheetTitle": "PDF hochladen",
   "pdfAssistantSheetSubtitle": "Wählen Sie aus, wie Sie Ihre PDF-Datei hinzufügen möchten",
@@ -288,21 +278,19 @@
   "pdfAssistantUploadPdf": "PDF hochladen",
   "cancel": "Abbrechen",
   "remove": "Entfernen",
-
   "commonNext": "Weiter",
   "commonSkip": "Überspringen",
   "commonContinue": "Fortfahren",
-
   "splashTagline": "KI-gestütztes Dokumentenscannen",
-
   "onboardingPage1Title": "Dokumente scannen",
   "onboardingPage1Description": "Belege und Notizen schnell erfassen.",
   "onboardingPage2Title": "OCR & Übersetzung",
   "onboardingPage2Description": "Text extrahieren und übersetzen.",
   "onboardingPage3Title": "Speichern & Exportieren",
   "onboardingPage3Description": "Alles an einem Ort speichern.",
-
   "settingsChooseLanguage": "Sprache wählen",
   "settingsLanguageApply": "Anwenden",
-  "commonSaving": "Wird gespeichert…"
+  "commonSaving": "Wird gespeichert…",
+  "translateDownloadTranslatedTextTitle": "Übersetzten Text herunterladen",
+  "translateDownloadTranslatedTextDescription": "Nur übersetzten Text herunterladen"
 }

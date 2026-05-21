@@ -371,11 +371,12 @@ class AppLocalizationsEs extends AppLocalizations {
       'Descargar el archivo completo';
 
   @override
-  String get translateDownloadTranslatedTextTitle => 'Download translated text';
+  String get translateDownloadTranslatedTextTitle =>
+      'Descargar texto traducido';
 
   @override
   String get translateDownloadTranslatedTextDescription =>
-      'Download only the translated text';
+      'Descargar solo el texto traducido';
 
   @override
   String get translateSavePdfSuccess => 'PDF guardado con éxito';
@@ -582,6 +583,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get chatbotSuggestTranslate => 'Traduce este PDF';
+
+  @override
+  String get chatbotAskQuestions => 'Hacer preguntas sobre este PDF';
 
   @override
   String get chatbotUploadHint => 'Sube un PDF...';

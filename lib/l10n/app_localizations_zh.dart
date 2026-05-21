@@ -562,6 +562,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get chatbotSuggestTranslate => '翻译PDF';
 
   @override
+  String get chatbotAskQuestions => '针对此PDF提问';
+
+  @override
   String get chatbotUploadHint => '上传PDF...';
 
   @override

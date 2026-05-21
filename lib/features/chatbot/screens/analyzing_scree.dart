@@ -5,7 +5,8 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/toast.dart';
 import '../providers/chatbot_analyze_provider.dart';
-import 'document_ready_summary_screen.dart';
+import '../providers/chatbot_chat_provider.dart';
+import 'chatbot_chat_screen.dart'; // Ab direct isko call karenge
 
 enum StepStatus { pending, loading, completed }
 
@@ -18,7 +19,8 @@ class AnalyzeScreen extends StatefulWidget {
     return Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => ChangeNotifierProvider(
-          create: (_) => ChatbotAnalyzeProvider(sourcePdfPath: pdfPath)..start(),
+          create: (_) =>
+              ChatbotAnalyzeProvider(sourcePdfPath: pdfPath)..start(),
           child: AnalyzeScreen(pdfPath: pdfPath),
         ),
       ),
@@ -43,12 +45,17 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
     _navigated = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
+
+      // 👉 PURANI ROUTING REMOVE KAR KE DIRECT CHAT SCREEN PAR LE GAYE HAIN
       Navigator.of(context).pushReplacement(
         MaterialPageRoute<void>(
-          builder: (_) => DocumentReadySummaryScreen(
-            sessionId: session.id,
-            displayName: session.displayName,
-            summary: session.summary,
+          builder: (_) => ChangeNotifierProvider(
+            create: (_) => ChatbotChatProvider(sessionId: session.id)..loadSession(),
+            child: ChatbotChatScreen(
+              sessionId: session.id,
+              displayName: session.displayName,
+              initialSummary: session.summary, // Summary dynamic pass ho rahi hai dashboard view ke liye
+            ),
           ),
         ),
       );
