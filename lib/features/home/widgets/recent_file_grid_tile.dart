@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/l10n_extension.dart';
 import '../models/recent_file_model.dart';
 import '../services/recent_documents_service.dart';
 
@@ -24,9 +25,11 @@ class RecentFileGridTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final meta = RecentDocumentsService.formatMeta(
       file.modifiedAt,
       file.sizeBytes,
+      l10n,
     );
 
     return GestureDetector(

@@ -38,6 +38,8 @@ class HomeHeader extends StatelessWidget {
         const SizedBox(height: 18),
         Text(
           greeting,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: const TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w500,
@@ -111,6 +113,8 @@ class _HomeTitle extends StatelessWidget {
         Flexible(
           child: Text(
             prefix,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.w800,

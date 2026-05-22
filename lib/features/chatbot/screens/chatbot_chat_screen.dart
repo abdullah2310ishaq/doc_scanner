@@ -255,7 +255,7 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
                       ),
                     _ChatInputBar(
                       controller: _inputController,
-                      hint: 'Ask anything about this PDF...',
+                      hint: l10n.chatbotChatInputHint,
                       isSending: provider.isSending,
                       onSend: (text) => _sendMessage(provider, text),
                     ),
@@ -362,29 +362,23 @@ class _DocumentReadyWelcomeView extends StatelessWidget {
           children: [
             _QuickActionWelcomeChip(
               iconAsset: 'assets/chatbot/up1.svg',
-              label: 'Summarize\nthis PDF',
-
+              label: l10n.chatbotSuggestSummarizeChip,
               onTap: () => onActionTap(l10n.chatbotChatPromptSummarize),
             ),
             _QuickActionWelcomeChip(
               iconAsset: 'assets/chatbot/up2.svg',
-              label: 'Key Points\nof this PDF',
-
+              label: l10n.chatbotSuggestKeyPointsChip,
               onTap: () => onActionTap(l10n.chatbotChatPromptHighlights),
             ),
             _QuickActionWelcomeChip(
               iconAsset: 'assets/chatbot/up3.svg',
-              label: 'Explain\nin detail',
-              onTap: () => onActionTap(
-                l10n.chatbotChatPromptHighlights,
-              ), // Ya context clear prompt string
+              label: l10n.chatbotSuggestExplainChip,
+              onTap: () => onActionTap(l10n.chatbotChatPromptHighlights),
             ),
             _QuickActionWelcomeChip(
               iconAsset: 'assets/chatbot/up1.svg',
-              label: 'Translate\nthis PDF',
-              onTap: () => onActionTap(
-                l10n.chatbotChatPromptSummarize,
-              ), // Map translation prompt if any
+              label: l10n.chatbotSuggestTranslateChip,
+              onTap: () => onActionTap(l10n.chatbotSuggestTranslate),
             ),
           ],
         ),
@@ -496,6 +490,8 @@ class _QuickActionWelcomeChip extends StatelessWidget {
                 Text(
                   label,
                   textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w500,
@@ -763,9 +759,9 @@ class _ThinkingLoaderState extends State<_ThinkingLoader>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'AI is thinking',
-          style: TextStyle(
+        Text(
+          context.l10n.chatbotAiThinking,
+          style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
             color: Color(0xFF555555),

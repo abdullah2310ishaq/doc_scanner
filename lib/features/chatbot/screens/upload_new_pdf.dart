@@ -226,21 +226,22 @@ class _TipsDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    final l10n = context.l10n;
+    return Row(
       children: [
-        Expanded(child: Divider(color: AppColors.searchBorder)),
+        const Expanded(child: Divider(color: AppColors.searchBorder)),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Text(
-            'Tips',
-            style: TextStyle(
+            l10n.chatbotTipsLabel,
+            style: const TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w600,
               color: AppColors.textSecondary,
             ),
           ),
         ),
-        Expanded(child: Divider(color: AppColors.searchBorder)),
+        const Expanded(child: Divider(color: AppColors.searchBorder)),
       ],
     );
   }

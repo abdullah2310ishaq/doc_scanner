@@ -40,12 +40,20 @@ class _SmartCropPdfResultScreenState extends State<SmartCropPdfResultScreen> {
   void initState() {
     super.initState();
     _pdfPath = widget.pdfPath;
-    _displayName = _baseNameFromPath(_pdfPath);
   }
 
-  String _baseNameFromPath(String path) {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _displayName = _baseNameFromPath(
+      _pdfPath,
+      fallback: context.l10n.commonUntitledDocument,
+    );
+  }
+
+  String _baseNameFromPath(String path, {required String fallback}) {
     final name = p.basenameWithoutExtension(path);
-    return name.isNotEmpty ? name : 'document';
+    return name.isNotEmpty ? name : fallback;
   }
 
   String get _fileSizeLabel {

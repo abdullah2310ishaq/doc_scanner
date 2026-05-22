@@ -137,9 +137,9 @@ class _RenameDialogWidgetState extends State<_RenameDialogWidget> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        child: const Text(
-                          'Done', // Using fixed strings matching image design requirements
-                          style: TextStyle(
+                        child: Text(
+                          l10n.commonDone,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
@@ -163,9 +163,9 @@ class _RenameDialogWidgetState extends State<_RenameDialogWidget> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        child: const Text(
-                          'Cancel',
-                          style: TextStyle(
+                        child: Text(
+                          l10n.commonCancel,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),

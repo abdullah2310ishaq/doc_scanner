@@ -53,7 +53,7 @@ class HomeRecentFolders extends StatelessWidget {
                 title: l10n.homeRecentPdfsFolder,
                 meta: l10n.homeRecentFolderMeta(
                   pdfs.length,
-                  RecentDocumentsService.formatSize(_totalBytes(pdfs)),
+                  RecentDocumentsService.formatSize(_totalBytes(pdfs), l10n),
                 ),
                 onTap: () => RecentPdfsScreen.open(context),
               ),
@@ -63,7 +63,7 @@ class HomeRecentFolders extends StatelessWidget {
                 title: l10n.homeRecentImagesFolder,
                 meta: l10n.homeRecentFolderMeta(
                   images.length,
-                  RecentDocumentsService.formatSize(_totalBytes(images)),
+                  RecentDocumentsService.formatSize(_totalBytes(images), l10n),
                 ),
                 onTap: () => RecentImagesScreen.open(context),
               ),

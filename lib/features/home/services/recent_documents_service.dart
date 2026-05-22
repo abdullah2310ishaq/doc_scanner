@@ -1,6 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:intl/intl.dart';
+
+import '../../../l10n/app_localizations.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
@@ -117,22 +121,27 @@ class RecentDocumentsService {
     await _upsert(file.copyWith(isFavorite: value));
   }
 
-  static String formatMeta(DateTime date, int sizeBytes) {
-    const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
-    ];
-    final month = months[date.month - 1];
-    final datePart = '$month ${date.day}, ${date.year}';
-    return '$datePart • ${formatSize(sizeBytes)}';
+  static String formatMeta(
+    DateTime date,
+    int sizeBytes,
+    AppLocalizations l10n,
+  ) {
+    final datePart = DateFormat.yMMMd(l10n.localeName).format(date);
+    return '$datePart • ${formatSize(sizeBytes, l10n)}';
   }
 
-  static String formatSize(int bytes) {
-    if (bytes < 1024) return '$bytes B';
-    if (bytes < 1024 * 1024) {
-      return '${(bytes / 1024).toStringAsFixed(1)} KB';
+  static String formatSize(int bytes, AppLocalizations l10n) {
+    if (bytes < 1024) {
+      return l10n.fileSizeBytes('$bytes');
     }
-    return '${(bytes / (1024 * 1024)).toStringAsFixed(1)} MB';
+    if (bytes < 1024 * 1024) {
+      return l10n.fileSizeKb(
+        (bytes / 1024).toStringAsFixed(1),
+      );
+    }
+    return l10n.fileSizeMb(
+      (bytes / (1024 * 1024)).toStringAsFixed(1),
+    );
   }
 
   Future<List<RecentFileModel>> _loadMerged() async {

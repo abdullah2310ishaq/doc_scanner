@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:screenshot/screenshot.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../l10n/app_localizations.dart';
 import '../models/translate_export_data.dart';
 import '../models/translate_export_scope.dart';
 import 'translate_export_storage.dart';
@@ -11,6 +12,7 @@ class TranslateSavePngService {
   Future<String> save({
     required TranslateExportData data,
     required TranslateExportScope scope,
+    required AppLocalizations l10n,
   }) async {
     final screenshotController = ScreenshotController();
 
@@ -61,9 +63,9 @@ class TranslateSavePngService {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Doc Scanner',
+                      l10n.appTitle,
                       style: _getTextStyle(
-                        text: 'Doc Scanner',
+                        text: l10n.appTitle,
                         fontSize: 16,
                         color: AppColors.textPrimary,
                         bold: true,
@@ -71,10 +73,16 @@ class TranslateSavePngService {
                     ),
                     Text(
                       data.targetLanguageName != null
-                          ? 'Translation: ${data.targetLanguageName}'
-                          : 'Document Translation',
+                          ? l10n.translateExportTranslationTitle(
+                              data.targetLanguageName!,
+                            )
+                          : l10n.translateExportDocumentTranslation,
                       style: _getTextStyle(
-                        text: data.targetLanguageName ?? 'Document Translation',
+                        text: data.targetLanguageName != null
+                            ? l10n.translateExportTranslationTitle(
+                                data.targetLanguageName!,
+                              )
+                            : l10n.translateExportDocumentTranslation,
                         fontSize: 11,
                         color: AppColors.textSecondary,
                       ),
@@ -119,9 +127,9 @@ class TranslateSavePngService {
                     const Icon(Icons.arrow_downward, size: 14, color: AppColors.textLink),
                     const SizedBox(width: 6),
                     Text(
-                      'Translated',
+                      l10n.translateExportTranslatedBadge,
                       style: _getTextStyle(
-                        text: 'Translated',
+                        text: l10n.translateExportTranslatedBadge,
                         fontSize: 10,
                         color: AppColors.textLink,
                         bold: true,
@@ -163,9 +171,9 @@ class TranslateSavePngService {
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  'Verified offline translation export',
+                  l10n.translateExportVerifiedFooter,
                   style: _getTextStyle(
-                    text: 'Verified offline translation export',
+                    text: l10n.translateExportVerifiedFooter,
                     fontSize: 10,
                     color: Colors.grey.shade500,
                   ),

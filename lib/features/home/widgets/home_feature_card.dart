@@ -42,6 +42,8 @@ class HomeFeatureCard extends StatelessWidget {
                   children: [
                     Text(
                       title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
@@ -51,6 +53,8 @@ class HomeFeatureCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       subtitle,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 11,
                         color: AppColors.textSecondary,

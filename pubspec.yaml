@@ -14,6 +14,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  intl: any
 
   cupertino_icons: ^1.0.8
   flutter_svg: ^2.3.0
@@ -43,6 +44,7 @@ dependencies:
   google_mlkit_document_scanner: ^0.4.1
   google_fonts: ^6.2.1
   colorfilter_generator: ^0.0.8
+  lottie: ^3.3.3
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +65,7 @@ flutter:
     
     - assets/settings/
     - assets/fonts/
+    - assets/splash.json
 
   fonts:
     - family: NotoSans

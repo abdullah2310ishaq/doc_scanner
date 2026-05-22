@@ -6,6 +6,7 @@ import '../../../core/constants/home_assets.dart';
 import '../../../core/services/locale_service.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
+import '../../../core/widgets/l10n_text.dart';
 import '../models/app_language_option.dart';
 import 'language.dart';
 
@@ -35,9 +36,9 @@ class SettingsScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Good Morning,',
-                        style: TextStyle(
+                      L10nText(
+                        l10n.settingsGreetingPrefix,
+                        style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
                           color: AppColors.textSecondary,
@@ -47,11 +48,11 @@ class SettingsScreen extends StatelessWidget {
                       const SizedBox(height: 6),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
+                        children: [
                           Flexible(
-                            child: Text(
-                              'Abdullah',
-                              style: TextStyle(
+                            child: L10nText(
+                              l10n.settingsDefaultUserName,
+                              style: const TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.w800,
                                 color: AppColors.textPrimary,
@@ -138,7 +139,7 @@ class SettingsScreen extends StatelessWidget {
             _buildSettingsTile(
               svgAsset: 'assets/settings/rate.svg', // Rename to your asset name
               iconColor: const Color(0xff5C6BC0),
-              title: 'Rate App',
+              title: l10n.settingsRateApp,
               trailing: Icon(
                 Icons.chevron_right_rounded,
                 color: Colors.grey[400],
@@ -154,7 +155,7 @@ class SettingsScreen extends StatelessWidget {
               svgAsset:
                   'assets/settings/share.svg', // Rename to your asset name
               iconColor: const Color(0xff5C6BC0),
-              title: 'Share App',
+              title: l10n.settingsShareApp,
               trailing: Icon(
                 Icons.chevron_right_rounded,
                 color: Colors.grey[400],
@@ -196,7 +197,7 @@ class SettingsScreen extends StatelessWidget {
             ),
             const SizedBox(width: 16),
             Expanded(
-              child: Text(
+              child: L10nText(
                 title,
                 style: const TextStyle(
                   fontSize: 16,

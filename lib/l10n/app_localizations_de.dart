@@ -9,13 +9,13 @@ class AppLocalizationsDe extends AppLocalizations {
   AppLocalizationsDe([String locale = 'de']) : super(locale);
 
   @override
-  String get appTitle => 'Dokumentenscanner';
+  String get appTitle => 'Doc Scanner';
 
   @override
   String get commonOk => 'OK';
 
   @override
-  String get commonCancel => 'Abbrechen';
+  String get commonCancel => 'Stornieren';
 
   @override
   String get commonSave => 'Speichern';
@@ -24,34 +24,37 @@ class AppLocalizationsDe extends AppLocalizations {
   String get commonDelete => 'Löschen';
 
   @override
-  String get commonShare => 'Teilen';
+  String get commonShare => 'Aktie';
 
   @override
-  String get commonCopy => 'Kopieren';
+  String get commonCopy => 'Kopie';
 
   @override
-  String get commonRetry => 'Erneut versuchen';
+  String get commonRetry => 'Wiederholen';
 
   @override
   String get commonClose => 'Schließen';
 
   @override
-  String get commonLoading => 'Wird geladen…';
+  String get commonDone => 'Fertig';
 
   @override
-  String get commonError => 'Etwas ist schiefgelaufen';
+  String get commonLoading => 'Laden…';
 
   @override
-  String get commonTryAgain => 'Bitte erneut versuchen';
+  String get commonError => 'Etwas ist schief gelaufen';
 
   @override
-  String get navHome => 'Startseite';
+  String get commonTryAgain => 'Bitte versuchen Sie es erneut';
 
   @override
-  String get navScan => 'Scannen';
+  String get navHome => 'Heim';
 
   @override
-  String get navDocuments => 'Dokumente';
+  String get navScan => 'Scan';
+
+  @override
+  String get navDocuments => 'Unterlagen';
 
   @override
   String get navTranslate => 'Übersetzen';
@@ -68,7 +71,7 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get homeTitlePrefix => 'KI-Dokumenten';
+  String get homeTitlePrefix => 'AI-Dokument';
 
   @override
   String get homeTitleHighlight => 'Scanner';
@@ -80,80 +83,81 @@ class AppLocalizationsDe extends AppLocalizations {
   String get homeMenuButton => 'Menü öffnen';
 
   @override
-  String get homeTagAiPowered => 'KI-gestützt';
+  String get homeTagAiPowered => 'KI-betrieben';
 
   @override
-  String get homeTagFastOcr => 'Schnelles OCR';
+  String get homeTagFastOcr => 'Schnelle OCR';
 
   @override
   String get homeTagSecure => 'Sicher';
 
   @override
-  String get homeTagSmartCrop => 'Intelligenter Zuschnitt';
+  String get homeTagSmartCrop => 'Intelligente Ernte';
 
   @override
-  String get homeHeroBadge => 'KI POWERED';
+  String get homeHeroBadge => 'AI POWERED';
 
   @override
-  String get homeHeroTitle => 'Intelligenter KI-OCR\nScanner';
+  String get homeHeroTitle => 'Intelligente KI-OCR\nScanner';
 
   @override
   String get homeHeroSubtitle =>
-      'KI-gestützte OCR mit schneller und präziser Texterkennung in Sekunden.';
+      'KI-gestützte OCR mit schneller, präziser Texterkennung in Sekundenschnelle.';
 
   @override
-  String get homeHeroButton => 'OCR Scanner';
+  String get homeHeroButton => 'OCR-Scanner';
 
   @override
-  String get homeSearchHint => 'Hier suchen';
+  String get homeSearchHint => 'Suchen Sie hier';
 
   @override
-  String get homeFeatureOcrTitle => 'OCR Scanner';
+  String get homeFeatureOcrTitle => 'OCR-Scanner';
 
   @override
   String get homeFeatureOcrSubtitle =>
-      'Text aus Bildern oder Dokumenten extrahieren';
+      'Scannen Sie Text aus Bildern oder Dokumenten';
 
   @override
-  String get homeFeaturePdfTitle => 'PDF Assistent';
+  String get homeFeaturePdfTitle => 'PDF-Assistent';
 
   @override
-  String get homeFeaturePdfSubtitle => 'PDFs übersetzen & transkribieren';
+  String get homeFeaturePdfSubtitle => 'PDF übersetzen und transkribieren';
 
   @override
-  String get homeFeatureChatbotTitle => 'KI Chatbot';
+  String get homeFeatureChatbotTitle => 'KI-Chabot';
 
   @override
-  String get homeFeatureChatbotSubtitle => 'PDF hochladen und Fragen stellen';
+  String get homeFeatureChatbotSubtitle =>
+      'Laden Sie ein PDF hoch, um Fragen zu stellen';
 
   @override
-  String get homeFeatureCropTitle => 'Intelligenter Zuschnitt';
+  String get homeFeatureCropTitle => 'Intelligente Ernte';
 
   @override
   String get homeFeatureCropSubtitle =>
-      'Automatisch zuschneiden und verbessern';
+      'Automatisches Zuschneiden, Reinigen und Verbessern';
 
   @override
-  String get homeRecentDocuments => 'Letzte Dokumente';
+  String get homeRecentDocuments => 'Aktuelle Dokumente';
 
   @override
   String get homeSeeAll => 'Alle anzeigen';
 
   @override
   String get homeEmptyDocuments =>
-      'Keine Dokumente vorhanden. Tippe auf Scannen.';
+      'Noch keine Dokumente. Tippen Sie zum Starten auf „Scannen“.';
 
   @override
-  String get homeSampleDocName => 'Rechnung_2026.pdf';
+  String get homeSampleDocName => 'Invoice_2026.pdf';
 
   @override
-  String get homeSampleDocMeta => '10. Mai 2026 • 2,4 MB';
+  String get homeSampleDocMeta => 'May 10, 2026 • 2.4 MB';
 
   @override
   String get homeRecentPdfsFolder => 'PDFs';
 
   @override
-  String get homeRecentImagesFolder => 'Images';
+  String get homeRecentImagesFolder => 'Bilder';
 
   @override
   String homeRecentFileCount(int count) {
@@ -183,54 +187,55 @@ class AppLocalizationsDe extends AppLocalizations {
   String get homeRecentPdfsTitle => 'PDFs';
 
   @override
-  String get homeRecentImagesTitle => 'Images';
+  String get homeRecentImagesTitle => 'Bilder';
 
   @override
-  String get homeRecentAdded => 'Recent Added';
+  String get homeRecentAdded => 'Zuletzt';
 
   @override
-  String get homeRecentSelect => 'Select';
+  String get homeRecentSelect => 'Auswählen';
 
   @override
-  String get homeRecentSearchPdfs => 'Search your PDFs…';
+  String get homeRecentSearchPdfs => 'PDFs suchen…';
 
   @override
-  String get homeRecentSearchImages => 'Search your images…';
+  String get homeRecentSearchImages => 'Bilder suchen…';
 
   @override
-  String get homeRecentNoSearchResults => 'No files match your search';
+  String get homeRecentNoSearchResults => 'Keine Treffer';
 
   @override
-  String get homeRecentToggleFavorite => 'Favorite';
+  String get homeRecentToggleFavorite => 'Favorit';
 
   @override
-  String get homeRecentPdfEmptyTitle => 'No PDF yet';
+  String get homeRecentUnfavorite => 'Entfernen';
 
   @override
-  String get homeRecentPdfEmptySubtitle =>
-      'Upload or scan documents to create your first PDF';
+  String get homeRecentPdfEmptyTitle => 'Keine PDFs';
 
   @override
-  String get homeRecentImageEmptyTitle => 'No Image yet';
+  String get homeRecentPdfEmptySubtitle => 'PDF hochladen oder scannen';
 
   @override
-  String get homeRecentImageEmptySubtitle =>
-      'Upload or scan images to organize them here';
+  String get homeRecentImageEmptyTitle => 'Keine Bilder';
 
   @override
-  String get homeRecentUploadPdf => 'Upload a PDF';
+  String get homeRecentImageEmptySubtitle => 'Bilder hochladen oder scannen';
 
   @override
-  String get homeRecentUploadImages => 'Upload Images';
+  String get homeRecentUploadPdf => 'PDF hochladen';
 
   @override
-  String get homeRecentScanDocument => 'Scan Document';
+  String get homeRecentUploadImages => 'Bilder hochladen';
 
   @override
-  String get scanTitle => 'Scannen';
+  String get homeRecentScanDocument => 'Scannen';
 
   @override
-  String get scanCapture => 'Aufnehmen';
+  String get scanTitle => 'Scan';
+
+  @override
+  String get scanCapture => 'Erfassen';
 
   @override
   String get scanImportGallery => 'Aus Galerie importieren';
@@ -242,24 +247,24 @@ class AppLocalizationsDe extends AppLocalizations {
   String get scanAddPage => 'Seite hinzufügen';
 
   @override
-  String get scanRetake => 'Erneut aufnehmen';
+  String get scanRetake => 'Wiederholung';
 
   @override
-  String get scanCrop => 'Zuschneiden';
+  String get scanCrop => 'Ernte';
 
   @override
-  String get scanEnhance => 'Verbessern';
+  String get scanEnhance => 'Erweitern';
 
   @override
-  String get scanDone => 'Fertig';
+  String get scanDone => 'Erledigt';
 
   @override
   String scanPageCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count Seiten',
-      one: '1 Seite',
+      other: '$count pages',
+      one: '1 page',
     );
     return '$_temp0';
   }
@@ -277,41 +282,43 @@ class AppLocalizationsDe extends AppLocalizations {
   String get ocrRun => 'Text erkennen';
 
   @override
-  String get ocrRunning => 'Text wird gelesen…';
+  String get ocrRunning => 'Text lesen…';
 
   @override
-  String get ocrEmpty => 'Kein Text gefunden';
+  String get ocrEmpty => 'In diesem Bild wurde kein Text gefunden';
 
   @override
   String get ocrCopySuccess => 'Text kopiert';
 
   @override
-  String get ocrEditHint => 'Erkannten Text bearbeiten';
+  String get ocrEditHint => 'Bearbeiten Sie erkannten Text';
 
   @override
-  String get ocrInputMethodTitle => 'Eingabemethode wählen';
+  String get ocrInputMethodTitle => 'Wählen Sie Eingabemethode';
 
   @override
   String get ocrInputMethodSubtitle =>
-      'Wähle, wie du Text extrahieren möchtest';
+      'Wählen Sie aus, wie Sie Text extrahieren möchten';
 
   @override
-  String get ocrInputLiveCameraTitle => 'Live Kamera';
+  String get ocrInputLiveCameraTitle => 'Live-Kamera';
 
   @override
-  String get ocrInputLiveCameraDescription => 'Foto mit Kamera aufnehmen';
+  String get ocrInputLiveCameraDescription =>
+      'Erfassen Sie Livebilder mit der Kamera';
 
   @override
   String get ocrInputUploadImageTitle => 'Bild hochladen';
 
   @override
-  String get ocrInputUploadImageDescription => 'Aus Galerie wählen';
+  String get ocrInputUploadImageDescription => 'Bild aus der Galerie hochladen';
 
   @override
-  String get ocrLiveCameraTitle => 'Live OCR Kamera';
+  String get ocrLiveCameraTitle => 'Live-OCR-Kamera';
 
   @override
-  String get ocrLiveCameraTip => 'Tipp: Gute Beleuchtung verbessert Ergebnisse';
+  String get ocrLiveCameraTip =>
+      'Tipp: Um bessere Ergebnisse zu erzielen, platzieren Sie den Text in einem gut beleuchteten Bereich';
 
   @override
   String get ocrLiveCameraClose => 'Kamera schließen';
@@ -320,46 +327,47 @@ class AppLocalizationsDe extends AppLocalizations {
   String get ocrLiveCameraFlash => 'Blitz umschalten';
 
   @override
-  String get ocrLiveCameraCapture => 'Bild für OCR aufnehmen';
+  String get ocrLiveCameraCapture => 'Erfassen Sie ein Bild zur Texterkennung';
 
   @override
-  String get ocrLiveCameraInitializing => 'Kamera startet…';
+  String get ocrLiveCameraInitializing => 'Kamera wird gestartet…';
 
   @override
-  String get ocrAnalyzeTitle => 'OCR Scanner';
+  String get ocrAnalyzeTitle => 'OCR-Scanner';
 
   @override
-  String get ocrAnalyzeCopy => 'Kopieren';
+  String get ocrAnalyzeCopy => 'Kopie';
 
   @override
   String get ocrAnalyzeTranslate => 'Übersetzen';
 
   @override
-  String get ocrAnalyzeProcessing => 'Analyse läuft…';
+  String get ocrAnalyzeProcessing => 'Text analysieren…';
 
   @override
-  String get ocrAnalyzeTranslateNext => 'Übersetzung wird geöffnet';
+  String get ocrAnalyzeTranslateNext =>
+      'Als nächstes wird „Übersetzen“ geöffnet';
 
   @override
-  String get ocrNoTextTitle => 'Kein lesbarer Text';
+  String get ocrNoTextTitle => 'Kein lesbarer Text erkannt';
 
   @override
-  String get ocrNoTextHint => 'Versuche ein klareres Bild';
+  String get ocrNoTextHint => 'Versuchen Sie es mit einem klareren Bild';
 
   @override
-  String get ocrNoTextRetakePhoto => 'Foto neu aufnehmen';
+  String get ocrNoTextRetakePhoto => 'Foto erneut aufnehmen';
 
   @override
-  String get ocrNoTextChooseGallery => 'Aus Galerie wählen';
+  String get ocrNoTextChooseGallery => 'Wählen Sie aus der Galerie';
 
   @override
   String get translateTitle => 'Übersetzen';
 
   @override
-  String get translateSourceLanguage => 'Von';
+  String get translateSourceLanguage => 'Aus';
 
   @override
-  String get translateTargetLanguage => 'Nach';
+  String get translateTargetLanguage => 'Zu';
 
   @override
   String get translateSwapLanguages => 'Sprachen tauschen';
@@ -368,19 +376,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get translateButton => 'Übersetzen';
 
   @override
-  String get translateRunning => 'Übersetzung läuft…';
+  String get translateRunning => 'Übersetzen…';
 
   @override
-  String get translatePasteHint => 'Text einfügen oder eingeben';
+  String get translatePasteHint => 'Fügen Sie Text ein oder geben Sie ihn ein';
 
   @override
   String get translateCopyResult => 'Übersetzung kopieren';
 
   @override
-  String get translateResultTitle => 'Übersetzung';
+  String get translateResultTitle => 'Text übersetzen';
 
   @override
-  String get translateResultSubtitle => 'Übersetze deinen Text in jede Sprache';
+  String get translateResultSubtitle =>
+      'Übersetzen Sie Ihren ausgewählten Text in eine beliebige Sprache';
 
   @override
   String get translateSelectedText => 'Ausgewählter Text';
@@ -389,13 +398,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get translateSelectedLanguage => 'Ausgewählte Sprache';
 
   @override
-  String get translateSelectLanguage => 'Sprache wählen';
+  String get translateSelectLanguage => 'Wählen Sie Sprache aus';
 
   @override
-  String get translateSearchLanguage => 'Sprache suchen';
+  String get translateSearchLanguage => 'Sprachen suchen';
 
   @override
-  String get translateRecentLanguages => 'Zuletzt';
+  String get translateRecentLanguages => 'Jüngste';
 
   @override
   String get translateNoLanguagesFound => 'Keine Sprachen gefunden';
@@ -404,7 +413,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get translateTranslatedText => 'Übersetzter Text';
 
   @override
-  String get translatePlaceholder => 'Übersetzung erscheint hier…';
+  String get translatePlaceholder => 'Die Übersetzung erscheint hier.';
 
   @override
   String get translateSeeMore => 'Mehr anzeigen';
@@ -416,17 +425,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get translateSavePdf => 'Als PDF speichern';
 
   @override
-  String get translateSavePng => 'Als Bild speichern';
+  String get translateSavePng => 'Als PNG speichern';
 
   @override
-  String get translateSaveComingSoon => 'Bald verfügbar';
+  String get translateSaveComingSoon => 'Speichern wird bald verfügbar sein';
 
   @override
-  String get translateDownloadOptionTitle => 'Download-Option wählen';
+  String get translateDownloadOptionTitle => 'Wählen Sie die Download-Option';
 
   @override
   String get translateDownloadOptionSubtitle =>
-      'Wähle, was du herunterladen möchtest';
+      'Wählen Sie aus, was Sie herunterladen möchten';
 
   @override
   String get translateDownloadSelectedTextTitle =>
@@ -434,7 +443,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get translateDownloadSelectedTextDescription =>
-      'Nur ausgewählten Text herunterladen';
+      'Laden Sie nur den ausgewählten Text herunter';
 
   @override
   String get translateDownloadCompleteFileTitle =>
@@ -442,15 +451,15 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get translateDownloadCompleteFileDescription =>
-      'Gesamte Datei herunterladen';
+      'Laden Sie die gesamte Datei herunter';
 
   @override
   String get translateDownloadTranslatedTextTitle =>
-      'Übersetzten Text herunterladen';
+      'Laden Sie den übersetzten Text herunter';
 
   @override
   String get translateDownloadTranslatedTextDescription =>
-      'Nur übersetzten Text herunterladen';
+      'Laden Sie nur den übersetzten Text herunter';
 
   @override
   String get translateSavePdfSuccess => 'PDF erfolgreich gespeichert';
@@ -459,25 +468,27 @@ class AppLocalizationsDe extends AppLocalizations {
   String get translateSavePngSuccess => 'Bild erfolgreich gespeichert';
 
   @override
-  String get translateExportNeedsTranslation => 'Bitte zuerst übersetzen';
+  String get translateExportNeedsTranslation =>
+      'Übersetzen Sie den Text vor dem Herunterladen';
 
   @override
-  String get liveTitle => 'Live Übersetzung';
+  String get liveTitle => 'Live-Übersetzung';
 
   @override
   String get liveStart => 'Kamera starten';
 
   @override
-  String get liveStop => 'Stopp';
+  String get liveStop => 'Stoppen';
 
   @override
-  String get liveListening => 'Erkennung läuft…';
+  String get liveListening => 'Hören…';
 
   @override
-  String get livePointAtText => 'Kamera auf Text richten';
+  String get livePointAtText => 'Richten Sie die Kamera auf den Text';
 
   @override
-  String get livePermissionNeeded => 'Kamerazugriff erforderlich';
+  String get livePermissionNeeded =>
+      'Für die Live-Übersetzung ist Kamerazugriff erforderlich';
 
   @override
   String get documentsTitle => 'Meine Dokumente';
@@ -490,7 +501,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get documentDeleteConfirmMessage =>
-      'Diese Aktion kann nicht rückgängig gemacht werden.';
+      'Dies kann nicht rückgängig gemacht werden.';
 
   @override
   String get documentDeleted => 'Dokument gelöscht';
@@ -502,104 +513,122 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingsLanguage => 'App-Sprache';
 
   @override
-  String get settingsTheme => 'Design';
+  String get settingsTheme => 'Thema';
 
   @override
-  String get settingsAbout => 'Über';
+  String get settingsAbout => 'Um';
 
   @override
-  String get settingsPrivacy => 'Datenschutz';
+  String get settingsPrivacy => 'Datenschutzrichtlinie';
 
   @override
   String get settingsTerms => 'Nutzungsbedingungen';
 
   @override
-  String get permissionCameraTitle => 'Kameraberechtigung';
+  String get settingsRateApp => 'App bewerten';
+
+  @override
+  String get settingsShareApp => 'App teilen';
+
+  @override
+  String get settingsGreetingPrefix => 'Guten Morgen,';
+
+  @override
+  String get settingsDefaultUserName => 'Abdullah';
+
+  @override
+  String get permissionCameraTitle => 'Kameraerlaubnis';
 
   @override
   String get permissionCameraMessage =>
-      'Zugriff auf Kamera erlauben zum Scannen.';
+      'Erlauben Sie den Zugriff auf die Kamera, um Dokumente zu scannen und die Live-Übersetzung zu verwenden.';
 
   @override
-  String get permissionStorageTitle => 'Speicherberechtigung';
+  String get permissionStorageTitle => 'Speichererlaubnis';
 
   @override
-  String get permissionStorageMessage => 'Zugriff zum Speichern erlauben.';
+  String get permissionStorageMessage =>
+      'Erlauben Sie den Zugriff zum Speichern und Öffnen Ihrer Scans.';
 
   @override
   String get permissionOpenSettings => 'Einstellungen öffnen';
 
   @override
-  String get permissionDenied => 'Berechtigung verweigert';
+  String get permissionDenied => 'Zugriff verweigert';
 
   @override
-  String get errorCameraUnavailable => 'Kamera nicht verfügbar';
+  String get errorCameraUnavailable =>
+      'Die Kamera ist auf diesem Gerät nicht verfügbar';
 
   @override
   String get errorFileRead => 'Datei konnte nicht gelesen werden';
 
   @override
-  String get errorNetwork => 'Internetverbindung prüfen';
+  String get errorNetwork => 'Überprüfen Sie Ihre Internetverbindung';
 
   @override
-  String get errorNoInternetFeatures => 'Keine Internetverbindung';
+  String get errorNoInternetFeatures =>
+      'Keine Internetverbindung. Einige Funktionen funktionieren möglicherweise nicht ordnungsgemäß.';
 
   @override
   String get exitAppTitle => 'App beenden';
 
   @override
-  String get exitAppMessage => 'Wirklich beenden?';
+  String get exitAppMessage =>
+      'Sind Sie sicher, dass Sie den Vorgang beenden möchten?';
 
   @override
-  String get exitAppConfirm => 'Beenden';
+  String get exitAppConfirm => 'Ausfahrt';
 
   @override
-  String get errorOcrFailed => 'Texterkennung fehlgeschlagen';
+  String get errorOcrFailed => 'Die Texterkennung ist fehlgeschlagen';
 
   @override
-  String get errorTranslateFailed => 'Übersetzung fehlgeschlagen';
+  String get errorTranslateFailed => 'Die Übersetzung ist fehlgeschlagen';
 
   @override
   String get errorTranslateModelDownload =>
-      'Sprachpaket konnte nicht geladen werden';
+      'Das Sprachpaket konnte nicht heruntergeladen werden. Überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.';
 
   @override
-  String get errorTranslateUnsupportedLanguage => 'Sprache nicht unterstützt';
+  String get errorTranslateUnsupportedLanguage =>
+      'Diese Sprache ist nicht für die Offline-Übersetzung verfügbar.';
 
   @override
   String get proTitle => 'Doc Scanner Pro';
 
   @override
-  String get proSubtitle => 'Unbegrenzte Scans und OCR';
+  String get proSubtitle =>
+      'Unbegrenzte Scans, OCR, Sprachen und Live-Übersetzung';
 
   @override
-  String get proUpgradeButton => 'Auf Pro upgraden';
+  String get proUpgradeButton => 'Upgrade auf Pro';
 
   @override
-  String get proRestorePurchases => 'Käufe wiederherstellen';
+  String get proRestorePurchases => 'Einkäufe wiederherstellen';
 
   @override
-  String get proFeatureLocked => 'Pro Funktion';
+  String get proFeatureLocked => 'Pro-Funktion';
 
   @override
   String proLimitPages(int max) {
-    return 'Kostenlos: bis $max Seiten';
+    return 'Der kostenlose Plan ermöglicht bis zu $max Seiten pro Dokument';
   }
 
   @override
-  String get proLimitOcr => 'Unbegrenztes OCR nur mit Pro';
+  String get proLimitOcr => 'Upgrade auf Pro für unbegrenzte OCR';
 
   @override
-  String get proLimitTranslate => 'Alle Sprachen nur mit Pro';
+  String get proLimitTranslate => 'Upgrade auf Pro für alle Sprachen';
 
   @override
-  String get proLimitLive => 'Live Übersetzung nur Pro';
+  String get proLimitLive => 'Live-Übersetzung ist in Pro verfügbar';
 
   @override
   String get proPurchaseSuccess => 'Willkommen bei Pro!';
 
   @override
-  String get proPurchaseFailed => 'Kauf fehlgeschlagen';
+  String get proPurchaseFailed => 'Der Kauf konnte nicht abgeschlossen werden';
 
   @override
   String get exportPdf => 'PDF exportieren';
@@ -611,79 +640,84 @@ class AppLocalizationsDe extends AppLocalizations {
   String get exportSuccess => 'Export abgeschlossen';
 
   @override
-  String get exportFailed => 'Export fehlgeschlagen';
+  String get exportFailed => 'Der Export ist fehlgeschlagen';
 
   @override
-  String get languageSearchHint => 'Sprache suchen';
+  String get languageSearchHint => 'Suchsprache';
 
   @override
-  String get languageAuto => 'Automatische Erkennung';
+  String get languageAuto => 'Sprache erkennen';
 
   @override
-  String get chatbotTitle => 'KI Chatbot';
+  String get chatbotTitle => 'KI-Chatbot';
 
   @override
-  String get chatbotHistoryButton => 'Verlauf';
+  String get chatbotHistoryButton => 'Chatverlauf';
 
   @override
-  String get chatbotBadge => 'Dein KI-Assistent';
+  String get chatbotBadge => 'Ihr intelligenter KI-Assistent';
 
   @override
-  String get chatbotHeadlineChat => 'Chat';
+  String get chatbotHeadlineChat => 'Chatten';
 
   @override
-  String get chatbotHeadlineMiddle => ' mit deinem ';
+  String get chatbotHeadlineMiddle => 'mit deinem';
 
   @override
   String get chatbotHeadlinePdf => 'PDF';
 
   @override
-  String get chatbotTryAsking => 'Versuche zu fragen';
+  String get chatbotTryAsking => 'Versuchen Sie zu fragen';
 
   @override
-  String get chatbotSuggestSummarize => 'PDF zusammenfassen';
+  String get chatbotSuggestSummarize => 'Fassen Sie dieses PDF zusammen';
 
   @override
-  String get chatbotSuggestKeyPoints => 'Wichtige Punkte';
+  String get chatbotSuggestKeyPoints => 'Kernpunkte dieses PDFs';
 
   @override
-  String get chatbotSuggestExplain => 'Detailliert erklären';
+  String get chatbotSuggestExplain => 'Erklären Sie es ausführlich';
 
   @override
-  String get chatbotSuggestTranslate => 'PDF übersetzen';
+  String get chatbotSuggestTranslate => 'Übersetzen Sie dieses PDF';
 
   @override
-  String get chatbotAskQuestions => 'Fragen zu dieser PDF-Datei stellen';
+  String get chatbotAskQuestions => 'Stellen Sie Fragen zu diesem PDF';
 
   @override
-  String get chatbotUploadHint => 'PDF hochladen...';
+  String get chatbotUploadHint => 'Laden Sie ein PDF hoch...';
 
   @override
-  String get chatbotSheetTitle => 'Chat mit PDF';
+  String get chatbotSheetTitle => 'Chatten Sie mit Ihrem PDF';
 
   @override
-  String get chatbotSheetSubtitle => 'PDF hochladen und Fragen stellen';
+  String get chatbotSheetSubtitle =>
+      'Laden Sie ein PDF hoch und fragen Sie etwas dazu';
 
   @override
-  String get chatbotChoosePdfTitle => 'PDF auswählen';
+  String get chatbotChoosePdfTitle => 'Wählen Sie eine PDF-Datei';
 
   @override
-  String get chatbotChoosePdfDescription => 'Vom Gerät auswählen';
+  String get chatbotChoosePdfDescription =>
+      'Durchsuchen Sie die PDF-Datei auf Ihrem Gerät und wählen Sie sie aus';
 
   @override
-  String get chatbotRecentFilesTitle => 'Letzte Dateien';
+  String get chatbotRecentFilesTitle => 'Aktuelle Dateien';
 
   @override
-  String get chatbotRecentFilesDescription => 'Aus Verlauf wählen';
+  String get chatbotRecentFilesDescription =>
+      'Wählen Sie aus Ihren letzten Dateien';
 
   @override
-  String get errorChatbotPdfPickFailed => 'PDF konnte nicht geöffnet werden';
+  String get errorChatbotPdfPickFailed =>
+      'Das ausgewählte PDF konnte nicht geöffnet werden';
 
   @override
-  String get chatbotAnalyzingTitle => 'Dokument wird analysiert...';
+  String get chatbotAnalyzingTitle => 'Analysieren Sie Ihr Dokument...';
 
   @override
-  String get chatbotAnalyzingSubtitle => 'Bitte warten';
+  String get chatbotAnalyzingSubtitle =>
+      'Bitte warten Sie, während wir lesen und\nVerstehen Sie Ihr PDF';
 
   @override
   String get chatbotStepReadingPdf => 'PDF lesen';
@@ -692,79 +726,117 @@ class AppLocalizationsDe extends AppLocalizations {
   String get chatbotStepExtractingText => 'Text extrahieren';
 
   @override
-  String get chatbotStepUnderstandingContent => 'Inhalt verstehen';
+  String get chatbotStepUnderstandingContent => 'Inhalte verstehen';
 
   @override
-  String get chatbotStepPreparingChat => 'Chat vorbereiten';
+  String get chatbotStepPreparingChat => 'KI-Chat wird vorbereitet';
 
   @override
-  String get chatbotHistoryTitle => 'Verlauf';
+  String get chatbotHistoryTitle => 'Geschichte';
 
   @override
-  String get chatbotNoConversationsTitle => 'Keine Chats';
+  String get chatbotNoConversationsTitle => 'Noch keine Gespräche';
 
   @override
-  String get chatbotNoConversationsSubtitle => 'PDF hochladen zum Starten';
+  String get chatbotNoConversationsSubtitle =>
+      'Laden Sie ein PDF hoch, um mit Ihrem KI-Assistenten zu chatten.';
 
   @override
-  String get chatbotUploadPdfButton => 'PDF hochladen';
+  String get chatbotUploadPdfButton => 'Laden Sie ein PDF hoch';
 
   @override
-  String get chatbotDocumentReadyTitle => 'Dokument bereit';
+  String get chatbotDocumentReadyTitle => 'Dokumentbereit';
 
   @override
-  String get chatbotDocumentReadySubtitle => 'Kurze Zusammenfassung';
+  String get chatbotDocumentReadySubtitle =>
+      'Sie können jetzt mit Ihrem PDF chatten';
 
   @override
-  String get chatbotCurrentSummary => 'Zusammenfassung';
+  String get chatbotCurrentSummary => 'Aktuelle Zusammenfassung';
 
   @override
-  String get chatbotStartChatting => 'Chat starten';
+  String get chatbotStartChatting => 'Beginnen Sie mit dem Chatten';
 
   @override
-  String get chatbotChatGreeting => '👋🏻 Hallo! Frag mich etwas zum PDF.';
+  String get chatbotChatGreeting =>
+      '👋🏻 Hallo! Ich bin Ihr KI-Assistent. Fragen Sie mich etwas zu diesem PDF und ich werde Ihnen helfen.';
 
   @override
-  String get chatbotChatYouCanAsk => 'Du kannst fragen:';
+  String get chatbotChatYouCanAsk => 'Sie können mich fragen:';
 
   @override
-  String get chatbotChatPromptSummarize => 'Zusammenfassen';
+  String get chatbotChatPromptSummarize =>
+      'Fassen Sie dieses Dokument zusammen';
 
   @override
-  String get chatbotChatPromptHighlights => 'Wichtige Punkte';
+  String get chatbotChatPromptHighlights =>
+      'Was sind die wichtigsten Highlights?';
 
   @override
-  String get chatbotChatPromptFinancial => 'Finanzdaten anzeigen';
+  String get chatbotChatPromptFinancial => 'Zeigen Sie mir Finanzdaten';
 
   @override
-  String get chatbotChatPromptDates => 'Wichtige Daten extrahieren';
+  String get chatbotChatPromptDates => 'Extrahieren Sie wichtige Daten';
 
   @override
-  String get chatbotChatInputHint => 'Frage etwas zum PDF...';
+  String get chatbotChatInputHint => 'Fragen Sie nach diesem PDF...';
 
   @override
   String get chatbotDeleteTitle => 'Chat löschen?';
 
   @override
-  String get chatbotDeleteMessage => 'Unwiderruflich.';
+  String get chatbotDeleteMessage =>
+      'Dadurch werden der Chat und das PDF aus Ihrem Verlauf entfernt. Dies kann nicht rückgängig gemacht werden.';
 
   @override
   String get chatbotRenameTitle => 'PDF umbenennen';
 
   @override
-  String get chatbotRenameHint => 'Name eingeben';
+  String get chatbotRenameHint => 'Geben Sie einen Namen ein';
 
   @override
-  String get chatbotAnalyzeFailed => 'Analyse fehlgeschlagen';
+  String get chatbotHistorySearchHint => 'Durchsuchen Sie Ihre Gespräche ...';
 
   @override
-  String get chatbotChatFailed => 'Antwort fehlgeschlagen';
+  String get chatbotRenameSuccess => 'Erfolgreich umbenannt';
 
   @override
-  String get errorChatbotPdfEmpty => 'Kein Text gefunden';
+  String get chatbotDeleteSuccess => 'Erfolgreich gelöscht';
 
   @override
-  String get pdfAssistantTitle => 'PDF Assistent';
+  String get chatbotEmptyConversationPreview => 'Leeres Gespräch…';
+
+  @override
+  String get chatbotAiThinking => 'KI denkt';
+
+  @override
+  String get chatbotTipsLabel => 'Tipps';
+
+  @override
+  String get chatbotSuggestSummarizeChip => 'Zusammenfassen\ndieses PDF';
+
+  @override
+  String get chatbotSuggestKeyPointsChip => 'Wichtige Punkte\ndieses PDFs';
+
+  @override
+  String get chatbotSuggestExplainChip => 'Erklären Sie\nim Detail';
+
+  @override
+  String get chatbotSuggestTranslateChip => 'Übersetzen\ndieses PDF';
+
+  @override
+  String get chatbotAnalyzeFailed =>
+      'Dieses PDF konnte nicht analysiert werden. Bitte versuchen Sie es erneut.';
+
+  @override
+  String get chatbotChatFailed =>
+      'Konnte keine Antwort erhalten. Versuchen Sie es erneut.';
+
+  @override
+  String get errorChatbotPdfEmpty => 'In diesem PDF wurde kein Text gefunden';
+
+  @override
+  String get pdfAssistantTitle => 'PDF-Assistent';
 
   @override
   String get pdfAssistantSheetTitle => 'PDF hochladen';
@@ -774,260 +846,284 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wählen Sie aus, wie Sie Ihre PDF-Datei hinzufügen möchten';
 
   @override
-  String get pdfAssistantChoosePdfTitle => 'PDF auswählen';
+  String get pdfAssistantChoosePdfTitle => 'Wählen Sie eine PDF-Datei';
 
   @override
-  String get pdfAssistantChoosePdfDescription => 'Vom Gerät auswählen';
+  String get pdfAssistantChoosePdfDescription =>
+      'Durchsuchen Sie die PDF-Datei auf Ihrem Gerät und wählen Sie sie aus';
 
   @override
-  String get pdfAssistantLinkTitle => 'PDF-Link hinzufügen';
+  String get pdfAssistantLinkTitle => 'PDF über Link hinzufügen';
 
   @override
   String get pdfAssistantLinkDescription =>
-      'PDF-Link einfügen zum direkten Hochladen';
+      'Fügen Sie einen PDF-Link ein, um ihn direkt hochzuladen';
 
   @override
-  String get pdfAssistantLinkHint => 'URL einfügen';
+  String get pdfAssistantLinkHint => 'PDF-URL einfügen';
 
   @override
-  String get pdfAssistantLinkButton => 'Herunterladen';
+  String get pdfAssistantLinkButton => 'PDF herunterladen';
 
   @override
   String get pdfAssistantTranslateTo => 'Übersetzen nach';
 
   @override
-  String get pdfAssistantStartProcessing => 'Starten';
+  String get pdfAssistantStartProcessing => 'Beginnen Sie mit der Verarbeitung';
 
   @override
-  String get pdfAssistantNoFileSelected => 'Keine Datei';
+  String get pdfAssistantNoFileSelected => 'Keine Datei ausgewählt';
 
   @override
-  String get pdfAssistantSelectLanguage => 'Sprache wählen';
+  String get pdfAssistantSelectLanguage =>
+      'Bitte wählen Sie eine Zielsprache aus';
 
   @override
-  String get pdfAssistantProcessingTitle => 'Verarbeitung läuft…';
+  String get pdfAssistantProcessingTitle => 'Verarbeiten Sie Ihr PDF…';
 
   @override
-  String get pdfAssistantProcessingSubtitle => 'Bitte warten';
+  String get pdfAssistantProcessingSubtitle => 'Bitte warten.';
 
   @override
-  String get pdfAssistantStepExtracting => 'Extrahieren…';
+  String get pdfAssistantStepExtracting => 'Text extrahieren…';
 
   @override
-  String get pdfAssistantStepTranslating => 'Übersetzen…';
+  String get pdfAssistantStepTranslating => 'Inhalte übersetzen…';
 
   @override
-  String get pdfAssistantStepGeneratingPdf => 'PDF erstellen…';
+  String get pdfAssistantStepGeneratingPdf =>
+      'Generieren einer übersetzten PDF-Datei…';
 
   @override
-  String get pdfAssistantStepFinalizing => 'Fertigstellen…';
+  String get pdfAssistantStepFinalizing => 'Finalisierung…';
 
   @override
-  String get pdfAssistantResultTitle => 'Ergebnis';
+  String get pdfAssistantResultTitle => 'Ergebnisse';
 
   @override
   String get pdfAssistantTranslatedPdfTitle => 'Übersetztes PDF';
 
   @override
-  String get pdfAssistantTranslatedPdfDescription => 'Original Layout';
+  String get pdfAssistantTranslatedPdfDescription =>
+      'Originallayout mit übersetztem Text-Overlay';
 
   @override
-  String get pdfAssistantExtractedTextTitle => 'Extrahierter Text';
+  String get pdfAssistantExtractedTextTitle => 'Extrahierter übersetzter Text';
 
   @override
-  String get pdfAssistantExtractedTextDescription => 'Einfaches Dokument';
+  String get pdfAssistantExtractedTextDescription =>
+      'Einfaches A4-Textdokument';
 
   @override
-  String get pdfAssistantActionOpen => 'Öffnen';
+  String get pdfAssistantActionOpen => 'Offen';
 
   @override
-  String get pdfAssistantActionDownload => 'Download';
+  String get pdfAssistantActionDownload => 'Herunterladen';
 
   @override
-  String get pdfAssistantDeleteTitle => 'Löschen?';
+  String get pdfAssistantDeleteTitle => 'Ergebnisse löschen?';
 
   @override
-  String get pdfAssistantDeleteMessage => 'Unwiderruflich';
+  String get pdfAssistantDeleteMessage =>
+      'Dadurch werden die übersetzten Dateien von Ihrem Gerät entfernt.';
 
   @override
-  String get pdfAssistantDownloadSuccess => 'Gespeichert';
+  String get pdfAssistantDownloadSuccess => 'Unter „Downloads“ gespeichert';
 
   @override
-  String get pdfAssistantOpenFailed => 'Kann nicht geöffnet werden';
+  String get pdfAssistantOpenFailed => 'Datei konnte nicht geöffnet werden';
 
   @override
-  String get pdfAssistantProcessFailed => 'Fehler bei Verarbeitung';
+  String get pdfAssistantProcessFailed =>
+      'Dieses PDF konnte nicht verarbeitet werden';
 
   @override
-  String get errorPdfAssistantPickFailed => 'Auswahl fehlgeschlagen';
+  String get errorPdfAssistantPickFailed =>
+      'Das ausgewählte PDF konnte nicht geöffnet werden';
 
   @override
-  String get errorPdfAssistantLinkFailed => 'Link ungültig';
+  String get errorPdfAssistantLinkFailed =>
+      'Das PDF konnte über diesen Link nicht heruntergeladen werden';
 
   @override
-  String get errorPdfAssistantPdfEmpty => 'Leeres PDF';
+  String get errorPdfAssistantPdfEmpty =>
+      'In diesem PDF wurde kein Text gefunden';
 
   @override
   String get pdfAssistantRemoveTitle => 'PDF entfernen';
 
   @override
   String get pdfAssistantRemoveWarning =>
-      'Dadurch wird das PDF von Ihrem Gerät entfernt.';
+      'Dadurch wird die PDF-Datei von Ihrem Gerät entfernt.';
 
   @override
   String get pdfAssistantUploadPdf => 'PDF hochladen';
 
   @override
-  String get cancel => 'Abbrechen';
+  String get cancel => 'Stornieren';
 
   @override
   String get remove => 'Entfernen';
 
   @override
-  String get commonNext => 'Weiter';
+  String get commonNext => 'Nächste';
 
   @override
   String get commonSkip => 'Überspringen';
 
   @override
-  String get commonContinue => 'Fortfahren';
+  String get commonContinue => 'Weitermachen';
 
   @override
   String get onboardingStart => 'Start';
 
   @override
-  String get splashTagline => 'KI-gestütztes Dokumentenscannen';
+  String get splashTagline => 'KI-gestütztes Scannen von Dokumenten';
 
   @override
-  String get onboardingPage1Title => 'Dokumente scannen';
+  String get onboardingPage1Title => 'Text scannen\nin Sekunden';
 
   @override
   String get onboardingPage1Description =>
-      'Belege und Notizen schnell erfassen.';
+      'Text aus Bildern mit schnellem KI-OCR erfassen.';
 
   @override
-  String get onboardingPage2Title => 'OCR & Übersetzung';
+  String get onboardingPage2Title => 'Smart PDF-\nAssistent';
 
   @override
-  String get onboardingPage2Description => 'Text extrahieren und übersetzen.';
+  String get onboardingPage2Description =>
+      'PDFs übersetzen, extrahieren\nund verstehen.';
 
   @override
-  String get onboardingPage3Title => 'Speichern & Exportieren';
+  String get onboardingPage3Title => 'Chat mit\nIhren PDFs';
 
   @override
-  String get onboardingPage3Description => 'Alles an einem Ort speichern.';
+  String get onboardingPage3Description =>
+      'Fragen stellen, zusammenfassen\nund Antworten erhalten.';
 
   @override
-  String get settingsChooseLanguage => 'Sprache wählen';
+  String get onboardingPage4Title => 'Smart Crop\nin Sekunden';
+
+  @override
+  String get onboardingPage4Description =>
+      'Mehrere Bilder zuschneiden\nund PDF erstellen.';
+
+  @override
+  String get settingsChooseLanguage => 'Wählen Sie eine Sprache';
 
   @override
   String get settingsLanguageApply => 'Anwenden';
 
   @override
-  String get commonSaving => 'Wird gespeichert…';
+  String get commonSaving => 'Sparen…';
 
   @override
-  String get smartCropTitle => 'Smart Crop';
+  String get smartCropTitle => 'Intelligente Ernte';
 
   @override
-  String get smartCropInputMethodTitle => 'Smart Crop Scanner';
+  String get smartCropInputMethodTitle => 'Smart-Crop-Scanner';
 
   @override
-  String get smartCropInputMethodSubtitle =>
-      'Choose how you want to crop your document';
+  String get smartCropInputMethodSubtitle => 'Wählen Sie die Eingabeart';
 
   @override
-  String get smartCropInputLiveCameraTitle => 'Live Camera';
+  String get smartCropInputLiveCameraTitle => 'Live-Kamera';
 
   @override
   String get smartCropInputLiveCameraDescription =>
-      'Google scanner — auto edges, crop and enhance';
+      'Google-Scanner – automatische Kanten, Zuschneiden und Verbessern';
 
   @override
-  String get smartCropInputUploadImageTitle => 'Upload Image';
+  String get smartCropInputUploadImageTitle => 'Bild hochladen';
 
   @override
   String get smartCropInputUploadImageDescription =>
-      'Upload document image from gallery';
+      'Dokumentbild aus der Galerie hochladen';
 
   @override
   String get smartCropUploadIntroHeadline =>
-      'Crop Multiple Images\nAutomatically';
+      'Mehrere Bilder zuschneiden\nAutomatisch';
 
   @override
   String get smartCropUploadIntroSubtitle =>
-      'Automatically detect edges, crop images perfectly and create a PDF in one tap.';
+      'Erkennen Sie Kanten automatisch, schneiden Sie Bilder perfekt zu und erstellen Sie mit einem Fingertipp ein PDF.';
 
   @override
-  String get smartCropUploadIntroStepSelect => 'Select multiple images';
+  String get smartCropUploadIntroStepSelect => 'Wählen Sie mehrere Bilder aus';
 
   @override
-  String get smartCropUploadIntroStepCrop => 'Auto detect and crop';
+  String get smartCropUploadIntroStepCrop =>
+      'Automatische Erkennung und Zuschnitt';
 
   @override
-  String get smartCropUploadIntroStepPdf => 'Create PDF instantly';
+  String get smartCropUploadIntroStepPdf => 'Erstellen Sie sofort PDF';
 
   @override
-  String get smartCropUploadIntroSelectImages => 'Select Images';
+  String get smartCropUploadIntroSelectImages => 'Wählen Sie Bilder aus';
 
   @override
-  String get smartCropLiveCameraTitle => 'Smart Crop Camera';
+  String get smartCropLiveCameraTitle => 'Intelligente Crop-Kamera';
 
   @override
-  String get smartCropLiveCameraTip => 'Document detected — tap to capture';
+  String get smartCropLiveCameraTip =>
+      'Dokument erkannt – zum Erfassen antippen';
 
   @override
-  String get smartCropLiveCameraAlignTip => 'Align document inside the corners';
+  String get smartCropLiveCameraAlignTip =>
+      'Richten Sie das Dokument innerhalb der Ecken aus';
 
   @override
-  String get smartCropLiveCameraClose => 'Close camera';
+  String get smartCropLiveCameraClose => 'Kamera schließen';
 
   @override
-  String get smartCropLiveCameraFlash => 'Toggle flash';
+  String get smartCropLiveCameraFlash => 'Blitz umschalten';
 
   @override
   String get smartCropLiveCameraCapture =>
-      'Capture document for smart cropping';
+      'Erfassen Sie Dokumente für intelligentes Zuschneiden';
 
   @override
-  String get smartCropLiveCameraInitializing => 'Starting camera…';
+  String get smartCropLiveCameraInitializing => 'Kamera wird gestartet…';
 
   @override
-  String get smartCropCapturedTitle => 'Captured Document';
+  String get smartCropCapturedTitle => 'Erfasstes Dokument';
 
   @override
-  String get smartCropCapturedRetake => 'Retake last photo';
+  String get smartCropCapturedRetake => 'Letztes Foto noch einmal aufnehmen';
 
   @override
-  String get smartCropCapturedAnotherPhoto => 'Add another photo';
+  String get smartCropCapturedAnotherPhoto =>
+      'Fügen Sie ein weiteres Foto hinzu';
 
   @override
-  String get smartCropCapturedRetakeAnotherPhoto => 'Retake another photo';
+  String get smartCropCapturedRetakeAnotherPhoto =>
+      'Machen Sie noch einmal ein Foto';
 
   @override
-  String get smartCropCapturedPreview => 'Preview';
+  String get smartCropCapturedPreview => 'Vorschau';
 
   @override
-  String get smartCropPreviewTitle => 'Preview';
+  String get smartCropPreviewTitle => 'Vorschau';
 
   @override
-  String get smartCropCapturedCrop => 'Crop';
+  String get smartCropCapturedCrop => 'Ernte';
 
   @override
-  String get smartCropAdjustCornersTitle => 'Adjust corners';
+  String get smartCropAdjustCornersTitle => 'Ecken anpassen';
 
   @override
   String get smartCropAdjustCornersHint =>
-      'Drag the purple corners to match the document edges';
+      'Ziehen Sie die violetten Ecken, um sie an die Dokumentkanten anzupassen';
 
   @override
-  String get smartCropAdjustCornersConfirm => 'Apply crop';
+  String get smartCropAdjustCornersConfirm => 'Zuschneiden anwenden';
 
   @override
-  String get smartCropDetectingEdges => 'Detecting document edges…';
+  String get smartCropDetectingEdges => 'Dokumentkanten erkennen…';
 
   @override
-  String get smartCropAndroidOnly => 'Smart scan is available on Android only.';
+  String get smartCropAndroidOnly =>
+      'Smart Scan ist nur für Android verfügbar.';
 
   @override
   String smartCropPageIndicator(int current, int total) {
@@ -1036,86 +1132,445 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String smartCropMaxPagesReached(int max) {
-    return 'Maximum $max photos reached';
+    return 'Maximal $max Fotos erreicht';
   }
 
   @override
-  String get smartCropProcessingCrop => 'Applying magical crop...';
+  String get smartCropProcessingCrop => 'Anwendung der magischen Ernte...';
 
   @override
   String smartCropProcessingCropMultiple(int count) {
-    return 'Cropping $count documents…';
+    return '$count-Dokumente zuschneiden…';
   }
 
   @override
-  String get smartCropCroppedTitle => 'Cropped Document';
+  String get smartCropCroppedTitle => 'Zugeschnittenes Dokument';
 
   @override
   String get smartCropFilterOriginal => 'Original';
 
   @override
-  String get smartCropFilterLighten => 'Lighten';
+  String get smartCropFilterLighten => 'Erleichtern';
 
   @override
-  String get smartCropFilterMagic => 'Magic';
+  String get smartCropFilterMagic => 'Magie';
 
   @override
-  String get smartCropFilterGrayscale => 'Grayscale';
+  String get smartCropFilterGrayscale => 'Graustufen';
 
   @override
-  String get smartCropFilterMono => 'B&W';
+  String get smartCropFilterMono => 'Schwarzweiß';
 
   @override
   String get smartCropFilterWarm => 'Warm';
 
   @override
-  String get smartCropActionCreatePdf => 'Create PDF';
+  String get smartCropActionCreatePdf => 'PDF erstellen';
 
   @override
-  String get smartCropProcessingPdf => 'Generating PDF document...';
+  String get smartCropProcessingPdf => 'PDF-Dokument wird erstellt...';
 
   @override
   String smartCropProcessingPdfMultiple(int count) {
-    return 'Generating PDF with $count pages…';
+    return 'PDF mit $count Seiten erstellen…';
   }
 
   @override
-  String get smartCropPdfSuccess => 'PDF document generated successfully';
+  String get smartCropPdfSuccess => 'PDF-Dokument erfolgreich generiert';
 
   @override
-  String get smartCropPdfPagesLabel => 'pages';
+  String get smartCropPdfPagesLabel => 'Seiten';
 
   @override
-  String get smartCropPdfSinglePageLabel => '1 page';
+  String get smartCropPdfSinglePageLabel => '1 Seite';
 
   @override
-  String get smartCropImageCopied => 'Copied';
+  String get smartCropImageCopied => 'Kopiert';
 
   @override
   String get smartCropDeleteImageConfirm =>
-      'Remove this page from the document?';
+      'Diese Seite aus dem Dokument entfernen?';
 
   @override
-  String get smartCropDeletePdfConfirm => 'Delete this PDF from your device?';
+  String get smartCropDeletePdfConfirm => 'Dieses PDF von Ihrem Gerät löschen?';
 
   @override
-  String get smartCropPdfRenamed => 'PDF renamed';
+  String get smartCropPdfRenamed => 'PDF umbenannt';
 
   @override
-  String get smartCropPdfFileName => 'File name';
+  String get smartCropPdfFileName => 'Dateiname';
 
   @override
-  String get smartCropPdfFileSize => 'File size';
+  String get smartCropPdfFileSize => 'Dateigröße';
 
   @override
-  String get smartCropViewPdf => 'View PDF';
+  String get smartCropViewPdf => 'PDF ansehen';
 
   @override
-  String get smartCropSavePdf => 'Save PDF';
+  String get smartCropSavePdf => 'PDF speichern';
 
   @override
-  String get smartCropRenamePdf => 'Rename';
+  String get smartCropRenamePdf => 'Umbenennen';
 
   @override
-  String get smartCropRenamePdfHint => 'Document name';
+  String get smartCropRenamePdfHint => 'Dokumentname';
+
+  @override
+  String get smartCropStepReadingImages => 'Bilder lesen';
+
+  @override
+  String get smartCropStepDetectingEdges => 'Kanten erkennen';
+
+  @override
+  String get smartCropStepCroppingImages => 'Bilder zuschneiden';
+
+  @override
+  String get smartCropStepGeneratingPdf => 'PDF erstellen';
+
+  @override
+  String get smartCropProcessingPdfSubtitle =>
+      'Zugeschnittene Bilder werden\nin ein PDF organisiert';
+
+  @override
+  String get smartCropProcessingPdfTitle => 'PDF wird erstellt';
+
+  @override
+  String get commonUntitledDocument => 'dokumentieren';
+
+  @override
+  String get pdfAssistantDefaultFileLabel => 'PDF';
+
+  @override
+  String get pdfAssistantTapToBrowse =>
+      'Tippen Sie hier, um das Geräteverzeichnis zu durchsuchen';
+
+  @override
+  String get errorPdfTextLoad => 'Fehler beim Laden des Textes.';
+
+  @override
+  String commonProgressPercent(int percent) {
+    return '$percent%';
+  }
+
+  @override
+  String translateExportTranslationTitle(String language) {
+    return 'Übersetzung: $language';
+  }
+
+  @override
+  String get translateExportDocumentTranslation => 'Dokumentübersetzung';
+
+  @override
+  String get translateExportTranslatedBadge => 'Übersetzt';
+
+  @override
+  String get translateExportVerifiedFooter =>
+      'Verifizierter Offline-Übersetzungsexport';
+
+  @override
+  String get translateExportPdfHeader => 'Übersetzungsexport';
+
+  @override
+  String get translateExportPdfFooterLabel => 'Vertrauliches Dokument';
+
+  @override
+  String translateExportPageOf(int page, int total) {
+    return 'Seite $page von $total';
+  }
+
+  @override
+  String pdfAssistantPageLabel(int page) {
+    return 'Seite $page';
+  }
+
+  @override
+  String fileSizeBytes(String size) {
+    return '$size B';
+  }
+
+  @override
+  String fileSizeKb(String size) {
+    return '$size KB';
+  }
+
+  @override
+  String fileSizeMb(String size) {
+    return '$size MB';
+  }
+
+  @override
+  String get translateLangName_en => 'Englisch';
+
+  @override
+  String get translateLangName_ur => 'Urdu';
+
+  @override
+  String get translateLangName_hi => 'Hindi';
+
+  @override
+  String get translateLangName_ar => 'Arabisch';
+
+  @override
+  String get translateLangName_es => 'Spanisch';
+
+  @override
+  String get translateLangName_fr => 'Französisch';
+
+  @override
+  String get translateLangName_de => 'Deutsch';
+
+  @override
+  String get translateLangName_pt => 'Portugiesisch';
+
+  @override
+  String get translateLangName_ru => 'Russisch';
+
+  @override
+  String get translateLangName_zh => 'Chinesisch (vereinfacht)';
+
+  @override
+  String get translateLangName_zhTw => 'Chinesisch (traditionell)';
+
+  @override
+  String get translateLangName_ja => 'japanisch';
+
+  @override
+  String get translateLangName_ko => 'Koreanisch';
+
+  @override
+  String get translateLangName_it => 'Italienisch';
+
+  @override
+  String get translateLangName_tr => 'Türkisch';
+
+  @override
+  String get translateLangName_nl => 'Niederländisch';
+
+  @override
+  String get translateLangName_sv => 'Schwedisch';
+
+  @override
+  String get translateLangName_no => 'norwegisch';
+
+  @override
+  String get translateLangName_da => 'dänisch';
+
+  @override
+  String get translateLangName_fi => 'finnisch';
+
+  @override
+  String get translateLangName_el => 'griechisch';
+
+  @override
+  String get translateLangName_pl => 'Polieren';
+
+  @override
+  String get translateLangName_cs => 'tschechisch';
+
+  @override
+  String get translateLangName_hu => 'ungarisch';
+
+  @override
+  String get translateLangName_ro => 'rumänisch';
+
+  @override
+  String get translateLangName_bg => 'bulgarisch';
+
+  @override
+  String get translateLangName_uk => 'ukrainisch';
+
+  @override
+  String get translateLangName_fa => 'persisch';
+
+  @override
+  String get translateLangName_he => 'hebräisch';
+
+  @override
+  String get translateLangName_th => 'Thailändisch';
+
+  @override
+  String get translateLangName_vi => 'Vietnamesisch';
+
+  @override
+  String get translateLangName_id => 'Indonesisch';
+
+  @override
+  String get translateLangName_ms => 'malaiisch';
+
+  @override
+  String get translateLangName_bn => 'Bengali';
+
+  @override
+  String get translateLangName_ta => 'Tamilisch';
+
+  @override
+  String get translateLangName_te => 'Telugu';
+
+  @override
+  String get translateLangName_mr => 'Marathi';
+
+  @override
+  String get translateLangName_gu => 'Gujarati';
+
+  @override
+  String get translateLangName_kn => 'Kannada';
+
+  @override
+  String get translateLangName_ml => 'Malayalam';
+
+  @override
+  String get translateLangName_pa => 'Punjabi';
+
+  @override
+  String get translateLangName_sw => 'Suaheli';
+
+  @override
+  String get translateLangName_af => 'Afrikaans';
+
+  @override
+  String get translateLangName_ca => 'katalanisch';
+
+  @override
+  String get translateLangName_hr => 'kroatisch';
+
+  @override
+  String get translateLangName_sk => 'slowakisch';
+
+  @override
+  String get translateLangName_sl => 'Slowenisch';
+
+  @override
+  String get translateLangName_sr => 'serbisch';
+
+  @override
+  String get translateLangName_lt => 'litauisch';
+
+  @override
+  String get translateLangName_lv => 'lettisch';
+
+  @override
+  String get translateLangName_et => 'estnisch';
+
+  @override
+  String get translateLangName_is => 'isländisch';
+
+  @override
+  String get translateLangName_ga => 'irisch';
+
+  @override
+  String get translateLangName_mt => 'maltesisch';
+
+  @override
+  String get translateLangName_sq => 'albanisch';
+
+  @override
+  String get translateLangName_mk => 'mazedonisch';
+
+  @override
+  String get translateLangName_be => 'Weißrussisch';
+
+  @override
+  String get translateLangName_kk => 'Kasachisch';
+
+  @override
+  String get translateLangName_uz => 'Usbekisch';
+
+  @override
+  String get translateLangName_az => 'Aserbaidschanisch';
+
+  @override
+  String get translateLangName_hy => 'Armenisch';
+
+  @override
+  String get translateLangName_ka => 'georgisch';
+
+  @override
+  String get translateLangName_lo => 'Laotisch';
+
+  @override
+  String get translateLangName_km => 'Khmer';
+
+  @override
+  String get translateLangName_my => 'birmanisch';
+
+  @override
+  String get translateLangName_ne => 'Nepali';
+
+  @override
+  String get translateLangName_si => 'Singhalesisch';
+
+  @override
+  String get translateLangName_am => 'Amharisch';
+
+  @override
+  String get translateLangName_ha => 'Hausa';
+
+  @override
+  String get translateLangName_yo => 'Yoruba';
+
+  @override
+  String get translateLangName_ig => 'Igbo';
+
+  @override
+  String get translateLangName_zu => 'Zulu';
+
+  @override
+  String get translateLangName_xh => 'Xhosa';
+
+  @override
+  String get translateLangName_st => 'Sesotho';
+
+  @override
+  String get translateLangName_sn => 'Shona';
+
+  @override
+  String get translateLangName_rw => 'Kinyarwanda';
+
+  @override
+  String get translateLangName_so => 'somali';
+
+  @override
+  String get translateLangName_mg => 'Madagassisch';
+
+  @override
+  String get translateLangName_cy => 'Walisisch';
+
+  @override
+  String get translateLangName_mn => 'mongolisch';
+
+  @override
+  String get translateLangName_tl => 'Philippinisch';
+
+  @override
+  String get translateLangName_ht => 'Haitianisches Kreol';
+
+  @override
+  String get translateLangName_eo => 'Esperanto';
+
+  @override
+  String get translateLangName_la => 'lateinisch';
+
+  @override
+  String get translateLangName_ku => 'kurdisch';
+
+  @override
+  String get translateLangName_ps => 'Paschtu';
+
+  @override
+  String get translateLangName_faAf => 'Dari';
+
+  @override
+  String get translateLangName_bs => 'bosnisch';
+
+  @override
+  String get translateLangName_mi => 'Maori';
+
+  @override
+  String get translateLangName_sm => 'Samoaner';
+
+  @override
+  String get translateLangName_haw => 'hawaiisch';
+
+  @override
+  String get translateLangName_lb => 'Luxemburgisch';
 }

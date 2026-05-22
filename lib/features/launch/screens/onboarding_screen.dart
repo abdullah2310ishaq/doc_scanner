@@ -54,31 +54,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final isLastPage = _pageIndex == _pageCount - 1;
     final showSkip = !isLastPage;
 
-    // Updated with your 4 new pages and onboarding assets path
     final pages = [
       _OnboardingPageData(
         imageAsset: 'assets/onboarding/one.png',
-        title: "Scan Text \nin Seconds",
-        description:
-            "Capture text from images with fast AI-powered OCR scanning.",
+        title: l10n.onboardingPage1Title,
+        description: l10n.onboardingPage1Description,
       ),
       _OnboardingPageData(
         imageAsset: 'assets/onboarding/two.png',
-        title: "Smart PDF \nAssistant",
-        description:
-            "Translate, extract and understand\nyour PDF documents with AI.",
+        title: l10n.onboardingPage2Title,
+        description: l10n.onboardingPage2Description,
       ),
       _OnboardingPageData(
         imageAsset: 'assets/onboarding/three.png',
-        title: "Chat with \nYour PDFs",
-        description:
-            "Ask questions, summarize documents\nand get instant AI answers.",
+        title: l10n.onboardingPage3Title,
+        description: l10n.onboardingPage3Description,
       ),
       _OnboardingPageData(
         imageAsset: 'assets/onboarding/four.png',
-        title: "Smart Crop \nin Seconds",
-        description:
-            "Auto-crop multiple images and\ncreate clean PDFs instantly.",
+        title: l10n.onboardingPage4Title,
+        description: l10n.onboardingPage4Description,
       ),
     ];
 

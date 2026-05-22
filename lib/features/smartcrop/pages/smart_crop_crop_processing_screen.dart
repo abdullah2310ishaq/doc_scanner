@@ -114,6 +114,7 @@ class _SmartCropCropProcessingScreenState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     // Design Tokens matching your premium design
     const Color primaryColor = Color(0xFF4D5BFF);
     const Color textColorPrimary = Color(0xFF1A1A1A);
@@ -209,22 +210,22 @@ class _SmartCropCropProcessingScreenState
                 child: Column(
                   children: [
                     _buildStatusRow(
-                      label: 'Reading Images',
+                      label: l10n.smartCropStepReadingImages,
                       status: _getStepStatus(ProcessingStep.reading),
                     ),
                     const SizedBox(height: 16),
                     _buildStatusRow(
-                      label: 'Detecting document edges',
+                      label: l10n.smartCropStepDetectingEdges,
                       status: _getStepStatus(ProcessingStep.detecting),
                     ),
                     const SizedBox(height: 16),
                     _buildStatusRow(
-                      label: 'Cropping Images',
+                      label: l10n.smartCropStepCroppingImages,
                       status: _getStepStatus(ProcessingStep.cropping),
                     ),
                     const SizedBox(height: 16),
                     _buildStatusRow(
-                      label: 'Generating PDF',
+                      label: l10n.smartCropStepGeneratingPdf,
                       status: _getStepStatus(ProcessingStep.generating),
                     ),
                   ],

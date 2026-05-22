@@ -170,6 +170,12 @@ abstract class AppLocalizations {
   /// **'Close'**
   String get commonClose;
 
+  /// No description provided for @commonDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get commonDone;
+
   /// No description provided for @commonLoading.
   ///
   /// In en, this message translates to:
@@ -457,6 +463,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Favorite'**
   String get homeRecentToggleFavorite;
+
+  /// No description provided for @homeRecentUnfavorite.
+  ///
+  /// In en, this message translates to:
+  /// **'Unfavorite'**
+  String get homeRecentUnfavorite;
 
   /// No description provided for @homeRecentPdfEmptyTitle.
   ///
@@ -1040,6 +1052,30 @@ abstract class AppLocalizations {
   /// **'Terms of use'**
   String get settingsTerms;
 
+  /// No description provided for @settingsRateApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate App'**
+  String get settingsRateApp;
+
+  /// No description provided for @settingsShareApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Share App'**
+  String get settingsShareApp;
+
+  /// No description provided for @settingsGreetingPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Morning,'**
+  String get settingsGreetingPrefix;
+
+  /// No description provided for @settingsDefaultUserName.
+  ///
+  /// In en, this message translates to:
+  /// **'Abdullah'**
+  String get settingsDefaultUserName;
+
   /// No description provided for @permissionCameraTitle.
   ///
   /// In en, this message translates to:
@@ -1514,6 +1550,66 @@ abstract class AppLocalizations {
   /// **'Enter a name'**
   String get chatbotRenameHint;
 
+  /// No description provided for @chatbotHistorySearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search your conversations…'**
+  String get chatbotHistorySearchHint;
+
+  /// No description provided for @chatbotRenameSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Renamed successfully'**
+  String get chatbotRenameSuccess;
+
+  /// No description provided for @chatbotDeleteSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted successfully'**
+  String get chatbotDeleteSuccess;
+
+  /// No description provided for @chatbotEmptyConversationPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Empty conversation…'**
+  String get chatbotEmptyConversationPreview;
+
+  /// No description provided for @chatbotAiThinking.
+  ///
+  /// In en, this message translates to:
+  /// **'AI is thinking'**
+  String get chatbotAiThinking;
+
+  /// No description provided for @chatbotTipsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Tips'**
+  String get chatbotTipsLabel;
+
+  /// No description provided for @chatbotSuggestSummarizeChip.
+  ///
+  /// In en, this message translates to:
+  /// **'Summarize\nthis PDF'**
+  String get chatbotSuggestSummarizeChip;
+
+  /// No description provided for @chatbotSuggestKeyPointsChip.
+  ///
+  /// In en, this message translates to:
+  /// **'Key Points\nof this PDF'**
+  String get chatbotSuggestKeyPointsChip;
+
+  /// No description provided for @chatbotSuggestExplainChip.
+  ///
+  /// In en, this message translates to:
+  /// **'Explain\nin detail'**
+  String get chatbotSuggestExplainChip;
+
+  /// No description provided for @chatbotSuggestTranslateChip.
+  ///
+  /// In en, this message translates to:
+  /// **'Translate\nthis PDF'**
+  String get chatbotSuggestTranslateChip;
+
   /// No description provided for @chatbotAnalyzeFailed.
   ///
   /// In en, this message translates to:
@@ -1799,38 +1895,50 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingPage1Title.
   ///
   /// In en, this message translates to:
-  /// **'Scan any document'**
+  /// **'Scan Text \nin Seconds'**
   String get onboardingPage1Title;
 
   /// No description provided for @onboardingPage1Description.
   ///
   /// In en, this message translates to:
-  /// **'Capture receipts, notes, and papers with your camera in seconds.'**
+  /// **'Capture text from images with fast AI-powered OCR scanning.'**
   String get onboardingPage1Description;
 
   /// No description provided for @onboardingPage2Title.
   ///
   /// In en, this message translates to:
-  /// **'Smart OCR & translate'**
+  /// **'Smart PDF \nAssistant'**
   String get onboardingPage2Title;
 
   /// No description provided for @onboardingPage2Description.
   ///
   /// In en, this message translates to:
-  /// **'Extract text instantly and translate it into your preferred language.'**
+  /// **'Translate, extract and understand\nyour PDF documents with AI.'**
   String get onboardingPage2Description;
 
   /// No description provided for @onboardingPage3Title.
   ///
   /// In en, this message translates to:
-  /// **'Organize & export'**
+  /// **'Chat with \nYour PDFs'**
   String get onboardingPage3Title;
 
   /// No description provided for @onboardingPage3Description.
   ///
   /// In en, this message translates to:
-  /// **'Save scans, export PDFs, and keep your documents in one place.'**
+  /// **'Ask questions, summarize documents\nand get instant AI answers.'**
   String get onboardingPage3Description;
+
+  /// No description provided for @onboardingPage4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Crop \nin Seconds'**
+  String get onboardingPage4Title;
+
+  /// No description provided for @onboardingPage4Description.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-crop multiple images and\ncreate clean PDFs instantly.'**
+  String get onboardingPage4Description;
 
   /// No description provided for @settingsChooseLanguage.
   ///
@@ -2203,6 +2311,690 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Document name'**
   String get smartCropRenamePdfHint;
+
+  /// No description provided for @smartCropStepReadingImages.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Images'**
+  String get smartCropStepReadingImages;
+
+  /// No description provided for @smartCropStepDetectingEdges.
+  ///
+  /// In en, this message translates to:
+  /// **'Detecting document edges'**
+  String get smartCropStepDetectingEdges;
+
+  /// No description provided for @smartCropStepCroppingImages.
+  ///
+  /// In en, this message translates to:
+  /// **'Cropping Images'**
+  String get smartCropStepCroppingImages;
+
+  /// No description provided for @smartCropStepGeneratingPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating PDF'**
+  String get smartCropStepGeneratingPdf;
+
+  /// No description provided for @smartCropProcessingPdfSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We are organizing your cropped images\ninto a high quality PDF'**
+  String get smartCropProcessingPdfSubtitle;
+
+  /// No description provided for @smartCropProcessingPdfTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating Your PDF'**
+  String get smartCropProcessingPdfTitle;
+
+  /// No description provided for @commonUntitledDocument.
+  ///
+  /// In en, this message translates to:
+  /// **'document'**
+  String get commonUntitledDocument;
+
+  /// No description provided for @pdfAssistantDefaultFileLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF'**
+  String get pdfAssistantDefaultFileLabel;
+
+  /// No description provided for @pdfAssistantTapToBrowse.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to browse device directory'**
+  String get pdfAssistantTapToBrowse;
+
+  /// No description provided for @errorPdfTextLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading text.'**
+  String get errorPdfTextLoad;
+
+  /// No description provided for @commonProgressPercent.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}%'**
+  String commonProgressPercent(int percent);
+
+  /// No description provided for @translateExportTranslationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Translation: {language}'**
+  String translateExportTranslationTitle(String language);
+
+  /// No description provided for @translateExportDocumentTranslation.
+  ///
+  /// In en, this message translates to:
+  /// **'Document Translation'**
+  String get translateExportDocumentTranslation;
+
+  /// No description provided for @translateExportTranslatedBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Translated'**
+  String get translateExportTranslatedBadge;
+
+  /// No description provided for @translateExportVerifiedFooter.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified offline translation export'**
+  String get translateExportVerifiedFooter;
+
+  /// No description provided for @translateExportPdfHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Translation Export'**
+  String get translateExportPdfHeader;
+
+  /// No description provided for @translateExportPdfFooterLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Confidential Document'**
+  String get translateExportPdfFooterLabel;
+
+  /// No description provided for @translateExportPageOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Page {page} of {total}'**
+  String translateExportPageOf(int page, int total);
+
+  /// No description provided for @pdfAssistantPageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Page {page}'**
+  String pdfAssistantPageLabel(int page);
+
+  /// No description provided for @fileSizeBytes.
+  ///
+  /// In en, this message translates to:
+  /// **'{size} B'**
+  String fileSizeBytes(String size);
+
+  /// No description provided for @fileSizeKb.
+  ///
+  /// In en, this message translates to:
+  /// **'{size} KB'**
+  String fileSizeKb(String size);
+
+  /// No description provided for @fileSizeMb.
+  ///
+  /// In en, this message translates to:
+  /// **'{size} MB'**
+  String fileSizeMb(String size);
+
+  /// No description provided for @translateLangName_en.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get translateLangName_en;
+
+  /// No description provided for @translateLangName_ur.
+  ///
+  /// In en, this message translates to:
+  /// **'Urdu'**
+  String get translateLangName_ur;
+
+  /// No description provided for @translateLangName_hi.
+  ///
+  /// In en, this message translates to:
+  /// **'Hindi'**
+  String get translateLangName_hi;
+
+  /// No description provided for @translateLangName_ar.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic'**
+  String get translateLangName_ar;
+
+  /// No description provided for @translateLangName_es.
+  ///
+  /// In en, this message translates to:
+  /// **'Spanish'**
+  String get translateLangName_es;
+
+  /// No description provided for @translateLangName_fr.
+  ///
+  /// In en, this message translates to:
+  /// **'French'**
+  String get translateLangName_fr;
+
+  /// No description provided for @translateLangName_de.
+  ///
+  /// In en, this message translates to:
+  /// **'German'**
+  String get translateLangName_de;
+
+  /// No description provided for @translateLangName_pt.
+  ///
+  /// In en, this message translates to:
+  /// **'Portuguese'**
+  String get translateLangName_pt;
+
+  /// No description provided for @translateLangName_ru.
+  ///
+  /// In en, this message translates to:
+  /// **'Russian'**
+  String get translateLangName_ru;
+
+  /// No description provided for @translateLangName_zh.
+  ///
+  /// In en, this message translates to:
+  /// **'Chinese (Simplified)'**
+  String get translateLangName_zh;
+
+  /// No description provided for @translateLangName_zhTw.
+  ///
+  /// In en, this message translates to:
+  /// **'Chinese (Traditional)'**
+  String get translateLangName_zhTw;
+
+  /// No description provided for @translateLangName_ja.
+  ///
+  /// In en, this message translates to:
+  /// **'Japanese'**
+  String get translateLangName_ja;
+
+  /// No description provided for @translateLangName_ko.
+  ///
+  /// In en, this message translates to:
+  /// **'Korean'**
+  String get translateLangName_ko;
+
+  /// No description provided for @translateLangName_it.
+  ///
+  /// In en, this message translates to:
+  /// **'Italian'**
+  String get translateLangName_it;
+
+  /// No description provided for @translateLangName_tr.
+  ///
+  /// In en, this message translates to:
+  /// **'Turkish'**
+  String get translateLangName_tr;
+
+  /// No description provided for @translateLangName_nl.
+  ///
+  /// In en, this message translates to:
+  /// **'Dutch'**
+  String get translateLangName_nl;
+
+  /// No description provided for @translateLangName_sv.
+  ///
+  /// In en, this message translates to:
+  /// **'Swedish'**
+  String get translateLangName_sv;
+
+  /// No description provided for @translateLangName_no.
+  ///
+  /// In en, this message translates to:
+  /// **'Norwegian'**
+  String get translateLangName_no;
+
+  /// No description provided for @translateLangName_da.
+  ///
+  /// In en, this message translates to:
+  /// **'Danish'**
+  String get translateLangName_da;
+
+  /// No description provided for @translateLangName_fi.
+  ///
+  /// In en, this message translates to:
+  /// **'Finnish'**
+  String get translateLangName_fi;
+
+  /// No description provided for @translateLangName_el.
+  ///
+  /// In en, this message translates to:
+  /// **'Greek'**
+  String get translateLangName_el;
+
+  /// No description provided for @translateLangName_pl.
+  ///
+  /// In en, this message translates to:
+  /// **'Polish'**
+  String get translateLangName_pl;
+
+  /// No description provided for @translateLangName_cs.
+  ///
+  /// In en, this message translates to:
+  /// **'Czech'**
+  String get translateLangName_cs;
+
+  /// No description provided for @translateLangName_hu.
+  ///
+  /// In en, this message translates to:
+  /// **'Hungarian'**
+  String get translateLangName_hu;
+
+  /// No description provided for @translateLangName_ro.
+  ///
+  /// In en, this message translates to:
+  /// **'Romanian'**
+  String get translateLangName_ro;
+
+  /// No description provided for @translateLangName_bg.
+  ///
+  /// In en, this message translates to:
+  /// **'Bulgarian'**
+  String get translateLangName_bg;
+
+  /// No description provided for @translateLangName_uk.
+  ///
+  /// In en, this message translates to:
+  /// **'Ukrainian'**
+  String get translateLangName_uk;
+
+  /// No description provided for @translateLangName_fa.
+  ///
+  /// In en, this message translates to:
+  /// **'Persian'**
+  String get translateLangName_fa;
+
+  /// No description provided for @translateLangName_he.
+  ///
+  /// In en, this message translates to:
+  /// **'Hebrew'**
+  String get translateLangName_he;
+
+  /// No description provided for @translateLangName_th.
+  ///
+  /// In en, this message translates to:
+  /// **'Thai'**
+  String get translateLangName_th;
+
+  /// No description provided for @translateLangName_vi.
+  ///
+  /// In en, this message translates to:
+  /// **'Vietnamese'**
+  String get translateLangName_vi;
+
+  /// No description provided for @translateLangName_id.
+  ///
+  /// In en, this message translates to:
+  /// **'Indonesian'**
+  String get translateLangName_id;
+
+  /// No description provided for @translateLangName_ms.
+  ///
+  /// In en, this message translates to:
+  /// **'Malay'**
+  String get translateLangName_ms;
+
+  /// No description provided for @translateLangName_bn.
+  ///
+  /// In en, this message translates to:
+  /// **'Bengali'**
+  String get translateLangName_bn;
+
+  /// No description provided for @translateLangName_ta.
+  ///
+  /// In en, this message translates to:
+  /// **'Tamil'**
+  String get translateLangName_ta;
+
+  /// No description provided for @translateLangName_te.
+  ///
+  /// In en, this message translates to:
+  /// **'Telugu'**
+  String get translateLangName_te;
+
+  /// No description provided for @translateLangName_mr.
+  ///
+  /// In en, this message translates to:
+  /// **'Marathi'**
+  String get translateLangName_mr;
+
+  /// No description provided for @translateLangName_gu.
+  ///
+  /// In en, this message translates to:
+  /// **'Gujarati'**
+  String get translateLangName_gu;
+
+  /// No description provided for @translateLangName_kn.
+  ///
+  /// In en, this message translates to:
+  /// **'Kannada'**
+  String get translateLangName_kn;
+
+  /// No description provided for @translateLangName_ml.
+  ///
+  /// In en, this message translates to:
+  /// **'Malayalam'**
+  String get translateLangName_ml;
+
+  /// No description provided for @translateLangName_pa.
+  ///
+  /// In en, this message translates to:
+  /// **'Punjabi'**
+  String get translateLangName_pa;
+
+  /// No description provided for @translateLangName_sw.
+  ///
+  /// In en, this message translates to:
+  /// **'Swahili'**
+  String get translateLangName_sw;
+
+  /// No description provided for @translateLangName_af.
+  ///
+  /// In en, this message translates to:
+  /// **'Afrikaans'**
+  String get translateLangName_af;
+
+  /// No description provided for @translateLangName_ca.
+  ///
+  /// In en, this message translates to:
+  /// **'Catalan'**
+  String get translateLangName_ca;
+
+  /// No description provided for @translateLangName_hr.
+  ///
+  /// In en, this message translates to:
+  /// **'Croatian'**
+  String get translateLangName_hr;
+
+  /// No description provided for @translateLangName_sk.
+  ///
+  /// In en, this message translates to:
+  /// **'Slovak'**
+  String get translateLangName_sk;
+
+  /// No description provided for @translateLangName_sl.
+  ///
+  /// In en, this message translates to:
+  /// **'Slovenian'**
+  String get translateLangName_sl;
+
+  /// No description provided for @translateLangName_sr.
+  ///
+  /// In en, this message translates to:
+  /// **'Serbian'**
+  String get translateLangName_sr;
+
+  /// No description provided for @translateLangName_lt.
+  ///
+  /// In en, this message translates to:
+  /// **'Lithuanian'**
+  String get translateLangName_lt;
+
+  /// No description provided for @translateLangName_lv.
+  ///
+  /// In en, this message translates to:
+  /// **'Latvian'**
+  String get translateLangName_lv;
+
+  /// No description provided for @translateLangName_et.
+  ///
+  /// In en, this message translates to:
+  /// **'Estonian'**
+  String get translateLangName_et;
+
+  /// No description provided for @translateLangName_is.
+  ///
+  /// In en, this message translates to:
+  /// **'Icelandic'**
+  String get translateLangName_is;
+
+  /// No description provided for @translateLangName_ga.
+  ///
+  /// In en, this message translates to:
+  /// **'Irish'**
+  String get translateLangName_ga;
+
+  /// No description provided for @translateLangName_mt.
+  ///
+  /// In en, this message translates to:
+  /// **'Maltese'**
+  String get translateLangName_mt;
+
+  /// No description provided for @translateLangName_sq.
+  ///
+  /// In en, this message translates to:
+  /// **'Albanian'**
+  String get translateLangName_sq;
+
+  /// No description provided for @translateLangName_mk.
+  ///
+  /// In en, this message translates to:
+  /// **'Macedonian'**
+  String get translateLangName_mk;
+
+  /// No description provided for @translateLangName_be.
+  ///
+  /// In en, this message translates to:
+  /// **'Belarusian'**
+  String get translateLangName_be;
+
+  /// No description provided for @translateLangName_kk.
+  ///
+  /// In en, this message translates to:
+  /// **'Kazakh'**
+  String get translateLangName_kk;
+
+  /// No description provided for @translateLangName_uz.
+  ///
+  /// In en, this message translates to:
+  /// **'Uzbek'**
+  String get translateLangName_uz;
+
+  /// No description provided for @translateLangName_az.
+  ///
+  /// In en, this message translates to:
+  /// **'Azerbaijani'**
+  String get translateLangName_az;
+
+  /// No description provided for @translateLangName_hy.
+  ///
+  /// In en, this message translates to:
+  /// **'Armenian'**
+  String get translateLangName_hy;
+
+  /// No description provided for @translateLangName_ka.
+  ///
+  /// In en, this message translates to:
+  /// **'Georgian'**
+  String get translateLangName_ka;
+
+  /// No description provided for @translateLangName_lo.
+  ///
+  /// In en, this message translates to:
+  /// **'Lao'**
+  String get translateLangName_lo;
+
+  /// No description provided for @translateLangName_km.
+  ///
+  /// In en, this message translates to:
+  /// **'Khmer'**
+  String get translateLangName_km;
+
+  /// No description provided for @translateLangName_my.
+  ///
+  /// In en, this message translates to:
+  /// **'Burmese'**
+  String get translateLangName_my;
+
+  /// No description provided for @translateLangName_ne.
+  ///
+  /// In en, this message translates to:
+  /// **'Nepali'**
+  String get translateLangName_ne;
+
+  /// No description provided for @translateLangName_si.
+  ///
+  /// In en, this message translates to:
+  /// **'Sinhala'**
+  String get translateLangName_si;
+
+  /// No description provided for @translateLangName_am.
+  ///
+  /// In en, this message translates to:
+  /// **'Amharic'**
+  String get translateLangName_am;
+
+  /// No description provided for @translateLangName_ha.
+  ///
+  /// In en, this message translates to:
+  /// **'Hausa'**
+  String get translateLangName_ha;
+
+  /// No description provided for @translateLangName_yo.
+  ///
+  /// In en, this message translates to:
+  /// **'Yoruba'**
+  String get translateLangName_yo;
+
+  /// No description provided for @translateLangName_ig.
+  ///
+  /// In en, this message translates to:
+  /// **'Igbo'**
+  String get translateLangName_ig;
+
+  /// No description provided for @translateLangName_zu.
+  ///
+  /// In en, this message translates to:
+  /// **'Zulu'**
+  String get translateLangName_zu;
+
+  /// No description provided for @translateLangName_xh.
+  ///
+  /// In en, this message translates to:
+  /// **'Xhosa'**
+  String get translateLangName_xh;
+
+  /// No description provided for @translateLangName_st.
+  ///
+  /// In en, this message translates to:
+  /// **'Sesotho'**
+  String get translateLangName_st;
+
+  /// No description provided for @translateLangName_sn.
+  ///
+  /// In en, this message translates to:
+  /// **'Shona'**
+  String get translateLangName_sn;
+
+  /// No description provided for @translateLangName_rw.
+  ///
+  /// In en, this message translates to:
+  /// **'Kinyarwanda'**
+  String get translateLangName_rw;
+
+  /// No description provided for @translateLangName_so.
+  ///
+  /// In en, this message translates to:
+  /// **'Somali'**
+  String get translateLangName_so;
+
+  /// No description provided for @translateLangName_mg.
+  ///
+  /// In en, this message translates to:
+  /// **'Malagasy'**
+  String get translateLangName_mg;
+
+  /// No description provided for @translateLangName_cy.
+  ///
+  /// In en, this message translates to:
+  /// **'Welsh'**
+  String get translateLangName_cy;
+
+  /// No description provided for @translateLangName_mn.
+  ///
+  /// In en, this message translates to:
+  /// **'Mongolian'**
+  String get translateLangName_mn;
+
+  /// No description provided for @translateLangName_tl.
+  ///
+  /// In en, this message translates to:
+  /// **'Filipino'**
+  String get translateLangName_tl;
+
+  /// No description provided for @translateLangName_ht.
+  ///
+  /// In en, this message translates to:
+  /// **'Haitian Creole'**
+  String get translateLangName_ht;
+
+  /// No description provided for @translateLangName_eo.
+  ///
+  /// In en, this message translates to:
+  /// **'Esperanto'**
+  String get translateLangName_eo;
+
+  /// No description provided for @translateLangName_la.
+  ///
+  /// In en, this message translates to:
+  /// **'Latin'**
+  String get translateLangName_la;
+
+  /// No description provided for @translateLangName_ku.
+  ///
+  /// In en, this message translates to:
+  /// **'Kurdish'**
+  String get translateLangName_ku;
+
+  /// No description provided for @translateLangName_ps.
+  ///
+  /// In en, this message translates to:
+  /// **'Pashto'**
+  String get translateLangName_ps;
+
+  /// No description provided for @translateLangName_faAf.
+  ///
+  /// In en, this message translates to:
+  /// **'Dari'**
+  String get translateLangName_faAf;
+
+  /// No description provided for @translateLangName_bs.
+  ///
+  /// In en, this message translates to:
+  /// **'Bosnian'**
+  String get translateLangName_bs;
+
+  /// No description provided for @translateLangName_mi.
+  ///
+  /// In en, this message translates to:
+  /// **'Maori'**
+  String get translateLangName_mi;
+
+  /// No description provided for @translateLangName_sm.
+  ///
+  /// In en, this message translates to:
+  /// **'Samoan'**
+  String get translateLangName_sm;
+
+  /// No description provided for @translateLangName_haw.
+  ///
+  /// In en, this message translates to:
+  /// **'Hawaiian'**
+  String get translateLangName_haw;
+
+  /// No description provided for @translateLangName_lb.
+  ///
+  /// In en, this message translates to:
+  /// **'Luxembourgish'**
+  String get translateLangName_lb;
 }
 
 class _AppLocalizationsDelegate

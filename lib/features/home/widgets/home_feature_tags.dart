@@ -62,12 +62,16 @@ class _TagChip extends StatelessWidget {
             height: HomeFeatureTags._iconSize,
           ),
           const SizedBox(width: 6),
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w500,
-              color: AppColors.textSecondary,
+          Flexible(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w500,
+                color: AppColors.textSecondary,
+              ),
             ),
           ),
         ],

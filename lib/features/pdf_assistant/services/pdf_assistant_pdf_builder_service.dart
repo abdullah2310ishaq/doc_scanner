@@ -74,6 +74,7 @@ class PdfAssistantPdfBuilderService {
   Future<void> buildTranslatedPagesPdf({
     required String outputPath,
     required List<String> translatedPageTexts,
+    required String Function(int pageNumber) pageLabelFor,
     void Function(double progress)? onProgress,
   }) async {
     await TranslatePdfFonts.ensureLoaded();
@@ -91,7 +92,7 @@ class PdfAssistantPdfBuilderService {
 
           for (var i = 0; i < totalPages; i++) {
             final rawText = translatedPageTexts[i].trim();
-            final pageLabel = 'Page ${i + 1}';
+            final pageLabel = pageLabelFor(i + 1);
             final isPageRtl = _isRtl(rawText);
 
             widgets.add(

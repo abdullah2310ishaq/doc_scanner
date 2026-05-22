@@ -36,6 +36,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonClose => 'Close';
 
   @override
+  String get commonDone => 'Done';
+
+  @override
   String get commonLoading => 'Loading…';
 
   @override
@@ -199,6 +202,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeRecentToggleFavorite => 'Favorite';
+
+  @override
+  String get homeRecentUnfavorite => 'Unfavorite';
 
   @override
   String get homeRecentPdfEmptyTitle => 'No PDF yet';
@@ -510,6 +516,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsTerms => 'Terms of use';
 
   @override
+  String get settingsRateApp => 'Rate App';
+
+  @override
+  String get settingsShareApp => 'Share App';
+
+  @override
+  String get settingsGreetingPrefix => 'Good Morning,';
+
+  @override
+  String get settingsDefaultUserName => 'Abdullah';
+
+  @override
   String get permissionCameraTitle => 'Camera permission';
 
   @override
@@ -760,6 +778,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatbotRenameHint => 'Enter a name';
 
   @override
+  String get chatbotHistorySearchHint => 'Search your conversations…';
+
+  @override
+  String get chatbotRenameSuccess => 'Renamed successfully';
+
+  @override
+  String get chatbotDeleteSuccess => 'Deleted successfully';
+
+  @override
+  String get chatbotEmptyConversationPreview => 'Empty conversation…';
+
+  @override
+  String get chatbotAiThinking => 'AI is thinking';
+
+  @override
+  String get chatbotTipsLabel => 'Tips';
+
+  @override
+  String get chatbotSuggestSummarizeChip => 'Summarize\nthis PDF';
+
+  @override
+  String get chatbotSuggestKeyPointsChip => 'Key Points\nof this PDF';
+
+  @override
+  String get chatbotSuggestExplainChip => 'Explain\nin detail';
+
+  @override
+  String get chatbotSuggestTranslateChip => 'Translate\nthis PDF';
+
+  @override
   String get chatbotAnalyzeFailed =>
       'Could not analyze this PDF. Please try again.';
 
@@ -909,25 +957,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get splashTagline => 'AI-powered document scanning';
 
   @override
-  String get onboardingPage1Title => 'Scan any document';
+  String get onboardingPage1Title => 'Scan Text \nin Seconds';
 
   @override
   String get onboardingPage1Description =>
-      'Capture receipts, notes, and papers with your camera in seconds.';
+      'Capture text from images with fast AI-powered OCR scanning.';
 
   @override
-  String get onboardingPage2Title => 'Smart OCR & translate';
+  String get onboardingPage2Title => 'Smart PDF \nAssistant';
 
   @override
   String get onboardingPage2Description =>
-      'Extract text instantly and translate it into your preferred language.';
+      'Translate, extract and understand\nyour PDF documents with AI.';
 
   @override
-  String get onboardingPage3Title => 'Organize & export';
+  String get onboardingPage3Title => 'Chat with \nYour PDFs';
 
   @override
   String get onboardingPage3Description =>
-      'Save scans, export PDFs, and keep your documents in one place.';
+      'Ask questions, summarize documents\nand get instant AI answers.';
+
+  @override
+  String get onboardingPage4Title => 'Smart Crop \nin Seconds';
+
+  @override
+  String get onboardingPage4Description =>
+      'Auto-crop multiple images and\ncreate clean PDFs instantly.';
 
   @override
   String get settingsChooseLanguage => 'Choose a language';
@@ -1130,4 +1185,362 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get smartCropRenamePdfHint => 'Document name';
+
+  @override
+  String get smartCropStepReadingImages => 'Reading Images';
+
+  @override
+  String get smartCropStepDetectingEdges => 'Detecting document edges';
+
+  @override
+  String get smartCropStepCroppingImages => 'Cropping Images';
+
+  @override
+  String get smartCropStepGeneratingPdf => 'Generating PDF';
+
+  @override
+  String get smartCropProcessingPdfSubtitle =>
+      'We are organizing your cropped images\ninto a high quality PDF';
+
+  @override
+  String get smartCropProcessingPdfTitle => 'Creating Your PDF';
+
+  @override
+  String get commonUntitledDocument => 'document';
+
+  @override
+  String get pdfAssistantDefaultFileLabel => 'PDF';
+
+  @override
+  String get pdfAssistantTapToBrowse => 'Tap to browse device directory';
+
+  @override
+  String get errorPdfTextLoad => 'Error loading text.';
+
+  @override
+  String commonProgressPercent(int percent) {
+    return '$percent%';
+  }
+
+  @override
+  String translateExportTranslationTitle(String language) {
+    return 'Translation: $language';
+  }
+
+  @override
+  String get translateExportDocumentTranslation => 'Document Translation';
+
+  @override
+  String get translateExportTranslatedBadge => 'Translated';
+
+  @override
+  String get translateExportVerifiedFooter =>
+      'Verified offline translation export';
+
+  @override
+  String get translateExportPdfHeader => 'Translation Export';
+
+  @override
+  String get translateExportPdfFooterLabel => 'Confidential Document';
+
+  @override
+  String translateExportPageOf(int page, int total) {
+    return 'Page $page of $total';
+  }
+
+  @override
+  String pdfAssistantPageLabel(int page) {
+    return 'Page $page';
+  }
+
+  @override
+  String fileSizeBytes(String size) {
+    return '$size B';
+  }
+
+  @override
+  String fileSizeKb(String size) {
+    return '$size KB';
+  }
+
+  @override
+  String fileSizeMb(String size) {
+    return '$size MB';
+  }
+
+  @override
+  String get translateLangName_en => 'English';
+
+  @override
+  String get translateLangName_ur => 'Urdu';
+
+  @override
+  String get translateLangName_hi => 'Hindi';
+
+  @override
+  String get translateLangName_ar => 'Arabic';
+
+  @override
+  String get translateLangName_es => 'Spanish';
+
+  @override
+  String get translateLangName_fr => 'French';
+
+  @override
+  String get translateLangName_de => 'German';
+
+  @override
+  String get translateLangName_pt => 'Portuguese';
+
+  @override
+  String get translateLangName_ru => 'Russian';
+
+  @override
+  String get translateLangName_zh => 'Chinese (Simplified)';
+
+  @override
+  String get translateLangName_zhTw => 'Chinese (Traditional)';
+
+  @override
+  String get translateLangName_ja => 'Japanese';
+
+  @override
+  String get translateLangName_ko => 'Korean';
+
+  @override
+  String get translateLangName_it => 'Italian';
+
+  @override
+  String get translateLangName_tr => 'Turkish';
+
+  @override
+  String get translateLangName_nl => 'Dutch';
+
+  @override
+  String get translateLangName_sv => 'Swedish';
+
+  @override
+  String get translateLangName_no => 'Norwegian';
+
+  @override
+  String get translateLangName_da => 'Danish';
+
+  @override
+  String get translateLangName_fi => 'Finnish';
+
+  @override
+  String get translateLangName_el => 'Greek';
+
+  @override
+  String get translateLangName_pl => 'Polish';
+
+  @override
+  String get translateLangName_cs => 'Czech';
+
+  @override
+  String get translateLangName_hu => 'Hungarian';
+
+  @override
+  String get translateLangName_ro => 'Romanian';
+
+  @override
+  String get translateLangName_bg => 'Bulgarian';
+
+  @override
+  String get translateLangName_uk => 'Ukrainian';
+
+  @override
+  String get translateLangName_fa => 'Persian';
+
+  @override
+  String get translateLangName_he => 'Hebrew';
+
+  @override
+  String get translateLangName_th => 'Thai';
+
+  @override
+  String get translateLangName_vi => 'Vietnamese';
+
+  @override
+  String get translateLangName_id => 'Indonesian';
+
+  @override
+  String get translateLangName_ms => 'Malay';
+
+  @override
+  String get translateLangName_bn => 'Bengali';
+
+  @override
+  String get translateLangName_ta => 'Tamil';
+
+  @override
+  String get translateLangName_te => 'Telugu';
+
+  @override
+  String get translateLangName_mr => 'Marathi';
+
+  @override
+  String get translateLangName_gu => 'Gujarati';
+
+  @override
+  String get translateLangName_kn => 'Kannada';
+
+  @override
+  String get translateLangName_ml => 'Malayalam';
+
+  @override
+  String get translateLangName_pa => 'Punjabi';
+
+  @override
+  String get translateLangName_sw => 'Swahili';
+
+  @override
+  String get translateLangName_af => 'Afrikaans';
+
+  @override
+  String get translateLangName_ca => 'Catalan';
+
+  @override
+  String get translateLangName_hr => 'Croatian';
+
+  @override
+  String get translateLangName_sk => 'Slovak';
+
+  @override
+  String get translateLangName_sl => 'Slovenian';
+
+  @override
+  String get translateLangName_sr => 'Serbian';
+
+  @override
+  String get translateLangName_lt => 'Lithuanian';
+
+  @override
+  String get translateLangName_lv => 'Latvian';
+
+  @override
+  String get translateLangName_et => 'Estonian';
+
+  @override
+  String get translateLangName_is => 'Icelandic';
+
+  @override
+  String get translateLangName_ga => 'Irish';
+
+  @override
+  String get translateLangName_mt => 'Maltese';
+
+  @override
+  String get translateLangName_sq => 'Albanian';
+
+  @override
+  String get translateLangName_mk => 'Macedonian';
+
+  @override
+  String get translateLangName_be => 'Belarusian';
+
+  @override
+  String get translateLangName_kk => 'Kazakh';
+
+  @override
+  String get translateLangName_uz => 'Uzbek';
+
+  @override
+  String get translateLangName_az => 'Azerbaijani';
+
+  @override
+  String get translateLangName_hy => 'Armenian';
+
+  @override
+  String get translateLangName_ka => 'Georgian';
+
+  @override
+  String get translateLangName_lo => 'Lao';
+
+  @override
+  String get translateLangName_km => 'Khmer';
+
+  @override
+  String get translateLangName_my => 'Burmese';
+
+  @override
+  String get translateLangName_ne => 'Nepali';
+
+  @override
+  String get translateLangName_si => 'Sinhala';
+
+  @override
+  String get translateLangName_am => 'Amharic';
+
+  @override
+  String get translateLangName_ha => 'Hausa';
+
+  @override
+  String get translateLangName_yo => 'Yoruba';
+
+  @override
+  String get translateLangName_ig => 'Igbo';
+
+  @override
+  String get translateLangName_zu => 'Zulu';
+
+  @override
+  String get translateLangName_xh => 'Xhosa';
+
+  @override
+  String get translateLangName_st => 'Sesotho';
+
+  @override
+  String get translateLangName_sn => 'Shona';
+
+  @override
+  String get translateLangName_rw => 'Kinyarwanda';
+
+  @override
+  String get translateLangName_so => 'Somali';
+
+  @override
+  String get translateLangName_mg => 'Malagasy';
+
+  @override
+  String get translateLangName_cy => 'Welsh';
+
+  @override
+  String get translateLangName_mn => 'Mongolian';
+
+  @override
+  String get translateLangName_tl => 'Filipino';
+
+  @override
+  String get translateLangName_ht => 'Haitian Creole';
+
+  @override
+  String get translateLangName_eo => 'Esperanto';
+
+  @override
+  String get translateLangName_la => 'Latin';
+
+  @override
+  String get translateLangName_ku => 'Kurdish';
+
+  @override
+  String get translateLangName_ps => 'Pashto';
+
+  @override
+  String get translateLangName_faAf => 'Dari';
+
+  @override
+  String get translateLangName_bs => 'Bosnian';
+
+  @override
+  String get translateLangName_mi => 'Maori';
+
+  @override
+  String get translateLangName_sm => 'Samoan';
+
+  @override
+  String get translateLangName_haw => 'Hawaiian';
+
+  @override
+  String get translateLangName_lb => 'Luxembourgish';
 }

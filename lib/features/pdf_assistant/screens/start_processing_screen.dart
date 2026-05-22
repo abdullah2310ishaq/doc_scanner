@@ -167,6 +167,8 @@ class _StartProcessingScreenState extends State<StartProcessingScreen> {
                 displayName: _displayName,
                 fileSizeLabel: _storage.formatFileSize(_fileSizeBytes),
                 noFileLabel: l10n.pdfAssistantUploadPdf,
+                pdfDefaultLabel: l10n.pdfAssistantDefaultFileLabel,
+                tapToBrowseLabel: l10n.pdfAssistantTapToBrowse,
                 onClear: hasFile ? _confirmAndClearFile : null,
                 onTap: !hasFile ? _pickPdfFile : null,
               ),
@@ -249,6 +251,8 @@ class _PdfPreviewCard extends StatelessWidget {
     required this.displayName,
     required this.fileSizeLabel,
     required this.noFileLabel,
+    required this.pdfDefaultLabel,
+    required this.tapToBrowseLabel,
     this.onClear,
     this.onTap,
   });
@@ -257,6 +261,8 @@ class _PdfPreviewCard extends StatelessWidget {
   final String? displayName;
   final String fileSizeLabel;
   final String noFileLabel;
+  final String pdfDefaultLabel;
+  final String tapToBrowseLabel;
   final VoidCallback? onClear;
   final VoidCallback? onTap;
 
@@ -312,7 +318,7 @@ class _PdfPreviewCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          hasFile ? (displayName ?? 'PDF') : noFileLabel,
+                          hasFile ? (displayName ?? pdfDefaultLabel) : noFileLabel,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -334,12 +340,14 @@ class _PdfPreviewCard extends StatelessWidget {
                           ),
                         ] else ...[
                           const SizedBox(height: 4),
-                          const Text(
-                            'Tap to browse device directory',
-                            style: TextStyle(
+                          Text(
+                            tapToBrowseLabel,
+                            style: const TextStyle(
                               fontSize: 13,
                               color: AppColors.textSecondary,
                             ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ],

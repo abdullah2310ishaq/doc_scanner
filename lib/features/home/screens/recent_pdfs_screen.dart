@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
+import '../../../core/widgets/l10n_text.dart';
 import '../../../core/widgets/delete_dialog.dart';
 import '../../../core/widgets/toast.dart';
 import '../../smartcrop/pages/smart_crop_pdf_view_screen.dart';
@@ -132,9 +133,9 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
             elevation: 0,
             scrolledUnderElevation: 0,
             foregroundColor: AppColors.textPrimary,
-            title: const Text(
-              'PDFs',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            title: L10nText(
+              l10n.homeRecentPdfsTitle,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
           ),
           body: provider.isLoadingPdfs
@@ -158,7 +159,7 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
                       child: TextField(
                         controller: _searchController,
                         decoration: InputDecoration(
-                          hintText: 'Search your pdf..',
+                          hintText: l10n.homeRecentSearchPdfs,
                           hintStyle: const TextStyle(
                             color: Colors.grey,
                             fontSize: 14,
@@ -242,6 +243,7 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
                                         RecentDocumentsService.formatMeta(
                                           file.modifiedAt,
                                           file.sizeBytes,
+                                          l10n,
                                         ),
                                         style: const TextStyle(
                                           fontSize: 11,
@@ -291,22 +293,22 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
                                             },
                                             itemBuilder:
                                                 (BuildContext context) => [
-                                                  const PopupMenuItem<String>(
+                                                  PopupMenuItem<String>(
                                                     value: 'share',
                                                     height: 36,
-                                                    child: Text(
-                                                      'Share',
-                                                      style: TextStyle(
+                                                    child: L10nText(
+                                                      l10n.commonShare,
+                                                      style: const TextStyle(
                                                         fontSize: 13,
                                                       ),
                                                     ),
                                                   ),
-                                                  const PopupMenuItem<String>(
+                                                  PopupMenuItem<String>(
                                                     value: 'delete',
                                                     height: 36,
-                                                    child: Text(
-                                                      'Delete',
-                                                      style: TextStyle(
+                                                    child: L10nText(
+                                                      l10n.commonDelete,
+                                                      style: const TextStyle(
                                                         fontSize: 13,
                                                       ),
                                                     ),
@@ -314,10 +316,10 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
                                                   PopupMenuItem<String>(
                                                     value: 'favorite',
                                                     height: 36,
-                                                    child: Text(
+                                                    child: L10nText(
                                                       file.isFavorite
-                                                          ? 'Unfavourite'
-                                                          : 'Favourite',
+                                                          ? l10n.homeRecentUnfavorite
+                                                          : l10n.homeRecentToggleFavorite,
                                                       style: const TextStyle(
                                                         fontSize: 13,
                                                       ),

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../../../l10n/app_localizations.dart';
 import '../models/translate_export_data.dart';
 import '../models/translate_export_scope.dart';
 import 'translate_export_storage.dart';
@@ -12,6 +13,7 @@ class TranslateSavePdfService {
   Future<Uint8List> buildBytes({
     required TranslateExportData data,
     required TranslateExportScope scope,
+    required AppLocalizations l10n,
   }) async {
     final text = data.textForScope(scope);
     if (text.trim().isEmpty) {
@@ -19,14 +21,17 @@ class TranslateSavePdfService {
     }
 
     await TranslatePdfFonts.ensureLoaded();
-    return Uint8List.fromList(await _buildPdfBytes(data: data, scope: scope));
+    return Uint8List.fromList(
+      await _buildPdfBytes(data: data, scope: scope, l10n: l10n),
+    );
   }
 
   Future<String> save({
     required TranslateExportData data,
     required TranslateExportScope scope,
+    required AppLocalizations l10n,
   }) async {
-    final bytes = await buildBytes(data: data, scope: scope);
+    final bytes = await buildBytes(data: data, scope: scope, l10n: l10n);
     final fileName = _fileName(scope);
     return TranslateExportStorage.saveBytes(bytes: bytes, fileName: fileName);
   }
@@ -34,6 +39,7 @@ class TranslateSavePdfService {
   Future<List<int>> _buildPdfBytes({
     required TranslateExportData data,
     required TranslateExportScope scope,
+    required AppLocalizations l10n,
   }) async {
     // Professional Corporate Color Palette
     const primaryColor = PdfColor.fromInt(0xFF0F172A); // Deep Slate / Navy
@@ -62,7 +68,7 @@ class TranslateSavePdfService {
                 pw.MainAxisAlignment.spaceBetween, // Fixed typo here
             children: [
               pw.Text(
-                'Translation Export',
+                l10n.translateExportPdfHeader,
                 style: pw.TextStyle(
                   fontSize: 9,
                   color: secondaryColor,
@@ -89,15 +95,20 @@ class TranslateSavePdfService {
                 pw.MainAxisAlignment.spaceBetween, // Fixed typo here
             children: [
               pw.Text(
-                'Confidential Document',
+                l10n.translateExportPdfFooterLabel,
                 style: const pw.TextStyle(fontSize: 9, color: secondaryColor),
               ),
               pw.Text(
-                'Page ${context.pageNumber} of ${context.pagesCount}',
+                l10n.translateExportPageOf(
+                  context.pageNumber,
+                  context.pagesCount,
+                ),
                 style: pw.TextStyle(
                   fontSize: 9,
                   color: secondaryColor,
-                  font: TranslatePdfFonts.bodyStyle('Page').font,
+                  font: TranslatePdfFonts.bodyStyle(
+                    l10n.translateExportPageOf(1, 1),
+                  ).font,
                 ),
               ),
             ],

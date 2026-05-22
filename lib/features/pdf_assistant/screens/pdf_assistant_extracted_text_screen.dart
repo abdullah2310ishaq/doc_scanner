@@ -72,8 +72,9 @@ class _PdfAssistantExtractedTextScreenState
         }
       }
     } catch (e) {
+      if (!mounted) return;
       setState(() {
-        _content = 'Error loading text.';
+        _content = context.l10n.errorPdfTextLoad;
         _isLoading = false;
       });
     }

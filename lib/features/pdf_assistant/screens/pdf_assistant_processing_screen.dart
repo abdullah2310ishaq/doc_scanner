@@ -29,6 +29,7 @@ class PdfAssistantProcessingScreen extends StatefulWidget {
     required String displayName,
     required TranslateLanguage targetLanguage,
   }) {
+    final l10n = AppLocalizations.of(context);
     return Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => ChangeNotifierProvider(
@@ -36,6 +37,7 @@ class PdfAssistantProcessingScreen extends StatefulWidget {
             originalPath: originalPath,
             displayName: displayName,
             targetLanguage: targetLanguage,
+            pageLabelFor: l10n.pdfAssistantPageLabel,
           )..start(),
           child: PdfAssistantProcessingScreen(
             originalPath: originalPath,
@@ -167,7 +169,7 @@ class _PdfAssistantProcessingScreenState
                     color: AppColors.navbarGradientStart,
                   ),
                   const SizedBox(height: 8),
-                  Text('$percent%'),
+                  Text(l10n.commonProgressPercent(percent)),
                   const Spacer(flex: 2),
                 ],
               ),

@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
+import '../../../core/widgets/l10n_text.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../core/widgets/delete_dialog.dart';
 import '../../../core/widgets/rename_dialog.dart';
 import '../../../core/widgets/toast.dart';
@@ -54,7 +56,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     await provider.renameSession(sessionId: sessionId, newName: newName);
 
     if (!context.mounted) return;
-    AppToast.show(context, 'Renamed successfully');
+    AppToast.show(context, l10n.chatbotRenameSuccess);
   }
 
   Future<void> _deleteSession(
@@ -74,16 +76,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
     await provider.deleteSession(sessionId);
 
     if (!context.mounted) return;
-    AppToast.show(context, 'Deleted successfully');
+    AppToast.show(context, l10n.chatbotDeleteSuccess);
   }
 
   // Markdown characters aur extra formatting cleanup helper method
-  String _cleanPreviewText(String source) {
+  String _cleanPreviewText(String source, AppLocalizations l10n) {
     String cleanStr = source.replaceAll(RegExp(r'\*+'), '').trim();
     if (cleanStr.length > 60) {
       return '${cleanStr.substring(0, 60).trim()}...';
     }
-    return cleanStr.isEmpty ? 'Empty conversation...' : '$cleanStr...';
+    return cleanStr.isEmpty
+        ? l10n.chatbotEmptyConversationPreview
+        : '$cleanStr...';
   }
 
   // Real-time calculation matrix helper for dynamic leading timestamp formatting
@@ -160,9 +164,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         Expanded(
                           child: TextField(
                             controller: _searchController,
-                            decoration: const InputDecoration(
-                              hintText: 'Search your conversations..',
-                              hintStyle: TextStyle(
+                            decoration: InputDecoration(
+                              hintText: l10n.chatbotHistorySearchHint,
+                              hintStyle: const TextStyle(
                                 color: AppColors.textSecondary,
                                 fontSize: 15,
                               ),
@@ -231,7 +235,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           subtitle: Padding(
                             padding: const EdgeInsets.only(top: 4),
                             child: Text(
-                              _cleanPreviewText(session.previewText),
+                              _cleanPreviewText(session.previewText, l10n),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
@@ -272,17 +276,21 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                       }
                                     },
                                     itemBuilder: (BuildContext context) => [
-                                      const PopupMenuItem(
+                                      PopupMenuItem(
                                         value: 'rename',
-                                        child: Row(children: [Text('Rename')]),
+                                        child: Row(
+                                          children: [
+                                            L10nText(l10n.documentRename),
+                                          ],
+                                        ),
                                       ),
-                                      const PopupMenuItem(
+                                      PopupMenuItem(
                                         value: 'delete',
                                         child: Row(
                                           children: [
-                                            Text(
-                                              'Delete',
-                                              style: TextStyle(
+                                            L10nText(
+                                              l10n.commonDelete,
+                                              style: const TextStyle(
                                                 color: Colors.red,
                                               ),
                                             ),

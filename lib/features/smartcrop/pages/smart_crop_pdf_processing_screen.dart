@@ -93,10 +93,9 @@ class _SmartCropPdfProcessingScreenState
     // Fallback static text if localization maps aren't fully configured yet
     final headingMessage = count > 1
         ? l10n.smartCropProcessingPdfMultiple(count)
-        : "Creating Your PDF";
+        : l10n.smartCropProcessingPdfTitle;
 
-    const subheadingMessage =
-        "We are organizing your cropped images\ninto a high quality PDF";
+    final subheadingMessage = l10n.smartCropProcessingPdfSubtitle;
 
     return Scaffold(
       backgroundColor: AppColors.smartCropSoftBackground,
@@ -130,10 +129,10 @@ class _SmartCropPdfProcessingScreenState
               const SizedBox(height: 12),
 
               // Secondary Descriptive Subtitle Text
-              const Text(
+              Text(
                 subheadingMessage,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors
                       .grey, // Replace with your AppColors.textSecondary if applicable
                   fontSize: 13,

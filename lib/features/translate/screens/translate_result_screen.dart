@@ -160,9 +160,17 @@ class TranslateResultScreen extends StatelessWidget {
     try {
       switch (format) {
         case _TranslateSaveFormat.pdf:
-          await TranslateSavePdfService().save(data: data, scope: scope);
+          await TranslateSavePdfService().save(
+            data: data,
+            scope: scope,
+            l10n: l10n,
+          );
         case _TranslateSaveFormat.png:
-          await TranslateSavePngService().save(data: data, scope: scope);
+          await TranslateSavePngService().save(
+            data: data,
+            scope: scope,
+            l10n: l10n,
+          );
       }
 
       if (!context.mounted) return;
@@ -203,7 +211,7 @@ class TranslateResultScreen extends StatelessWidget {
       searchHint: l10n.translateSearchLanguage,
       recentLabel: l10n.translateRecentLanguages,
       emptyLabel: l10n.translateNoLanguagesFound,
-      languages: DummyLanguages.all,
+      languages: DummyLanguages.all(l10n),
       selected: provider.selectedLanguage,
       onSelected: provider.selectLanguage,
     );

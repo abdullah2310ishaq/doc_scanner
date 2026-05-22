@@ -22,10 +22,11 @@ enum PdfAssistantProcessStep {
 enum PdfAssistantProcessStatus { idle, running, success, failed }
 
 class PdfAssistantProcessProvider extends ChangeNotifier {
-  PdfAssistantProcessProvider({
+    PdfAssistantProcessProvider({
     required this.originalPath,
     required this.displayName,
     required this.targetLanguage,
+    required this.pageLabelFor,
     PdfAssistantExtractService? extractService,
     PdfAssistantTranslateService? translateService,
     PdfAssistantPdfBuilderService? pdfBuilderService,
@@ -38,6 +39,7 @@ class PdfAssistantProcessProvider extends ChangeNotifier {
   final String originalPath;
   final String displayName;
   final TranslateLanguage targetLanguage;
+  final String Function(int pageNumber) pageLabelFor;
 
   final PdfAssistantExtractService _extractService;
   final PdfAssistantTranslateService _translateService;
@@ -97,6 +99,7 @@ class PdfAssistantProcessProvider extends ChangeNotifier {
       await _pdfBuilderService.buildTranslatedPagesPdf(
         outputPath: translatedPath,
         translatedPageTexts: translatedPages,
+        pageLabelFor: pageLabelFor,
         onProgress: (pageProgress) {
           completedSteps = 2 + pageProgress.clamp(0.0, 1.0);
           notifyListeners();
