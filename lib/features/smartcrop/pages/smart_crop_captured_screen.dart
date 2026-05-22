@@ -270,8 +270,10 @@ class _CapturedActions extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
+    final bottomInset = MediaQuery.paddingOf(context).bottom;
+
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+      padding: EdgeInsets.fromLTRB(20, 8, 20, 24 + bottomInset),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

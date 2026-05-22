@@ -117,7 +117,12 @@ class _SmartCropMultiPreviewBodyState extends State<SmartCropMultiPreviewBody> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
+          padding: EdgeInsets.fromLTRB(
+            24,
+            16,
+            24,
+            24 + MediaQuery.paddingOf(context).bottom,
+          ),
           child: SizedBox(
             width: double.infinity,
             height: 54,

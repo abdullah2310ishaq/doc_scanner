@@ -32,7 +32,8 @@ class SmartCropCornerAdjustScreen extends StatefulWidget {
       _SmartCropCornerAdjustScreenState();
 }
 
-class _SmartCropCornerAdjustScreenState extends State<SmartCropCornerAdjustScreen> {
+class _SmartCropCornerAdjustScreenState
+    extends State<SmartCropCornerAdjustScreen> {
   final _edgeDetect = SmartCropEdgeDetectService();
   bool _isDetecting = true;
   int _pageIndex = 0;
@@ -75,6 +76,7 @@ class _SmartCropCornerAdjustScreenState extends State<SmartCropCornerAdjustScree
 
         final index = _pageIndex.clamp(0, pages.length - 1);
         final page = pages[index];
+        final bottomInset = MediaQuery.paddingOf(context).bottom;
 
         return Scaffold(
           backgroundColor: const Color(0xFF121212),
@@ -134,22 +136,23 @@ class _SmartCropCornerAdjustScreenState extends State<SmartCropCornerAdjustScree
                         topRight: page.topRight,
                         bottomRight: page.bottomRight,
                         bottomLeft: page.bottomLeft,
-                        onCornersChanged: ({
-                          required topLeft,
-                          required topRight,
-                          required bottomRight,
-                          required bottomLeft,
-                        }) {
-                          session.updatePage(
-                            index,
-                            page.copyWith(
-                              topLeft: topLeft,
-                              topRight: topRight,
-                              bottomRight: bottomRight,
-                              bottomLeft: bottomLeft,
-                            ),
-                          );
-                        },
+                        onCornersChanged:
+                            ({
+                              required topLeft,
+                              required topRight,
+                              required bottomRight,
+                              required bottomLeft,
+                            }) {
+                              session.updatePage(
+                                index,
+                                page.copyWith(
+                                  topLeft: topLeft,
+                                  topRight: topRight,
+                                  bottomRight: bottomRight,
+                                  bottomLeft: bottomLeft,
+                                ),
+                              );
+                            },
                       ),
               ),
               if (pages.length > 1 && !_isDetecting)
@@ -162,7 +165,10 @@ class _SmartCropCornerAdjustScreenState extends State<SmartCropCornerAdjustScree
                         onPressed: index > 0
                             ? () => setState(() => _pageIndex = index - 1)
                             : null,
-                        icon: const Icon(Icons.chevron_left, color: Colors.white),
+                        icon: const Icon(
+                          Icons.chevron_left,
+                          color: Colors.white,
+                        ),
                       ),
                       Text(
                         l10n.smartCropPageIndicator(index + 1, pages.length),
@@ -172,13 +178,16 @@ class _SmartCropCornerAdjustScreenState extends State<SmartCropCornerAdjustScree
                         onPressed: index < pages.length - 1
                             ? () => setState(() => _pageIndex = index + 1)
                             : null,
-                        icon: const Icon(Icons.chevron_right, color: Colors.white),
+                        icon: const Icon(
+                          Icons.chevron_right,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),
                 ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+                padding: EdgeInsets.fromLTRB(24, 8, 24, 24 + bottomInset),
                 child: SizedBox(
                   width: double.infinity,
                   height: 52,

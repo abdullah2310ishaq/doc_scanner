@@ -68,9 +68,10 @@ class _SmartCropSinglePhotoReviewBodyState
 
     final index = _currentIndex.clamp(0, paths.length - 1);
     final hasMultiple = paths.length > 1;
+    final bottomInset = MediaQuery.paddingOf(context).bottom;
 
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + bottomInset),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -109,7 +110,8 @@ class _SmartCropSinglePhotoReviewBodyState
               child: OutlinedButton(
                 onPressed: widget.onAddAnother,
                 style: OutlinedButton.styleFrom(
-                  backgroundColor: SmartCropSinglePhotoReviewBody.addButtonBackground,
+                  backgroundColor:
+                      SmartCropSinglePhotoReviewBody.addButtonBackground,
                   foregroundColor: SmartCropSinglePhotoReviewBody.addButtonText,
                   side: const BorderSide(
                     color: SmartCropSinglePhotoReviewBody.addButtonBorder,
@@ -152,7 +154,6 @@ class _SmartCropSinglePhotoReviewBodyState
               ),
             ),
           ),
-          const SizedBox(height: 16),
         ],
       ),
     );
@@ -180,10 +181,7 @@ class SmartCropFramedImage extends StatelessWidget {
         color: Colors.white,
         border: Border.all(color: borderColor, width: borderWidth),
       ),
-      child: Image.file(
-        File(path),
-        fit: BoxFit.contain,
-      ),
+      child: Image.file(File(path), fit: BoxFit.contain),
     );
   }
 }
