@@ -1729,6 +1729,288 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Saving…'**
   String get commonSaving;
+
+  /// No description provided for @smartCropTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Crop'**
+  String get smartCropTitle;
+
+  /// No description provided for @smartCropInputMethodTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Crop Scanner'**
+  String get smartCropInputMethodTitle;
+
+  /// No description provided for @smartCropInputMethodSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose how you want to crop your document'**
+  String get smartCropInputMethodSubtitle;
+
+  /// No description provided for @smartCropInputLiveCameraTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Live Camera'**
+  String get smartCropInputLiveCameraTitle;
+
+  /// No description provided for @smartCropInputLiveCameraDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture document with auto edge detection'**
+  String get smartCropInputLiveCameraDescription;
+
+  /// No description provided for @smartCropInputUploadImageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Image'**
+  String get smartCropInputUploadImageTitle;
+
+  /// No description provided for @smartCropInputUploadImageDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload document image from gallery'**
+  String get smartCropInputUploadImageDescription;
+
+  /// No description provided for @smartCropUploadIntroHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Crop Multiple Images\nAutomatically'**
+  String get smartCropUploadIntroHeadline;
+
+  /// No description provided for @smartCropUploadIntroSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically detect edges, crop images perfectly and create a PDF in one tap.'**
+  String get smartCropUploadIntroSubtitle;
+
+  /// No description provided for @smartCropUploadIntroStepSelect.
+  ///
+  /// In en, this message translates to:
+  /// **'Select multiple images'**
+  String get smartCropUploadIntroStepSelect;
+
+  /// No description provided for @smartCropUploadIntroStepCrop.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto detect and crop'**
+  String get smartCropUploadIntroStepCrop;
+
+  /// No description provided for @smartCropUploadIntroStepPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Create PDF instantly'**
+  String get smartCropUploadIntroStepPdf;
+
+  /// No description provided for @smartCropUploadIntroSelectImages.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Images'**
+  String get smartCropUploadIntroSelectImages;
+
+  /// No description provided for @smartCropLiveCameraTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Crop Camera'**
+  String get smartCropLiveCameraTitle;
+
+  /// No description provided for @smartCropLiveCameraTip.
+  ///
+  /// In en, this message translates to:
+  /// **'Tip: Align document edges inside the green guidelines'**
+  String get smartCropLiveCameraTip;
+
+  /// No description provided for @smartCropLiveCameraClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close camera'**
+  String get smartCropLiveCameraClose;
+
+  /// No description provided for @smartCropLiveCameraFlash.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle flash'**
+  String get smartCropLiveCameraFlash;
+
+  /// No description provided for @smartCropLiveCameraCapture.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture document for smart cropping'**
+  String get smartCropLiveCameraCapture;
+
+  /// No description provided for @smartCropLiveCameraInitializing.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting camera…'**
+  String get smartCropLiveCameraInitializing;
+
+  /// No description provided for @smartCropCapturedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Captured Document'**
+  String get smartCropCapturedTitle;
+
+  /// No description provided for @smartCropCapturedRetake.
+  ///
+  /// In en, this message translates to:
+  /// **'Retake last photo'**
+  String get smartCropCapturedRetake;
+
+  /// No description provided for @smartCropCapturedAnotherPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Add another photo'**
+  String get smartCropCapturedAnotherPhoto;
+
+  /// No description provided for @smartCropCapturedRetakeAnotherPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Retake another photo'**
+  String get smartCropCapturedRetakeAnotherPhoto;
+
+  /// No description provided for @smartCropCapturedPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get smartCropCapturedPreview;
+
+  /// No description provided for @smartCropPreviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get smartCropPreviewTitle;
+
+  /// No description provided for @smartCropCapturedCrop.
+  ///
+  /// In en, this message translates to:
+  /// **'Crop'**
+  String get smartCropCapturedCrop;
+
+  /// No description provided for @smartCropAdjustCornersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust corners'**
+  String get smartCropAdjustCornersTitle;
+
+  /// No description provided for @smartCropAdjustCornersHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag the purple corners to match the document edges'**
+  String get smartCropAdjustCornersHint;
+
+  /// No description provided for @smartCropAdjustCornersConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply crop'**
+  String get smartCropAdjustCornersConfirm;
+
+  /// No description provided for @smartCropDetectingEdges.
+  ///
+  /// In en, this message translates to:
+  /// **'Detecting document edges…'**
+  String get smartCropDetectingEdges;
+
+  /// No description provided for @smartCropAndroidOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart scan is available on Android only.'**
+  String get smartCropAndroidOnly;
+
+  /// No description provided for @smartCropPageIndicator.
+  ///
+  /// In en, this message translates to:
+  /// **'{current}/{total}'**
+  String smartCropPageIndicator(int current, int total);
+
+  /// No description provided for @smartCropMaxPagesReached.
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum {max} photos reached'**
+  String smartCropMaxPagesReached(int max);
+
+  /// No description provided for @smartCropProcessingCrop.
+  ///
+  /// In en, this message translates to:
+  /// **'Applying magical crop...'**
+  String get smartCropProcessingCrop;
+
+  /// No description provided for @smartCropProcessingCropMultiple.
+  ///
+  /// In en, this message translates to:
+  /// **'Cropping {count} documents…'**
+  String smartCropProcessingCropMultiple(int count);
+
+  /// No description provided for @smartCropCroppedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cropped Document'**
+  String get smartCropCroppedTitle;
+
+  /// No description provided for @smartCropFilterOriginal.
+  ///
+  /// In en, this message translates to:
+  /// **'Original'**
+  String get smartCropFilterOriginal;
+
+  /// No description provided for @smartCropFilterMagic.
+  ///
+  /// In en, this message translates to:
+  /// **'Magic Color'**
+  String get smartCropFilterMagic;
+
+  /// No description provided for @smartCropFilterGrayscale.
+  ///
+  /// In en, this message translates to:
+  /// **'Grayscale'**
+  String get smartCropFilterGrayscale;
+
+  /// No description provided for @smartCropFilterMono.
+  ///
+  /// In en, this message translates to:
+  /// **'B&W'**
+  String get smartCropFilterMono;
+
+  /// No description provided for @smartCropFilterWarm.
+  ///
+  /// In en, this message translates to:
+  /// **'Warm'**
+  String get smartCropFilterWarm;
+
+  /// No description provided for @smartCropActionCreatePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Create PDF'**
+  String get smartCropActionCreatePdf;
+
+  /// No description provided for @smartCropProcessingPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating PDF document...'**
+  String get smartCropProcessingPdf;
+
+  /// No description provided for @smartCropProcessingPdfMultiple.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating PDF with {count} pages…'**
+  String smartCropProcessingPdfMultiple(int count);
+
+  /// No description provided for @smartCropPdfSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF document generated successfully'**
+  String get smartCropPdfSuccess;
+
+  /// No description provided for @smartCropPdfPagesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'pages'**
+  String get smartCropPdfPagesLabel;
+
+  /// No description provided for @smartCropPdfSinglePageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'1 page'**
+  String get smartCropPdfSinglePageLabel;
 }
 
 class _AppLocalizationsDelegate

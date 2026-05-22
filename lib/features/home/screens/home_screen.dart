@@ -8,6 +8,8 @@ import '../../pdf_assistant/widgets/pdf_assistant_source_sheet.dart';
 import '../../ocr/ocr_flow.dart';
 import '../../ocr/screens/live_ocr_camera_screen.dart';
 import '../../ocr/widgets/ocr_input_method_sheet.dart';
+import '../../smartcrop/smart_crop_flow.dart';
+import '../../smartcrop/widgets/smart_crop_input_sheet.dart';
 import '../widgets/home_drawer.dart';
 import '../widgets/home_feature_card.dart';
 import '../widgets/home_feature_tags.dart';
@@ -26,6 +28,14 @@ class HomeScreen extends StatelessWidget {
       context,
       onLiveCamera: () => LiveOcrCameraScreen.open(context),
       onUploadImage: () => OcrFlow.pickImageAndAnalyze(context),
+    );
+  }
+
+  void _openSmartCropInputSheet(BuildContext context) {
+    showSmartCropInputSheet(
+      context,
+      onLiveCamera: () => SmartCropFlow.startLiveCamera(context),
+      onUploadImage: () => SmartCropFlow.pickFromGallery(context),
     );
   }
 
@@ -126,7 +136,7 @@ class HomeScreen extends StatelessWidget {
                         subtitle: l10n.homeFeatureCropSubtitle,
                         backgroundColor: AppColors.cardCropBg,
                         iconAsset: HomeAssets.crop,
-                        onTap: () {},
+                        onTap: () => _openSmartCropInputSheet(scaffoldContext),
                       ),
                       const SizedBox(height: 20),
                       HomeRecentDocuments(

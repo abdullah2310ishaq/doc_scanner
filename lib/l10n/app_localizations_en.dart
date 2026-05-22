@@ -857,4 +857,161 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonSaving => 'Saving…';
+
+  @override
+  String get smartCropTitle => 'Smart Crop';
+
+  @override
+  String get smartCropInputMethodTitle => 'Smart Crop Scanner';
+
+  @override
+  String get smartCropInputMethodSubtitle =>
+      'Choose how you want to crop your document';
+
+  @override
+  String get smartCropInputLiveCameraTitle => 'Live Camera';
+
+  @override
+  String get smartCropInputLiveCameraDescription =>
+      'Capture document with auto edge detection';
+
+  @override
+  String get smartCropInputUploadImageTitle => 'Upload Image';
+
+  @override
+  String get smartCropInputUploadImageDescription =>
+      'Upload document image from gallery';
+
+  @override
+  String get smartCropUploadIntroHeadline =>
+      'Crop Multiple Images\nAutomatically';
+
+  @override
+  String get smartCropUploadIntroSubtitle =>
+      'Automatically detect edges, crop images perfectly and create a PDF in one tap.';
+
+  @override
+  String get smartCropUploadIntroStepSelect => 'Select multiple images';
+
+  @override
+  String get smartCropUploadIntroStepCrop => 'Auto detect and crop';
+
+  @override
+  String get smartCropUploadIntroStepPdf => 'Create PDF instantly';
+
+  @override
+  String get smartCropUploadIntroSelectImages => 'Select Images';
+
+  @override
+  String get smartCropLiveCameraTitle => 'Smart Crop Camera';
+
+  @override
+  String get smartCropLiveCameraTip =>
+      'Tip: Align document edges inside the green guidelines';
+
+  @override
+  String get smartCropLiveCameraClose => 'Close camera';
+
+  @override
+  String get smartCropLiveCameraFlash => 'Toggle flash';
+
+  @override
+  String get smartCropLiveCameraCapture =>
+      'Capture document for smart cropping';
+
+  @override
+  String get smartCropLiveCameraInitializing => 'Starting camera…';
+
+  @override
+  String get smartCropCapturedTitle => 'Captured Document';
+
+  @override
+  String get smartCropCapturedRetake => 'Retake last photo';
+
+  @override
+  String get smartCropCapturedAnotherPhoto => 'Add another photo';
+
+  @override
+  String get smartCropCapturedRetakeAnotherPhoto => 'Retake another photo';
+
+  @override
+  String get smartCropCapturedPreview => 'Preview';
+
+  @override
+  String get smartCropPreviewTitle => 'Preview';
+
+  @override
+  String get smartCropCapturedCrop => 'Crop';
+
+  @override
+  String get smartCropAdjustCornersTitle => 'Adjust corners';
+
+  @override
+  String get smartCropAdjustCornersHint =>
+      'Drag the purple corners to match the document edges';
+
+  @override
+  String get smartCropAdjustCornersConfirm => 'Apply crop';
+
+  @override
+  String get smartCropDetectingEdges => 'Detecting document edges…';
+
+  @override
+  String get smartCropAndroidOnly => 'Smart scan is available on Android only.';
+
+  @override
+  String smartCropPageIndicator(int current, int total) {
+    return '$current/$total';
+  }
+
+  @override
+  String smartCropMaxPagesReached(int max) {
+    return 'Maximum $max photos reached';
+  }
+
+  @override
+  String get smartCropProcessingCrop => 'Applying magical crop...';
+
+  @override
+  String smartCropProcessingCropMultiple(int count) {
+    return 'Cropping $count documents…';
+  }
+
+  @override
+  String get smartCropCroppedTitle => 'Cropped Document';
+
+  @override
+  String get smartCropFilterOriginal => 'Original';
+
+  @override
+  String get smartCropFilterMagic => 'Magic Color';
+
+  @override
+  String get smartCropFilterGrayscale => 'Grayscale';
+
+  @override
+  String get smartCropFilterMono => 'B&W';
+
+  @override
+  String get smartCropFilterWarm => 'Warm';
+
+  @override
+  String get smartCropActionCreatePdf => 'Create PDF';
+
+  @override
+  String get smartCropProcessingPdf => 'Generating PDF document...';
+
+  @override
+  String smartCropProcessingPdfMultiple(int count) {
+    return 'Generating PDF with $count pages…';
+  }
+
+  @override
+  String get smartCropPdfSuccess => 'PDF document generated successfully';
+
+  @override
+  String get smartCropPdfPagesLabel => 'pages';
+
+  @override
+  String get smartCropPdfSinglePageLabel => '1 page';
 }

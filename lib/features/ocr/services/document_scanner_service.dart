@@ -10,8 +10,7 @@ import 'package:google_mlkit_document_scanner/google_mlkit_document_scanner.dart
 /// - Auto-rotation so the page is always upright
 /// - Shadow / stain removal filter
 ///
-/// ⚠️ Android only — requires Google Play Services.
-///    On iOS [isSupported] returns false; callers must fall back gracefully.
+/// Android only — requires Google Play Services.
 class DocumentScannerService {
   /// Returns true only on Android where Google Play Services is available.
   static bool get isSupported => Platform.isAndroid;

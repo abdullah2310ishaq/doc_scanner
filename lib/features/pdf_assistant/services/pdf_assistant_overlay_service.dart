@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -90,8 +88,9 @@ Future<Uint8List> _applyOverlays(_ApplyArgs args) async {
             brush: PdfSolidBrush(PdfColor(0, 0, 0)),
             bounds: bounds,
             format: PdfStringFormat(
-              alignment:
-                  isArabic ? PdfTextAlignment.right : PdfTextAlignment.left,
+              alignment: isArabic
+                  ? PdfTextAlignment.right
+                  : PdfTextAlignment.left,
               lineAlignment: PdfVerticalAlignment.middle,
               wordWrap: PdfWordWrapType.word,
             ),
@@ -109,12 +108,12 @@ Future<Uint8List> _applyOverlays(_ApplyArgs args) async {
 }
 
 bool _isArabicScript(String t) => t.runes.any(
-      (c) =>
-          (c >= 0x0600 && c <= 0x06FF) ||
-          (c >= 0x0750 && c <= 0x077F) ||
-          (c >= 0xFB50 && c <= 0xFDFF) ||
-          (c >= 0xFE70 && c <= 0xFEFF),
-    );
+  (c) =>
+      (c >= 0x0600 && c <= 0x06FF) ||
+      (c >= 0x0750 && c <= 0x077F) ||
+      (c >= 0xFB50 && c <= 0xFDFF) ||
+      (c >= 0xFE70 && c <= 0xFEFF),
+);
 
 // ── Service ────────────────────────────────────────────────────────────────
 
@@ -124,8 +123,7 @@ bool _isArabicScript(String t) => t.runes.any(
 ///   3. Applies white-erase + redraw in a background isolate (no UI freeze).
 class PdfAssistantOverlayService {
   PdfAssistantOverlayService({PdfAssistantTranslateService? translateService})
-      : _translateService =
-            translateService ?? PdfAssistantTranslateService();
+    : _translateService = translateService ?? PdfAssistantTranslateService();
 
   final PdfAssistantTranslateService _translateService;
 

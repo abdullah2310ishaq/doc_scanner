@@ -309,5 +309,74 @@
 
   "settingsChooseLanguage": "Choose a language",
   "settingsLanguageApply": "Apply",
-  "commonSaving": "Saving…"
+  "commonSaving": "Saving…",
+
+  "smartCropTitle": "Smart Crop",
+  "smartCropInputMethodTitle": "Smart Crop Scanner",
+  "smartCropInputMethodSubtitle": "Choose how you want to crop your document",
+  "smartCropInputLiveCameraTitle": "Live Camera",
+  "smartCropInputLiveCameraDescription": "Capture document with auto edge detection",
+  "smartCropInputUploadImageTitle": "Upload Image",
+  "smartCropInputUploadImageDescription": "Upload document image from gallery",
+  "smartCropUploadIntroHeadline": "Crop Multiple Images\nAutomatically",
+  "smartCropUploadIntroSubtitle": "Automatically detect edges, crop images perfectly and create a PDF in one tap.",
+  "smartCropUploadIntroStepSelect": "Select multiple images",
+  "smartCropUploadIntroStepCrop": "Auto detect and crop",
+  "smartCropUploadIntroStepPdf": "Create PDF instantly",
+  "smartCropUploadIntroSelectImages": "Select Images",
+  "smartCropLiveCameraTitle": "Smart Crop Camera",
+  "smartCropLiveCameraTip": "Tip: Align document edges inside the green guidelines",
+  "smartCropLiveCameraClose": "Close camera",
+  "smartCropLiveCameraFlash": "Toggle flash",
+  "smartCropLiveCameraCapture": "Capture document for smart cropping",
+  "smartCropLiveCameraInitializing": "Starting camera…",
+  "smartCropCapturedTitle": "Captured Document",
+  "smartCropCapturedRetake": "Retake last photo",
+  "smartCropCapturedAnotherPhoto": "Add another photo",
+  "smartCropCapturedRetakeAnotherPhoto": "Retake another photo",
+  "smartCropCapturedPreview": "Preview",
+  "smartCropPreviewTitle": "Preview",
+  "smartCropCapturedCrop": "Crop",
+  "smartCropAdjustCornersTitle": "Adjust corners",
+  "smartCropAdjustCornersHint": "Drag the purple corners to match the document edges",
+  "smartCropAdjustCornersConfirm": "Apply crop",
+  "smartCropDetectingEdges": "Detecting document edges…",
+  "smartCropAndroidOnly": "Smart scan is available on Android only.",
+  "smartCropPageIndicator": "{current}/{total}",
+  "@smartCropPageIndicator": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "smartCropMaxPagesReached": "Maximum {max} photos reached",
+  "@smartCropMaxPagesReached": {
+    "placeholders": {
+      "max": { "type": "int" }
+    }
+  },
+  "smartCropProcessingCrop": "Applying magical crop...",
+  "smartCropProcessingCropMultiple": "Cropping {count} documents…",
+  "@smartCropProcessingCropMultiple": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "smartCropCroppedTitle": "Cropped Document",
+  "smartCropFilterOriginal": "Original",
+  "smartCropFilterMagic": "Magic Color",
+  "smartCropFilterGrayscale": "Grayscale",
+  "smartCropFilterMono": "B&W",
+  "smartCropFilterWarm": "Warm",
+  "smartCropActionCreatePdf": "Create PDF",
+  "smartCropProcessingPdf": "Generating PDF document...",
+  "smartCropProcessingPdfMultiple": "Generating PDF with {count} pages…",
+  "@smartCropProcessingPdfMultiple": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "smartCropPdfSuccess": "PDF document generated successfully",
+  "smartCropPdfPagesLabel": "pages",
+  "smartCropPdfSinglePageLabel": "1 page"
 }
