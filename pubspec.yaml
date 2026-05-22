@@ -59,6 +59,8 @@ flutter:
     - assets/home/
     - assets/chatbot/
     - assets/language/
+    - assets/onboarding/
+    
     - assets/settings/
     - assets/fonts/
 

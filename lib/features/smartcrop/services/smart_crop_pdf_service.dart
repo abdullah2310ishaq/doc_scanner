@@ -11,14 +11,25 @@ class SmartCropPdfService {
   Future<String> createPdf({
     required List<String> imagePaths,
     List<double>? colorMatrix,
+    void Function(double progress)? onProgress,
   }) async {
     if (imagePaths.isEmpty) {
       throw Exception('No images to export');
     }
 
+    final totalSteps = imagePaths.length * 2 + 1;
+    var step = 0;
+    void reportProgress() {
+      onProgress?.call(step / totalSteps);
+    }
+
+    reportProgress();
+
     final bakedPaths = <String>[];
     for (final path in imagePaths) {
       bakedPaths.add(await _bakeFilterIfNeeded(path, colorMatrix));
+      step++;
+      reportProgress();
     }
 
     final pdf = pw.Document();
@@ -30,18 +41,19 @@ class SmartCropPdfService {
           pageFormat: PdfPageFormat.a4,
           margin: const pw.EdgeInsets.all(20),
           build: (pw.Context context) {
-            return pw.Center(
-              child: pw.Image(pwImage, fit: pw.BoxFit.contain),
-            );
+            return pw.Center(child: pw.Image(pwImage, fit: pw.BoxFit.contain));
           },
         ),
       );
+      step++;
+      reportProgress();
     }
 
     final tempDir = await getTemporaryDirectory();
     final timestamp = DateTime.now().millisecondsSinceEpoch;
     final pdfPath = '${tempDir.path}/smartcrop_$timestamp.pdf';
     await File(pdfPath).writeAsBytes(await pdf.save());
+    onProgress?.call(1.0);
 
     for (var i = 0; i < bakedPaths.length; i++) {
       if (bakedPaths[i] != imagePaths[i]) {
@@ -78,10 +90,7 @@ class SmartCropPdfService {
     canvas.drawImage(uiImage, Offset.zero, paint);
 
     final picture = recorder.endRecording();
-    final filteredImage = await picture.toImage(
-      uiImage.width,
-      uiImage.height,
-    );
+    final filteredImage = await picture.toImage(uiImage.width, uiImage.height);
 
     final byteData = await filteredImage.toByteData(
       format: ui.ImageByteFormat.png,

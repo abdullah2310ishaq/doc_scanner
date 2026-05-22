@@ -17,6 +17,8 @@ abstract final class HomeAssets {
   static const String uploadImageBottom = '$_base/upload_image_bottom.png';
   static const String navbariconn = '$_base/home_shell.svg';
   static const String link = 'assets/link.svg';
+  static const String folderPdf = 'assets/fred.svg';
+  static const String folderImage = 'assets/fblue.svg';
 
   static const String homeHeader = '$_base/home_header.png';
   static const String recentDocs = '$_base/recent_docs.png';

@@ -3,6 +3,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/toast.dart';
 import '../models/smart_crop_page_model.dart';
+import '../../home/services/recent_documents_service.dart';
 import '../services/smart_crop_crop_service.dart';
 import 'smart_crop_filters_screen.dart';
 
@@ -47,31 +48,43 @@ class _SmartCropCropProcessingScreenState
     WidgetsBinding.instance.addPostFrameCallback((_) => _runCrop());
   }
 
+  static const _minTotalDuration = Duration(milliseconds: 3500);
+
   Future<void> _runCrop() async {
     if (widget.pages.isEmpty) {
       if (mounted) Navigator.of(context).pop();
       return;
     }
 
+    final started = DateTime.now();
+
     try {
       // Phase 1: Reading Images
       _updateProgress(ProcessingStep.reading, 0.25, 0.15);
-      await Future<void>.delayed(const Duration(milliseconds: 600));
+      await Future<void>.delayed(const Duration(milliseconds: 700));
 
       // Phase 2: Detecting document edges
       _updateProgress(ProcessingStep.detecting, 0.50, 0.40);
-      await Future<void>.delayed(const Duration(milliseconds: 800));
+      await Future<void>.delayed(const Duration(milliseconds: 900));
 
-      // Phase 3: Cropping Images (Actual background work)
+      // Phase 3: Cropping Images (actual work; ML Kit pages pass-through + trim)
       _updateProgress(ProcessingStep.cropping, 0.75, 0.65);
       final croppedPaths = await _cropService.cropAllPages(widget.pages);
+      final recentDocs = RecentDocumentsService();
+      for (final path in croppedPaths) {
+        await recentDocs.registerImage(path);
+      }
 
-      // Phase 4: Generating PDF structure
+      // Phase 4: Preparing for filters
       _updateProgress(ProcessingStep.generating, 0.95, 0.90);
-      await Future<void>.delayed(const Duration(milliseconds: 500));
+      await Future<void>.delayed(const Duration(milliseconds: 600));
 
       _updateProgress(ProcessingStep.completed, 1.0, 1.0);
-      await Future<void>.delayed(const Duration(milliseconds: 200));
+
+      final elapsed = DateTime.now().difference(started);
+      if (elapsed < _minTotalDuration) {
+        await Future.delayed(_minTotalDuration - elapsed);
+      }
 
       if (!mounted) return;
 
@@ -106,7 +119,7 @@ class _SmartCropCropProcessingScreenState
     const Color trackColor = Color(0xFFEEF0FF);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFAFBFF), // Soft clean canvas background
+      backgroundColor: AppColors.smartCropSoftBackground,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -114,9 +127,9 @@ class _SmartCropCropProcessingScreenState
           icon: const Icon(Icons.arrow_back, color: textColorPrimary),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: const Text(
-          'Smart Crop',
-          style: TextStyle(
+        title: Text(
+          context.l10n.smartCropTitle,
+          style: const TextStyle(
             color: textColorPrimary,
             fontSize: 20,
             fontWeight: FontWeight.w600,
@@ -163,21 +176,22 @@ class _SmartCropCropProcessingScreenState
               const Spacer(flex: 2),
 
               // 2. Center Headers
-              const Text(
-                'Processing Images',
-                style: TextStyle(
+              Text(
+                context.l10n.smartCropProcessingCrop,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
                   color: textColorPrimary,
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 12),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: Text(
-                  'Detecting edges and cropping your images automatically.',
+                  context.l10n.smartCropDetectingEdges,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: textColorSecondary,
                     fontSize: 14,
                     height: 1.4,

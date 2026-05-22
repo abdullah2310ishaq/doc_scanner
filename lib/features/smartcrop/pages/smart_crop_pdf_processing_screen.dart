@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../core/constants/home_assets.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/toast.dart';
+import '../../home/services/recent_documents_service.dart';
 import '../services/smart_crop_pdf_service.dart';
 import 'smart_crop_pdf_result_screen.dart';
 
-/// Step 6 — building PDF (loading UI).
+/// PDF building — white/blue loading (#F9FAFD).
 class SmartCropPdfProcessingScreen extends StatefulWidget {
   const SmartCropPdfProcessingScreen({
     super.key,
@@ -43,6 +42,8 @@ class _SmartCropPdfProcessingScreenState
     extends State<SmartCropPdfProcessingScreen> {
   final _pdfService = SmartCropPdfService();
 
+  double _currentProgress = 0;
+
   @override
   void initState() {
     super.initState();
@@ -59,14 +60,18 @@ class _SmartCropPdfProcessingScreenState
       final pdfPath = await _pdfService.createPdf(
         imagePaths: widget.imagePaths,
         colorMatrix: widget.matrix,
+        onProgress: (progress) {
+          if (!mounted) return;
+          setState(() => _currentProgress = progress);
+        },
       );
+      await RecentDocumentsService().registerPdf(pdfPath);
       if (!mounted) return;
 
       Navigator.of(context).pushReplacement(
         MaterialPageRoute<void>(
           builder: (_) => SmartCropPdfResultScreen(
             pdfPath: pdfPath,
-            imagePath: widget.imagePaths.first,
             pageCount: widget.imagePaths.length,
           ),
         ),
@@ -82,36 +87,85 @@ class _SmartCropPdfProcessingScreenState
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final count = widget.imagePaths.length;
-    final message = count > 1
+
+    // Fallback static text if localization maps aren't fully configured yet
+    final headingMessage = count > 1
         ? l10n.smartCropProcessingPdfMultiple(count)
-        : l10n.smartCropProcessingPdf;
+        : "Creating Your PDF";
+
+    const subheadingMessage =
+        "We are organizing your cropped images\ninto a high quality PDF";
 
     return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
+      backgroundColor: AppColors.smartCropSoftBackground,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(HomeAssets.pdf, width: 72, height: 72),
-              const SizedBox(height: 28),
+              const Spacer(flex: 3),
+
+              // New centralized image asset matching UI design
+              Image.asset(
+                'assets/creating_pdf.png',
+                width: 180,
+                height: 180,
+                fit: BoxFit.contain,
+              ),
+              const SizedBox(height: 40),
+
+              // Primary Heading Text
               Text(
-                message,
+                headingMessage,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   color: AppColors.textPrimary,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: -0.2,
                 ),
               ),
-              const SizedBox(height: 32),
-              const LinearProgressIndicator(
-                minHeight: 6,
-                borderRadius: BorderRadius.all(Radius.circular(8)),
-                backgroundColor: AppColors.searchBorder,
-                color: Color(0xFF7B61FF),
+              const SizedBox(height: 12),
+
+              // Secondary Descriptive Subtitle Text
+              const Text(
+                subheadingMessage,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors
+                      .grey, // Replace with your AppColors.textSecondary if applicable
+                  fontSize: 13,
+                  fontWeight: FontWeight.w400,
+                  height: 1.4,
+                ),
               ),
+
+              const Spacer(flex: 4),
+
+              // Linear Indicator bound side-by-side with Percentage text
+              Row(
+                children: [
+                  Expanded(
+                    child: LinearProgressIndicator(
+                      value: _currentProgress,
+                      minHeight: 6,
+                      borderRadius: const BorderRadius.all(Radius.circular(8)),
+                      backgroundColor: AppColors.searchBorder,
+                      color: AppColors.smartCropPrimary,
+                    ),
+                  ),
+                  const SizedBox(width: 14),
+                  Text(
+                    "${(_currentProgress * 100).toInt()}%",
+                    style: const TextStyle(
+                      color: AppColors.textPrimary,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
             ],
           ),
         ),

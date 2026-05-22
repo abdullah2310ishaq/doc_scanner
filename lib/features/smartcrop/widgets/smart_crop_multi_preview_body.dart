@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import 'smart_crop_single_photo_review_body.dart';
 
@@ -16,8 +17,8 @@ class SmartCropMultiPreviewBody extends StatefulWidget {
   final int initialIndex;
   final VoidCallback onCrop;
 
-  static const Color previewBorderColor = Color(0xFF2F80ED);
-  static const Color cropButtonColor = Color(0xFF2F80ED);
+  static const Color previewBorderColor = AppColors.smartCropPrimary;
+  static const Color cropButtonColor = AppColors.smartCropPrimary;
 
   @override
   State<SmartCropMultiPreviewBody> createState() =>

@@ -9,6 +9,7 @@ class SmartCropPageModel {
     this.bottomRight = const Offset(0.9, 0.9),
     this.bottomLeft = const Offset(0.1, 0.9),
     this.isMlKitProcessed = false,
+    this.isCameraScanned = false,
     this.cornersLocked = false,
   });
 
@@ -21,11 +22,14 @@ class SmartCropPageModel {
   /// Google ML Kit scanner (Android) — already dewarped.
   final bool isMlKitProcessed;
 
+  /// Auto-cropped on our live camera shutter.
+  final bool isCameraScanned;
+
   /// User confirmed corners on adjust screen — use these for perspective warp.
   final bool cornersLocked;
 
-  /// Page is already edge-cropped in ML Kit; go straight to filters.
-  bool get isAlreadyScanned => isMlKitProcessed;
+  /// Page is already edge-cropped; go straight to filters.
+  bool get isAlreadyScanned => isMlKitProcessed || isCameraScanned;
 
   SmartCropPageModel copyWith({
     String? imagePath,
@@ -34,6 +38,7 @@ class SmartCropPageModel {
     Offset? bottomRight,
     Offset? bottomLeft,
     bool? isMlKitProcessed,
+    bool? isCameraScanned,
     bool? cornersLocked,
   }) {
     return SmartCropPageModel(
@@ -43,6 +48,7 @@ class SmartCropPageModel {
       bottomRight: bottomRight ?? this.bottomRight,
       bottomLeft: bottomLeft ?? this.bottomLeft,
       isMlKitProcessed: isMlKitProcessed ?? this.isMlKitProcessed,
+      isCameraScanned: isCameraScanned ?? this.isCameraScanned,
       cornersLocked: cornersLocked ?? this.cornersLocked,
     );
   }

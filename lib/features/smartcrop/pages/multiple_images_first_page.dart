@@ -9,8 +9,6 @@ import '../smart_crop_flow.dart';
 class MultipleImagesFirstPage extends StatelessWidget {
   const MultipleImagesFirstPage({super.key});
 
-  static const Color _primaryColor = Color(0xFF4D5FEF);
-  static const Color _iconBgColor = Color(0xFFEEF0FF);
 
   static Future<void> open(BuildContext context) {
     return Navigator.of(context).push(
@@ -23,7 +21,7 @@ class MultipleImagesFirstPage extends StatelessWidget {
     final l10n = context.l10n;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFAFBFF),
+      backgroundColor: AppColors.smartCropSoftBackground,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -108,7 +106,7 @@ class MultipleImagesFirstPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () => SmartCropFlow.pickGalleryImages(context),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: _primaryColor,
+                    backgroundColor: AppColors.smartCropPrimary,
                     foregroundColor: AppColors.white,
                     elevation: 0,
                     shape: RoundedRectangleBorder(

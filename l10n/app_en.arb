@@ -56,6 +56,36 @@
   "homeEmptyDocuments": "No documents yet. Tap Scan to start.",
   "homeSampleDocName": "Invoice_2026.pdf",
   "homeSampleDocMeta": "May 10, 2026 • 2.4 MB",
+  "homeRecentPdfsFolder": "PDFs",
+  "homeRecentImagesFolder": "Images",
+  "homeRecentFileCount": "{count, plural, =0{0 files} =1{1 file} other{{count} files}}",
+  "@homeRecentFileCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "homeRecentFolderMeta": "{count, plural, =0{0 files} =1{1 file} other{{count} files}} • {size}",
+  "@homeRecentFolderMeta": {
+    "placeholders": {
+      "count": { "type": "int" },
+      "size": { "type": "String" }
+    }
+  },
+  "homeRecentPdfsTitle": "PDFs",
+  "homeRecentImagesTitle": "Images",
+  "homeRecentAdded": "Recent Added",
+  "homeRecentSelect": "Select",
+  "homeRecentSearchPdfs": "Search your PDFs…",
+  "homeRecentSearchImages": "Search your images…",
+  "homeRecentNoSearchResults": "No files match your search",
+  "homeRecentToggleFavorite": "Favorite",
+  "homeRecentPdfEmptyTitle": "No PDF yet",
+  "homeRecentPdfEmptySubtitle": "Upload or scan documents to create your first PDF",
+  "homeRecentImageEmptyTitle": "No Image yet",
+  "homeRecentImageEmptySubtitle": "Upload or scan images to organize them here",
+  "homeRecentUploadPdf": "Upload a PDF",
+  "homeRecentUploadImages": "Upload Images",
+  "homeRecentScanDocument": "Scan Document",
 
   "scanTitle": "Scan",
   "scanCapture": "Capture",
@@ -315,7 +345,7 @@
   "smartCropInputMethodTitle": "Smart Crop Scanner",
   "smartCropInputMethodSubtitle": "Choose how you want to crop your document",
   "smartCropInputLiveCameraTitle": "Live Camera",
-  "smartCropInputLiveCameraDescription": "Capture document with auto edge detection",
+  "smartCropInputLiveCameraDescription": "Google scanner — auto edges, crop and enhance",
   "smartCropInputUploadImageTitle": "Upload Image",
   "smartCropInputUploadImageDescription": "Upload document image from gallery",
   "smartCropUploadIntroHeadline": "Crop Multiple Images\nAutomatically",
@@ -325,7 +355,8 @@
   "smartCropUploadIntroStepPdf": "Create PDF instantly",
   "smartCropUploadIntroSelectImages": "Select Images",
   "smartCropLiveCameraTitle": "Smart Crop Camera",
-  "smartCropLiveCameraTip": "Tip: Align document edges inside the green guidelines",
+  "smartCropLiveCameraTip": "Document detected — tap to capture",
+  "smartCropLiveCameraAlignTip": "Align document inside the corners",
   "smartCropLiveCameraClose": "Close camera",
   "smartCropLiveCameraFlash": "Toggle flash",
   "smartCropLiveCameraCapture": "Capture document for smart cropping",
@@ -364,7 +395,8 @@
   },
   "smartCropCroppedTitle": "Cropped Document",
   "smartCropFilterOriginal": "Original",
-  "smartCropFilterMagic": "Magic Color",
+  "smartCropFilterLighten": "Lighten",
+  "smartCropFilterMagic": "Magic",
   "smartCropFilterGrayscale": "Grayscale",
   "smartCropFilterMono": "B&W",
   "smartCropFilterWarm": "Warm",
@@ -378,5 +410,15 @@
   },
   "smartCropPdfSuccess": "PDF document generated successfully",
   "smartCropPdfPagesLabel": "pages",
-  "smartCropPdfSinglePageLabel": "1 page"
+  "smartCropPdfSinglePageLabel": "1 page",
+  "smartCropImageCopied": "Copied",
+  "smartCropDeleteImageConfirm": "Remove this page from the document?",
+  "smartCropDeletePdfConfirm": "Delete this PDF from your device?",
+  "smartCropPdfRenamed": "PDF renamed",
+  "smartCropPdfFileName": "File name",
+  "smartCropPdfFileSize": "File size",
+  "smartCropViewPdf": "View PDF",
+  "smartCropSavePdf": "Save PDF",
+  "smartCropRenamePdf": "Rename",
+  "smartCropRenamePdfHint": "Document name"
 }

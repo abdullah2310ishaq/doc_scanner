@@ -74,6 +74,19 @@ abstract final class AppColors {
   static const Color liveCameraText = white;
   static const Color liveCameraTextMuted = Color(0xB3FFFFFF);
   static const Color liveCameraReticle = white;
+
+  /// Smart crop live camera — black until document detected, then green.
+  static const Color smartCropReticleIdle = Color(0xFF1A1A1A);
+  static const Color smartCropReticleDetected = Color(0xFF22C55E);
+
+  /// Smart crop review UI — white canvas, blue actions (design mock).
+  static const Color smartCropCanvas = white;
+  static const Color smartCropSoftBackground = Color(0xFFF9FAFD);
+  static const Color smartCropPrimary = Color(0xFF5D5FEF);
+  static const Color smartCropRetakeBackground = Color(0xFFEEEEFF);
+  static const Color smartCropRetakeBorder = Color(0xFFDCDDFF);
+  static const Color smartCropRetakeText = Color(0xFF4343FF);
+  static const Color smartCropFrameBorder = smartCropPrimary;
   static const Color liveCameraShutterRing = Color(0xFF7B61FF);
   static const Color liveCameraTipBorder = Color(0x4DFFFFFF);
 

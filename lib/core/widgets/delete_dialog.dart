@@ -13,8 +13,9 @@ class DeleteDialog {
   }) async {
     final l10n = context.l10n;
 
-    return await showDialog<bool>(
+    return showDialog<bool>(
       context: context,
+      useRootNavigator: true,
       barrierDismissible: true,
       builder: (dialogContext) {
         return Dialog(

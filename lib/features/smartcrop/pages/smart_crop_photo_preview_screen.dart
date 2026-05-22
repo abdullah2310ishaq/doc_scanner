@@ -41,7 +41,7 @@ class _SmartCropPhotoPreviewScreenState
     extends State<SmartCropPhotoPreviewScreen> {
   void _onCrop(SmartCropSessionProvider session) {
     if (session.isEmpty) return;
-    SmartCropNavigation.goToCropOrFilters(context, session: session);
+    SmartCropNavigation.goToCropProcessing(context, session: session);
   }
 
   @override
@@ -61,18 +61,18 @@ class _SmartCropPhotoPreviewScreenState
         final paths = pages.map((p) => p.imagePath).toList();
 
         return Scaffold(
-          backgroundColor: AppColors.white,
+          backgroundColor: AppColors.smartCropCanvas,
           appBar: AppBar(
-            leading: const BackButton(color: Colors.black),
+            leading: const BackButton(color: AppColors.textPrimary),
             title: Text(
               l10n.smartCropPreviewTitle,
               style: const TextStyle(
-                color: Colors.black,
+                color: AppColors.textPrimary,
                 fontWeight: FontWeight.w600,
                 fontSize: 18,
               ),
             ),
-            backgroundColor: AppColors.white,
+            backgroundColor: AppColors.smartCropCanvas,
             elevation: 0,
             scrolledUnderElevation: 0,
           ),

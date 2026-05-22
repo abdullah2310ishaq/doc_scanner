@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
 
@@ -15,15 +16,30 @@ class _DetectResult {
   final Offset bl;
 }
 
+/// Isolate-safe corner payload for [compute].
+List<double> detectDocumentCornersFlat(String imagePath) {
+  final c = detectDocumentCorners(imagePath);
+  return [
+    c.topLeft.dx,
+    c.topLeft.dy,
+    c.topRight.dx,
+    c.topRight.dy,
+    c.bottomRight.dx,
+    c.bottomRight.dy,
+    c.bottomLeft.dx,
+    c.bottomLeft.dy,
+  ];
+}
+
 /// Finds document corners from a photo (paper only — tight bounds).
 class SmartCropEdgeDetectService {
   Future<SmartCropPageModel> detectCorners(SmartCropPageModel page) async {
-    final corners = detectDocumentCorners(page.imagePath);
+    final flat = await compute(detectDocumentCornersFlat, page.imagePath);
     return page.copyWith(
-      topLeft: corners.topLeft,
-      topRight: corners.topRight,
-      bottomRight: corners.bottomRight,
-      bottomLeft: corners.bottomLeft,
+      topLeft: Offset(flat[0], flat[1]),
+      topRight: Offset(flat[2], flat[3]),
+      bottomRight: Offset(flat[4], flat[5]),
+      bottomLeft: Offset(flat[6], flat[7]),
     );
   }
 }
@@ -43,8 +59,64 @@ class DetectedDocumentCorners {
   final Offset bottomLeft;
 }
 
+/// Live camera frame result — [isDetected] drives black → green corners.
+class LiveDocumentDetection {
+  const LiveDocumentDetection({
+    required this.corners,
+    required this.isDetected,
+  });
+
+  final DetectedDocumentCorners corners;
+  final bool isDetected;
+}
+
+/// Default guide quad when no document found yet (normalized).
+DetectedDocumentCorners get defaultGuideCorners => const DetectedDocumentCorners(
+      topLeft: Offset(0.08, 0.18),
+      topRight: Offset(0.92, 0.18),
+      bottomRight: Offset(0.92, 0.82),
+      bottomLeft: Offset(0.08, 0.82),
+    );
+
 DetectedDocumentCorners detectDocumentCorners(String imagePath) {
   final result = _detectPaperQuad(imagePath);
+  return DetectedDocumentCorners(
+    topLeft: result.tl,
+    topRight: result.tr,
+    bottomRight: result.br,
+    bottomLeft: result.bl,
+  );
+}
+
+/// Fast path for live camera preview frames (small grayscale image).
+LiveDocumentDetection detectDocumentEdgesLive(img.Image grayImage) {
+  final blurred = img.gaussianBlur(grayImage, radius: 2);
+  final paperBounds = _findPaperBounds(blurred, forLivePreview: true);
+
+  if (paperBounds != null) {
+    final refined = _refineCornersInBounds(blurred, paperBounds);
+    final normalized = _normalizeQuad(blurred.width, blurred.height, refined);
+    return LiveDocumentDetection(
+      corners: _cornersFromResult(normalized),
+      isDetected: true,
+    );
+  }
+
+  final edgeQuad = _quadFromEdgePoints(blurred, minEdges: 40);
+  if (edgeQuad != null) {
+    return LiveDocumentDetection(
+      corners: _cornersFromResult(edgeQuad),
+      isDetected: true,
+    );
+  }
+
+  return LiveDocumentDetection(
+    corners: defaultGuideCorners,
+    isDetected: false,
+  );
+}
+
+DetectedDocumentCorners _cornersFromResult(_DetectResult result) {
   return DetectedDocumentCorners(
     topLeft: result.tl,
     topRight: result.tr,
@@ -92,7 +164,10 @@ _DetectResult _detectPaperQuad(String imagePath) {
 }
 
 /// Largest bright/dark paper region — primary detector for uploads.
-_PaperBounds? _findPaperBounds(img.Image gray) {
+_PaperBounds? _findPaperBounds(
+  img.Image gray, {
+  bool forLivePreview = false,
+}) {
   final w = gray.width;
   final h = gray.height;
   final total = w * h;
@@ -131,11 +206,15 @@ _PaperBounds? _findPaperBounds(img.Image gray) {
     }
   }
 
-  if (paperCount < total * 0.08) return null;
+  final minPaperRatio = forLivePreview ? 0.04 : 0.08;
+  final minArea = forLivePreview ? 0.06 : 0.12;
+  final maxArea = forLivePreview ? 0.92 : 0.98;
+
+  if (paperCount < total * minPaperRatio) return null;
   if (right <= left + 8 || bottom <= top + 8) return null;
 
   final areaRatio = (right - left + 1) * (bottom - top + 1) / total;
-  if (areaRatio < 0.12 || areaRatio > 0.98) return null;
+  if (areaRatio < minArea || areaRatio > maxArea) return null;
 
   const shrink = 2;
   left = (left + shrink).clamp(0, w - 1);
@@ -223,7 +302,10 @@ class _DetectQuad {
   final math.Point<int> bl;
 }
 
-_DetectResult? _quadFromEdgePoints(img.Image gray) {
+_DetectResult? _quadFromEdgePoints(
+  img.Image gray, {
+  int minEdges = 60,
+}) {
   final w = gray.width;
   final h = gray.height;
   final edgePoints = <math.Point<int>>[];
@@ -241,7 +323,7 @@ _DetectResult? _quadFromEdgePoints(img.Image gray) {
     }
   }
 
-  if (edgePoints.length < 60) return null;
+  if (edgePoints.length < minEdges) return null;
 
   var tl = edgePoints.first;
   var tr = edgePoints.first;

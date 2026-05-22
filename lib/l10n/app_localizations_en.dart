@@ -147,6 +147,83 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeSampleDocMeta => 'May 10, 2026 • 2.4 MB';
 
   @override
+  String get homeRecentPdfsFolder => 'PDFs';
+
+  @override
+  String get homeRecentImagesFolder => 'Images';
+
+  @override
+  String homeRecentFileCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count files',
+      one: '1 file',
+      zero: '0 files',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String homeRecentFolderMeta(int count, String size) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count files',
+      one: '1 file',
+      zero: '0 files',
+    );
+    return '$_temp0 • $size';
+  }
+
+  @override
+  String get homeRecentPdfsTitle => 'PDFs';
+
+  @override
+  String get homeRecentImagesTitle => 'Images';
+
+  @override
+  String get homeRecentAdded => 'Recent Added';
+
+  @override
+  String get homeRecentSelect => 'Select';
+
+  @override
+  String get homeRecentSearchPdfs => 'Search your PDFs…';
+
+  @override
+  String get homeRecentSearchImages => 'Search your images…';
+
+  @override
+  String get homeRecentNoSearchResults => 'No files match your search';
+
+  @override
+  String get homeRecentToggleFavorite => 'Favorite';
+
+  @override
+  String get homeRecentPdfEmptyTitle => 'No PDF yet';
+
+  @override
+  String get homeRecentPdfEmptySubtitle =>
+      'Upload or scan documents to create your first PDF';
+
+  @override
+  String get homeRecentImageEmptyTitle => 'No Image yet';
+
+  @override
+  String get homeRecentImageEmptySubtitle =>
+      'Upload or scan images to organize them here';
+
+  @override
+  String get homeRecentUploadPdf => 'Upload a PDF';
+
+  @override
+  String get homeRecentUploadImages => 'Upload Images';
+
+  @override
+  String get homeRecentScanDocument => 'Scan Document';
+
+  @override
   String get scanTitle => 'Scan';
 
   @override
@@ -873,7 +950,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get smartCropInputLiveCameraDescription =>
-      'Capture document with auto edge detection';
+      'Google scanner — auto edges, crop and enhance';
 
   @override
   String get smartCropInputUploadImageTitle => 'Upload Image';
@@ -906,8 +983,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get smartCropLiveCameraTitle => 'Smart Crop Camera';
 
   @override
-  String get smartCropLiveCameraTip =>
-      'Tip: Align document edges inside the green guidelines';
+  String get smartCropLiveCameraTip => 'Document detected — tap to capture';
+
+  @override
+  String get smartCropLiveCameraAlignTip => 'Align document inside the corners';
 
   @override
   String get smartCropLiveCameraClose => 'Close camera';
@@ -984,7 +1063,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get smartCropFilterOriginal => 'Original';
 
   @override
-  String get smartCropFilterMagic => 'Magic Color';
+  String get smartCropFilterLighten => 'Lighten';
+
+  @override
+  String get smartCropFilterMagic => 'Magic';
 
   @override
   String get smartCropFilterGrayscale => 'Grayscale';
@@ -1014,4 +1096,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get smartCropPdfSinglePageLabel => '1 page';
+
+  @override
+  String get smartCropImageCopied => 'Copied';
+
+  @override
+  String get smartCropDeleteImageConfirm =>
+      'Remove this page from the document?';
+
+  @override
+  String get smartCropDeletePdfConfirm => 'Delete this PDF from your device?';
+
+  @override
+  String get smartCropPdfRenamed => 'PDF renamed';
+
+  @override
+  String get smartCropPdfFileName => 'File name';
+
+  @override
+  String get smartCropPdfFileSize => 'File size';
+
+  @override
+  String get smartCropViewPdf => 'View PDF';
+
+  @override
+  String get smartCropSavePdf => 'Save PDF';
+
+  @override
+  String get smartCropRenamePdf => 'Rename';
+
+  @override
+  String get smartCropRenamePdfHint => 'Document name';
 }

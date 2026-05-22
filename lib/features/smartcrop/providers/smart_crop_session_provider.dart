@@ -15,6 +15,7 @@ class SmartCropSessionProvider extends ChangeNotifier {
   void setFromPaths(
     List<String> paths, {
     bool isMlKitProcessed = false,
+    bool isCameraScanned = false,
   }) {
     _pages
       ..clear()
@@ -23,6 +24,7 @@ class SmartCropSessionProvider extends ChangeNotifier {
           (path) => SmartCropPageModel(
             imagePath: path,
             isMlKitProcessed: isMlKitProcessed,
+            isCameraScanned: isCameraScanned,
           ),
         ),
       );
@@ -32,12 +34,14 @@ class SmartCropSessionProvider extends ChangeNotifier {
   void addPage(
     String imagePath, {
     bool isMlKitProcessed = false,
+    bool isCameraScanned = false,
   }) {
     if (!canAddMore) return;
     _pages.add(
       SmartCropPageModel(
         imagePath: imagePath,
         isMlKitProcessed: isMlKitProcessed,
+        isCameraScanned: isCameraScanned,
       ),
     );
     notifyListeners();

@@ -386,6 +386,120 @@ abstract class AppLocalizations {
   /// **'May 10, 2026 • 2.4 MB'**
   String get homeSampleDocMeta;
 
+  /// No description provided for @homeRecentPdfsFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'PDFs'**
+  String get homeRecentPdfsFolder;
+
+  /// No description provided for @homeRecentImagesFolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Images'**
+  String get homeRecentImagesFolder;
+
+  /// No description provided for @homeRecentFileCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{0 files} =1{1 file} other{{count} files}}'**
+  String homeRecentFileCount(int count);
+
+  /// No description provided for @homeRecentFolderMeta.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{0 files} =1{1 file} other{{count} files}} • {size}'**
+  String homeRecentFolderMeta(int count, String size);
+
+  /// No description provided for @homeRecentPdfsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'PDFs'**
+  String get homeRecentPdfsTitle;
+
+  /// No description provided for @homeRecentImagesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Images'**
+  String get homeRecentImagesTitle;
+
+  /// No description provided for @homeRecentAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Added'**
+  String get homeRecentAdded;
+
+  /// No description provided for @homeRecentSelect.
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get homeRecentSelect;
+
+  /// No description provided for @homeRecentSearchPdfs.
+  ///
+  /// In en, this message translates to:
+  /// **'Search your PDFs…'**
+  String get homeRecentSearchPdfs;
+
+  /// No description provided for @homeRecentSearchImages.
+  ///
+  /// In en, this message translates to:
+  /// **'Search your images…'**
+  String get homeRecentSearchImages;
+
+  /// No description provided for @homeRecentNoSearchResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No files match your search'**
+  String get homeRecentNoSearchResults;
+
+  /// No description provided for @homeRecentToggleFavorite.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite'**
+  String get homeRecentToggleFavorite;
+
+  /// No description provided for @homeRecentPdfEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No PDF yet'**
+  String get homeRecentPdfEmptyTitle;
+
+  /// No description provided for @homeRecentPdfEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload or scan documents to create your first PDF'**
+  String get homeRecentPdfEmptySubtitle;
+
+  /// No description provided for @homeRecentImageEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No Image yet'**
+  String get homeRecentImageEmptyTitle;
+
+  /// No description provided for @homeRecentImageEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload or scan images to organize them here'**
+  String get homeRecentImageEmptySubtitle;
+
+  /// No description provided for @homeRecentUploadPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload a PDF'**
+  String get homeRecentUploadPdf;
+
+  /// No description provided for @homeRecentUploadImages.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Images'**
+  String get homeRecentUploadImages;
+
+  /// No description provided for @homeRecentScanDocument.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan Document'**
+  String get homeRecentScanDocument;
+
   /// No description provided for @scanTitle.
   ///
   /// In en, this message translates to:
@@ -1757,7 +1871,7 @@ abstract class AppLocalizations {
   /// No description provided for @smartCropInputLiveCameraDescription.
   ///
   /// In en, this message translates to:
-  /// **'Capture document with auto edge detection'**
+  /// **'Google scanner — auto edges, crop and enhance'**
   String get smartCropInputLiveCameraDescription;
 
   /// No description provided for @smartCropInputUploadImageTitle.
@@ -1817,8 +1931,14 @@ abstract class AppLocalizations {
   /// No description provided for @smartCropLiveCameraTip.
   ///
   /// In en, this message translates to:
-  /// **'Tip: Align document edges inside the green guidelines'**
+  /// **'Document detected — tap to capture'**
   String get smartCropLiveCameraTip;
+
+  /// No description provided for @smartCropLiveCameraAlignTip.
+  ///
+  /// In en, this message translates to:
+  /// **'Align document inside the corners'**
+  String get smartCropLiveCameraAlignTip;
 
   /// No description provided for @smartCropLiveCameraClose.
   ///
@@ -1952,10 +2072,16 @@ abstract class AppLocalizations {
   /// **'Original'**
   String get smartCropFilterOriginal;
 
+  /// No description provided for @smartCropFilterLighten.
+  ///
+  /// In en, this message translates to:
+  /// **'Lighten'**
+  String get smartCropFilterLighten;
+
   /// No description provided for @smartCropFilterMagic.
   ///
   /// In en, this message translates to:
-  /// **'Magic Color'**
+  /// **'Magic'**
   String get smartCropFilterMagic;
 
   /// No description provided for @smartCropFilterGrayscale.
@@ -2011,6 +2137,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'1 page'**
   String get smartCropPdfSinglePageLabel;
+
+  /// No description provided for @smartCropImageCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied'**
+  String get smartCropImageCopied;
+
+  /// No description provided for @smartCropDeleteImageConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this page from the document?'**
+  String get smartCropDeleteImageConfirm;
+
+  /// No description provided for @smartCropDeletePdfConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this PDF from your device?'**
+  String get smartCropDeletePdfConfirm;
+
+  /// No description provided for @smartCropPdfRenamed.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF renamed'**
+  String get smartCropPdfRenamed;
+
+  /// No description provided for @smartCropPdfFileName.
+  ///
+  /// In en, this message translates to:
+  /// **'File name'**
+  String get smartCropPdfFileName;
+
+  /// No description provided for @smartCropPdfFileSize.
+  ///
+  /// In en, this message translates to:
+  /// **'File size'**
+  String get smartCropPdfFileSize;
+
+  /// No description provided for @smartCropViewPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'View PDF'**
+  String get smartCropViewPdf;
+
+  /// No description provided for @smartCropSavePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Save PDF'**
+  String get smartCropSavePdf;
+
+  /// No description provided for @smartCropRenamePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename'**
+  String get smartCropRenamePdf;
+
+  /// No description provided for @smartCropRenamePdfHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Document name'**
+  String get smartCropRenamePdfHint;
 }
 
 class _AppLocalizationsDelegate

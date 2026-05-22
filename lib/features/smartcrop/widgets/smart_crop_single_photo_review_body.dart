@@ -2,9 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 
-/// Single-photo review layout (bordered preview + action buttons) per design mock.
+/// Single-photo review — white background, blue frame + buttons (design mock).
 class SmartCropSinglePhotoReviewBody extends StatefulWidget {
   const SmartCropSinglePhotoReviewBody({
     super.key,
@@ -23,12 +24,6 @@ class SmartCropSinglePhotoReviewBody extends StatefulWidget {
   final bool showAddAnother;
   final ValueChanged<int>? onPageChanged;
 
-  static const Color backgroundColor = Color(0xFFF5F5F5);
-  static const Color frameBorderColor = Color(0xFF5D5FEF);
-  static const Color addButtonBackground = Color(0xFFEEEEFF);
-  static const Color addButtonBorder = Color(0xFFDCDDFF);
-  static const Color addButtonText = Color(0xFF4343FF);
-  static const Color cropButtonColor = Color(0xFF5D5FEF);
   static const double frameBorderWidth = 2;
 
   @override
@@ -71,7 +66,7 @@ class _SmartCropSinglePhotoReviewBodyState
     final bottomInset = MediaQuery.paddingOf(context).bottom;
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(16, 16, 16, 16 + bottomInset),
+      padding: EdgeInsets.fromLTRB(16, 8, 16, 16 + bottomInset),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -84,7 +79,7 @@ class _SmartCropSinglePhotoReviewBodyState
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF333333),
+                  color: AppColors.textPrimary,
                 ),
               ),
             ),
@@ -102,7 +97,7 @@ class _SmartCropSinglePhotoReviewBodyState
                   )
                 : SmartCropFramedImage(path: paths[index]),
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 24),
           if (widget.showAddAnother && widget.onAddAnother != null) ...[
             SizedBox(
               width: double.infinity,
@@ -110,11 +105,10 @@ class _SmartCropSinglePhotoReviewBodyState
               child: OutlinedButton(
                 onPressed: widget.onAddAnother,
                 style: OutlinedButton.styleFrom(
-                  backgroundColor:
-                      SmartCropSinglePhotoReviewBody.addButtonBackground,
-                  foregroundColor: SmartCropSinglePhotoReviewBody.addButtonText,
+                  backgroundColor: AppColors.smartCropRetakeBackground,
+                  foregroundColor: AppColors.smartCropRetakeText,
                   side: const BorderSide(
-                    color: SmartCropSinglePhotoReviewBody.addButtonBorder,
+                    color: AppColors.smartCropRetakeBorder,
                     width: 1.5,
                   ),
                   shape: RoundedRectangleBorder(
@@ -138,8 +132,8 @@ class _SmartCropSinglePhotoReviewBodyState
             child: ElevatedButton(
               onPressed: widget.onCrop,
               style: ElevatedButton.styleFrom(
-                backgroundColor: SmartCropSinglePhotoReviewBody.cropButtonColor,
-                foregroundColor: Colors.white,
+                backgroundColor: AppColors.smartCropPrimary,
+                foregroundColor: AppColors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -165,7 +159,7 @@ class SmartCropFramedImage extends StatelessWidget {
   const SmartCropFramedImage({
     super.key,
     required this.path,
-    this.borderColor = SmartCropSinglePhotoReviewBody.frameBorderColor,
+    this.borderColor = AppColors.smartCropFrameBorder,
     this.borderWidth = SmartCropSinglePhotoReviewBody.frameBorderWidth,
   });
 
@@ -178,7 +172,7 @@ class SmartCropFramedImage extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.smartCropCanvas,
         border: Border.all(color: borderColor, width: borderWidth),
       ),
       child: Image.file(File(path), fit: BoxFit.contain),

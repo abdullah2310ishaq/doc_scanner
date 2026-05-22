@@ -6,7 +6,7 @@ import '../../../core/widgets/app_exit_guard.dart';
 import '../../home/screens/main_shell_screen.dart';
 import '../services/app_launch_prefs_service.dart';
 
-/// Three-page intro shown on first launch ([PageView]).
+/// Four-page intro shown on first launch ([PageView]).
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
 
@@ -19,7 +19,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final AppLaunchPrefsService _launchPrefs = AppLaunchPrefsService();
   int _pageIndex = 0;
 
-  static const int _pageCount = 3;
+  // Updated page count to 4
+  static const int _pageCount = 4;
 
   @override
   void dispose() {
@@ -55,21 +56,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final isLastPage = _pageIndex == _pageCount - 1;
     final showSkip = !isLastPage;
 
+    // Updated with your 4 new pages and onboarding assets path
     final pages = [
       _OnboardingPageData(
-        imageAsset: 'assets/home/scanner.png',
-        title: l10n.onboardingPage1Title,
-        description: l10n.onboardingPage1Description,
+        imageAsset: 'assets/onboarding/one.png',
+        title: "Scan Text \nin Seconds",
+        description: "Capture text from images with fast AI-powered OCR scanning.",
       ),
       _OnboardingPageData(
-        imageAsset: 'assets/home/aichat.png',
-        title: l10n.onboardingPage2Title,
-        description: l10n.onboardingPage2Description,
+        imageAsset: 'assets/onboarding/two.png',
+        title: "Smart PDF \nAssistant",
+        description: "Translate, extract and understand\nyour PDF documents with AI.",
       ),
       _OnboardingPageData(
-        imageAsset: 'assets/home/recent_docs.png',
-        title: l10n.onboardingPage3Title,
-        description: l10n.onboardingPage3Description,
+        imageAsset: 'assets/onboarding/three.png',
+        title: "Chat with \nYour PDFs",
+        description: "Ask questions, summarize documents\nand get instant AI answers.",
+      ),
+      _OnboardingPageData(
+        imageAsset: 'assets/onboarding/four.png',
+        title: "Smart Crop \nin Seconds",
+        description: "Auto-crop multiple images and\ncreate clean PDFs instantly.",
       ),
     ];
 

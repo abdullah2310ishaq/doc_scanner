@@ -1,14 +1,16 @@
 import 'dart:io';
 
-import 'package:colorfilter_generator/addons.dart';
 import 'package:colorfilter_generator/colorfilter_generator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
+import '../../../core/widgets/toast.dart';
+import '../constants/smart_crop_color_filters.dart';
 import 'smart_crop_pdf_processing_screen.dart';
 
-/// Step 5 — cropped pages, filters, Create PDF button.
+/// Cropped image + filters + Create PDF (#F9FAFD white / blue theme).
 class SmartCropFiltersScreen extends StatefulWidget {
   const SmartCropFiltersScreen({super.key, required this.imagePaths});
 
@@ -19,40 +21,17 @@ class SmartCropFiltersScreen extends StatefulWidget {
 }
 
 class _SmartCropFiltersScreenState extends State<SmartCropFiltersScreen> {
+  late List<String> _paths;
   late final PageController _pageController;
   int _currentIndex = 0;
-
-  late final List<ColorFilterGenerator> _filters = [
-    ColorFilterGenerator(name: 'Original', filters: []),
-    ColorFilterGenerator(
-      name: 'Magic Color',
-      filters: [
-        ColorFilterAddons.contrast(0.2),
-        ColorFilterAddons.brightness(0.15),
-      ],
-    ),
-    ColorFilterGenerator(
-      name: 'Grayscale',
-      filters: [ColorFilterAddons.saturation(-1.0)],
-    ),
-    ColorFilterGenerator(
-      name: 'B&W',
-      filters: [
-        ColorFilterAddons.saturation(-1.0),
-        ColorFilterAddons.contrast(0.6),
-      ],
-    ),
-    ColorFilterGenerator(
-      name: 'Warm',
-      filters: [ColorFilterAddons.sepia(0.35)],
-    ),
-  ];
-
   int _selectedFilterIndex = 0;
+
+  final List<ColorFilterGenerator> _filters = SmartCropColorFilters.filters;
 
   @override
   void initState() {
     super.initState();
+    _paths = List<String>.from(widget.imagePaths);
     _pageController = PageController();
   }
 
@@ -62,252 +41,323 @@ class _SmartCropFiltersScreenState extends State<SmartCropFiltersScreen> {
     super.dispose();
   }
 
-  String _getLocalizedFilterName(BuildContext context, String name) {
+  String _filterLabel(BuildContext context, String name) {
     final l10n = context.l10n;
     switch (name) {
+      case 'No Filter':
       case 'Original':
         return l10n.smartCropFilterOriginal;
-      case 'Magic Color':
+      case 'Lighten':
+        return l10n.smartCropFilterLighten;
+      case 'Clarendon':
         return l10n.smartCropFilterMagic;
       case 'Grayscale':
         return l10n.smartCropFilterGrayscale;
-      case 'B&W':
+      case 'Inkwell':
         return l10n.smartCropFilterMono;
-      case 'Warm':
+      case 'Reyes':
         return l10n.smartCropFilterWarm;
       default:
         return name;
     }
   }
 
+  void _copyCurrentImage() {
+    if (_paths.isEmpty) return;
+    final path = _paths[_currentIndex.clamp(0, _paths.length - 1)];
+    Clipboard.setData(ClipboardData(text: path));
+    AppToast.show(context, context.l10n.smartCropImageCopied);
+  }
+
+  Future<void> _confirmDeleteCurrent() async {
+    if (_paths.isEmpty) return;
+
+    final l10n = context.l10n;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          title: Text(l10n.commonDelete),
+          content: Text(l10n.smartCropDeleteImageConfirm),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(false),
+              child: Text(l10n.commonCancel),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(true),
+              child: Text(
+                l10n.commonDelete,
+                style: const TextStyle(color: Colors.redAccent),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmed == true && mounted) {
+      _deleteCurrentImage();
+    }
+  }
+
+  void _deleteCurrentImage() {
+    if (_paths.isEmpty) return;
+    setState(() {
+      _paths.removeAt(_currentIndex.clamp(0, _paths.length - 1));
+      if (_currentIndex >= _paths.length && _paths.isNotEmpty) {
+        _currentIndex = _paths.length - 1;
+      }
+    });
+    if (_paths.isEmpty) {
+      Navigator.of(context).pop();
+      return;
+    }
+    if (_pageController.hasClients) {
+      _pageController.jumpToPage(_currentIndex);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final paths = widget.imagePaths;
+    if (_paths.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    final index = _currentIndex.clamp(0, _paths.length - 1);
     final currentFilter = _filters[_selectedFilterIndex];
-    final index = _currentIndex.clamp(0, paths.length - 1);
+    final bottomInset = MediaQuery.paddingOf(context).bottom;
 
     return Scaffold(
-      backgroundColor: AppColors.textPrimary,
+      backgroundColor: AppColors.smartCropSoftBackground,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColors.smartCropSoftBackground,
         elevation: 0,
+        foregroundColor: AppColors.textPrimary,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.white),
+          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
           l10n.smartCropCroppedTitle,
           style: const TextStyle(
-            color: AppColors.white,
+            color: AppColors.textPrimary,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
         ),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 4, 20, 0),
-              child: Align(
-                alignment: Alignment.centerLeft,
+        actions: [
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.more_vert, color: AppColors.textPrimary),
+            onSelected: (value) {
+              if (value == 'copy') {
+                _copyCurrentImage();
+              } else if (value == 'delete') {
+                _confirmDeleteCurrent();
+              }
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(value: 'copy', child: Text(l10n.commonCopy)),
+              const PopupMenuDivider(),
+              PopupMenuItem(
+                value: 'delete',
                 child: Text(
-                  l10n.smartCropPageIndicator(index + 1, paths.length),
-                  style: TextStyle(
-                    color: AppColors.white.withValues(alpha: 0.85),
-                    fontSize: 14,
+                  l10n.commonDelete,
+                  style: const TextStyle(color: Colors.redAccent),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          if (_paths.length > 1)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Text(
+                l10n.smartCropPageIndicator(index + 1, _paths.length),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: _BlueBorderCroppedPreview(
+                child: PageView.builder(
+                  controller: _pageController,
+                  itemCount: _paths.length,
+                  onPageChanged: (i) => setState(() => _currentIndex = i),
+                  itemBuilder: (context, i) {
+                    return ColorFiltered(
+                      colorFilter: ColorFilter.matrix(currentFilter.matrix),
+                      child: Image.file(
+                        File(_paths[i]),
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: double.infinity,
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [const SizedBox(width: 8)],
+            ),
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            height: 100,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              itemCount: _filters.length,
+              itemBuilder: (context, filterIndex) {
+                final filter = _filters[filterIndex];
+                final isSelected = filterIndex == _selectedFilterIndex;
+                final label = _filterLabel(context, filter.name);
+
+                return GestureDetector(
+                  onTap: () =>
+                      setState(() => _selectedFilterIndex = filterIndex),
+                  child: Container(
+                    width: 72,
+                    margin: const EdgeInsets.only(right: 12),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Container(
+                              height: 70,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: isSelected
+                                      ? AppColors.smartCropPrimary
+                                      : AppColors.searchBorder,
+                                  width: isSelected ? 2.5 : 1,
+                                ),
+                              ),
+                              clipBehavior: Clip.antiAlias,
+                              child: ColorFiltered(
+                                colorFilter: ColorFilter.matrix(filter.matrix),
+                                child: Image.file(
+                                  File(_paths[index]),
+                                  fit: BoxFit.cover,
+                                  width: 70,
+                                  height: 70,
+                                ),
+                              ),
+                            ),
+                            if (isSelected)
+                              Container(
+                                width: 28,
+                                height: 28,
+                                decoration: const BoxDecoration(
+                                  color: AppColors.smartCropPrimary,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.check,
+                                  color: AppColors.white,
+                                  size: 18,
+                                ),
+                              ),
+                          ],
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          label,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 11,
+                            height: 1.1,
+                            fontWeight: isSelected
+                                ? FontWeight.w600
+                                : FontWeight.w400,
+                            color: isSelected
+                                ? AppColors.smartCropPrimary
+                                : AppColors.textSecondary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(24, 16, 24, 16 + bottomInset),
+            child: SizedBox(
+              width: double.infinity,
+              height: 52,
+              child: ElevatedButton(
+                onPressed: () {
+                  SmartCropPdfProcessingScreen.open(
+                    context,
+                    imagePaths: _paths,
+                    matrix: currentFilter.matrix,
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.smartCropPrimary,
+                  foregroundColor: AppColors.white,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: Text(
+                  l10n.smartCropActionCreatePdf,
+                  style: const TextStyle(
+                    fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
             ),
-            Expanded(
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  PageView.builder(
-                    controller: _pageController,
-                    itemCount: paths.length,
-                    onPageChanged: (i) => setState(() => _currentIndex = i),
-                    itemBuilder: (context, i) {
-                      return Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: InteractiveViewer(
-                            maxScale: 4.5,
-                            child: Center(
-                              child: ColorFiltered(
-                                colorFilter: ColorFilter.matrix(
-                                  currentFilter.matrix,
-                                ),
-                                child: Image.file(
-                                  File(paths[i]),
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  if (paths.length > 1 && index < paths.length - 1)
-                    Positioned(
-                      right: 8,
-                      child: _NavCircle(
-                        icon: Icons.chevron_right,
-                        onTap: () => _pageController.nextPage(
-                          duration: const Duration(milliseconds: 280),
-                          curve: Curves.easeOut,
-                        ),
-                      ),
-                    ),
-                  if (paths.length > 1 && index > 0)
-                    Positioned(
-                      left: 8,
-                      child: _NavCircle(
-                        icon: Icons.chevron_left,
-                        onTap: () => _pageController.previousPage(
-                          duration: const Duration(milliseconds: 280),
-                          curve: Curves.easeOut,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-            Container(
-              color: const Color(0xFF1E1E1E),
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    height: 105,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      itemCount: _filters.length,
-                      itemBuilder: (context, filterIndex) {
-                        final filter = _filters[filterIndex];
-                        final isSelected = filterIndex == _selectedFilterIndex;
-                        final displayName = _getLocalizedFilterName(
-                          context,
-                          filter.name,
-                        );
-                        final thumbPath = paths[index];
-
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _selectedFilterIndex = filterIndex;
-                            });
-                          },
-                          child: Container(
-                            margin: const EdgeInsets.only(right: 14),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  width: 62,
-                                  height: 62,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                      color: isSelected
-                                          ? const Color(0xFF7B61FF)
-                                          : Colors.grey.shade800,
-                                      width: isSelected ? 3.0 : 1.5,
-                                    ),
-                                  ),
-                                  clipBehavior: Clip.antiAlias,
-                                  child: ColorFiltered(
-                                    colorFilter: ColorFilter.matrix(
-                                      filter.matrix,
-                                    ),
-                                    child: Image.file(
-                                      File(thumbPath),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  displayName,
-                                  style: TextStyle(
-                                    color: isSelected
-                                        ? const Color(0xFF7B61FF)
-                                        : AppColors.white.withValues(alpha: 0.7),
-                                    fontSize: 12,
-                                    fontWeight: isSelected
-                                        ? FontWeight.w600
-                                        : FontWeight.w400,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        SmartCropPdfProcessingScreen.open(
-                          context,
-                          imagePaths: paths,
-                          matrix: currentFilter.matrix,
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF7B61FF),
-                        foregroundColor: AppColors.white,
-                        minimumSize: const Size.fromHeight(52),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        elevation: 0,
-                      ),
-                      child: Text(
-                        l10n.smartCropActionCreatePdf,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 0.2,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
 
-class _NavCircle extends StatelessWidget {
-  const _NavCircle({required this.icon, required this.onTap});
+/// Cropped preview with theme blue frame (#5D5FEF).
+class _BlueBorderCroppedPreview extends StatelessWidget {
+  const _BlueBorderCroppedPreview({required this.child});
 
-  final IconData icon;
-  final VoidCallback onTap;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.black45,
-      shape: const CircleBorder(),
-      child: IconButton(
-        icon: Icon(icon, color: AppColors.white),
-        onPressed: onTap,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.smartCropPrimary, width: 2.5),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.smartCropPrimary.withValues(alpha: 0.12),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
+      clipBehavior: Clip.antiAlias,
+      child: child,
     );
   }
 }

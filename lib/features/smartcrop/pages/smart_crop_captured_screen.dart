@@ -44,9 +44,9 @@ class SmartCropCapturedScreen extends StatelessWidget {
         }
 
         return Scaffold(
-          backgroundColor: AppColors.scaffoldBackground,
+          backgroundColor: AppColors.smartCropSoftBackground,
           appBar: AppBar(
-            backgroundColor: AppColors.white,
+            backgroundColor: AppColors.smartCropSoftBackground,
             elevation: 0,
             foregroundColor: AppColors.textPrimary,
             title: Text(
@@ -111,18 +111,18 @@ class _SingleCapturedScreen extends StatelessWidget {
     final path = session.pages.first.imagePath;
 
     return Scaffold(
-      backgroundColor: SmartCropSinglePhotoReviewBody.backgroundColor,
+      backgroundColor: AppColors.smartCropSoftBackground,
       appBar: AppBar(
-        leading: const BackButton(color: Colors.black),
+        leading: const BackButton(color: AppColors.textPrimary),
         title: Text(
           smartCropPhotoReviewTitle([path], 0),
           style: const TextStyle(
-            color: Colors.black,
+            color: AppColors.textPrimary,
             fontWeight: FontWeight.w500,
             fontSize: 18,
           ),
         ),
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColors.smartCropSoftBackground,
         elevation: 0,
         scrolledUnderElevation: 0,
       ),
@@ -133,7 +133,7 @@ class _SingleCapturedScreen extends StatelessWidget {
           context,
           session: session,
         ),
-        onCrop: () => SmartCropNavigation.goToCropOrFilters(
+        onCrop: () => SmartCropNavigation.goToCropProcessing(
           context,
           session: session,
         ),
@@ -178,10 +178,10 @@ class _CapturedGrid extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
-                  color: const Color(0xFF7B61FF),
+                  color: AppColors.smartCropPrimary,
                   width: 1.5,
                 ),
-                color: const Color(0xFF7B61FF).withValues(alpha: 0.08),
+                color: AppColors.smartCropRetakeBackground,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -189,7 +189,7 @@ class _CapturedGrid extends StatelessWidget {
                   const Icon(
                     Icons.add_photo_alternate_outlined,
                     size: 32,
-                    color: Color(0xFF7B61FF),
+                    color: AppColors.smartCropPrimary,
                   ),
                   const SizedBox(height: 6),
                   Padding(
@@ -202,7 +202,7 @@ class _CapturedGrid extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF7B61FF),
+                        color: AppColors.smartCropPrimary,
                       ),
                     ),
                   ),
@@ -284,11 +284,12 @@ class _CapturedActions extends StatelessWidget {
                 session: context.read<SmartCropSessionProvider>(),
               ),
               style: OutlinedButton.styleFrom(
-                foregroundColor: const Color(0xFF7B61FF),
-                side: const BorderSide(color: Color(0xFF7B61FF)),
+                backgroundColor: AppColors.smartCropRetakeBackground,
+                foregroundColor: AppColors.smartCropRetakeText,
+                side: const BorderSide(color: AppColors.smartCropRetakeBorder),
                 minimumSize: const Size.fromHeight(50),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
               child: Text(
@@ -305,17 +306,17 @@ class _CapturedActions extends StatelessWidget {
             onPressed: session.isEmpty
                 ? null
                 : () {
-                    SmartCropNavigation.goToCropOrFilters(
+                    SmartCropNavigation.goToCropProcessing(
                       context,
                       session: session,
                     );
                   },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF7B61FF),
+              backgroundColor: AppColors.smartCropPrimary,
               foregroundColor: AppColors.white,
-              minimumSize: const Size.fromHeight(52),
+              minimumSize: const Size.fromHeight(50),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8),
               ),
               elevation: 0,
             ),

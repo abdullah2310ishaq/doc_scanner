@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 
+import '../../home/services/recent_documents_service.dart';
 import '../../translate/models/translate_language.dart';
 import '../models/pdf_assistant_session_model.dart';
 import '../services/pdf_assistant_extract_service.dart';
@@ -99,6 +100,11 @@ class PdfAssistantProcessProvider extends ChangeNotifier {
           completedSteps = 2 + pageProgress.clamp(0.0, 1.0);
           notifyListeners();
         },
+      );
+
+      await RecentDocumentsService().registerPdf(
+        translatedPath,
+        displayName: '${displayName}_translated',
       );
 
       await _pdfBuilderService.buildExtractedTextPdf(

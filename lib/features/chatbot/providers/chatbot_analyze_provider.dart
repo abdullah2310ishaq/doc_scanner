@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import '../models/chatbot_session_model.dart';
 import '../services/chatbot_openai_service.dart';
 import '../services/chatbot_pdf_extract_service.dart';
+import '../../home/services/recent_documents_service.dart';
 import '../services/chatbot_storage_service.dart';
 
 enum ChatbotAnalyzeStep {
@@ -59,6 +60,10 @@ class ChatbotAnalyzeProvider extends ChangeNotifier {
       final storedPath = await _storageService.copyPdfToAppStorage(
         sourcePath: sourcePdfPath,
         sessionId: sessionId,
+      );
+      await RecentDocumentsService().registerPdf(
+        storedPath,
+        displayName: _storageService.displayNameFromPath(sourcePdfPath),
       );
       _completeStep(ChatbotAnalyzeStep.extractingText);
 

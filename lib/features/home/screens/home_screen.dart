@@ -15,7 +15,7 @@ import '../widgets/home_feature_card.dart';
 import '../widgets/home_feature_tags.dart';
 import '../widgets/home_header_delegate.dart';
 import '../widgets/home_hero_card.dart';
-import '../widgets/home_recent_documents.dart';
+import '../widgets/home_recent_folders.dart';
 import '../widgets/home_search_bar.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -139,21 +139,7 @@ class HomeScreen extends StatelessWidget {
                         onTap: () => _openSmartCropInputSheet(scaffoldContext),
                       ),
                       const SizedBox(height: 20),
-                      HomeRecentDocuments(
-                        title: l10n.homeRecentDocuments,
-                        seeAllLabel: l10n.homeSeeAll,
-                        documents: [
-                          HomeDocumentItem(
-                            name: l10n.homeSampleDocName,
-                            meta: l10n.homeSampleDocMeta,
-                          ),
-                          HomeDocumentItem(
-                            name: l10n.homeSampleDocName,
-                            meta: l10n.homeSampleDocMeta,
-                          ),
-                        ],
-                        onSeeAll: () {},
-                      ),
+                      const HomeRecentFolders(),
                     ]),
                   ),
                 ),

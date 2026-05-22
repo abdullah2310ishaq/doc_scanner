@@ -22,7 +22,8 @@ class HomeHeaderSliverDelegate extends SliverPersistentHeaderDelegate {
   final VoidCallback? onProTap;
   final Widget? tags;
 
-  static const double extent = 170;
+  /// Room for drawer row, title, and feature tags (avoids 3px overflow).
+  static const double extent = 175;
 
   @override
   double get minExtent => extent;

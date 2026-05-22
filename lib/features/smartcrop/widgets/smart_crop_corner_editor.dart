@@ -3,6 +3,8 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
+import '../../../core/theme/app_colors.dart';
+
 /// Draggable 4-corner overlay for perspective crop (CamScanner-style).
 class SmartCropCornerEditor extends StatefulWidget {
   const SmartCropCornerEditor({
@@ -13,6 +15,8 @@ class SmartCropCornerEditor extends StatefulWidget {
     required this.bottomRight,
     required this.bottomLeft,
     required this.onCornersChanged,
+    this.onSwipeToPrevious,
+    this.onSwipeToNext,
   });
 
   final String imagePath;
@@ -26,8 +30,10 @@ class SmartCropCornerEditor extends StatefulWidget {
     required Offset bottomRight,
     required Offset bottomLeft,
   }) onCornersChanged;
+  final VoidCallback? onSwipeToPrevious;
+  final VoidCallback? onSwipeToNext;
 
-  static const Color frameColor = Color(0xFF5D5FEF);
+  static const Color frameColor = AppColors.smartCropPrimary;
 
   @override
   State<SmartCropCornerEditor> createState() => _SmartCropCornerEditorState();
@@ -39,8 +45,11 @@ class _SmartCropCornerEditorState extends State<SmartCropCornerEditor> {
   late Offset _br;
   late Offset _bl;
   int? _dragIndex;
+  double _swipeDx = 0;
 
   ui.Image? _decodedImage;
+
+  static const _swipeThreshold = 48.0;
 
   @override
   void initState() {
@@ -96,25 +105,41 @@ class _SmartCropCornerEditorState extends State<SmartCropCornerEditor> {
         final imageRect = _imageRect(size);
 
         return GestureDetector(
-          onPanStart: (d) => _dragIndex = _hitCorner(d.localPosition, imageRect),
-          onPanUpdate: (d) {
-            if (_dragIndex == null) return;
-            final norm = _screenToNorm(d.localPosition, imageRect);
-            setState(() {
-              switch (_dragIndex) {
-                case 0:
-                  _tl = norm;
-                case 1:
-                  _tr = norm;
-                case 2:
-                  _br = norm;
-                case 3:
-                  _bl = norm;
-              }
-            });
-            _notify();
+          onPanStart: (d) {
+            _swipeDx = 0;
+            _dragIndex = _hitCorner(d.localPosition, imageRect);
           },
-          onPanEnd: (_) => _dragIndex = null,
+          onPanUpdate: (d) {
+            if (_dragIndex != null) {
+              final norm = _screenToNorm(d.localPosition, imageRect);
+              setState(() {
+                switch (_dragIndex) {
+                  case 0:
+                    _tl = norm;
+                  case 1:
+                    _tr = norm;
+                  case 2:
+                    _br = norm;
+                  case 3:
+                    _bl = norm;
+                }
+              });
+              _notify();
+              return;
+            }
+            _swipeDx += d.delta.dx;
+          },
+          onPanEnd: (_) {
+            if (_dragIndex == null) {
+              if (_swipeDx >= _swipeThreshold) {
+                widget.onSwipeToPrevious?.call();
+              } else if (_swipeDx <= -_swipeThreshold) {
+                widget.onSwipeToNext?.call();
+              }
+            }
+            _dragIndex = null;
+            _swipeDx = 0;
+          },
           child: CustomPaint(
             size: size,
             painter: _CornerFramePainter(

@@ -9,15 +9,16 @@ import '../../core/utils/l10n_extension.dart';
 import '../ocr/services/image_picker_service.dart';
 import 'pages/multiple_images_first_page.dart';
 import 'pages/smart_crop_captured_screen.dart';
+import '../home/services/recent_documents_service.dart';
 import 'providers/smart_crop_session_provider.dart';
 import 'services/smart_crop_mlkit_scan_service.dart';
 
-/// Smart Crop — **Android only** (Google ML Kit document scanner).
+/// Smart Crop — **Android only**.
 ///
-/// - **Live camera** → ML Kit scanner UI (edge detect + perspective crop in-camera)
-/// - **Upload** → intro screen → gallery picker → crop → PDF
+/// - **Live camera** → Google ML Kit document scanner (auto edges, crop, filters)
+/// - **Upload** → intro → gallery → captured → corner adjust → crop → filters → PDF
 abstract final class SmartCropFlow {
-  static final _mlKit = SmartCropMlKitScanService();
+  static final _mlKitScan = SmartCropMlKitScanService();
 
   static SmartCropSessionProvider _newSession() => SmartCropSessionProvider();
 
@@ -27,11 +28,19 @@ abstract final class SmartCropFlow {
     return false;
   }
 
+  /// Opens ML Kit scanner — dewarped pages go straight to captured review.
   static Future<void> startLiveCamera(BuildContext context) async {
     if (!_guardAndroid(context)) return;
 
+    final paths = await _mlKitScan.scanPages(
+      limit: SmartCropLimits.maxPages,
+    );
+    if (paths == null || paths.isEmpty || !context.mounted) return;
+
     final session = _newSession();
-    await _openMlKitScannerAndCaptured(context, session: session);
+    session.setFromPaths(paths, isMlKitProcessed: true);
+    if (!context.mounted) return;
+    await SmartCropCapturedScreen.open(context, session: session);
   }
 
   static Future<void> captureAnotherPage(
@@ -41,7 +50,7 @@ abstract final class SmartCropFlow {
     if (!_guardAndroid(context) || !session.canAddMore) return;
 
     final remaining = SmartCropLimits.maxPages - session.pageCount;
-    final paths = await _mlKit.scanPages(limit: remaining);
+    final paths = await _mlKitScan.scanPages(limit: remaining);
     if (paths == null || paths.isEmpty || !context.mounted) return;
 
     for (final path in paths) {
@@ -50,13 +59,11 @@ abstract final class SmartCropFlow {
     }
   }
 
-  /// Step 0 for upload — intro UI before gallery.
   static Future<void> pickFromGallery(BuildContext context) async {
     if (!_guardAndroid(context)) return;
     await MultipleImagesFirstPage.open(context);
   }
 
-  /// Gallery picker → captured review → crop → filters → PDF.
   static Future<void> pickGalleryImages(BuildContext context) async {
     if (!_guardAndroid(context)) return;
 
@@ -65,20 +72,14 @@ abstract final class SmartCropFlow {
     );
     if (paths.isEmpty || !context.mounted) return;
 
+    final recentDocs = RecentDocumentsService();
+    for (final path in paths) {
+      await recentDocs.registerImage(path);
+    }
+
     final session = _newSession();
     session.setFromPaths(paths);
     if (!context.mounted) return;
-    await SmartCropCapturedScreen.open(context, session: session);
-  }
-
-  static Future<void> _openMlKitScannerAndCaptured(
-    BuildContext context, {
-    required SmartCropSessionProvider session,
-  }) async {
-    final paths = await _mlKit.scanPages();
-    if (paths == null || paths.isEmpty || !context.mounted) return;
-
-    session.setFromPaths(paths, isMlKitProcessed: true);
     await SmartCropCapturedScreen.open(context, session: session);
   }
 

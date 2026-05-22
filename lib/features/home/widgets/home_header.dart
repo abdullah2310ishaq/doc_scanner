@@ -35,19 +35,19 @@ class HomeHeader extends StatelessWidget {
             _ProButton(label: proSemanticsLabel, onTap: onProTap),
           ],
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 18),
         Text(
           greeting,
           style: const TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w500,
             color: AppColors.textSecondary,
-            height: 1.25,
+            height: 1.2,
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 6),
         _HomeTitle(prefix: titlePrefix),
-        if (tags != null) ...[const SizedBox(height: 16), tags!],
+        if (tags != null) ...[const SizedBox(height: 12), tags!],
       ],
     );
   }
