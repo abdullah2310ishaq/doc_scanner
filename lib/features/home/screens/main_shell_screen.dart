@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/utils/l10n_extension.dart';
+import '../../../core/widgets/app_exit_guard.dart';
 import '../../../core/widgets/app_navbar.dart';
 import '../../settings/screens/settings_screen.dart';
 import '../widgets/home_drawer.dart';
@@ -32,19 +33,21 @@ class _MainShellScreenState extends State<MainShellScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    return Scaffold(
-      body: IndexedStack(
-        index: _current.index,
-        children: [
-          HomeScreen(onDrawerDestination: _onDrawerDestination),
-          const SettingsScreen(),
-        ],
-      ),
-      bottomNavigationBar: AppNavbar(
-        current: _current,
-        onChanged: _onNavChanged,
-        homeLabel: l10n.navHome,
-        settingsLabel: l10n.navSettings,
+    return AppExitGuard(
+      child: Scaffold(
+        body: IndexedStack(
+          index: _current.index,
+          children: [
+            HomeScreen(onDrawerDestination: _onDrawerDestination),
+            const SettingsScreen(),
+          ],
+        ),
+        bottomNavigationBar: AppNavbar(
+          current: _current,
+          onChanged: _onNavChanged,
+          homeLabel: l10n.navHome,
+          settingsLabel: l10n.navSettings,
+        ),
       ),
     );
   }

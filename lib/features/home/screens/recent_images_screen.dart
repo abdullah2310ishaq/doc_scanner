@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,21 +10,20 @@ import '../../../core/widgets/toast.dart';
 import '../../smartcrop/smart_crop_flow.dart';
 import '../models/recent_file_model.dart';
 import '../providers/recent_documents_provider.dart';
-import '../services/recent_documents_service.dart';
 import '../widgets/recent_documents_empty_state.dart';
+import '../widgets/recent_file_grid_tile.dart';
 
-/// All recent images — Dynamic Selection Mode with unified bottom action controller.
+/// Recent images — grid cards with star, meta, ⋮ share / favorite / delete.
 class RecentImagesScreen extends StatefulWidget {
   const RecentImagesScreen({super.key});
 
   static Future<void> open(BuildContext context) {
+    final provider = context.read<RecentDocumentsProvider>();
+    if (!provider.isLoadingImages && provider.imageFiles.isEmpty) {
+      provider.loadImages();
+    }
     return Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => ChangeNotifierProvider(
-          create: (_) => RecentDocumentsProvider()..loadImages(),
-          child: const RecentImagesScreen(),
-        ),
-      ),
+      MaterialPageRoute<void>(builder: (_) => const RecentImagesScreen()),
     );
   }
 
@@ -78,7 +78,7 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
           backgroundColor: Colors.black,
           appBar: AppBar(
             backgroundColor: Colors.black,
-            foregroundColor: Colors.white,
+            foregroundColor: AppColors.white,
             title: Text(file.fileName),
           ),
           body: Center(
@@ -89,37 +89,19 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
     );
   }
 
-  Future<void> _toggleFavorite(RecentFileModel file) async {
+  Future<void> _share(RecentFileModel file) async {
     final l10n = context.l10n;
     try {
-      await context.read<RecentDocumentsProvider>().toggleFavorite(file);
+      await context.read<RecentDocumentsProvider>().shareFile(file);
     } catch (_) {
       if (mounted) AppToast.show(context, l10n.commonError);
     }
   }
 
-  /// Handles deleting multiple files at once during selection mode
-  Future<void> _deleteSelected() async {
-    if (_selectedIds.isEmpty) return;
+  Future<void> _toggleFavorite(RecentFileModel file) async {
     final l10n = context.l10n;
-    final provider = context.read<RecentDocumentsProvider>();
-
-    final ok = await DeleteDialog.show(
-      context: context,
-      title: l10n.commonDelete,
-      message: l10n.smartCropDeleteImageConfirm,
-    );
-    if (ok != true || !mounted) return;
-
     try {
-      for (final id in _selectedIds) {
-        final target = provider.imageFiles.firstWhere((f) => f.id == id);
-        await provider.deleteFile(target);
-      }
-      setState(() {
-        _selectedIds.clear();
-        _selectMode = false;
-      });
+      await context.read<RecentDocumentsProvider>().toggleFavorite(file);
     } catch (_) {
       if (mounted) AppToast.show(context, l10n.commonError);
     }
@@ -140,12 +122,35 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
     }
   }
 
-  void _showMenu(RecentFileModel file) {
-    showThemeContextMenu(context, file);
+  Future<void> _deleteSelected() async {
+    if (_selectedIds.isEmpty) return;
+    final l10n = context.l10n;
+    final provider = context.read<RecentDocumentsProvider>();
+
+    final ok = await DeleteDialog.show(
+      context: context,
+      title: l10n.commonDelete,
+      message: l10n.smartCropDeleteImageConfirm,
+    );
+    if (ok != true || !mounted) return;
+
+    try {
+      for (final id in List<String>.from(_selectedIds)) {
+        final target = provider.imageFiles.firstWhere((f) => f.id == id);
+        await provider.deleteFile(target);
+      }
+      setState(() {
+        _selectedIds.clear();
+        _selectMode = false;
+      });
+    } catch (_) {
+      if (mounted) AppToast.show(context, l10n.commonError);
+    }
   }
 
-  void showThemeContextMenu(BuildContext context, RecentFileModel file) {
+  void _showMenu(RecentFileModel file) {
     final l10n = context.l10n;
+
     showModalBottomSheet<void>(
       context: context,
       builder: (sheetContext) => SafeArea(
@@ -153,22 +158,26 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              leading: const Icon(Icons.visibility_outlined),
-              title: Text(l10n.smartCropCapturedPreview),
-              onTap: () {
+              leading: const Icon(Icons.share_outlined),
+              title: Text(l10n.commonShare),
+              onTap: () async {
                 Navigator.pop(sheetContext);
-                _previewImage(file);
+                await Future<void>.delayed(Duration.zero);
+                if (!mounted) return;
+                await _share(file);
               },
             ),
             ListTile(
               leading: Icon(
                 file.isFavorite ? Icons.star : Icons.star_border,
-                color: file.isFavorite ? Colors.amber : null,
+                color: file.isFavorite ? const Color(0xFFFFC107) : null,
               ),
               title: Text(l10n.homeRecentToggleFavorite),
-              onTap: () {
+              onTap: () async {
                 Navigator.pop(sheetContext);
-                _toggleFavorite(file);
+                await Future<void>.delayed(Duration.zero);
+                if (!mounted) return;
+                await _toggleFavorite(file);
               },
             ),
             ListTile(
@@ -180,9 +189,11 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
                 l10n.commonDelete,
                 style: const TextStyle(color: Colors.redAccent),
               ),
-              onTap: () {
+              onTap: () async {
                 Navigator.pop(sheetContext);
-                _deleteSingle(file);
+                await Future<void>.delayed(Duration.zero);
+                if (!mounted) return;
+                await _deleteSingle(file);
               },
             ),
           ],
@@ -200,16 +211,15 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
         final files = _filtered(provider);
 
         return Scaffold(
-          // Background Color exact as requested: #F9FAFD
-          backgroundColor: const Color(0xFFF9FAFD),
+          backgroundColor: AppColors.smartCropSoftBackground,
           appBar: AppBar(
-            backgroundColor: Colors.white,
+            backgroundColor: AppColors.white,
             elevation: 0,
             scrolledUnderElevation: 0,
             foregroundColor: AppColors.textPrimary,
-            title: const Text(
-              'Images',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            title: Text(
+              l10n.homeRecentImagesTitle,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
           ),
           body: provider.isLoadingImages
@@ -228,52 +238,52 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
                       child: TextField(
                         controller: _searchController,
                         decoration: InputDecoration(
-                          hintText: 'Search your images...',
+                          hintText: l10n.homeRecentSearchImages,
                           hintStyle: const TextStyle(
-                            color: Colors.grey,
+                            color: AppColors.textSecondary,
                             fontSize: 14,
                           ),
                           prefixIcon: const Icon(
                             Icons.search,
-                            color: Colors.grey,
+                            color: AppColors.textSecondary,
                           ),
                           filled: true,
-                          fillColor: Colors.white,
-                          contentPadding: const EdgeInsets.symmetric(
-                            vertical: 0,
-                          ),
+                          fillColor: AppColors.searchFill,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(
+                              AppColors.searchRadius,
+                            ),
                             borderSide: const BorderSide(
-                              color: Color(0xFFEFEFEF),
+                              color: AppColors.searchBorder,
                             ),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(
+                              AppColors.searchRadius,
+                            ),
                             borderSide: const BorderSide(
-                              color: Color(0xFFEFEFEF),
+                              color: AppColors.searchBorder,
                             ),
                           ),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
                       child: Row(
                         children: [
-                          const Text(
-                            'Recent Added',
-                            style: TextStyle(
-                              fontSize: 18,
+                          Text(
+                            l10n.homeRecentAdded,
+                            style: const TextStyle(
+                              fontSize: 17,
                               fontWeight: FontWeight.w700,
-                              color: Colors.black87,
+                              color: AppColors.textPrimary,
                             ),
                           ),
-
                           const Spacer(),
                           TextButton(
                             onPressed: () {
@@ -283,19 +293,14 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
                               });
                             },
                             child: Text(
-                              _selectMode ? l10n.commonCancel : 'Select',
+                              _selectMode
+                                  ? l10n.commonCancel
+                                  : l10n.homeRecentSelect,
                               style: const TextStyle(
-                                color: Colors.blueAccent,
-                                fontSize: 15,
+                                color: AppColors.textLink,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                          ),
-                          const SizedBox(width: 4),
-                          const Icon(
-                            Icons.grid_view_rounded,
-                            color: Colors.blueAccent,
-                            size: 22,
                           ),
                         ],
                       ),
@@ -305,20 +310,19 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
                           ? Center(
                               child: Text(
                                 l10n.homeRecentNoSearchResults,
-                                style: const TextStyle(color: Colors.grey),
+                                style: const TextStyle(
+                                  color: AppColors.textSecondary,
+                                ),
                               ),
                             )
                           : GridView.builder(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                              ),
+                              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
+                                    crossAxisCount: 2,
                                     mainAxisSpacing: 12,
                                     crossAxisSpacing: 12,
-                                    childAspectRatio:
-                                        0.84, // Perfect aspect match for standard aspect ratios
+                                    childAspectRatio: 0.78,
                                   ),
                               itemCount: files.length,
                               itemBuilder: (context, index) {
@@ -327,7 +331,9 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
                                   file.id,
                                 );
 
-                                return GestureDetector(
+                                return RecentFileGridTile(
+                                  file: file,
+                                  isSelected: isSelected,
                                   onTap: () {
                                     if (_selectMode) {
                                       setState(() {
@@ -341,153 +347,53 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
                                       _previewImage(file);
                                     }
                                   },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(
-                                        color: isSelected
-                                            ? Colors.blueAccent
-                                            : const Color(0xFFEFEFEF),
-                                        width: isSelected ? 2 : 1,
-                                      ),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
-                                      children: [
-                                        Expanded(
-                                          child: Stack(
-                                            children: [
-                                              Positioned.fill(
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      const BorderRadius.vertical(
-                                                        top: Radius.circular(
-                                                          11,
-                                                        ),
-                                                      ),
-                                                  child: Image.file(
-                                                    File(file.path),
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                              ),
-                                              if (file.isFavorite)
-                                                const Positioned(
-                                                  top: 6,
-                                                  right: 6,
-                                                  child: Icon(
-                                                    Icons.star,
-                                                    color: Colors.amber,
-                                                    size: 18,
-                                                  ),
-                                                ),
-                                              if (_selectMode)
-                                                Positioned(
-                                                  top: 6,
-                                                  left: 6,
-                                                  child: Container(
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                          color: Colors.white,
-                                                          shape:
-                                                              BoxShape.circle,
-                                                        ),
-                                                    child: Icon(
-                                                      isSelected
-                                                          ? Icons.check_circle
-                                                          : Icons
-                                                                .radio_button_unchecked,
-                                                      color: isSelected
-                                                          ? Colors.blueAccent
-                                                          : Colors.grey,
-                                                      size: 20,
-                                                    ),
-                                                  ),
-                                                ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                            8,
-                                            6,
-                                            4,
-                                            6,
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  file.displayName,
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: const TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: Colors.black87,
-                                                  ),
-                                                ),
-                                              ),
-                                              if (!_selectMode)
-                                                GestureDetector(
-                                                  onTap: () => _showMenu(file),
-                                                  child: const Icon(
-                                                    Icons.more_vert,
-                                                    color: Colors.grey,
-                                                    size: 16,
-                                                  ),
-                                                ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  onMenu: () => _showMenu(file),
+                                  onToggleSelect: _selectMode
+                                      ? () {
+                                          setState(() {
+                                            if (isSelected) {
+                                              _selectedIds.remove(file.id);
+                                            } else {
+                                              _selectedIds.add(file.id);
+                                            }
+                                          });
+                                        }
+                                      : null,
                                 );
                               },
                             ),
                     ),
                   ],
                 ),
-          // Hidden floating action button when selection layout mode is on
-
-          // Persistent custom action layout footer bar specifically triggered inside selection step
           bottomNavigationBar: _selectMode
               ? SafeArea(
                   child: Container(
-                    height: 60,
-                    margin: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+                    height: 56,
+                    margin: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: AppColors.documentCardBorder),
+                      boxShadow: const [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.06),
-                          blurRadius: 10,
-                          offset: const Offset(0, -2),
+                          color: AppColors.cardShadow,
+                          blurRadius: 8,
+                          offset: Offset(0, 2),
                         ),
                       ],
                     ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          '${_selectedIds.length} Selected',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black87,
-                          ),
+                          '${_selectedIds.length} ${l10n.homeRecentSelect}',
+                          style: const TextStyle(fontWeight: FontWeight.w600),
                         ),
-                        const VerticalDivider(indent: 16, endIndent: 16),
+                        const Spacer(),
                         IconButton(
                           icon: const Icon(
                             Icons.delete_outline,
                             color: Colors.redAccent,
-                            size: 26,
                           ),
                           onPressed: _selectedIds.isEmpty
                               ? null

@@ -71,7 +71,7 @@ class _UploadNewPdfScreenState extends State<UploadNewPdfScreen> {
         title: Text(
           l10n.chatbotTitle,
           style: const TextStyle(
-            fontSize: 18,
+            fontSize: 16,
             fontWeight: FontWeight.w700,
             color: AppColors.textPrimary,
           ),
@@ -110,7 +110,7 @@ class _UploadNewPdfScreenState extends State<UploadNewPdfScreen> {
                     Image.asset(
                       ChatbotAssets.illustration,
                       fit: BoxFit.contain,
-                      height: 220,
+                      height: 190,
                     ),
                     const SizedBox(height: 24),
                     const _TipsDivider(),
@@ -161,8 +161,8 @@ class _ChatbotBadge extends StatelessWidget {
         children: [
           SvgPicture.asset(
             HomeAssets.sparkles,
-            width: 16,
-            height: 16,
+            width: 14,
+            height: 14,
             colorFilter: const ColorFilter.mode(
               AppColors.chatbotAccent,
               BlendMode.srcIn,
@@ -172,7 +172,7 @@ class _ChatbotBadge extends StatelessWidget {
           Text(
             label,
             style: const TextStyle(
-              fontSize: 13,
+              fontSize: 12,
               fontWeight: FontWeight.w500,
               color: AppColors.chatbotAccent,
             ),
@@ -199,7 +199,7 @@ class _ChatbotHeadline extends StatelessWidget {
     return Text.rich(
       TextSpan(
         style: const TextStyle(
-          fontSize: 28,
+          fontSize: 24,
           fontWeight: FontWeight.w700,
           height: 1.2,
           color: AppColors.textPrimary,
@@ -234,7 +234,7 @@ class _TipsDivider extends StatelessWidget {
           child: Text(
             'Tips',
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 13,
               fontWeight: FontWeight.w600,
               color: AppColors.textSecondary,
             ),
@@ -267,7 +267,7 @@ class _TipsList extends StatelessWidget {
                 child: Text(
                   tip,
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 14,
                     fontWeight: FontWeight.w400,
                     color: AppColors.textPrimary,
                   ),
@@ -291,7 +291,7 @@ class _UploadPdfButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 54,
+      height: 50,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [Color(0xFF2F69FF), Color(0xFF6B58FF)],
@@ -312,14 +312,14 @@ class _UploadPdfButton extends StatelessWidget {
                 const Icon(
                   Icons.attach_file_rounded,
                   color: AppColors.white,
-                  size: 20,
+                  size: 18,
                 ),
                 const SizedBox(width: 8),
                 Text(
                   label,
                   style: const TextStyle(
                     color: AppColors.white,
-                    fontSize: 16,
+                    fontSize: 15,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

@@ -56,7 +56,7 @@ class _FirstTimeLanguageSelectionScreenState
     }
 
     final Widget nextScreen = isOnboardingComplete
-        ? const AppExitGuard(child: MainShellScreen())
+        ? const MainShellScreen()
         : const OnboardingScreen();
 
     Navigator.of(context).pushReplacement(
@@ -68,9 +68,10 @@ class _FirstTimeLanguageSelectionScreenState
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    return Scaffold(
-      backgroundColor: _highlightBg,
-      appBar: AppBar(
+    return AppExitGuard(
+      child: Scaffold(
+        backgroundColor: _highlightBg,
+        appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         surfaceTintColor: Colors.transparent,
@@ -132,6 +133,7 @@ class _FirstTimeLanguageSelectionScreenState
             );
           },
         ),
+      ),
       ),
     );
   }

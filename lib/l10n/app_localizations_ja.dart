@@ -875,6 +875,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get commonContinue => '続ける';
 
   @override
+  String get onboardingStart => 'Start';
+
+  @override
   String get splashTagline => 'AI搭載ドキュメントスキャナー';
 
   @override

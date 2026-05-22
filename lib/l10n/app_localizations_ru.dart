@@ -885,6 +885,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get commonContinue => 'Продолжить';
 
   @override
+  String get onboardingStart => 'Start';
+
+  @override
   String get splashTagline => 'AI-сканер документов';
 
   @override

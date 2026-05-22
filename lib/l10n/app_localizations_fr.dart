@@ -899,6 +899,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commonContinue => 'Continuer';
 
   @override
+  String get onboardingStart => 'Start';
+
+  @override
   String get splashTagline => 'Scanner intelligent alimenté par IA';
 
   @override

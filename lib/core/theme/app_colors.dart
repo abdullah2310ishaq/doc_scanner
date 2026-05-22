@@ -110,6 +110,16 @@ abstract final class AppColors {
     colors: [navbarGradientStart, navbarGradientEnd],
   );
 
+  /// Onboarding CTA — CSS: `linear-gradient(91.01deg, #1766FE 1.27%, #635CF1 53.96%)`.
+  static const Color onboardingCtaGradientStart = Color(0xFF1766FE);
+  static const Color onboardingCtaGradientEnd = Color(0xFF635CF1);
+
+  static final LinearGradient onboardingCtaGradient = cssLinearGradient(
+    degrees: 91.01,
+    colors: [onboardingCtaGradientStart, onboardingCtaGradientEnd],
+    stops: [0.0127, 0.5396],
+  );
+
   static const double featureCardRadius = 6;
 
   static const Color documentCardBg = Color(0xFFFFFFFF);

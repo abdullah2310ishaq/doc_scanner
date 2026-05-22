@@ -879,6 +879,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get commonContinue => 'متابعة';
 
   @override
+  String get onboardingStart => 'Start';
+
+  @override
   String get splashTagline => 'ماسح مستندات مدعوم بالذكاء الاصطناعي';
 
   @override

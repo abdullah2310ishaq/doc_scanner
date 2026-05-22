@@ -1784,6 +1784,12 @@ abstract class AppLocalizations {
   /// **'Continue'**
   String get commonContinue;
 
+  /// No description provided for @onboardingStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get onboardingStart;
+
   /// No description provided for @splashTagline.
   ///
   /// In en, this message translates to:

@@ -920,6 +920,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get commonContinue => 'Continuar';
 
   @override
+  String get onboardingStart => 'Start';
+
+  @override
   String get splashTagline => 'Escaneo de documentos con IA';
 
   @override

@@ -903,6 +903,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonContinue => 'Continue';
 
   @override
+  String get onboardingStart => 'Start';
+
+  @override
   String get splashTagline => 'AI-powered document scanning';
 
   @override

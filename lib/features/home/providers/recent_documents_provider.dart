@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../core/navigation/app_navigator.dart';
 import '../models/recent_file_model.dart';
 import '../services/recent_documents_service.dart';
 
@@ -15,6 +17,41 @@ class RecentDocumentsProvider extends ChangeNotifier {
   List<RecentFileModel> imageFiles = [];
   bool isLoadingPdfs = false;
   bool isLoadingImages = false;
+  bool isLoadingSummary = false;
+
+  /// Reloads home folder counts (PDFs + images).
+  Future<void> loadSummary() async {
+    isLoadingSummary = true;
+    notifyListeners();
+    final results = await Future.wait([
+      _service.loadPdfs(),
+      _service.loadImages(),
+    ]);
+    pdfFiles = results[0];
+    imageFiles = results[1];
+    isLoadingSummary = false;
+    notifyListeners();
+  }
+
+  /// Call after [RecentDocumentsService.registerPdf] / [registerImage] from anywhere.
+  static Future<void> refreshGlobal() async {
+    final context = appNavigatorKey.currentContext;
+    if (context == null) {
+      return;
+    }
+    final provider = context.read<RecentDocumentsProvider>();
+    await provider.loadSummary();
+  }
+
+  Future<void> registerPdf(String sourcePath, {String? displayName}) async {
+    await _service.registerPdf(sourcePath, displayName: displayName);
+    await loadSummary();
+  }
+
+  Future<void> registerImage(String sourcePath, {String? displayName}) async {
+    await _service.registerImage(sourcePath, displayName: displayName);
+    await loadSummary();
+  }
 
   Future<void> loadPdfs() async {
     isLoadingPdfs = true;

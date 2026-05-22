@@ -3,6 +3,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/toast.dart';
 import '../models/smart_crop_page_model.dart';
+import '../../home/providers/recent_documents_provider.dart';
 import '../../home/services/recent_documents_service.dart';
 import '../services/smart_crop_crop_service.dart';
 import 'smart_crop_filters_screen.dart';
@@ -74,6 +75,7 @@ class _SmartCropCropProcessingScreenState
       for (final path in croppedPaths) {
         await recentDocs.registerImage(path);
       }
+      await RecentDocumentsProvider.refreshGlobal();
 
       // Phase 4: Preparing for filters
       _updateProgress(ProcessingStep.generating, 0.95, 0.90);

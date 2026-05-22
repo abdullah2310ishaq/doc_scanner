@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import '../models/chatbot_session_model.dart';
 import '../services/chatbot_openai_service.dart';
 import '../services/chatbot_pdf_extract_service.dart';
+import '../../home/providers/recent_documents_provider.dart';
 import '../../home/services/recent_documents_service.dart';
 import '../services/chatbot_storage_service.dart';
 
@@ -65,6 +66,7 @@ class ChatbotAnalyzeProvider extends ChangeNotifier {
         storedPath,
         displayName: _storageService.displayNameFromPath(sourcePdfPath),
       );
+      await RecentDocumentsProvider.refreshGlobal();
       _completeStep(ChatbotAnalyzeStep.extractingText);
 
       final extractedText = await _extractService.extractText(storedPath);

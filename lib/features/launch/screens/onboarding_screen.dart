@@ -34,9 +34,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       return;
     }
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (_) => const AppExitGuard(child: MainShellScreen()),
-      ),
+      MaterialPageRoute(builder: (_) => const MainShellScreen()),
     );
   }
 
@@ -61,130 +59,194 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       _OnboardingPageData(
         imageAsset: 'assets/onboarding/one.png',
         title: "Scan Text \nin Seconds",
-        description: "Capture text from images with fast AI-powered OCR scanning.",
+        description:
+            "Capture text from images with fast AI-powered OCR scanning.",
       ),
       _OnboardingPageData(
         imageAsset: 'assets/onboarding/two.png',
         title: "Smart PDF \nAssistant",
-        description: "Translate, extract and understand\nyour PDF documents with AI.",
+        description:
+            "Translate, extract and understand\nyour PDF documents with AI.",
       ),
       _OnboardingPageData(
         imageAsset: 'assets/onboarding/three.png',
         title: "Chat with \nYour PDFs",
-        description: "Ask questions, summarize documents\nand get instant AI answers.",
+        description:
+            "Ask questions, summarize documents\nand get instant AI answers.",
       ),
       _OnboardingPageData(
         imageAsset: 'assets/onboarding/four.png',
         title: "Smart Crop \nin Seconds",
-        description: "Auto-crop multiple images and\ncreate clean PDFs instantly.",
+        description:
+            "Auto-crop multiple images and\ncreate clean PDFs instantly.",
       ),
     ];
 
-    return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
-      body: SafeArea(
-        child: Column(
-          children: [
-            if (showSkip)
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: _finishOnboarding,
-                  child: Text(l10n.commonSkip),
-                ),
-              )
-            else
-              const SizedBox(height: 48),
-            Expanded(
-              child: PageView.builder(
-                controller: _pageController,
-                itemCount: _pageCount,
-                onPageChanged: (index) {
-                  setState(() => _pageIndex = index);
-                },
-                itemBuilder: (context, index) {
-                  final page = pages[index];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+    return AppExitGuard(
+      child: Scaffold(
+        backgroundColor: AppColors.smartCropSoftBackground,
+        body: SafeArea(
+          child: Column(
+            children: [
+              if (showSkip)
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: _finishOnboarding,
+                    child: Text(l10n.commonSkip),
+                  ),
+                )
+              else
+                const SizedBox(height: 48),
+              Expanded(
+                child: PageView.builder(
+                  controller: _pageController,
+                  itemCount: _pageCount,
+                  onPageChanged: (index) {
+                    setState(() => _pageIndex = index);
+                  },
+                  itemBuilder: (context, index) {
+                    final page = pages[index];
+                    return Column(
                       children: [
-                        Image.asset(
-                          page.imageAsset,
-                          height: 220,
-                          fit: BoxFit.contain,
-                        ),
-                        const SizedBox(height: 40),
-                        Text(
-                          page.title,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.textPrimary,
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Image.asset(
+                              page.imageAsset,
+                              fit: BoxFit.contain,
+                              width: double.infinity,
+                              height: double.infinity,
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 16),
-                        Text(
-                          page.description,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            height: 1.5,
-                            color: AppColors.textSecondary,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 28),
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 8),
+                              OnboardingTitleText(title: page.title),
+                              const SizedBox(height: 8),
+                              Text(
+                                page.description,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  height: 1.45,
+                                  color: AppColors.textSecondary,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                            ],
                           ),
                         ),
                       ],
+                    );
+                  },
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(_pageCount, (index) {
+                  final isActive = index == _pageIndex;
+                  return Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                    width: isActive ? 7 : 6,
+                    height: isActive ? 7 : 6,
+                    decoration: BoxDecoration(
+                      color: isActive
+                          ? AppColors.textPrimary
+                          : AppColors.textPrimary.withValues(alpha: 0.25),
+                      shape: BoxShape.circle,
                     ),
                   );
-                },
+                }),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(_pageCount, (index) {
-                final isActive = index == _pageIndex;
-                return AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  width: isActive ? 24 : 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: isActive
-                        ? AppColors.navbarGradientStart
-                        : AppColors.textSecondary.withValues(alpha: 0.3),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                );
-              }),
-            ),
-            const SizedBox(height: 24),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-              child: SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: ElevatedButton(
-                  onPressed: isLastPage ? _finishOnboarding : _goToNextPage,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.navbarGradientStart,
-                    foregroundColor: AppColors.white,
-                    shape: RoundedRectangleBorder(
+              const SizedBox(height: 24),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 52,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: AppColors.onboardingCtaGradient,
                       borderRadius: BorderRadius.circular(12),
                     ),
-                  ),
-                  child: Text(
-                    isLastPage ? l10n.commonContinue : l10n.commonNext,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                    child: ElevatedButton(
+                      onPressed: isLastPage ? _finishOnboarding : _goToNextPage,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        shadowColor: Colors.transparent,
+                        foregroundColor: AppColors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Text(
+                        isLastPage ? l10n.onboardingStart : l10n.commonContinue,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Title: first line (first two words) blue, remaining lines black.
+class OnboardingTitleText extends StatelessWidget {
+  const OnboardingTitleText({super.key, required this.title});
+
+  final String title;
+
+  static const TextStyle _baseStyle = TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.w700,
+    height: 1.25,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    final lines = title
+        .split('\n')
+        .map((line) => line.trim())
+        .where((line) => line.isNotEmpty)
+        .toList();
+
+    if (lines.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    final blueLine = lines.first;
+    final blackLines = lines.length > 1 ? lines.sublist(1).join('\n') : '';
+
+    return Text.rich(
+      textAlign: TextAlign.center,
+      TextSpan(
+        children: [
+          TextSpan(
+            text: blueLine,
+            style: _baseStyle.copyWith(
+              color: AppColors.onboardingCtaGradientStart,
+            ),
+          ),
+          if (blackLines.isNotEmpty) ...[
+            const TextSpan(text: '\n'),
+            TextSpan(
+              text: blackLines,
+              style: _baseStyle.copyWith(color: AppColors.textPrimary),
             ),
           ],
-        ),
+        ],
       ),
     );
   }

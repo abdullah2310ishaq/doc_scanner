@@ -14,9 +14,10 @@ class ExitAppDialog {
     final l10n = context.l10n;
 
     try {
-      return await showDialog<bool>(
+      return showDialog<bool>(
         context: context,
-        barrierDismissible: true, // Allows tapping outside to dismiss safely
+        useRootNavigator: true,
+        barrierDismissible: true,
         builder: (dialogContext) {
           return Dialog(
             insetPadding: const EdgeInsets.symmetric(

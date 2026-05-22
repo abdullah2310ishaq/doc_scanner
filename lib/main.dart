@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'app.dart';
 import 'core/providers/connectivity_provider.dart';
 import 'core/services/locale_service.dart';
+import 'features/home/providers/recent_documents_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,6 +45,9 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider.value(value: connectivityProvider),
         ChangeNotifierProvider.value(value: localeService),
+        ChangeNotifierProvider(
+          create: (_) => RecentDocumentsProvider()..loadSummary(),
+        ),
       ],
       child: const DocScannerApp(),
     ),

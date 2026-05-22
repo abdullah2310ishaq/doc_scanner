@@ -34,7 +34,7 @@ class RecentFileGridTile extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.white,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected
                 ? AppColors.smartCropPrimary
@@ -60,11 +60,11 @@ class RecentFileGridTile extends StatelessWidget {
                   _Thumbnail(file: file),
                   if (file.isFavorite)
                     const Positioned(
-                      top: 6,
-                      right: 6,
+                      top: 8,
+                      right: 8,
                       child: Icon(
                         Icons.star,
-                        size: 18,
+                        size: 20,
                         color: Color(0xFFFFC107),
                       ),
                     ),
@@ -89,8 +89,9 @@ class RecentFileGridTile extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(8, 8, 4, 8),
+              padding: const EdgeInsets.fromLTRB(10, 8, 4, 8),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                     child: Column(
@@ -101,18 +102,18 @@ class RecentFileGridTile extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
-                            fontSize: 12,
+                            fontSize: 13,
                             fontWeight: FontWeight.w600,
                             color: AppColors.textPrimary,
                           ),
                         ),
-                        const SizedBox(height: 2),
+                        const SizedBox(height: 4),
                         Text(
                           meta,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
-                            fontSize: 10,
+                            fontSize: 11,
                             color: AppColors.textSecondary,
                           ),
                         ),
@@ -123,13 +124,13 @@ class RecentFileGridTile extends StatelessWidget {
                     onPressed: onMenu,
                     icon: const Icon(
                       Icons.more_vert,
-                      size: 18,
+                      size: 20,
                       color: AppColors.textSecondary,
                     ),
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(
-                      minWidth: 28,
-                      minHeight: 28,
+                      minWidth: 32,
+                      minHeight: 32,
                     ),
                   ),
                 ],

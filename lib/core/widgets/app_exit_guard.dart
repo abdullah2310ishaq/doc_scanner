@@ -14,9 +14,10 @@ class AppExitGuard extends StatelessWidget {
       canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
         if (didPop) return;
+        if (!context.mounted) return;
 
         final shouldExit = await ExitAppDialog.show(context);
-        if (shouldExit == true) {
+        if (shouldExit == true && context.mounted) {
           SystemNavigator.pop();
         }
       },

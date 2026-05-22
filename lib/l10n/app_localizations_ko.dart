@@ -876,6 +876,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get commonContinue => '계속';
 
   @override
+  String get onboardingStart => 'Start';
+
+  @override
   String get splashTagline => 'AI 기반 문서 스캐너';
 
   @override

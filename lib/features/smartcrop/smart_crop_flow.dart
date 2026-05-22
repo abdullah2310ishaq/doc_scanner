@@ -9,6 +9,7 @@ import '../../core/utils/l10n_extension.dart';
 import '../ocr/services/image_picker_service.dart';
 import 'pages/multiple_images_first_page.dart';
 import 'pages/smart_crop_captured_screen.dart';
+import '../home/providers/recent_documents_provider.dart';
 import '../home/services/recent_documents_service.dart';
 import 'providers/smart_crop_session_provider.dart';
 import 'services/smart_crop_mlkit_scan_service.dart';
@@ -76,6 +77,7 @@ abstract final class SmartCropFlow {
     for (final path in paths) {
       await recentDocs.registerImage(path);
     }
+    await RecentDocumentsProvider.refreshGlobal();
 
     final session = _newSession();
     session.setFromPaths(paths);

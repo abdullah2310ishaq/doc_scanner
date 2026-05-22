@@ -19,13 +19,12 @@ class RecentPdfsScreen extends StatefulWidget {
   const RecentPdfsScreen({super.key});
 
   static Future<void> open(BuildContext context) {
+    final provider = context.read<RecentDocumentsProvider>();
+    if (!provider.isLoadingPdfs && provider.pdfFiles.isEmpty) {
+      provider.loadPdfs();
+    }
     return Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => ChangeNotifierProvider(
-          create: (_) => RecentDocumentsProvider()..loadPdfs(),
-          child: const RecentPdfsScreen(),
-        ),
-      ),
+      MaterialPageRoute<void>(builder: (_) => const RecentPdfsScreen()),
     );
   }
 
@@ -34,7 +33,6 @@ class RecentPdfsScreen extends StatefulWidget {
 }
 
 class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
-  final _service = RecentDocumentsService();
   final _searchController = TextEditingController();
 
   @override
@@ -67,9 +65,8 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
     );
     final path = result?.files.single.path;
     if (path == null) return;
-    await _service.registerPdf(path);
     if (!mounted) return;
-    await context.read<RecentDocumentsProvider>().loadPdfs();
+    await context.read<RecentDocumentsProvider>().registerPdf(path);
   }
 
   Future<void> _scanDocument() async {

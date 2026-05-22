@@ -8,6 +8,7 @@ import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/delete_dialog.dart';
 import '../../../core/widgets/toast.dart';
 import '../../pdf_assistant/services/pdf_assistant_file_actions_service.dart';
+import '../../home/providers/recent_documents_provider.dart';
 import '../../home/services/recent_documents_service.dart';
 import '../services/smart_crop_pdf_file_service.dart';
 import 'smart_crop_pdf_view_screen.dart';
@@ -151,6 +152,7 @@ class _SmartCropPdfResultScreenState extends State<SmartCropPdfResultScreen> {
         _pdfPath,
         displayName: _displayName,
       );
+      await RecentDocumentsProvider.refreshGlobal();
       if (!mounted) return;
       AppToast.show(context, l10n.pdfAssistantDownloadSuccess);
     } catch (_) {

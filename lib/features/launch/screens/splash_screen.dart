@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
-import '../../../core/widgets/app_exit_guard.dart';
 import '../../home/screens/main_shell_screen.dart';
 import '../services/app_launch_prefs_service.dart';
 import 'onboarding_screen.dart';
@@ -25,22 +24,21 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _startLaunchFlow() async {
-    await Future<void>.delayed(const Duration(milliseconds: 1200));
+    await Future<void>.delayed(const Duration(seconds: 1200));
     await _launchPrefs.markFirstLaunchSeen();
-    final hasCompletedOnboarding =
-        await _launchPrefs.hasCompletedOnboarding();
+    final hasCompletedOnboarding = await _launchPrefs.hasCompletedOnboarding();
 
     if (!mounted) {
       return;
     }
 
     final Widget nextScreen = hasCompletedOnboarding
-        ? const AppExitGuard(child: MainShellScreen())
+        ? const MainShellScreen()
         : const OnboardingScreen();
 
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => nextScreen),
-    );
+    Navigator.of(
+      context,
+    ).pushReplacement(MaterialPageRoute(builder: (_) => nextScreen));
   }
 
   @override
@@ -53,11 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/home/scanner.png',
-              width: 96,
-              height: 96,
-            ),
+            Image.asset('assets/home/scanner.png', width: 96, height: 96),
             const SizedBox(height: 24),
             Text(
               l10n.appTitle,

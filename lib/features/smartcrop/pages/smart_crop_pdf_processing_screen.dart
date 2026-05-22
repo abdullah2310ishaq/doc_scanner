@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/toast.dart';
+import '../../home/providers/recent_documents_provider.dart';
 import '../../home/services/recent_documents_service.dart';
 import '../services/smart_crop_pdf_service.dart';
 import 'smart_crop_pdf_result_screen.dart';
@@ -66,6 +67,7 @@ class _SmartCropPdfProcessingScreenState
         },
       );
       await RecentDocumentsService().registerPdf(pdfPath);
+      await RecentDocumentsProvider.refreshGlobal();
       if (!mounted) return;
 
       Navigator.of(context).pushReplacement(

@@ -1,44 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/constants/home_assets.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../models/recent_file_model.dart';
+import '../providers/recent_documents_provider.dart';
 import '../screens/recent_images_screen.dart';
 import '../screens/recent_pdfs_screen.dart';
 import '../services/recent_documents_service.dart';
 
-/// Home — PDFs and Images folder cards (vertical list, design mock).
-class HomeRecentFolders extends StatefulWidget {
+/// Home — PDFs and Images folder cards (listens to global [RecentDocumentsProvider]).
+class HomeRecentFolders extends StatelessWidget {
   const HomeRecentFolders({super.key});
-
-  @override
-  State<HomeRecentFolders> createState() => _HomeRecentFoldersState();
-}
-
-class _HomeRecentFoldersState extends State<HomeRecentFolders> {
-  final _service = RecentDocumentsService();
-  List<RecentFileModel> _pdfs = [];
-  List<RecentFileModel> _images = [];
-  bool _loading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _load();
-  }
-
-  Future<void> _load() async {
-    final pdfs = await _service.loadPdfs();
-    final images = await _service.loadImages();
-    if (!mounted) return;
-    setState(() {
-      _pdfs = pdfs;
-      _images = images;
-      _loading = false;
-    });
-  }
 
   int _totalBytes(List<RecentFileModel> files) {
     return files.fold(0, (sum, f) => sum + f.sizeBytes);
@@ -48,53 +23,54 @@ class _HomeRecentFoldersState extends State<HomeRecentFolders> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          l10n.homeRecentDocuments,
-          style: const TextStyle(
-            fontSize: 17,
-            fontWeight: FontWeight.w700,
-            color: AppColors.textPrimary,
-          ),
-        ),
-        const SizedBox(height: 12),
-        if (_loading)
-          const Center(
-            child: Padding(
-              padding: EdgeInsets.all(24),
-              child: CircularProgressIndicator(strokeWidth: 2),
+    return Consumer<RecentDocumentsProvider>(
+      builder: (context, provider, _) {
+        final pdfs = provider.pdfFiles;
+        final images = provider.imageFiles;
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              l10n.homeRecentDocuments,
+              style: const TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textPrimary,
+              ),
             ),
-          )
-        else ...[
-          _FolderCard(
-            iconAsset: HomeAssets.folderPdf,
-            title: l10n.homeRecentPdfsFolder,
-            meta: l10n.homeRecentFolderMeta(
-              _pdfs.length,
-              RecentDocumentsService.formatSize(_totalBytes(_pdfs)),
-            ),
-            onTap: () async {
-              await RecentPdfsScreen.open(context);
-              _load();
-            },
-          ),
-          const SizedBox(height: 10),
-          _FolderCard(
-            iconAsset: HomeAssets.folderImage,
-            title: l10n.homeRecentImagesFolder,
-            meta: l10n.homeRecentFolderMeta(
-              _images.length,
-              RecentDocumentsService.formatSize(_totalBytes(_images)),
-            ),
-            onTap: () async {
-              await RecentImagesScreen.open(context);
-              _load();
-            },
-          ),
-        ],
-      ],
+            const SizedBox(height: 12),
+            if (provider.isLoadingSummary)
+              const Center(
+                child: Padding(
+                  padding: EdgeInsets.all(24),
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                ),
+              )
+            else ...[
+              _FolderCard(
+                iconAsset: HomeAssets.folderPdf,
+                title: l10n.homeRecentPdfsFolder,
+                meta: l10n.homeRecentFolderMeta(
+                  pdfs.length,
+                  RecentDocumentsService.formatSize(_totalBytes(pdfs)),
+                ),
+                onTap: () => RecentPdfsScreen.open(context),
+              ),
+              const SizedBox(height: 10),
+              _FolderCard(
+                iconAsset: HomeAssets.folderImage,
+                title: l10n.homeRecentImagesFolder,
+                meta: l10n.homeRecentFolderMeta(
+                  images.length,
+                  RecentDocumentsService.formatSize(_totalBytes(images)),
+                ),
+                onTap: () => RecentImagesScreen.open(context),
+              ),
+            ],
+          ],
+        );
+      },
     );
   }
 }
