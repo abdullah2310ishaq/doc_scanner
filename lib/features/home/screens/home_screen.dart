@@ -65,7 +65,6 @@ class HomeScreen extends StatelessWidget {
                 SliverPersistentHeader(
                   pinned: true,
                   delegate: HomeHeaderSliverDelegate(
-                    greeting: l10n.homeGreeting(l10n.settingsDefaultUserName),
                     titlePrefix: l10n.homeTitlePrefix,
                     proSemanticsLabel: l10n.homeProBadge,
                     menuSemanticsLabel: l10n.homeMenuButton,

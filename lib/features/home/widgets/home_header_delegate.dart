@@ -5,7 +5,6 @@ import 'home_header.dart';
 
 class HomeHeaderSliverDelegate extends SliverPersistentHeaderDelegate {
   HomeHeaderSliverDelegate({
-    required this.greeting,
     required this.titlePrefix,
     required this.proSemanticsLabel,
     required this.menuSemanticsLabel,
@@ -14,7 +13,6 @@ class HomeHeaderSliverDelegate extends SliverPersistentHeaderDelegate {
     this.tags,
   });
 
-  final String greeting;
   final String titlePrefix;
   final String proSemanticsLabel;
   final String menuSemanticsLabel;
@@ -23,7 +21,7 @@ class HomeHeaderSliverDelegate extends SliverPersistentHeaderDelegate {
   final Widget? tags;
 
   /// Room for drawer row, title, and feature tags (avoids 3px overflow).
-  static const double extent = 175;
+  static const double extent = 135;
 
   @override
   double get minExtent => extent;
@@ -42,11 +40,9 @@ class HomeHeaderSliverDelegate extends SliverPersistentHeaderDelegate {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
         child: HomeHeader(
-          greeting: greeting,
           titlePrefix: titlePrefix,
           proSemanticsLabel: proSemanticsLabel,
-          menuSemanticsLabel: menuSemanticsLabel,
-          onMenuTap: onMenuTap,
+
           onProTap: onProTap,
           tags: tags,
         ),
@@ -56,8 +52,7 @@ class HomeHeaderSliverDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant HomeHeaderSliverDelegate oldDelegate) {
-    return greeting != oldDelegate.greeting ||
-        titlePrefix != oldDelegate.titlePrefix ||
+    return titlePrefix != oldDelegate.titlePrefix ||
         proSemanticsLabel != oldDelegate.proSemanticsLabel ||
         menuSemanticsLabel != oldDelegate.menuSemanticsLabel;
   }

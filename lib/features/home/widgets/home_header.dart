@@ -6,20 +6,15 @@ import '../../../core/theme/app_colors.dart';
 class HomeHeader extends StatelessWidget {
   const HomeHeader({
     super.key,
-    required this.greeting,
+
     required this.titlePrefix,
     required this.proSemanticsLabel,
-    required this.menuSemanticsLabel,
-    this.onMenuTap,
     this.onProTap,
     this.tags,
   });
 
-  final String greeting;
   final String titlePrefix;
   final String proSemanticsLabel;
-  final String menuSemanticsLabel;
-  final VoidCallback? onMenuTap;
   final VoidCallback? onProTap;
   final Widget? tags;
 
@@ -29,53 +24,14 @@ class HomeHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _DrawerButton(semanticsLabel: menuSemanticsLabel, onTap: onMenuTap),
-            _ProButton(label: proSemanticsLabel, onTap: onProTap),
-          ],
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [_ProButton(label: proSemanticsLabel, onTap: onProTap)],
         ),
         const SizedBox(height: 18),
-        Text(
-          greeting,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.w500,
-            color: AppColors.textSecondary,
-            height: 1.2,
-          ),
-        ),
-        const SizedBox(height: 6),
+
         _HomeTitle(prefix: titlePrefix),
         if (tags != null) ...[const SizedBox(height: 12), tags!],
       ],
-    );
-  }
-}
-
-class _DrawerButton extends StatelessWidget {
-  const _DrawerButton({required this.semanticsLabel, this.onTap});
-
-  final String semanticsLabel;
-  final VoidCallback? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      label: semanticsLabel,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(10),
-        child: Image.asset(
-          HomeAssets.drawer,
-          width: 36,
-          height: 36,
-          fit: BoxFit.contain,
-        ),
-      ),
     );
   }
 }
@@ -90,10 +46,11 @@ class _ProButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-
+      label:
+          label, // Fixed: Added missing label mapping to the Semantics widget
       child: InkWell(
         onTap: onTap,
-
+        borderRadius: BorderRadius.circular(10),
         child: Image.asset(HomeAssets.pro, height: 26, fit: BoxFit.contain),
       ),
     );

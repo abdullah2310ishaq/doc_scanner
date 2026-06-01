@@ -102,8 +102,10 @@ class HomeDrawer extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: ListTile(
-                  leading: const Icon(Icons.workspace_premium_outlined,
-                      color: AppColors.white),
+                  leading: const Icon(
+                    Icons.workspace_premium_outlined,
+                    color: AppColors.white,
+                  ),
                   title: Text(
                     proTitle,
                     style: const TextStyle(
