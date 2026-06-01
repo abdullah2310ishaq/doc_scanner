@@ -2,15 +2,7 @@ import 'dart:io';
 
 import 'package:google_mlkit_document_scanner/google_mlkit_document_scanner.dart';
 
-/// Wraps Google ML Kit Document Scanner API.
-///
-/// Key capabilities provided by Google's native scanner UI:
-/// - Automatic document edge detection
-/// - Perspective correction (de-warping tilted pages)
-/// - Auto-rotation so the page is always upright
-/// - Shadow / stain removal filter
-///
-/// Android only — requires Google Play Services.
+
 class DocumentScannerService {
   /// Returns true only on Android where Google Play Services is available.
   static bool get isSupported => Platform.isAndroid;

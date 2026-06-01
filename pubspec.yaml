@@ -46,6 +46,8 @@ dependencies:
   colorfilter_generator: ^0.0.8
   lottie: ^3.3.3
 
+  cunning_document_scanner: ^1.4.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

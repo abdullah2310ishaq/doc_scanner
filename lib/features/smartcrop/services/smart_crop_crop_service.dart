@@ -25,21 +25,11 @@ String _saveJpg(img.Image image, String tempDir) {
   return outputPath;
 }
 
-SmartCropPageModel _pageWithDetectedCorners(SmartCropPageModel page) {
-  final detected = detectDocumentCorners(page.imagePath);
-  return page.copyWith(
-    topLeft: detected.topLeft,
-    topRight: detected.topRight,
-    bottomRight: detected.bottomRight,
-    bottomLeft: detected.bottomLeft,
-  );
-}
-
 String _cropPageInIsolate(_CropJob job) {
   final page = job.page;
   final file = File(page.imagePath);
   if (!file.existsSync()) {
-    throw Exception('Source file does not exist');
+    throw Exception('Source file does not exist: ${page.imagePath}');
   }
 
   final bytes = file.readAsBytesSync();
@@ -50,24 +40,16 @@ String _cropPageInIsolate(_CropJob job) {
 
   final oriented = img.bakeOrientation(decoded);
 
-  if (page.isAlreadyScanned) {
-    return _saveJpg(oriented, job.tempDir);
-  }
-
-  final corners = page.cornersLocked
-      ? page
-      : _pageWithDetectedCorners(page);
-
   final cropped = warpDocument(
     oriented,
-    tlX: corners.topLeft.dx,
-    tlY: corners.topLeft.dy,
-    trX: corners.topRight.dx,
-    trY: corners.topRight.dy,
-    brX: corners.bottomRight.dx,
-    brY: corners.bottomRight.dy,
-    blX: corners.bottomLeft.dx,
-    blY: corners.bottomLeft.dy,
+    tlX: page.topLeft.dx,
+    tlY: page.topLeft.dy,
+    trX: page.topRight.dx,
+    trY: page.topRight.dy,
+    brX: page.bottomRight.dx,
+    brY: page.bottomRight.dy,
+    blX: page.bottomLeft.dx,
+    blY: page.bottomLeft.dy,
   );
 
   return _saveJpg(cropped, job.tempDir);
@@ -76,17 +58,30 @@ String _cropPageInIsolate(_CropJob job) {
 /// Smart crop: detect paper edges → perspective warp → trim white margins.
 class SmartCropCropService {
   Future<String> cropPage(SmartCropPageModel page) async {
+    if (page.isAlreadyScanned) {
+      return page.imagePath;
+    }
+
+    // 1. Edge detection main thread par hi handle karein (Safe for Native ML Kit Plugins)
+    SmartCropPageModel finalPageConfig = page;
+    if (!page.cornersLocked) {
+      final detected = detectDocumentCorners(page.imagePath);
+      finalPageConfig = page.copyWith(
+        topLeft: detected.topLeft,
+        topRight: detected.topRight,
+        bottomRight: detected.bottomRight,
+        bottomLeft: detected.bottomLeft,
+      );
+    }
+
     final tempDir = await getTemporaryDirectory();
     return Isolate.run(
-      () => _cropPageInIsolate(_CropJob(page: page, tempDir: tempDir.path)),
+      () => _cropPageInIsolate(_CropJob(page: finalPageConfig, tempDir: tempDir.path)),
     );
   }
 
   Future<List<String>> cropAllPages(List<SmartCropPageModel> pages) async {
-    final results = <String>[];
-    for (final page in pages) {
-      results.add(await cropPage(page));
-    }
-    return results;
+    final futures = pages.map((page) => cropPage(page)).toList();
+    return await Future.wait(futures);
   }
 }
