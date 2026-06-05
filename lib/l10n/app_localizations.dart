@@ -1688,6 +1688,48 @@ abstract class AppLocalizations {
   /// **'Translate To'**
   String get pdfAssistantTranslateTo;
 
+  /// No description provided for @pdfAssistantTranslateToOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Translate To (optional)'**
+  String get pdfAssistantTranslateToOptional;
+
+  /// No description provided for @pdfAssistantNoTranslation.
+  ///
+  /// In en, this message translates to:
+  /// **'No translation'**
+  String get pdfAssistantNoTranslation;
+
+  /// No description provided for @pdfAssistantExtractedPdfTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Extracted PDF'**
+  String get pdfAssistantExtractedPdfTitle;
+
+  /// No description provided for @pdfAssistantExtractedPdfDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Text extracted from your PDF pages'**
+  String get pdfAssistantExtractedPdfDescription;
+
+  /// No description provided for @pdfAssistantExtractedTextOnlyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Extracted text'**
+  String get pdfAssistantExtractedTextOnlyTitle;
+
+  /// No description provided for @pdfAssistantStepPreparingContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing content…'**
+  String get pdfAssistantStepPreparingContent;
+
+  /// No description provided for @pdfAssistantStepGeneratingPdfNeutral.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating PDF…'**
+  String get pdfAssistantStepGeneratingPdfNeutral;
+
   /// No description provided for @pdfAssistantStartProcessing.
   ///
   /// In en, this message translates to:

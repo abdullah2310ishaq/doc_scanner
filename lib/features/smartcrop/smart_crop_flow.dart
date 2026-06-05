@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/constants/smart_crop_limits.dart';
+import '../../core/services/permission_service.dart';
 import '../../core/utils/l10n_extension.dart';
 import '../../core/widgets/toast.dart';
 import '../home/providers/recent_documents_provider.dart';
@@ -12,18 +13,13 @@ import '../ocr/services/image_picker_service.dart';
 import 'pages/multiple_images_first_page.dart';
 import 'pages/smart_crop_captured_screen.dart';
 import 'providers/smart_crop_session_provider.dart';
+import 'services/smart_crop_gallery_import_service.dart';
 import 'services/smart_crop_mlkit_scan_service.dart';
 
-/// Smart Crop — **Android only**.
-///
-/// - **Live camera** → Google ML Kit scanner (`google_mlkit_document_scanner`)
-/// - **Upload** → system gallery → auto edge detect + crop → filters → PDF
-///
-/// Do not use `cunning_document_scanner` here — it launches the same ML Kit UI
-/// natively and crashes when `google_mlkit_document_scanner` is also installed.
 abstract final class SmartCropFlow {
   static final _mlKitScan = SmartCropMlKitScanService();
-
+  static final _galleryImport = SmartCropGalleryImportService();
+  static final _permissions = PermissionService();
   static SmartCropSessionProvider _newSession() => SmartCropSessionProvider();
 
   static bool _guardAndroid(BuildContext context) {
@@ -81,15 +77,80 @@ abstract final class SmartCropFlow {
     await MultipleImagesFirstPage.open(context);
   }
 
-  /// Opens device gallery — auto edge detect + crop on continue (same as camera).
-  static Future<void> pickGalleryImages(BuildContext context) async {
+  /// Opens device gallery → stable JPEG copies → captured review.
+  static Future<void> pickGalleryImages(
+    BuildContext context, {
+    bool replaceCurrentRoute = false,
+  }) async {
     if (!_guardAndroid(context)) return;
 
+    final hasPermission =
+        await _permissions.hasGalleryPermission() ||
+        await _permissions.requestGalleryPermission();
+    if (!hasPermission) {
+      if (context.mounted) {
+        AppToast.show(context, context.l10n.permissionStorageMessage);
+      }
+      return;
+    }
+
+    var loadingShown = false;
+
+    void showLoading() {
+      if (!context.mounted || loadingShown) return;
+      loadingShown = true;
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (dialogContext) {
+          final l10n = dialogContext.l10n;
+          return PopScope(
+            canPop: false,
+            child: Center(
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const CircularProgressIndicator(),
+                      const SizedBox(height: 16),
+                      Text(
+                        l10n.smartCropStepReadingImages,
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    }
+
+    void hideLoading() {
+      if (!context.mounted || !loadingShown) return;
+      loadingShown = false;
+      Navigator.of(context, rootNavigator: true).pop();
+    }
+
     try {
-      final paths = await ImagePickerService().pickMultipleImagesFromGallery(
+      final picked = await ImagePickerService().pickMultipleImagesFromGallery(
         max: SmartCropLimits.maxPages,
       );
-      if (paths.isEmpty || !context.mounted) return;
+      if (picked.isEmpty || !context.mounted) return;
+
+      showLoading();
+
+      final paths = await _galleryImport.importImages(picked);
+      if (paths.isEmpty) {
+        hideLoading();
+        if (context.mounted) {
+          AppToast.show(context, context.l10n.commonError);
+        }
+        return;
+      }
 
       final recentDocs = RecentDocumentsService();
       for (final path in paths) {
@@ -99,9 +160,17 @@ abstract final class SmartCropFlow {
 
       final session = _newSession();
       session.setFromPaths(paths);
+
+      hideLoading();
       if (!context.mounted) return;
-      await SmartCropCapturedScreen.open(context, session: session);
+
+      await SmartCropCapturedScreen.open(
+        context,
+        session: session,
+        replaceCurrentRoute: replaceCurrentRoute,
+      );
     } catch (e) {
+      hideLoading();
       if (context.mounted) {
         AppToast.show(context, context.l10n.commonError);
       }

@@ -104,7 +104,10 @@ class MultipleImagesFirstPage extends StatelessWidget {
                 width: double.infinity,
                 height: 56,
                 child: ElevatedButton(
-                  onPressed: () => SmartCropFlow.pickGalleryImages(context),
+                  onPressed: () => SmartCropFlow.pickGalleryImages(
+                    context,
+                    replaceCurrentRoute: true,
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.smartCropPrimary,
                     foregroundColor: AppColors.white,

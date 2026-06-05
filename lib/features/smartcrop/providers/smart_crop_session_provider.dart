@@ -56,6 +56,10 @@ class SmartCropSessionProvider extends ChangeNotifier {
   bool get allPagesAlreadyScanned =>
       _pages.isNotEmpty && _pages.every((p) => p.isAlreadyScanned);
 
+  bool get anyPageNeedsCornerReview => _pages.any(
+        (p) => !p.isAlreadyScanned && !p.cornersLocked,
+      );
+
   void updatePage(int index, SmartCropPageModel page) {
     if (index < 0 || index >= _pages.length) return;
     _pages[index] = page;

@@ -129,11 +129,6 @@ class _FolderCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const Icon(
-                Icons.more_vert,
-                color: AppColors.textSecondary,
-                size: 22,
-              ),
             ],
           ),
         ),

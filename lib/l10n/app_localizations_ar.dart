@@ -848,6 +848,28 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pdfAssistantTranslateTo => 'ترجمة إلى';
 
   @override
+  String get pdfAssistantTranslateToOptional => 'Translate To (optional)';
+
+  @override
+  String get pdfAssistantNoTranslation => 'No translation';
+
+  @override
+  String get pdfAssistantExtractedPdfTitle => 'Extracted PDF';
+
+  @override
+  String get pdfAssistantExtractedPdfDescription =>
+      'Text extracted from your PDF pages';
+
+  @override
+  String get pdfAssistantExtractedTextOnlyTitle => 'Extracted text';
+
+  @override
+  String get pdfAssistantStepPreparingContent => 'Preparing content…';
+
+  @override
+  String get pdfAssistantStepGeneratingPdfNeutral => 'Generating PDF…';
+
+  @override
   String get pdfAssistantStartProcessing => 'ابدأ المعالجة';
 
   @override

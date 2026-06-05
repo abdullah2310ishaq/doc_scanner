@@ -1,1 +1,101 @@
-{}
+{
+  "ar": [
+    "pdfAssistantTranslateToOptional",
+    "pdfAssistantNoTranslation",
+    "pdfAssistantExtractedPdfTitle",
+    "pdfAssistantExtractedPdfDescription",
+    "pdfAssistantExtractedTextOnlyTitle",
+    "pdfAssistantStepPreparingContent",
+    "pdfAssistantStepGeneratingPdfNeutral"
+  ],
+
+  "de": [
+    "pdfAssistantTranslateToOptional",
+    "pdfAssistantNoTranslation",
+    "pdfAssistantExtractedPdfTitle",
+    "pdfAssistantExtractedPdfDescription",
+    "pdfAssistantExtractedTextOnlyTitle",
+    "pdfAssistantStepPreparingContent",
+    "pdfAssistantStepGeneratingPdfNeutral"
+  ],
+
+  "es": [
+    "pdfAssistantTranslateToOptional",
+    "pdfAssistantNoTranslation",
+    "pdfAssistantExtractedPdfTitle",
+    "pdfAssistantExtractedPdfDescription",
+    "pdfAssistantExtractedTextOnlyTitle",
+    "pdfAssistantStepPreparingContent",
+    "pdfAssistantStepGeneratingPdfNeutral"
+  ],
+
+  "fr": [
+    "pdfAssistantTranslateToOptional",
+    "pdfAssistantNoTranslation",
+    "pdfAssistantExtractedPdfTitle",
+    "pdfAssistantExtractedPdfDescription",
+    "pdfAssistantExtractedTextOnlyTitle",
+    "pdfAssistantStepPreparingContent",
+    "pdfAssistantStepGeneratingPdfNeutral"
+  ],
+
+  "it": [
+    "pdfAssistantTranslateToOptional",
+    "pdfAssistantNoTranslation",
+    "pdfAssistantExtractedPdfTitle",
+    "pdfAssistantExtractedPdfDescription",
+    "pdfAssistantExtractedTextOnlyTitle",
+    "pdfAssistantStepPreparingContent",
+    "pdfAssistantStepGeneratingPdfNeutral"
+  ],
+
+  "ja": [
+    "pdfAssistantTranslateToOptional",
+    "pdfAssistantNoTranslation",
+    "pdfAssistantExtractedPdfTitle",
+    "pdfAssistantExtractedPdfDescription",
+    "pdfAssistantExtractedTextOnlyTitle",
+    "pdfAssistantStepPreparingContent",
+    "pdfAssistantStepGeneratingPdfNeutral"
+  ],
+
+  "ko": [
+    "pdfAssistantTranslateToOptional",
+    "pdfAssistantNoTranslation",
+    "pdfAssistantExtractedPdfTitle",
+    "pdfAssistantExtractedPdfDescription",
+    "pdfAssistantExtractedTextOnlyTitle",
+    "pdfAssistantStepPreparingContent",
+    "pdfAssistantStepGeneratingPdfNeutral"
+  ],
+
+  "pt": [
+    "pdfAssistantTranslateToOptional",
+    "pdfAssistantNoTranslation",
+    "pdfAssistantExtractedPdfTitle",
+    "pdfAssistantExtractedPdfDescription",
+    "pdfAssistantExtractedTextOnlyTitle",
+    "pdfAssistantStepPreparingContent",
+    "pdfAssistantStepGeneratingPdfNeutral"
+  ],
+
+  "ru": [
+    "pdfAssistantTranslateToOptional",
+    "pdfAssistantNoTranslation",
+    "pdfAssistantExtractedPdfTitle",
+    "pdfAssistantExtractedPdfDescription",
+    "pdfAssistantExtractedTextOnlyTitle",
+    "pdfAssistantStepPreparingContent",
+    "pdfAssistantStepGeneratingPdfNeutral"
+  ],
+
+  "zh": [
+    "pdfAssistantTranslateToOptional",
+    "pdfAssistantNoTranslation",
+    "pdfAssistantExtractedPdfTitle",
+    "pdfAssistantExtractedPdfDescription",
+    "pdfAssistantExtractedTextOnlyTitle",
+    "pdfAssistantStepPreparingContent",
+    "pdfAssistantStepGeneratingPdfNeutral"
+  ]
+}

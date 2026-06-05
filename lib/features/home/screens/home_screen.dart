@@ -16,7 +16,6 @@ import '../widgets/home_feature_tags.dart';
 import '../widgets/home_header_delegate.dart';
 import '../widgets/home_hero_card.dart';
 import '../widgets/home_recent_folders.dart';
-import '../widgets/home_search_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key, this.onDrawerDestination});
@@ -102,8 +101,9 @@ class HomeScreen extends StatelessWidget {
                         buttonLabel: l10n.homeHeroButton,
                         onPressed: () => _openOcrInputSheet(scaffoldContext),
                       ),
-                      const SizedBox(height: 16),
-                      HomeSearchBar(hint: l10n.homeSearchHint),
+
+                      // const SizedBox(height: 16),
+                      // HomeSearchBar(hint: l10n.homeSearchHint),
                       const SizedBox(height: 16),
                       HomeFeatureCard(
                         title: l10n.homeFeatureOcrTitle,

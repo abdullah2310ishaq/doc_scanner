@@ -6,6 +6,7 @@ import '../../../core/utils/l10n_extension.dart';
 import '../providers/smart_crop_session_provider.dart';
 import '../services/smart_crop_edge_detect_service.dart';
 import '../smart_crop_flow.dart';
+import '../widgets/smart_crop_preview_nav_button.dart';
 import '../widgets/smart_crop_corner_editor.dart';
 import 'smart_crop_crop_processing_screen.dart';
 
@@ -210,7 +211,7 @@ class _SmartCropCornerAdjustScreenState
                             top: 0,
                             bottom: 0,
                             child: Center(
-                              child: _CornerPageNavButton(
+                              child: SmartCropPreviewNavButton(
                                 icon: Icons.chevron_left,
                                 onPressed: () => _goToPage(index - 1),
                               ),
@@ -222,7 +223,7 @@ class _SmartCropCornerAdjustScreenState
                             top: 0,
                             bottom: 0,
                             child: Center(
-                              child: _CornerPageNavButton(
+                              child: SmartCropPreviewNavButton(
                                 icon: Icons.chevron_right,
                                 onPressed: () => _goToPage(index + 1),
                               ),
@@ -304,41 +305,6 @@ class _SmartCropCornerAdjustScreenState
           ),
         );
       },
-    );
-  }
-}
-
-/// Circular prev/next control on the sides of the corner editor.
-class _CornerPageNavButton extends StatelessWidget {
-  const _CornerPageNavButton({
-    required this.icon,
-    required this.onPressed,
-  });
-
-  final IconData icon;
-  final VoidCallback onPressed;
-
-  static const double _size = 52;
-  static const double _iconSize = 32;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.white,
-      elevation: 4,
-      shadowColor: AppColors.cardShadow,
-      shape: CircleBorder(
-        side: BorderSide(color: AppColors.smartCropRetakeBorder.withValues(alpha: 0.9)),
-      ),
-      child: InkWell(
-        customBorder: const CircleBorder(),
-        onTap: onPressed,
-        child: SizedBox(
-          width: _size,
-          height: _size,
-          child: Icon(icon, color: AppColors.smartCropPrimary, size: _iconSize),
-        ),
-      ),
     );
   }
 }

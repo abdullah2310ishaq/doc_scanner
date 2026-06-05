@@ -24,9 +24,9 @@ class RecentPdfsScreen extends StatefulWidget {
     if (!provider.isLoadingPdfs && provider.pdfFiles.isEmpty) {
       provider.loadPdfs();
     }
-    return Navigator.of(context).push(
-      MaterialPageRoute<void>(builder: (_) => const RecentPdfsScreen()),
-    );
+    return Navigator.of(
+      context,
+    ).push(MaterialPageRoute<void>(builder: (_) => const RecentPdfsScreen()));
   }
 
   @override
@@ -291,41 +291,40 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
                                                 _toggleFavorite(file);
                                               }
                                             },
-                                            itemBuilder:
-                                                (BuildContext context) => [
-                                                  PopupMenuItem<String>(
-                                                    value: 'share',
-                                                    height: 36,
-                                                    child: L10nText(
-                                                      l10n.commonShare,
-                                                      style: const TextStyle(
-                                                        fontSize: 13,
-                                                      ),
-                                                    ),
+                                            itemBuilder: (BuildContext context) => [
+                                              PopupMenuItem<String>(
+                                                value: 'share',
+                                                height: 36,
+                                                child: L10nText(
+                                                  l10n.commonShare,
+                                                  style: const TextStyle(
+                                                    fontSize: 13,
                                                   ),
-                                                  PopupMenuItem<String>(
-                                                    value: 'delete',
-                                                    height: 36,
-                                                    child: L10nText(
-                                                      l10n.commonDelete,
-                                                      style: const TextStyle(
-                                                        fontSize: 13,
-                                                      ),
-                                                    ),
+                                                ),
+                                              ),
+                                              PopupMenuItem<String>(
+                                                value: 'delete',
+                                                height: 36,
+                                                child: L10nText(
+                                                  l10n.commonDelete,
+                                                  style: const TextStyle(
+                                                    fontSize: 13,
                                                   ),
-                                                  PopupMenuItem<String>(
-                                                    value: 'favorite',
-                                                    height: 36,
-                                                    child: L10nText(
-                                                      file.isFavorite
-                                                          ? l10n.homeRecentUnfavorite
-                                                          : l10n.homeRecentToggleFavorite,
-                                                      style: const TextStyle(
-                                                        fontSize: 13,
-                                                      ),
-                                                    ),
+                                                ),
+                                              ),
+                                              PopupMenuItem<String>(
+                                                value: 'favorite',
+                                                height: 36,
+                                                child: L10nText(
+                                                  file.isFavorite
+                                                      ? l10n.homeRecentUnfavorite
+                                                      : l10n.homeRecentToggleFavorite,
+                                                  style: const TextStyle(
+                                                    fontSize: 13,
                                                   ),
-                                                ],
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
+import '../../../core/widgets/l10n_text.dart';
 import '../models/recent_file_model.dart';
 import '../services/recent_documents_service.dart';
 
@@ -12,14 +13,18 @@ class RecentFileGridTile extends StatelessWidget {
     super.key,
     required this.file,
     required this.onTap,
-    required this.onMenu,
+    required this.onShare,
+    required this.onDelete,
+    required this.onToggleFavorite,
     this.isSelected = false,
     this.onToggleSelect,
   });
 
   final RecentFileModel file;
   final VoidCallback onTap;
-  final VoidCallback onMenu;
+  final VoidCallback onShare;
+  final VoidCallback onDelete;
+  final VoidCallback onToggleFavorite;
   final bool isSelected;
   final VoidCallback? onToggleSelect;
 
@@ -123,17 +128,65 @@ class RecentFileGridTile extends StatelessWidget {
                       ],
                     ),
                   ),
-                  IconButton(
-                    onPressed: onMenu,
-                    icon: const Icon(
-                      Icons.more_vert,
-                      size: 20,
-                      color: AppColors.textSecondary,
+                  Theme(
+                    data: Theme.of(context).copyWith(
+                      popupMenuTheme: const PopupMenuThemeData(
+                        color: Colors.white,
+                        elevation: 4,
+                        surfaceTintColor: Colors.white,
+                      ),
                     ),
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(
-                      minWidth: 32,
-                      minHeight: 32,
+                    child: PopupMenuButton<String>(
+                      icon: const Icon(
+                        Icons.more_vert,
+                        size: 20,
+                        color: AppColors.textSecondary,
+                      ),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(
+                        minWidth: 32,
+                        minHeight: 32,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      onSelected: (value) {
+                        if (value == 'share') {
+                          onShare();
+                        } else if (value == 'delete') {
+                          onDelete();
+                        } else if (value == 'favorite') {
+                          onToggleFavorite();
+                        }
+                      },
+                      itemBuilder: (context) => [
+                        PopupMenuItem<String>(
+                          value: 'share',
+                          height: 36,
+                          child: L10nText(
+                            l10n.commonShare,
+                            style: const TextStyle(fontSize: 13),
+                          ),
+                        ),
+                        PopupMenuItem<String>(
+                          value: 'delete',
+                          height: 36,
+                          child: L10nText(
+                            l10n.commonDelete,
+                            style: const TextStyle(fontSize: 13),
+                          ),
+                        ),
+                        PopupMenuItem<String>(
+                          value: 'favorite',
+                          height: 36,
+                          child: L10nText(
+                            file.isFavorite
+                                ? l10n.homeRecentUnfavorite
+                                : l10n.homeRecentToggleFavorite,
+                            style: const TextStyle(fontSize: 13),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

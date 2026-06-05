@@ -13,7 +13,7 @@ import '../providers/recent_documents_provider.dart';
 import '../widgets/recent_documents_empty_state.dart';
 import '../widgets/recent_file_grid_tile.dart';
 
-/// Recent images — grid cards with star, meta, ⋮ share / favorite / delete.
+/// Recent images — grid cards with star, meta, and popup menu like PDFs.
 class RecentImagesScreen extends StatefulWidget {
   const RecentImagesScreen({super.key});
 
@@ -146,60 +146,6 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
     } catch (_) {
       if (mounted) AppToast.show(context, l10n.commonError);
     }
-  }
-
-  void _showMenu(RecentFileModel file) {
-    final l10n = context.l10n;
-
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (sheetContext) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.share_outlined),
-              title: Text(l10n.commonShare),
-              onTap: () async {
-                Navigator.pop(sheetContext);
-                await Future<void>.delayed(Duration.zero);
-                if (!mounted) return;
-                await _share(file);
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                file.isFavorite ? Icons.star : Icons.star_border,
-                color: file.isFavorite ? const Color(0xFFFFC107) : null,
-              ),
-              title: Text(l10n.homeRecentToggleFavorite),
-              onTap: () async {
-                Navigator.pop(sheetContext);
-                await Future<void>.delayed(Duration.zero);
-                if (!mounted) return;
-                await _toggleFavorite(file);
-              },
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.delete_outline,
-                color: Colors.redAccent,
-              ),
-              title: Text(
-                l10n.commonDelete,
-                style: const TextStyle(color: Colors.redAccent),
-              ),
-              onTap: () async {
-                Navigator.pop(sheetContext);
-                await Future<void>.delayed(Duration.zero);
-                if (!mounted) return;
-                await _deleteSingle(file);
-              },
-            ),
-          ],
-        ),
-      ),
-    );
   }
 
   @override
@@ -347,7 +293,9 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
                                       _previewImage(file);
                                     }
                                   },
-                                  onMenu: () => _showMenu(file),
+                                  onShare: () => _share(file),
+                                  onDelete: () => _deleteSingle(file),
+                                  onToggleFavorite: () => _toggleFavorite(file),
                                   onToggleSelect: _selectMode
                                       ? () {
                                           setState(() {

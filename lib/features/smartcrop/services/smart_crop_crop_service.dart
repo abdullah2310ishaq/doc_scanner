@@ -1,11 +1,14 @@
 import 'dart:io';
 import 'dart:isolate';
+import 'dart:math' as math;
+import 'dart:ui' show Offset;
 
+import 'package:flutter/foundation.dart';
 import 'package:image/image.dart' as img;
 import 'package:path_provider/path_provider.dart';
 
 import '../models/smart_crop_page_model.dart';
-import 'smart_crop_edge_detect_service.dart' show detectDocumentCorners;
+import 'smart_crop_edge_detect_service.dart' show detectDocumentCornersFlat;
 import 'smart_crop_image_trim.dart';
 import 'smart_crop_perspective_warp.dart';
 
@@ -25,6 +28,36 @@ String _saveJpg(img.Image image, String tempDir) {
   return outputPath;
 }
 
+bool _isNearRectangularAndLarge(SmartCropPageModel page) {
+  final xs = [
+    page.topLeft.dx,
+    page.topRight.dx,
+    page.bottomRight.dx,
+    page.bottomLeft.dx,
+  ];
+  final ys = [
+    page.topLeft.dy,
+    page.topRight.dy,
+    page.bottomRight.dy,
+    page.bottomLeft.dy,
+  ];
+  final minX = xs.reduce(math.min);
+  final maxX = xs.reduce(math.max);
+  final minY = ys.reduce(math.min);
+  final maxY = ys.reduce(math.max);
+
+  final area = (maxX - minX) * (maxY - minY);
+  if (area < 0.75) return false;
+
+  const tol = 0.03;
+  final topAligned = (page.topLeft.dy - page.topRight.dy).abs() < tol;
+  final bottomAligned = (page.bottomLeft.dy - page.bottomRight.dy).abs() < tol;
+  final leftAligned = (page.topLeft.dx - page.bottomLeft.dx).abs() < tol;
+  final rightAligned = (page.topRight.dx - page.bottomRight.dx).abs() < tol;
+
+  return topAligned && bottomAligned && leftAligned && rightAligned;
+}
+
 String _cropPageInIsolate(_CropJob job) {
   final page = job.page;
   final file = File(page.imagePath);
@@ -39,6 +72,42 @@ String _cropPageInIsolate(_CropJob job) {
   }
 
   final oriented = img.bakeOrientation(decoded);
+
+  // Flat scans / screenshots: avoid heavy homography warping; crop bbox + trim.
+  if (_isNearRectangularAndLarge(page)) {
+    final w = oriented.width;
+    final h = oriented.height;
+    final xs = [
+      page.topLeft.dx,
+      page.topRight.dx,
+      page.bottomRight.dx,
+      page.bottomLeft.dx,
+    ];
+    final ys = [
+      page.topLeft.dy,
+      page.topRight.dy,
+      page.bottomRight.dy,
+      page.bottomLeft.dy,
+    ];
+    final minX = xs.reduce(math.min);
+    final maxX = xs.reduce(math.max);
+    final minY = ys.reduce(math.min);
+    final maxY = ys.reduce(math.max);
+
+    final left = (minX * w).floor().clamp(0, w - 1);
+    final right = (maxX * w).ceil().clamp(left + 1, w);
+    final top = (minY * h).floor().clamp(0, h - 1);
+    final bottom = (maxY * h).ceil().clamp(top + 1, h);
+
+    final cropped = img.copyCrop(
+      oriented,
+      x: left,
+      y: top,
+      width: right - left,
+      height: bottom - top,
+    );
+    return _saveJpg(cropped, job.tempDir);
+  }
 
   final cropped = warpDocument(
     oriented,
@@ -55,28 +124,28 @@ String _cropPageInIsolate(_CropJob job) {
   return _saveJpg(cropped, job.tempDir);
 }
 
-/// Smart crop: detect paper edges → perspective warp → trim white margins.
 class SmartCropCropService {
   Future<String> cropPage(SmartCropPageModel page) async {
     if (page.isAlreadyScanned) {
       return page.imagePath;
     }
 
-    // 1. Edge detection main thread par hi handle karein (Safe for Native ML Kit Plugins)
     SmartCropPageModel finalPageConfig = page;
     if (!page.cornersLocked) {
-      final detected = detectDocumentCorners(page.imagePath);
+      final flat = await compute(detectDocumentCornersFlat, page.imagePath);
       finalPageConfig = page.copyWith(
-        topLeft: detected.topLeft,
-        topRight: detected.topRight,
-        bottomRight: detected.bottomRight,
-        bottomLeft: detected.bottomLeft,
+        topLeft: Offset(flat[0], flat[1]),
+        topRight: Offset(flat[2], flat[3]),
+        bottomRight: Offset(flat[4], flat[5]),
+        bottomLeft: Offset(flat[6], flat[7]),
       );
     }
 
     final tempDir = await getTemporaryDirectory();
     return Isolate.run(
-      () => _cropPageInIsolate(_CropJob(page: finalPageConfig, tempDir: tempDir.path)),
+      () => _cropPageInIsolate(
+        _CropJob(page: finalPageConfig, tempDir: tempDir.path),
+      ),
     );
   }
 

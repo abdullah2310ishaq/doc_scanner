@@ -16,6 +16,23 @@ class _DetectResult {
   final Offset bl;
 }
 
+/// Corner detection result + quality hint.
+class DocumentCornerResult {
+  const DocumentCornerResult({
+    required this.corners,
+    required this.confidence,
+    required this.isFallback,
+  });
+
+  final DetectedDocumentCorners corners;
+
+  /// 0.0 (very unsure) → 1.0 (very sure).
+  final double confidence;
+
+  /// True when we had to fall back to a full-image quad.
+  final bool isFallback;
+}
+
 /// Isolate-safe corner payload for [compute].
 List<double> detectDocumentCornersFlat(String imagePath) {
   final c = detectDocumentCorners(imagePath);
@@ -31,6 +48,23 @@ List<double> detectDocumentCornersFlat(String imagePath) {
   ];
 }
 
+/// Isolate-safe corner + confidence payload for [compute].
+List<double> detectDocumentCornersWithConfidenceFlat(String imagePath) {
+  final r = detectDocumentCornersWithConfidence(imagePath);
+  return [
+    r.corners.topLeft.dx,
+    r.corners.topLeft.dy,
+    r.corners.topRight.dx,
+    r.corners.topRight.dy,
+    r.corners.bottomRight.dx,
+    r.corners.bottomRight.dy,
+    r.corners.bottomLeft.dx,
+    r.corners.bottomLeft.dy,
+    r.confidence,
+    r.isFallback ? 1.0 : 0.0,
+  ];
+}
+
 /// Finds document corners from a photo (paper only — tight bounds).
 class SmartCropEdgeDetectService {
   Future<SmartCropPageModel> detectCorners(SmartCropPageModel page) async {
@@ -40,6 +74,21 @@ class SmartCropEdgeDetectService {
       topRight: Offset(flat[2], flat[3]),
       bottomRight: Offset(flat[4], flat[5]),
       bottomLeft: Offset(flat[6], flat[7]),
+    );
+  }
+
+  Future<DocumentCornerResult> detectCornersWithConfidence(String imagePath) async {
+    final flat =
+        await compute(detectDocumentCornersWithConfidenceFlat, imagePath);
+    return DocumentCornerResult(
+      corners: DetectedDocumentCorners(
+        topLeft: Offset(flat[0], flat[1]),
+        topRight: Offset(flat[2], flat[3]),
+        bottomRight: Offset(flat[4], flat[5]),
+        bottomLeft: Offset(flat[6], flat[7]),
+      ),
+      confidence: flat[8].clamp(0.0, 1.0),
+      isFallback: flat[9] >= 0.5,
     );
   }
 }
@@ -79,12 +128,26 @@ DetectedDocumentCorners get defaultGuideCorners => const DetectedDocumentCorners
     );
 
 DetectedDocumentCorners detectDocumentCorners(String imagePath) {
-  final result = _detectPaperQuad(imagePath);
+  final result = _detectPaperQuad(imagePath, maxWidth: 1000);
   return DetectedDocumentCorners(
     topLeft: result.tl,
     topRight: result.tr,
     bottomRight: result.br,
     bottomLeft: result.bl,
+  );
+}
+
+DocumentCornerResult detectDocumentCornersWithConfidence(String imagePath) {
+  final r = _detectPaperQuadWithConfidence(imagePath, maxWidth: 1600);
+  return DocumentCornerResult(
+    corners: DetectedDocumentCorners(
+      topLeft: r.result.tl,
+      topRight: r.result.tr,
+      bottomRight: r.result.br,
+      bottomLeft: r.result.bl,
+    ),
+    confidence: r.confidence,
+    isFallback: r.isFallback,
   );
 }
 
@@ -134,33 +197,75 @@ _DetectResult _fallbackQuad() {
   );
 }
 
-_DetectResult _detectPaperQuad(String imagePath) {
+bool _isPlausibleQuad(_DetectResult quad) {
+  final xs = [quad.tl.dx, quad.tr.dx, quad.br.dx, quad.bl.dx];
+  final ys = [quad.tl.dy, quad.tr.dy, quad.br.dy, quad.bl.dy];
+  final minX = xs.reduce(math.min);
+  final maxX = xs.reduce(math.max);
+  final minY = ys.reduce(math.min);
+  final maxY = ys.reduce(math.max);
+
+  final area = (maxX - minX) * (maxY - minY);
+  if (area < 0.08) return false;
+  if (minX < 0 || minY < 0 || maxX > 1 || maxY > 1) return false;
+  return true;
+}
+
+class _QuadWithConfidence {
+  const _QuadWithConfidence(this.result, this.confidence, this.isFallback);
+
+  final _DetectResult result;
+  final double confidence;
+  final bool isFallback;
+}
+
+_QuadWithConfidence _detectPaperQuadWithConfidence(
+  String imagePath, {
+  required int maxWidth,
+}) {
   final fallback = _fallbackQuad();
 
   final file = File(imagePath);
-  if (!file.existsSync()) return fallback;
+  if (!file.existsSync()) {
+    return _QuadWithConfidence(fallback, 0.0, true);
+  }
 
   final bytes = file.readAsBytesSync();
   final decoded = img.decodeImage(bytes);
-  if (decoded == null) return fallback;
+  if (decoded == null) {
+    return _QuadWithConfidence(fallback, 0.0, true);
+  }
 
   final oriented = img.bakeOrientation(decoded);
-  const maxWidth = 1000;
   final scale = oriented.width > maxWidth ? maxWidth / oriented.width : 1.0;
-  final scaled = scale < 1
-      ? img.copyResize(oriented, width: maxWidth)
-      : oriented;
+  final scaled =
+      scale < 1 ? img.copyResize(oriented, width: maxWidth) : oriented;
 
   final gray = img.grayscale(scaled);
   final blurred = img.gaussianBlur(gray, radius: 3);
 
   final paperBounds = _findPaperBounds(blurred);
   if (paperBounds == null) {
-    return _quadFromEdgePoints(blurred) ?? fallback;
+    final edgeQuad = _quadFromEdgePoints(blurred);
+    if (edgeQuad == null || !_isPlausibleQuad(edgeQuad)) {
+      return _QuadWithConfidence(fallback, 0.15, true);
+    }
+    return _QuadWithConfidence(edgeQuad, 0.55, false);
   }
 
   final refined = _refineCornersInBounds(blurred, paperBounds);
-  return _normalizeQuad(scaled.width, scaled.height, refined);
+  final normalized = _normalizeQuad(scaled.width, scaled.height, refined);
+  if (!_isPlausibleQuad(normalized)) {
+    return _QuadWithConfidence(fallback, 0.2, true);
+  }
+  return _QuadWithConfidence(normalized, 0.85, false);
+}
+
+_DetectResult _detectPaperQuad(
+  String imagePath, {
+  required int maxWidth,
+}) {
+  return _detectPaperQuadWithConfidence(imagePath, maxWidth: maxWidth).result;
 }
 
 /// Largest bright/dark paper region — primary detector for uploads.

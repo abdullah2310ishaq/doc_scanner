@@ -7,6 +7,7 @@ import '../../../core/constants/smart_crop_limits.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../providers/smart_crop_session_provider.dart';
+import '../services/smart_crop_edge_detect_service.dart';
 import '../smart_crop_flow.dart';
 import '../widgets/smart_crop_multi_preview_body.dart';
 import '../widgets/smart_crop_single_photo_review_body.dart';
@@ -14,21 +15,69 @@ import 'smart_crop_photo_preview_screen.dart';
 import '../smart_crop_navigation.dart';
 
 /// Step 2 — review captures (1 photo = bordered layout, 2+ = grid).
-class SmartCropCapturedScreen extends StatelessWidget {
+class SmartCropCapturedScreen extends StatefulWidget {
   const SmartCropCapturedScreen({super.key});
 
   static Future<void> open(
     BuildContext context, {
     required SmartCropSessionProvider session,
+    bool replaceCurrentRoute = false,
   }) {
-    return Navigator.of(context).push(
-      MaterialPageRoute<void>(
-        builder: (_) => SmartCropFlow.wrapSession(
-          session: session,
-          child: const SmartCropCapturedScreen(),
-        ),
+    final route = MaterialPageRoute<void>(
+      builder: (_) => SmartCropFlow.wrapSession(
+        session: session,
+        child: const SmartCropCapturedScreen(),
       ),
     );
+
+    if (replaceCurrentRoute) {
+      return Navigator.of(context).pushReplacement(route);
+    }
+    return Navigator.of(context).push(route);
+  }
+
+  @override
+  State<SmartCropCapturedScreen> createState() =>
+      _SmartCropCapturedScreenState();
+}
+
+class _SmartCropCapturedScreenState extends State<SmartCropCapturedScreen> {
+  final _edgeDetect = SmartCropEdgeDetectService();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _preDetectGalleryCornersInBackground();
+    });
+  }
+
+  /// Runs after UI is visible so gallery pick does not block navigation.
+  Future<void> _preDetectGalleryCornersInBackground() async {
+    if (!mounted) return;
+
+    final session = context.read<SmartCropSessionProvider>();
+    if (session.allPagesAlreadyScanned) return;
+
+    for (var i = 0; i < session.pageCount; i++) {
+      if (!mounted) return;
+
+      final page = session.pages[i];
+      if (page.cornersLocked) continue;
+
+      final result =
+          await _edgeDetect.detectCornersWithConfidence(page.imagePath);
+      session.updatePage(
+        i,
+        page.copyWith(
+          topLeft: result.corners.topLeft,
+          topRight: result.corners.topRight,
+          bottomRight: result.corners.bottomRight,
+          bottomLeft: result.corners.bottomLeft,
+          cornersLocked: result.confidence >= 0.7 && !result.isFallback,
+        ),
+      );
+    }
   }
 
   @override
