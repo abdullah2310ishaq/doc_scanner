@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'pages/smart_crop_corner_adjust_screen.dart';
 import 'pages/smart_crop_crop_processing_screen.dart';
 import 'providers/smart_crop_session_provider.dart';
 
-/// Captured → corner adjust (gallery) → crop processing → filters → PDF.
+/// Captured → auto edge detect + crop → filters → PDF.
 abstract final class SmartCropNavigation {
   static void goToCropProcessing(
     BuildContext context, {
@@ -12,12 +11,7 @@ abstract final class SmartCropNavigation {
   }) {
     if (session.isEmpty) return;
 
-    // Gallery uploads need edge detection + manual corners before crop/filters.
-    if (session.allPagesAlreadyScanned) {
-      SmartCropCropProcessingScreen.open(context, pages: session.pages);
-      return;
-    }
-
-    SmartCropCornerAdjustScreen.open(context, session: session);
+    // Gallery + camera: processing screen auto-detects edges and crops.
+    SmartCropCropProcessingScreen.open(context, pages: session.pages);
   }
 }

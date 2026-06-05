@@ -14,7 +14,8 @@ class ConnectivityListener extends StatefulWidget {
   State<ConnectivityListener> createState() => _ConnectivityListenerState();
 }
 
-class _ConnectivityListenerState extends State<ConnectivityListener> {
+class _ConnectivityListenerState extends State<ConnectivityListener>
+    with WidgetsBindingObserver {
   ConnectivityProvider? _provider;
   bool? _wasOnline;
   bool _offlineToastShown = false;
@@ -22,6 +23,7 @@ class _ConnectivityListenerState extends State<ConnectivityListener> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       _provider = context.read<ConnectivityProvider>();
@@ -32,12 +34,25 @@ class _ConnectivityListenerState extends State<ConnectivityListener> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _provider?.removeListener(_onConnectivityChanged);
     super.dispose();
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _offlineToastShown = false;
+    }
+  }
+
   void _onConnectivityChanged() {
     if (!mounted) return;
+
+    final lifecycle = WidgetsBinding.instance.lifecycleState;
+    if (lifecycle != null && lifecycle != AppLifecycleState.resumed) {
+      return;
+    }
 
     final provider = context.read<ConnectivityProvider>();
     if (!provider.isInitialized) return;

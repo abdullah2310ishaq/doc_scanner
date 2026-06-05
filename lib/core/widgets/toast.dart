@@ -10,7 +10,8 @@ class AppToast {
   }
 
   static void show(BuildContext context, String message) {
-    final overlay = Overlay.of(context);
+    final overlay = Overlay.maybeOf(context);
+    if (overlay == null) return;
 
     final entry = OverlayEntry(
       builder: (overlayContext) => Positioned(

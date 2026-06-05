@@ -13,7 +13,10 @@ class DocumentScannerService {
   /// [pageLimit] — maximum pages the user can scan (default 1 for OCR).
   /// Returns null if the user cancels, the platform is unsupported, or an
   /// error occurs.
-  Future<List<String>?> scanDocument({int pageLimit = 1}) async {
+  Future<List<String>?> scanDocument({
+    int pageLimit = 1,
+    bool isGalleryImport = true,
+  }) async {
     if (!isSupported) return null;
 
     final scanner = DocumentScanner(
@@ -22,8 +25,7 @@ class DocumentScannerService {
         documentFormats: const {DocumentFormat.jpeg},
         // filter mode applies perspective correction, shadow removal, etc.
         mode: ScannerMode.filter,
-        // Allow the user to also import a photo from their gallery.
-        isGalleryImport: true,
+        isGalleryImport: isGalleryImport,
         pageLimit: pageLimit,
       ),
     );

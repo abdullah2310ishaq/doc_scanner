@@ -8,8 +8,8 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../providers/smart_crop_session_provider.dart';
 import '../smart_crop_flow.dart';
-import '../widgets/smart_crop_single_photo_review_body.dart';
 import '../widgets/smart_crop_multi_preview_body.dart';
+import '../widgets/smart_crop_single_photo_review_body.dart';
 import 'smart_crop_photo_preview_screen.dart';
 import '../smart_crop_navigation.dart';
 

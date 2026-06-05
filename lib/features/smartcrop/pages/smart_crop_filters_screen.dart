@@ -8,6 +8,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/toast.dart';
 import '../constants/smart_crop_color_filters.dart';
+import '../widgets/smart_crop_preview_nav_button.dart';
 import 'smart_crop_pdf_processing_screen.dart';
 
 /// Cropped image + filters + Create PDF (#F9FAFD white / blue theme).
@@ -101,6 +102,15 @@ class _SmartCropFiltersScreenState extends State<SmartCropFiltersScreen> {
     }
   }
 
+  void _goToPage(int index) {
+    if (!_pageController.hasClients) return;
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 280),
+      curve: Curves.easeOut,
+    );
+  }
+
   void _deleteCurrentImage() {
     if (_paths.isEmpty) return;
     setState(() {
@@ -126,6 +136,9 @@ class _SmartCropFiltersScreenState extends State<SmartCropFiltersScreen> {
     }
 
     final index = _currentIndex.clamp(0, _paths.length - 1);
+    final hasMultiple = _paths.length > 1;
+    final canGoBack = hasMultiple && index > 0;
+    final canGoForward = hasMultiple && index < _paths.length - 1;
     final currentFilter = _filters[_selectedFilterIndex];
     final bottomInset = MediaQuery.paddingOf(context).bottom;
 
@@ -186,32 +199,50 @@ class _SmartCropFiltersScreenState extends State<SmartCropFiltersScreen> {
             ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: _BlueBorderCroppedPreview(
-                child: PageView.builder(
-                  controller: _pageController,
-                  itemCount: _paths.length,
-                  onPageChanged: (i) => setState(() => _currentIndex = i),
-                  itemBuilder: (context, i) {
-                    return ColorFiltered(
-                      colorFilter: ColorFilter.matrix(currentFilter.matrix),
-                      child: Image.file(
-                        File(_paths[i]),
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        height: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: _BlueBorderCroppedPreview(
+                      child: PageView.builder(
+                        controller: _pageController,
+                        itemCount: _paths.length,
+                        onPageChanged: (i) => setState(() => _currentIndex = i),
+                        itemBuilder: (context, i) {
+                          return ColorFiltered(
+                            colorFilter:
+                                ColorFilter.matrix(currentFilter.matrix),
+                            child: Image.file(
+                              File(_paths[i]),
+                              fit: BoxFit.contain,
+                              width: double.infinity,
+                              height: double.infinity,
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  ),
+                  if (canGoBack)
+                    Positioned(
+                      left: 0,
+                      child: SmartCropPreviewNavButton(
+                        icon: Icons.chevron_left,
+                        onPressed: () => _goToPage(index - 1),
+                      ),
+                    ),
+                  if (canGoForward)
+                    Positioned(
+                      right: 0,
+                      child: SmartCropPreviewNavButton(
+                        icon: Icons.chevron_right,
+                        onPressed: () => _goToPage(index + 1),
+                      ),
+                    ),
+                ],
               ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [const SizedBox(width: 8)],
             ),
           ),
           const SizedBox(height: 16),

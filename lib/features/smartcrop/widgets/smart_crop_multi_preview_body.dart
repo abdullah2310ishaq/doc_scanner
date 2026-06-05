@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
+import 'smart_crop_preview_nav_button.dart';
 import 'smart_crop_single_photo_review_body.dart';
 
 /// Step 3b — multi-photo preview when user taps a grid thumbnail (1/N, chevrons).
@@ -100,7 +101,7 @@ class _SmartCropMultiPreviewBodyState extends State<SmartCropMultiPreviewBody> {
                 if (canGoBack)
                   Positioned(
                     left: 0,
-                    child: _PreviewNavButton(
+                    child: SmartCropPreviewNavButton(
                       icon: Icons.chevron_left,
                       onPressed: () => _goToPage(index - 1),
                     ),
@@ -108,7 +109,7 @@ class _SmartCropMultiPreviewBodyState extends State<SmartCropMultiPreviewBody> {
                 if (canGoForward)
                   Positioned(
                     right: 0,
-                    child: _PreviewNavButton(
+                    child: SmartCropPreviewNavButton(
                       icon: Icons.chevron_right,
                       onPressed: () => _goToPage(index + 1),
                     ),
@@ -148,35 +149,6 @@ class _SmartCropMultiPreviewBodyState extends State<SmartCropMultiPreviewBody> {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _PreviewNavButton extends StatelessWidget {
-  const _PreviewNavButton({
-    required this.icon,
-    required this.onPressed,
-  });
-
-  final IconData icon;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      elevation: 4,
-      shadowColor: Colors.black26,
-      shape: const CircleBorder(),
-      child: InkWell(
-        customBorder: const CircleBorder(),
-        onTap: onPressed,
-        child: SizedBox(
-          width: 40,
-          height: 40,
-          child: Icon(icon, color: Colors.black87, size: 28),
-        ),
-      ),
     );
   }
 }

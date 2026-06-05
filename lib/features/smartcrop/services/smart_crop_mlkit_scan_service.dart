@@ -5,10 +5,14 @@ import '../../ocr/services/document_scanner_service.dart';
 class SmartCropMlKitScanService {
   final _scanner = DocumentScannerService();
 
-  /// Opens Google's scanner UI (gallery import enabled). Returns dewarped JPEG paths.
+  /// Opens Google's ML Kit scanner UI. Returns dewarped JPEG paths.
   Future<List<String>?> scanPages({
     int limit = SmartCropLimits.maxPages,
+    bool isGalleryImport = false,
   }) {
-    return _scanner.scanDocument(pageLimit: limit);
+    return _scanner.scanDocument(
+      pageLimit: limit,
+      isGalleryImport: isGalleryImport,
+    );
   }
 }
