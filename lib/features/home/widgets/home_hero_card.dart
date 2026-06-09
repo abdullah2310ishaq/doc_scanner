@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../core/constants/home_assets.dart';
 import '../../../core/theme/app_colors.dart';
@@ -29,8 +30,12 @@ class HomeHeroCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isCompactLocale = _isCompactLocale(context);
-    final heroImageWidth = isCompactLocale ? 78.w : 92.w;
-    final heroImageHeight = isCompactLocale ? 88.h : 100.h;
+
+    // Halka sa size badha diya hai yahan par animations ke liye
+    final heroImageWidth = isCompactLocale ? 90.w : 110.w; // 92.w se 110.w kiya
+    final heroImageHeight = isCompactLocale
+        ? 100.h
+        : 120.h; // 100.h se 120.h kiya
 
     return Material(
       color: Colors.transparent,
@@ -114,8 +119,8 @@ class HomeHeroCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Image.asset(
-                      HomeAssets.homeHeader,
+                    Lottie.asset(
+                      'assets/pen.json',
                       width: heroImageWidth,
                       height: heroImageHeight,
                       fit: BoxFit.contain,
@@ -147,8 +152,11 @@ class _OcrButton extends StatelessWidget {
     final iconSize = isCompactLocale ? 12.w : 14.w;
     final horizontalPadding = isCompactLocale ? 6.w : 8.w;
     final spacing = 6.w;
-    final labelMaxWidth = (maxWidth - (horizontalPadding * 2) - iconSize - spacing)
-        .clamp(0.0, maxWidth);
+    final labelMaxWidth =
+        (maxWidth - (horizontalPadding * 2) - iconSize - spacing).clamp(
+          0.0,
+          maxWidth,
+        );
 
     return Align(
       alignment: AlignmentDirectional.centerStart,
@@ -165,11 +173,7 @@ class _OcrButton extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(
-              HomeAssets.camera,
-              width: iconSize,
-              height: iconSize,
-            ),
+            Image.asset(HomeAssets.camera, width: iconSize, height: iconSize),
             SizedBox(width: spacing),
             ConstrainedBox(
               constraints: BoxConstraints(maxWidth: labelMaxWidth),

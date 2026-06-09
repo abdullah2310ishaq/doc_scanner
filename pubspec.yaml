@@ -70,6 +70,7 @@ flutter:
     - assets/second.json
     - assets/third.json
     - assets/fourth.json
+    - assets/pen.json
 
   fonts:
     - family: NotoSans

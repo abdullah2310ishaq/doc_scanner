@@ -146,19 +146,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   itemBuilder: (context, index) {
                     final page = pages[index];
 
-                    // Determine if the current JSON background needs scaling (Page 2 & 3)
                     final bool scaleJson = (index == 1 || index == 2);
+                    // Page 3 (index 2) gets a larger scale of 1.28, Page 2 gets 1.15
+                    final double currentScale = index == 2 ? 1.28 : 1.15;
 
                     final Widget finalGraphic = page.pngOverlayAsset != null
                         ? _buildStackedGraphic(
                             lottiePath: page.lottieAsset,
                             pngPath: page.pngOverlayAsset!,
                             showCorners: index == 0,
-                            scaleBackgroundOnly:
-                                scaleJson, // Conditional scale control
+                            scaleBackgroundOnly: scaleJson,
+                            scaleValue: currentScale,
                           )
                         : Transform.scale(
-                            scale: scaleJson ? 1.15 : 1.0,
+                            scale: scaleJson ? currentScale : 1.0,
                             child: Lottie.asset(
                               page.lottieAsset,
                               fit: BoxFit.contain,
@@ -262,8 +263,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     required String pngPath,
     required bool showCorners,
     required bool scaleBackgroundOnly,
+    required double scaleValue,
   }) {
-    // Isolate the Lottie image inside a scaled container ONLY if the flag is true
     final Widget lottieWidget = Lottie.asset(
       lottiePath,
       fit: BoxFit.contain,
@@ -274,12 +275,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Stack(
       alignment: Alignment.center,
       children: [
-        // 1. The Lottie animation running in the background (Scales if required)
+        // 1. The Lottie animation running in the background (Scales based on page requirement)
         scaleBackgroundOnly
-            ? Transform.scale(scale: 1.15, child: lottieWidget)
+            ? Transform.scale(scale: scaleValue, child: lottieWidget)
             : lottieWidget,
 
-        // 2. Scanner Corners - Kept outside of scale parameters to protect positions
+        // 2. Scanner Corners - Kept safe from scaling to maintain exact positioning
         if (showCorners)
           Positioned(
             top: 65,
@@ -294,7 +295,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
 
-        // 3. PNG card remains untouched at height 140, aligned identically across page 1 and 2
+        // 3. PNG card remains uniform across Page 1 & 2 without breaking alignment
         Positioned(
           bottom: 0,
           left: 16,
