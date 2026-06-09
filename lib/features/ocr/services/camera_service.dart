@@ -1,10 +1,21 @@
 import 'dart:io';
+import 'dart:math' as math;
+
 import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
+import 'package:image/image.dart' as img;
+
+import '../../../core/services/device_performance_profile.dart';
 
 class CameraService {
+  CameraService();
+
   CameraController? _controller;
   List<CameraDescription> _cameras = const [];
+
+  static const _maxCaptureWidth = 4000;
+  static const _maxCaptureHeight = 3000;
+  static const _focusSettleMs = 300;
 
   CameraController? get controller => _controller;
 
@@ -24,10 +35,11 @@ class CameraService {
       orElse: () => _cameras.first,
     );
 
-    // high (1080p) is enough for OCR; max binds a 48MP capture stream on many devices.
+    final profile = await DevicePerformanceProfile.load();
+
     final controller = CameraController(
       backCamera,
-      ResolutionPreset.high,
+      profile.previewPreset,
       enableAudio: false,
       imageFormatGroup: Platform.isIOS
           ? ImageFormatGroup.bgra8888
@@ -37,8 +49,6 @@ class CameraService {
     await controller.initialize();
     await controller.setFlashMode(FlashMode.off);
     try {
-      // In the Flutter camera package, FocusMode.auto enables continuous autofocus 
-      // under the hood (FocusMode only contains 'auto' and 'locked').
       await controller.setFocusMode(FocusMode.auto);
     } catch (_) {}
     try {
@@ -62,22 +72,46 @@ class CameraService {
     }
 
     try {
-      // Force auto focus and wait for it to settle for sharp text OCR
       await controller.setFocusMode(FocusMode.auto);
-      await Future.delayed(const Duration(milliseconds: 800));
-    } catch (_) {
-      // Ignore if focus mode is unsupported
-    }
+      await Future.delayed(const Duration(milliseconds: _focusSettleMs));
+    } catch (_) {}
 
     try {
       final file = await controller.takePicture();
-      return file.path;
+      return _capCaptureResolution(file.path);
     } finally {
-      // Restore continuous focus mode after capture
       try {
         await controller.setFocusMode(FocusMode.auto);
       } catch (_) {}
     }
+  }
+
+  /// Caps still captures at 12MP to avoid 48MP memory spikes on flagship sensors.
+  Future<String> _capCaptureResolution(String path) async {
+    final file = File(path);
+    final bytes = await file.readAsBytes();
+    final decoded = img.decodeImage(bytes);
+    if (decoded == null) return path;
+
+    if (decoded.width <= _maxCaptureWidth &&
+        decoded.height <= _maxCaptureHeight) {
+      return path;
+    }
+
+    final scale = math.min(
+      _maxCaptureWidth / decoded.width,
+      _maxCaptureHeight / decoded.height,
+    );
+    final newWidth = (decoded.width * scale).round();
+    final newHeight = (decoded.height * scale).round();
+
+    final resized = img.copyResize(
+      decoded,
+      width: newWidth,
+      height: newHeight,
+    );
+    await file.writeAsBytes(img.encodeJpg(resized, quality: 90));
+    return path;
   }
 
   Future<void> dispose() async {

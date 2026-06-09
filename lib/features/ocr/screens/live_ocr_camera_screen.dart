@@ -33,7 +33,8 @@ class LiveOcrCameraScreen extends StatefulWidget {
   State<LiveOcrCameraScreen> createState() => _LiveOcrCameraScreenState();
 }
 
-class _LiveOcrCameraScreenState extends State<LiveOcrCameraScreen> {
+class _LiveOcrCameraScreenState extends State<LiveOcrCameraScreen>
+    with WidgetsBindingObserver {
   bool _permissionDialogRequested = false;
 
   static const _cameraOverlayStyle = SystemUiOverlayStyle(
@@ -47,11 +48,25 @@ class _LiveOcrCameraScreenState extends State<LiveOcrCameraScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     SystemChrome.setSystemUIOverlayStyle(_cameraOverlayStyle);
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (!mounted) return;
+
+    final provider = context.read<LiveOcrCameraProvider>();
+    if (state == AppLifecycleState.paused) {
+      provider.pauseLiveOcr();
+    } else if (state == AppLifecycleState.resumed) {
+      provider.resumeLiveOcr();
+    }
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(

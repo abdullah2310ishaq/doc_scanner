@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
@@ -88,22 +89,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
     final pages = [
       _OnboardingPageData(
-        imageAsset: 'assets/onboarding/one.png',
+        lottieAsset: 'assets/first.json',
+        pngOverlayAsset: 'assets/firstob.png',
         title: l10n.onboardingPage1Title,
         description: l10n.onboardingPage1Description,
       ),
       _OnboardingPageData(
-        imageAsset: 'assets/onboarding/two.png',
+        lottieAsset: 'assets/second.json',
+        pngOverlayAsset: 'assets/secondob.png',
         title: l10n.onboardingPage2Title,
         description: l10n.onboardingPage2Description,
       ),
       _OnboardingPageData(
-        imageAsset: 'assets/onboarding/three.png',
+        lottieAsset: 'assets/third.json',
         title: l10n.onboardingPage3Title,
         description: l10n.onboardingPage3Description,
       ),
       _OnboardingPageData(
-        imageAsset: 'assets/onboarding/four.png',
+        lottieAsset: 'assets/fourth.json',
         title: l10n.onboardingPage4Title,
         description: l10n.onboardingPage4Description,
       ),
@@ -142,17 +145,34 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   },
                   itemBuilder: (context, index) {
                     final page = pages[index];
+
+                    // Determine if the current JSON background needs scaling (Page 2 & 3)
+                    final bool scaleJson = (index == 1 || index == 2);
+
+                    final Widget finalGraphic = page.pngOverlayAsset != null
+                        ? _buildStackedGraphic(
+                            lottiePath: page.lottieAsset,
+                            pngPath: page.pngOverlayAsset!,
+                            showCorners: index == 0,
+                            scaleBackgroundOnly:
+                                scaleJson, // Conditional scale control
+                          )
+                        : Transform.scale(
+                            scale: scaleJson ? 1.15 : 1.0,
+                            child: Lottie.asset(
+                              page.lottieAsset,
+                              fit: BoxFit.contain,
+                              width: double.infinity,
+                              height: double.infinity,
+                            ),
+                          );
+
                     return Column(
                       children: [
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Image.asset(
-                              page.imageAsset,
-                              fit: BoxFit.contain,
-                              width: double.infinity,
-                              height: double.infinity,
-                            ),
+                            child: finalGraphic,
                           ),
                         ),
                         Padding(
@@ -235,6 +255,83 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
     );
   }
+
+  /// Reusable setup to stack JSON animations with overlay PNG cards at the bottom
+  Widget _buildStackedGraphic({
+    required String lottiePath,
+    required String pngPath,
+    required bool showCorners,
+    required bool scaleBackgroundOnly,
+  }) {
+    // Isolate the Lottie image inside a scaled container ONLY if the flag is true
+    final Widget lottieWidget = Lottie.asset(
+      lottiePath,
+      fit: BoxFit.contain,
+      width: double.infinity,
+      height: double.infinity,
+    );
+
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        // 1. The Lottie animation running in the background (Scales if required)
+        scaleBackgroundOnly
+            ? Transform.scale(scale: 1.15, child: lottieWidget)
+            : lottieWidget,
+
+        // 2. Scanner Corners - Kept outside of scale parameters to protect positions
+        if (showCorners)
+          Positioned(
+            top: 65,
+            left: 45,
+            right: 45,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildScannerCorner(topLeft: true),
+                _buildScannerCorner(topLeft: false),
+              ],
+            ),
+          ),
+
+        // 3. PNG card remains untouched at height 140, aligned identically across page 1 and 2
+        Positioned(
+          bottom: 0,
+          left: 16,
+          right: 16,
+          child: Image.asset(pngPath, fit: BoxFit.contain, height: 140),
+        ),
+      ],
+    );
+  }
+
+  /// Reusable widget to generate a custom scanner corner line
+  Widget _buildScannerCorner({required bool topLeft}) {
+    const double size = 32.0;
+    const double thickness = 5.0;
+    const Radius radius = Radius.circular(12);
+    final Color cornerColor = AppColors.onboardingCtaGradientStart;
+
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(color: cornerColor, width: thickness),
+          left: topLeft
+              ? BorderSide(color: cornerColor, width: thickness)
+              : BorderSide.none,
+          right: !topLeft
+              ? BorderSide(color: cornerColor, width: thickness)
+              : BorderSide.none,
+        ),
+        borderRadius: BorderRadius.only(
+          topLeft: topLeft ? radius : Radius.zero,
+          topRight: !topLeft ? radius : Radius.zero,
+        ),
+      ),
+    );
+  }
 }
 
 /// Title: first line (first two words) blue, remaining lines black.
@@ -289,12 +386,14 @@ class OnboardingTitleText extends StatelessWidget {
 
 class _OnboardingPageData {
   const _OnboardingPageData({
-    required this.imageAsset,
+    required this.lottieAsset,
+    this.pngOverlayAsset,
     required this.title,
     required this.description,
   });
 
-  final String imageAsset;
+  final String lottieAsset;
+  final String? pngOverlayAsset;
   final String title;
   final String description;
 }
