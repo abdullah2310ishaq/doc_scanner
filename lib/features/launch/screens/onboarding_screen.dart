@@ -24,8 +24,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Timer? _autoScrollTimer;
 
   static const int _pageCount = 4;
-  static const Duration _autoScrollInterval = Duration(seconds: 4);
-  static const Duration _pageAnimationDuration = Duration(milliseconds: 300);
+  // Page stay interval balanced to handle the longer 3-second scroll duration smoothly
+  static const Duration _autoScrollInterval = Duration(seconds: 6);
+  // Changed page animation duration to exactly 3000 milliseconds for an ultra-smooth slow transition
+  static const Duration _pageAnimationDuration = Duration(milliseconds: 3000);
 
   @override
   void initState() {
@@ -147,10 +149,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     final page = pages[index];
 
                     final bool scaleJson = (index == 1 || index == 2);
-                    // Page 3 (index 2) gets a larger scale of 1.28, Page 2 gets 1.15
-                    final double currentScale = index == 2 ? 1.28 : 1.15;
+                    final double currentScale = index == 2 ? 1.65 : 1.15;
 
-                    final Widget finalGraphic = page.pngOverlayAsset != null
+                    Widget rawGraphic = page.pngOverlayAsset != null
                         ? _buildStackedGraphic(
                             lottiePath: page.lottieAsset,
                             pngPath: page.pngOverlayAsset!,
@@ -158,21 +159,42 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             scaleBackgroundOnly: scaleJson,
                             scaleValue: currentScale,
                           )
-                        : Transform.scale(
-                            scale: scaleJson ? currentScale : 1.0,
+                        : SizedBox(
+                            width: double.infinity,
+                            height: double.infinity,
                             child: Lottie.asset(
                               page.lottieAsset,
                               fit: BoxFit.contain,
-                              width: double.infinity,
-                              height: double.infinity,
+                              alignment: index == 2
+                                  ? const Alignment(0, -0.3)
+                                  : Alignment.center,
                             ),
                           );
+
+                    final Widget finalGraphic = index == 2
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 35, bottom: 5),
+                            child: Transform.scale(
+                              scale: currentScale,
+                              alignment: const Alignment(0, -0.3),
+                              child: rawGraphic,
+                            ),
+                          )
+                        : (page.pngOverlayAsset == null && scaleJson)
+                        ? Transform.scale(
+                            scale: currentScale,
+                            child: rawGraphic,
+                          )
+                        : rawGraphic;
 
                     return Column(
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: index == 2 ? 0 : 8,
+                              vertical: index == 2 ? 0 : 8,
+                            ),
                             child: finalGraphic,
                           ),
                         ),
@@ -275,12 +297,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Stack(
       alignment: Alignment.center,
       children: [
-        // 1. The Lottie animation running in the background (Scales based on page requirement)
+        // 1. The Lottie animation running in the background
         scaleBackgroundOnly
             ? Transform.scale(scale: scaleValue, child: lottieWidget)
             : lottieWidget,
 
-        // 2. Scanner Corners - Kept safe from scaling to maintain exact positioning
+        // 2. Scanner Corners
         if (showCorners)
           Positioned(
             top: 65,
