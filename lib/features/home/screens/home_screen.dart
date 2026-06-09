@@ -12,7 +12,6 @@ import '../../smartcrop/smart_crop_flow.dart';
 import '../../smartcrop/widgets/smart_crop_input_sheet.dart';
 import '../widgets/home_drawer.dart';
 import '../widgets/home_feature_card.dart';
-import '../widgets/home_feature_tags.dart';
 import '../widgets/home_header_delegate.dart';
 import '../widgets/home_hero_card.dart';
 import '../widgets/home_recent_folders.dart';
@@ -64,30 +63,7 @@ class HomeScreen extends StatelessWidget {
                 SliverPersistentHeader(
                   pinned: true,
                   delegate: HomeHeaderSliverDelegate(
-                    titlePrefix: l10n.homeTitlePrefix,
-                    proSemanticsLabel: l10n.homeProBadge,
-                    menuSemanticsLabel: l10n.homeMenuButton,
-                    onMenuTap: () => Scaffold.of(scaffoldContext).openDrawer(),
-                    tags: HomeFeatureTags(
-                      tags: [
-                        HomeFeatureTag(
-                          label: l10n.homeTagAiPowered,
-                          iconAsset: HomeAssets.sparkles,
-                        ),
-                        HomeFeatureTag(
-                          label: l10n.homeTagFastOcr,
-                          iconAsset: HomeAssets.ocr,
-                        ),
-                        HomeFeatureTag(
-                          label: l10n.homeTagSecure,
-                          iconAsset: HomeAssets.secure,
-                        ),
-                        HomeFeatureTag(
-                          label: l10n.homeTagSmartCrop,
-                          iconAsset: HomeAssets.crop,
-                        ),
-                      ],
-                    ),
+                    title: l10n.homeTitlePrefix,
                   ),
                 ),
                 SliverPadding(

@@ -991,7 +991,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get commonContinue => 'Продолжить';
 
   @override
-  String get onboardingStart => 'Начать';
+  String get onboardingStart => 'Начать с →';
 
   @override
   String get splashTagline => 'Сканирование документов на базе ИИ';

@@ -338,7 +338,7 @@
   "commonNext": "다음",
   "commonSkip": "건너뛰기",
   "commonContinue": "계속",
-  "onboardingStart": "시작",
+  "onboardingStart": "시작하기 →",
   "splashTagline": "AI 기반 문서 스캔",
   "onboardingPage1Title": "몇 초 만에\n텍스트 스캔",
   "onboardingPage1Description": "빠른 AI 기반 OCR 스캔으로 이미지에서 텍스트를 캡처하세요.",

@@ -973,7 +973,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonContinue => 'Continue';
 
   @override
-  String get onboardingStart => 'Start';
+  String get onboardingStart => 'Get Started With →';
 
   @override
   String get splashTagline => 'AI-powered document scanning';

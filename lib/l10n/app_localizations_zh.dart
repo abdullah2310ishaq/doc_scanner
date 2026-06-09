@@ -944,7 +944,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get commonContinue => '继续';
 
   @override
-  String get onboardingStart => '开始';
+  String get onboardingStart => '开始使用 →';
 
   @override
   String get splashTagline => 'AI 驱动的文档扫描';

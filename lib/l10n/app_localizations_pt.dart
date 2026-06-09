@@ -988,7 +988,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get commonContinue => 'Continuar';
 
   @override
-  String get onboardingStart => 'Iniciar';
+  String get onboardingStart => 'Comece com →';
 
   @override
   String get splashTagline => 'Digitalização de documentos baseada em IA';

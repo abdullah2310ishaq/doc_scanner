@@ -997,7 +997,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get commonContinue => 'Weitermachen';
 
   @override
-  String get onboardingStart => 'Start';
+  String get onboardingStart => 'Jetzt starten →';
 
   @override
   String get splashTagline => 'KI-gestütztes Scannen von Dokumenten';

@@ -18,7 +18,7 @@ class ChatbotHistoryProvider extends ChangeNotifier {
 
     try {
       sessions = await _storageService.loadSessions();
-      // Sessions ko latest updated timestamp ke hisab se sort karne ke liye loop logic boundary
+
       sessions.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
     } catch (error, stack) {
       if (kDebugMode) {
@@ -48,8 +48,7 @@ class ChatbotHistoryProvider extends ChangeNotifier {
     await _storageService.saveSession(updated);
     sessions[index] = updated;
 
-    // Sort items after timestamp mutate operation completes
-    sessions.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
+     sessions.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
     notifyListeners();
   }
 

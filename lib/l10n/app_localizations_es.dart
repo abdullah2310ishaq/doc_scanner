@@ -993,7 +993,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get commonContinue => 'Continuar';
 
   @override
-  String get onboardingStart => 'Empezar';
+  String get onboardingStart => 'Comienza con →';
 
   @override
   String get splashTagline => 'Escaneo de documentos con tecnología de IA';

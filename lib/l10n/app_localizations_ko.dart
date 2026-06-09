@@ -949,7 +949,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get commonContinue => '계속';
 
   @override
-  String get onboardingStart => '시작';
+  String get onboardingStart => '시작하기 →';
 
   @override
   String get splashTagline => 'AI 기반 문서 스캔';

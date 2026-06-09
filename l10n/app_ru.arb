@@ -338,7 +338,7 @@
   "commonNext": "Далее",
   "commonSkip": "Пропустить",
   "commonContinue": "Продолжить",
-  "onboardingStart": "Начать",
+  "onboardingStart": "Начать с →",
   "splashTagline": "Сканирование документов на базе ИИ",
   "onboardingPage1Title": "Скан текста\nза секунды",
   "onboardingPage1Description": "Распознавайте текст на изображениях с помощью быстрого OCR на базе ИИ.",

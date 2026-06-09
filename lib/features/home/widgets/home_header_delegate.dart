@@ -5,29 +5,24 @@ import 'home_header.dart';
 
 class HomeHeaderSliverDelegate extends SliverPersistentHeaderDelegate {
   HomeHeaderSliverDelegate({
-    required this.titlePrefix,
-    required this.proSemanticsLabel,
-    required this.menuSemanticsLabel,
-    this.onMenuTap,
-    this.onProTap,
+    required this.title,
     this.tags,
   });
 
-  final String titlePrefix;
-  final String proSemanticsLabel;
-  final String menuSemanticsLabel;
-  final VoidCallback? onMenuTap;
-  final VoidCallback? onProTap;
+  final String title;
   final Widget? tags;
 
-  /// Room for drawer row, title, and feature tags (avoids 3px overflow).
-  static const double extent = 135;
+  static const double _topPadding = 14;
+  static const double _titleExtent = 58;
+  static const double _tagsExtent = 52;
+
+  double get _extent => tags != null ? _titleExtent + _tagsExtent : _titleExtent;
 
   @override
-  double get minExtent => extent;
+  double get minExtent => _extent;
 
   @override
-  double get maxExtent => extent;
+  double get maxExtent => _extent;
 
   @override
   Widget build(
@@ -38,12 +33,9 @@ class HomeHeaderSliverDelegate extends SliverPersistentHeaderDelegate {
     return ColoredBox(
       color: AppColors.scaffoldBackground,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+        padding: const EdgeInsets.fromLTRB(16, _topPadding, 16, 8),
         child: HomeHeader(
-          titlePrefix: titlePrefix,
-          proSemanticsLabel: proSemanticsLabel,
-
-          onProTap: onProTap,
+          title: title,
           tags: tags,
         ),
       ),
@@ -52,8 +44,6 @@ class HomeHeaderSliverDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant HomeHeaderSliverDelegate oldDelegate) {
-    return titlePrefix != oldDelegate.titlePrefix ||
-        proSemanticsLabel != oldDelegate.proSemanticsLabel ||
-        menuSemanticsLabel != oldDelegate.menuSemanticsLabel;
+    return title != oldDelegate.title || tags != oldDelegate.tags;
   }
 }

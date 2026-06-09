@@ -1,8 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
-import '../../../core/widgets/app_exit_guard.dart';
 import '../../home/screens/main_shell_screen.dart';
 import '../services/app_launch_prefs_service.dart';
 
@@ -18,14 +20,43 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   final AppLaunchPrefsService _launchPrefs = AppLaunchPrefsService();
   int _pageIndex = 0;
+  Timer? _autoScrollTimer;
 
-  // Updated page count to 4
   static const int _pageCount = 4;
+  static const Duration _autoScrollInterval = Duration(seconds: 4);
+  static const Duration _pageAnimationDuration = Duration(milliseconds: 300);
+
+  @override
+  void initState() {
+    super.initState();
+    _startAutoScroll();
+  }
 
   @override
   void dispose() {
+    _autoScrollTimer?.cancel();
     _pageController.dispose();
     super.dispose();
+  }
+
+  void _startAutoScroll() {
+    _autoScrollTimer?.cancel();
+    _autoScrollTimer = Timer.periodic(_autoScrollInterval, (_) {
+      _autoAdvancePage();
+    });
+  }
+
+  void _autoAdvancePage() {
+    if (!mounted || !_pageController.hasClients) {
+      return;
+    }
+
+    final nextIndex = _pageIndex >= _pageCount - 1 ? 0 : _pageIndex + 1;
+    _pageController.animateToPage(
+      nextIndex,
+      duration: _pageAnimationDuration,
+      curve: Curves.easeInOut,
+    );
   }
 
   Future<void> _finishOnboarding() async {
@@ -43,9 +74,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       return;
     }
     _pageController.nextPage(
-      duration: const Duration(milliseconds: 300),
+      duration: _pageAnimationDuration,
       curve: Curves.easeInOut,
     );
+    _startAutoScroll();
   }
 
   @override
@@ -77,7 +109,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
     ];
 
-    return AppExitGuard(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) {
+          return;
+        }
+        SystemNavigator.pop();
+      },
       child: Scaffold(
         backgroundColor: AppColors.smartCropSoftBackground,
         body: SafeArea(
@@ -99,6 +138,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   itemCount: _pageCount,
                   onPageChanged: (index) {
                     setState(() => _pageIndex = index);
+                    _startAutoScroll();
                   },
                   itemBuilder: (context, index) {
                     final page = pages[index];

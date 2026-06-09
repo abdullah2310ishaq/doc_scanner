@@ -1925,7 +1925,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingStart.
   ///
   /// In en, this message translates to:
-  /// **'Start'**
+  /// **'Get Started With →'**
   String get onboardingStart;
 
   /// No description provided for @splashTagline.

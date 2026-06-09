@@ -338,7 +338,7 @@
   "commonNext": "Suivant",
   "commonSkip": "Passer",
   "commonContinue": "Continuer",
-  "onboardingStart": "Commencer",
+  "onboardingStart": "Commencer avec →",
   "splashTagline": "Numérisation de documents optimisée par l'IA",
   "onboardingPage1Title": "Scannez le texte\nen secondes",
   "onboardingPage1Description": "Capturez le texte des images avec l'OCR rapide.",

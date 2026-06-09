@@ -999,7 +999,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get commonContinue => 'Continuer';
 
   @override
-  String get onboardingStart => 'Commencer';
+  String get onboardingStart => 'Commencer avec →';
 
   @override
   String get splashTagline => 'Numérisation de documents optimisée par l\'IA';

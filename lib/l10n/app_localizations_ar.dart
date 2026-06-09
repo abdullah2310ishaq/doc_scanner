@@ -969,7 +969,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get commonContinue => 'يكمل';
 
   @override
-  String get onboardingStart => 'ابدأ';
+  String get onboardingStart => 'ابدأ الآن →';
 
   @override
   String get splashTagline => 'مسح المستندات ضوئيًا باستخدام الذكاء الاصطناعي';
