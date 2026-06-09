@@ -54,6 +54,8 @@
   "homeRecentImagesTitle": "صور",
   "homeRecentAdded": "أضيف مؤخراً",
   "homeRecentSelect": "تحديد",
+  "homeRecentSelectAll": "تحديد الكل",
+  "homeRecentDeselectAll": "إلغاء تحديد الكل",
   "homeRecentSearchPdfs": "ابحث في PDF…",
   "homeRecentSearchImages": "ابحث في الصور…",
   "homeRecentNoSearchResults": "لا توجد نتائج",

@@ -135,7 +135,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeFeatureCropSubtitle => 'Auto crop, clean and enhance';
 
   @override
-  String get homeRecentDocuments => 'Recent Documents';
+  String get homeRecentDocuments => 'Recent';
 
   @override
   String get homeSeeAll => 'See All';
@@ -190,6 +190,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeRecentSelect => 'Select';
+
+  @override
+  String get homeRecentSelectAll => 'Select all';
+
+  @override
+  String get homeRecentDeselectAll => 'Deselect all';
 
   @override
   String get homeRecentSearchPdfs => 'Search your PDFs…';

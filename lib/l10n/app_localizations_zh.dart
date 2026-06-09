@@ -134,7 +134,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get homeFeatureCropSubtitle => '自动裁剪、清理和优化';
 
   @override
-  String get homeRecentDocuments => '最近文档';
+  String get homeRecentDocuments => '文档';
 
   @override
   String get homeSeeAll => '查看全部';
@@ -189,6 +189,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get homeRecentSelect => '选择';
+
+  @override
+  String get homeRecentSelectAll => '全选';
+
+  @override
+  String get homeRecentDeselectAll => '取消全选';
 
   @override
   String get homeRecentSearchPdfs => '搜索您的 PDF…';

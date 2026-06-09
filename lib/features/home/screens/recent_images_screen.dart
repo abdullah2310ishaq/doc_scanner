@@ -22,9 +22,9 @@ class RecentImagesScreen extends StatefulWidget {
     if (!provider.isLoadingImages && provider.imageFiles.isEmpty) {
       provider.loadImages();
     }
-    return Navigator.of(context).push(
-      MaterialPageRoute<void>(builder: (_) => const RecentImagesScreen()),
-    );
+    return Navigator.of(
+      context,
+    ).push(MaterialPageRoute<void>(builder: (_) => const RecentImagesScreen()));
   }
 
   @override
@@ -120,6 +120,23 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
     } catch (_) {
       if (mounted) AppToast.show(context, l10n.commonError);
     }
+  }
+
+  bool _isAllSelected(List<RecentFileModel> files) {
+    if (files.isEmpty) return false;
+    return files.every((f) => _selectedIds.contains(f.id));
+  }
+
+  void _toggleSelectAll(List<RecentFileModel> files) {
+    setState(() {
+      if (_isAllSelected(files)) {
+        _selectedIds.clear();
+      } else {
+        _selectedIds
+          ..clear()
+          ..addAll(files.map((f) => f.id));
+      }
+    });
   }
 
   Future<void> _deleteSelected() async {
@@ -231,6 +248,19 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
                             ),
                           ),
                           const Spacer(),
+                          if (_selectMode && files.isNotEmpty)
+                            TextButton(
+                              onPressed: () => _toggleSelectAll(files),
+                              child: Text(
+                                _isAllSelected(files)
+                                    ? l10n.homeRecentDeselectAll
+                                    : l10n.homeRecentSelectAll,
+                                style: const TextStyle(
+                                  color: AppColors.textLink,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
                           TextButton(
                             onPressed: () {
                               setState(() {

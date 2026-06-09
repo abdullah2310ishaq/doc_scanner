@@ -365,7 +365,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeRecentDocuments.
   ///
   /// In en, this message translates to:
-  /// **'Recent Documents'**
+  /// **'Recent'**
   String get homeRecentDocuments;
 
   /// No description provided for @homeSeeAll.
@@ -439,6 +439,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select'**
   String get homeRecentSelect;
+
+  /// No description provided for @homeRecentSelectAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Select all'**
+  String get homeRecentSelectAll;
+
+  /// No description provided for @homeRecentDeselectAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Deselect all'**
+  String get homeRecentDeselectAll;
 
   /// No description provided for @homeRecentSearchPdfs.
   ///

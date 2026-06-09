@@ -134,7 +134,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get homeFeatureCropSubtitle => '自動トリミング、クリーン、補正';
 
   @override
-  String get homeRecentDocuments => '最近のドキュメント';
+  String get homeRecentDocuments => 'キュメント';
 
   @override
   String get homeSeeAll => 'すべて見る';
@@ -189,6 +189,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get homeRecentSelect => '選択';
+
+  @override
+  String get homeRecentSelectAll => 'すべて選択';
+
+  @override
+  String get homeRecentDeselectAll => '選択解除';
 
   @override
   String get homeRecentSearchPdfs => 'PDF を検索…';

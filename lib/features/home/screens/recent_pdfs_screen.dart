@@ -35,6 +35,8 @@ class RecentPdfsScreen extends StatefulWidget {
 
 class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
   final _searchController = TextEditingController();
+  bool _selectMode = false;
+  final Set<String> _selectedIds = {};
 
   @override
   void initState() {
@@ -98,6 +100,49 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
     final l10n = context.l10n;
     try {
       await context.read<RecentDocumentsProvider>().toggleFavorite(file);
+    } catch (_) {
+      if (mounted) AppToast.show(context, l10n.commonError);
+    }
+  }
+
+  bool _isAllSelected(List<RecentFileModel> files) {
+    if (files.isEmpty) return false;
+    return files.every((f) => _selectedIds.contains(f.id));
+  }
+
+  void _toggleSelectAll(List<RecentFileModel> files) {
+    setState(() {
+      if (_isAllSelected(files)) {
+        _selectedIds.clear();
+      } else {
+        _selectedIds
+          ..clear()
+          ..addAll(files.map((f) => f.id));
+      }
+    });
+  }
+
+  Future<void> _deleteSelected() async {
+    if (_selectedIds.isEmpty) return;
+    final l10n = context.l10n;
+    final provider = context.read<RecentDocumentsProvider>();
+
+    final ok = await DeleteDialog.show(
+      context: context,
+      title: l10n.commonDelete,
+      message: l10n.smartCropDeletePdfConfirm,
+    );
+    if (ok != true || !mounted) return;
+
+    try {
+      for (final id in List<String>.from(_selectedIds)) {
+        final target = provider.pdfFiles.firstWhere((f) => f.id == id);
+        await provider.deleteFile(target);
+      }
+      setState(() {
+        _selectedIds.clear();
+        _selectMode = false;
+      });
     } catch (_) {
       if (mounted) AppToast.show(context, l10n.commonError);
     }
@@ -188,6 +233,52 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                      child: Row(
+                        children: [
+                          Text(
+                            l10n.homeRecentAdded,
+                            style: const TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                          const Spacer(),
+                          if (_selectMode && files.isNotEmpty)
+                            TextButton(
+                              onPressed: () => _toggleSelectAll(files),
+                              child: Text(
+                                _isAllSelected(files)
+                                    ? l10n.homeRecentDeselectAll
+                                    : l10n.homeRecentSelectAll,
+                                style: const TextStyle(
+                                  color: AppColors.textLink,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                _selectMode = !_selectMode;
+                                _selectedIds.clear();
+                              });
+                            },
+                            child: Text(
+                              _selectMode
+                                  ? l10n.commonCancel
+                                  : l10n.homeRecentSelect,
+                              style: const TextStyle(
+                                color: AppColors.textLink,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Expanded(
                       child: files.isEmpty
                           ? Center(
@@ -203,6 +294,9 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
                               itemCount: files.length,
                               itemBuilder: (context, index) {
                                 final file = files[index];
+                                final isSelected = _selectedIds.contains(
+                                  file.id,
+                                );
 
                                 return Container(
                                   margin: const EdgeInsets.only(bottom: 8),
@@ -210,7 +304,10 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(12),
                                     border: Border.all(
-                                      color: const Color(0xFFEFEFEF),
+                                      color: isSelected
+                                          ? AppColors.smartCropPrimary
+                                          : const Color(0xFFEFEFEF),
+                                      width: isSelected ? 2 : 1,
                                     ),
                                   ),
                                   child: ListTile(
@@ -219,13 +316,30 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
                                       left: 12,
                                       right: 4,
                                     ),
-                                    leading: Container(
-                                      // Yahan card icon ki jagah aapka custom SVG laga diya hai:
-                                      child: SvgPicture.asset(
-                                        'assets/recent_pdf.svg',
-                                        width: 40,
-                                        height: 40,
-                                      ),
+                                    leading: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        if (_selectMode)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              right: 8,
+                                            ),
+                                            child: Icon(
+                                              isSelected
+                                                  ? Icons.check_circle
+                                                  : Icons.circle_outlined,
+                                              color: isSelected
+                                                  ? AppColors.smartCropPrimary
+                                                  : AppColors.textSecondary,
+                                              size: 22,
+                                            ),
+                                          ),
+                                        SvgPicture.asset(
+                                          'assets/recent_pdf.svg',
+                                          width: 40,
+                                          height: 40,
+                                        ),
+                                      ],
                                     ),
                                     title: Text(
                                       file.displayName,
@@ -251,7 +365,9 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
                                         ),
                                       ),
                                     ),
-                                    trailing: Row(
+                                    trailing: _selectMode
+                                        ? null
+                                        : Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         if (file.isFavorite)
@@ -329,7 +445,19 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
                                         ),
                                       ],
                                     ),
-                                    onTap: () => _openPdf(file),
+                                    onTap: () {
+                                      if (_selectMode) {
+                                        setState(() {
+                                          if (isSelected) {
+                                            _selectedIds.remove(file.id);
+                                          } else {
+                                            _selectedIds.add(file.id);
+                                          }
+                                        });
+                                      } else {
+                                        _openPdf(file);
+                                      }
+                                    },
                                   ),
                                 );
                               },
@@ -337,6 +465,45 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
                     ),
                   ],
                 ),
+          bottomNavigationBar: _selectMode
+              ? SafeArea(
+                  child: Container(
+                    height: 56,
+                    margin: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: AppColors.documentCardBorder),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: AppColors.cardShadow,
+                          blurRadius: 8,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          '${_selectedIds.length} ${l10n.homeRecentSelect}',
+                          style: const TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        const Spacer(),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.delete_outline,
+                            color: Colors.redAccent,
+                          ),
+                          onPressed: _selectedIds.isEmpty
+                              ? null
+                              : _deleteSelected,
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              : null,
         );
       },
     );

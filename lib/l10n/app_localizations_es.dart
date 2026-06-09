@@ -136,7 +136,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Recorta, limpia y mejora automáticamente';
 
   @override
-  String get homeRecentDocuments => 'Documentos recientes';
+  String get homeRecentDocuments => 'Recientes';
 
   @override
   String get homeSeeAll => 'Ver todo';
@@ -192,6 +192,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get homeRecentSelect => 'Seleccionar';
+
+  @override
+  String get homeRecentSelectAll => 'Seleccionar todo';
+
+  @override
+  String get homeRecentDeselectAll => 'Deseleccionar todo';
 
   @override
   String get homeRecentSearchPdfs => 'Buscar PDF…';

@@ -137,7 +137,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get homeFeatureCropSubtitle => 'Автообрезка, очистка и улучшение';
 
   @override
-  String get homeRecentDocuments => 'Последние документы';
+  String get homeRecentDocuments => 'документы';
 
   @override
   String get homeSeeAll => 'Смотреть все';
@@ -197,6 +197,12 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get homeRecentSelect => 'Выбрать';
+
+  @override
+  String get homeRecentSelectAll => 'Выбрать все';
+
+  @override
+  String get homeRecentDeselectAll => 'Снять выделение';
 
   @override
   String get homeRecentSearchPdfs => 'Искать в PDF…';

@@ -24,13 +24,14 @@ class CameraService {
       orElse: () => _cameras.first,
     );
 
+    // high (1080p) is enough for OCR; max binds a 48MP capture stream on many devices.
     final controller = CameraController(
       backCamera,
-      ResolutionPreset.max,
+      ResolutionPreset.high,
       enableAudio: false,
       imageFormatGroup: Platform.isIOS
           ? ImageFormatGroup.bgra8888
-          : ImageFormatGroup.yuv420,
+          : ImageFormatGroup.nv21,
     );
 
     await controller.initialize();

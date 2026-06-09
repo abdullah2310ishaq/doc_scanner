@@ -1,13 +1,12 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 import '../../../core/services/permission_service.dart';
 import '../models/ocr_text_block.dart';
+import '../services/camera_input_image_converter.dart';
 import '../services/camera_service.dart';
 
 enum LiveOcrCameraStatus {
@@ -27,7 +26,8 @@ class LiveOcrCameraProvider extends ChangeNotifier {
 
   final PermissionService _permissionService;
   final CameraService _cameraService;
-  final TextRecognizer _recognizer = TextRecognizer();
+  TextRecognizer? _recognizer;
+  CameraInputImageConverter? _inputImageConverter;
 
   // Debounce: only push new results to the UI every 200ms.
   static const _debounceMs = 200;
@@ -61,6 +61,10 @@ class LiveOcrCameraProvider extends ChangeNotifier {
 
     try {
       await _cameraService.initialize();
+      final camera = _cameraService.controller?.description;
+      if (camera != null) {
+        _inputImageConverter = CameraInputImageConverter(camera);
+      }
       _errorMessage = null;
       _setStatus(LiveOcrCameraStatus.ready);
       _startLiveOcr();
@@ -109,10 +113,14 @@ class LiveOcrCameraProvider extends ChangeNotifier {
         _isProcessing = true;
 
         try {
-          final inputImage = _convertCameraImageToInputImage(image, controller);
+          final converter = _inputImageConverter;
+          if (converter == null) return;
+
+          final inputImage = converter.fromCameraImage(image, controller);
           if (inputImage == null) return;
 
-          final result = await _recognizer.processImage(inputImage);
+          _recognizer ??= TextRecognizer();
+          final result = await _recognizer!.processImage(inputImage);
 
           final blocks = <OcrTextBlock>[];
           for (final block in result.blocks) {
@@ -152,73 +160,11 @@ class LiveOcrCameraProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Converts a camera image frame to an ML Kit InputImage.
-  ///
-  /// The critical fix is computing rotation dynamically by combining the
-  /// camera sensor orientation with the current device orientation.
-  /// Using the raw sensorOrientation value alone is incorrect when the
-  /// user holds the phone at any orientation other than the default.
-  InputImage? _convertCameraImageToInputImage(
-    CameraImage image,
-    CameraController controller,
-  ) {
-    final rotation = _computeRotation(controller);
-
-    final format = Platform.isIOS
-        ? InputImageFormat.bgra8888
-        : InputImageFormat.yuv_420_888;
-
-    final WriteBuffer allBytes = WriteBuffer();
-    for (final Plane plane in image.planes) {
-      allBytes.putUint8List(plane.bytes);
-    }
-    final bytes = allBytes.done().buffer.asUint8List();
-
-    final metadata = InputImageMetadata(
-      size: Size(image.width.toDouble(), image.height.toDouble()),
-      rotation: rotation,
-      format: format,
-      bytesPerRow: image.planes[0].bytesPerRow,
-    );
-
-    return InputImage.fromBytes(bytes: bytes, metadata: metadata);
-  }
-
-  /// Compute the correct InputImageRotation by combining the camera's
-  /// fixed sensor orientation with the live device orientation.
-  InputImageRotation _computeRotation(CameraController controller) {
-    final sensorOrientation = controller.description.sensorOrientation;
-
-    // Map DeviceOrientation to degrees clockwise from portrait-up.
-    var deviceAngle = 0;
-    switch (controller.value.deviceOrientation) {
-      case DeviceOrientation.portraitUp:
-        deviceAngle = 0;
-      case DeviceOrientation.landscapeLeft:
-        deviceAngle = 90;
-      case DeviceOrientation.portraitDown:
-        deviceAngle = 180;
-      case DeviceOrientation.landscapeRight:
-        deviceAngle = 270;
-    }
-
-    // Android and iOS compensate in opposite directions.
-    final int rawAngle;
-    if (Platform.isAndroid) {
-      rawAngle = (sensorOrientation - deviceAngle + 360) % 360;
-    } else {
-      rawAngle = (sensorOrientation + deviceAngle) % 360;
-    }
-
-    return InputImageRotationValue.fromRawValue(rawAngle) ??
-        InputImageRotation.rotation0deg;
-  }
-
   @override
   void dispose() {
     _disposed = true;
     _debounceTimer?.cancel();
-    _recognizer.close();
+    _recognizer?.close();
     _cameraService.dispose();
     super.dispose();
   }

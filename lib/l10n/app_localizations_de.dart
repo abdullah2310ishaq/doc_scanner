@@ -138,7 +138,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Automatisches Zuschneiden, Reinigen und Verbessern';
 
   @override
-  String get homeRecentDocuments => 'Aktuelle Dokumente';
+  String get homeRecentDocuments => 'Aktuelle';
 
   @override
   String get homeSeeAll => 'Alle anzeigen';
@@ -194,6 +194,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get homeRecentSelect => 'Auswählen';
+
+  @override
+  String get homeRecentSelectAll => 'Alle auswählen';
+
+  @override
+  String get homeRecentDeselectAll => 'Auswahl aufheben';
 
   @override
   String get homeRecentSearchPdfs => 'PDFs suchen…';

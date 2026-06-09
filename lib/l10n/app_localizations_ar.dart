@@ -195,6 +195,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeRecentSelect => 'تحديد';
 
   @override
+  String get homeRecentSelectAll => 'تحديد الكل';
+
+  @override
+  String get homeRecentDeselectAll => 'إلغاء تحديد الكل';
+
+  @override
   String get homeRecentSearchPdfs => 'ابحث في PDF…';
 
   @override

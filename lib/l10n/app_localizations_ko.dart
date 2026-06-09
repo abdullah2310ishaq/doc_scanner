@@ -134,7 +134,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get homeFeatureCropSubtitle => '자동 자르기, 정리 및 보정';
 
   @override
-  String get homeRecentDocuments => '최근 문서';
+  String get homeRecentDocuments => '문서';
 
   @override
   String get homeSeeAll => '모두 보기';
@@ -189,6 +189,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get homeRecentSelect => '선택';
+
+  @override
+  String get homeRecentSelectAll => '모두 선택';
+
+  @override
+  String get homeRecentDeselectAll => '선택 해제';
 
   @override
   String get homeRecentSearchPdfs => 'PDF 검색…';
