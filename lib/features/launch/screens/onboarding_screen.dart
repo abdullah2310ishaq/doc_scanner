@@ -25,9 +25,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   static const int _pageCount = 4;
   // Page stay interval balanced to handle the longer 3-second scroll duration smoothly
-  static const Duration _autoScrollInterval = Duration(seconds: 6);
+  static const Duration _autoScrollInterval = Duration(seconds: 3);
   // Changed page animation duration to exactly 3000 milliseconds for an ultra-smooth slow transition
-  static const Duration _pageAnimationDuration = Duration(milliseconds: 3000);
+  static const Duration _pageAnimationDuration = Duration(milliseconds: 500);
 
   @override
   void initState() {
@@ -83,6 +83,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     _startAutoScroll();
   }
 
+  void _goToLastPage() {
+    if (_pageIndex >= _pageCount - 1) {
+      return;
+    }
+    _pageController.animateToPage(
+      _pageCount - 1,
+      duration: _pageAnimationDuration,
+      curve: Curves.easeInOut,
+    );
+    _startAutoScroll();
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -131,7 +143,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
-                    onPressed: _finishOnboarding,
+                    onPressed: _goToLastPage,
                     child: Text(l10n.commonSkip),
                   ),
                 )
@@ -148,8 +160,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   itemBuilder: (context, index) {
                     final page = pages[index];
 
-                    final bool scaleJson = (index == 1 || index == 2);
-                    final double currentScale = index == 2 ? 1.65 : 1.15;
+                    final bool scaleJson = index == 1;
+                    final double currentScale = index == 3 ? 1.65 : 1.15;
 
                     Widget rawGraphic = page.pngOverlayAsset != null
                         ? _buildStackedGraphic(
@@ -165,13 +177,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             child: Lottie.asset(
                               page.lottieAsset,
                               fit: BoxFit.contain,
-                              alignment: index == 2
+                              alignment: index == 3
                                   ? const Alignment(0, -0.3)
                                   : Alignment.center,
                             ),
                           );
 
-                    final Widget finalGraphic = index == 2
+                    final Widget finalGraphic = index == 3
                         ? Padding(
                             padding: const EdgeInsets.only(top: 35, bottom: 5),
                             child: Transform.scale(
@@ -192,8 +204,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Expanded(
                           child: Padding(
                             padding: EdgeInsets.symmetric(
-                              horizontal: index == 2 ? 0 : 8,
-                              vertical: index == 2 ? 0 : 8,
+                              horizontal: index == 3 ? 0 : 8,
+                              vertical: index == 3 ? 0 : 8,
                             ),
                             child: finalGraphic,
                           ),

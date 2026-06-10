@@ -519,7 +519,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsPrivacy => 'Privacy policy';
 
   @override
-  String get settingsTerms => 'Terms of use';
+  String get settingsTerms => 'Terms & Conditions';
+
+  @override
+  String get settingsContactSupport => 'Contact Support';
+
+  @override
+  String get settingsMoreApps => 'More Apps';
 
   @override
   String get settingsRateApp => 'Rate App';
@@ -644,7 +650,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get languageAuto => 'Detect language';
 
   @override
-  String get chatbotTitle => 'AI Chatbot';
+  String get chatbotTitle => 'Ask PDF';
 
   @override
   String get chatbotHistoryButton => 'Chat history';
@@ -979,7 +985,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonContinue => 'Continue';
 
   @override
-  String get onboardingStart => 'Get Started With →';
+  String get onboardingStart => 'Get Started →';
 
   @override
   String get splashTagline => 'AI-powered document scanning';

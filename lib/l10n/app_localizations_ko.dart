@@ -511,6 +511,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get settingsTerms => '이용약관';
 
   @override
+  String get settingsContactSupport => '고객 지원 문의';
+
+  @override
+  String get settingsMoreApps => '더 많은 앱';
+
+  @override
   String get settingsRateApp => '앱 평가';
 
   @override

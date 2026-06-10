@@ -518,7 +518,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsPrivacy => 'سياسة الخصوصية';
 
   @override
-  String get settingsTerms => 'شروط الاستخدام';
+  String get settingsTerms => 'الشروط والأحكام';
+
+  @override
+  String get settingsContactSupport => 'تواصل مع الدعم';
+
+  @override
+  String get settingsMoreApps => 'المزيد من التطبيقات';
 
   @override
   String get settingsRateApp => 'قيّم التطبيق';

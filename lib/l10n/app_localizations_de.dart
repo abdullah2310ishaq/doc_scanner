@@ -528,7 +528,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingsPrivacy => 'Datenschutzrichtlinie';
 
   @override
-  String get settingsTerms => 'Nutzungsbedingungen';
+  String get settingsTerms => 'Allgemeine Geschäftsbedingungen';
+
+  @override
+  String get settingsContactSupport => 'Support kontaktieren';
+
+  @override
+  String get settingsMoreApps => 'Weitere Apps';
 
   @override
   String get settingsRateApp => 'App bewerten';

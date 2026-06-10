@@ -513,6 +513,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get settingsTerms => '利用規約';
 
   @override
+  String get settingsContactSupport => 'サポートに連絡';
+
+  @override
+  String get settingsMoreApps => 'その他のアプリ';
+
+  @override
   String get settingsRateApp => 'アプリを評価';
 
   @override

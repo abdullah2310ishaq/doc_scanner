@@ -508,7 +508,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settingsPrivacy => '隐私政策';
 
   @override
-  String get settingsTerms => '使用条款';
+  String get settingsTerms => '条款与条件';
+
+  @override
+  String get settingsContactSupport => '联系支持';
+
+  @override
+  String get settingsMoreApps => '更多应用';
 
   @override
   String get settingsRateApp => '评价应用';

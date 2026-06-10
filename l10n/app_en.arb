@@ -190,7 +190,9 @@
   "settingsTheme": "Theme",
   "settingsAbout": "About",
   "settingsPrivacy": "Privacy policy",
-  "settingsTerms": "Terms of use",
+  "settingsTerms": "Terms & Conditions",
+  "settingsContactSupport": "Contact Support",
+  "settingsMoreApps": "More Apps",
   "settingsRateApp": "Rate App",
   "settingsShareApp": "Share App",
   "settingsGreetingPrefix": "Good Morning,",
@@ -240,7 +242,7 @@
   "languageSearchHint": "Search language",
   "languageAuto": "Detect language",
 
-  "chatbotTitle": "AI Chatbot",
+  "chatbotTitle": "Ask PDF",
   "chatbotHistoryButton": "Chat history",
   "chatbotBadge": "Your Smart AI Assistant",
   "chatbotHeadlineChat": "Chat",
@@ -352,7 +354,7 @@
   "commonNext": "Next",
   "commonSkip": "Skip",
   "commonContinue": "Continue",
-  "onboardingStart": "Get Started With →",
+  "onboardingStart": "Get Started →",
 
   "splashTagline": "AI-powered document scanning",
 

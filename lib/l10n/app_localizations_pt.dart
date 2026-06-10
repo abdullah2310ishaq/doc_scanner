@@ -524,7 +524,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get settingsPrivacy => 'Política de privacidade';
 
   @override
-  String get settingsTerms => 'Termos de uso';
+  String get settingsTerms => 'Termos e condições';
+
+  @override
+  String get settingsContactSupport => 'Contactar suporte';
+
+  @override
+  String get settingsMoreApps => 'Mais aplicativos';
 
   @override
   String get settingsRateApp => 'Avaliar app';

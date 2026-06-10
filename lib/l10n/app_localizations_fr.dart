@@ -533,7 +533,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get settingsPrivacy => 'Politique de confidentialité';
 
   @override
-  String get settingsTerms => 'Conditions d\'utilisation';
+  String get settingsTerms => 'Conditions générales';
+
+  @override
+  String get settingsContactSupport => 'Contacter le support';
+
+  @override
+  String get settingsMoreApps => 'Plus d\'applications';
 
   @override
   String get settingsRateApp => 'Noter l\'app';

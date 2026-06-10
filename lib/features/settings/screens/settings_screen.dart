@@ -137,7 +137,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               svgAsset:
                   'assets/settings/privacypolicy.svg', // custom icons replace kar sakte hain variable path se
               iconColor: const Color(0xff43A047),
-              title: 'Terms & Conditions',
+              title: l10n.settingsTerms,
               trailing: Icon(
                 Icons.chevron_right_rounded,
                 color: Colors.grey[400],
@@ -156,7 +156,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             _buildSettingsTile(
               svgAsset: 'assets/settings/share.svg',
               iconColor: const Color(0xffFB8C00),
-              title: 'Contact Support',
+              title: l10n.settingsContactSupport,
               trailing: Icon(
                 Icons.chevron_right_rounded,
                 color: Colors.grey[400],
@@ -195,7 +195,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             _buildSettingsTile(
               svgAsset: 'assets/settings/share.svg',
               iconColor: const Color(0xff00ACC1),
-              title: 'More Apps',
+              title: l10n.settingsMoreApps,
               trailing: Icon(
                 Icons.chevron_right_rounded,
                 color: Colors.grey[400],

@@ -22,17 +22,22 @@ class AppNavbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final sideMargin = (screenWidth * 0.14).clamp(40.0, 64.0);
+
     return SafeArea(
       top: false,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        padding: EdgeInsets.fromLTRB(sideMargin, 0, sideMargin, 16),
         child: Container(
           height: 64,
+          width: double.infinity,
           decoration: BoxDecoration(
             gradient: AppColors.navbarGradient,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _NavItem(
                 iconAsset: HomeAssets.navbariconn,
@@ -40,6 +45,7 @@ class AppNavbar extends StatelessWidget {
                 isSelected: current == AppNavItem.home,
                 onTap: () => onChanged(AppNavItem.home),
               ),
+              const SizedBox(width: 80),
               _NavItem(
                 iconData: Icons.settings_rounded,
                 label: settingsLabel,
@@ -88,13 +94,15 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(24),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _buildIcon(),

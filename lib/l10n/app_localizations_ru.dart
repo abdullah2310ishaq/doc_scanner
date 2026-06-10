@@ -534,6 +534,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsTerms => 'Условия использования';
 
   @override
+  String get settingsContactSupport => 'Связаться с поддержкой';
+
+  @override
+  String get settingsMoreApps => 'Другие приложения';
+
+  @override
   String get settingsRateApp => 'Оценить';
 
   @override

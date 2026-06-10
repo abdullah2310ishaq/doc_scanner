@@ -1061,8 +1061,20 @@ abstract class AppLocalizations {
   /// No description provided for @settingsTerms.
   ///
   /// In en, this message translates to:
-  /// **'Terms of use'**
+  /// **'Terms & Conditions'**
   String get settingsTerms;
+
+  /// No description provided for @settingsContactSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Support'**
+  String get settingsContactSupport;
+
+  /// No description provided for @settingsMoreApps.
+  ///
+  /// In en, this message translates to:
+  /// **'More Apps'**
+  String get settingsMoreApps;
 
   /// No description provided for @settingsRateApp.
   ///
@@ -1295,7 +1307,7 @@ abstract class AppLocalizations {
   /// No description provided for @chatbotTitle.
   ///
   /// In en, this message translates to:
-  /// **'AI Chatbot'**
+  /// **'Ask PDF'**
   String get chatbotTitle;
 
   /// No description provided for @chatbotHistoryButton.
@@ -1937,7 +1949,7 @@ abstract class AppLocalizations {
   /// No description provided for @onboardingStart.
   ///
   /// In en, this message translates to:
-  /// **'Get Started With →'**
+  /// **'Get Started →'**
   String get onboardingStart;
 
   /// No description provided for @splashTagline.

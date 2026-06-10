@@ -8,7 +8,7 @@ class HomeFeatureCard extends StatelessWidget {
     super.key,
     required this.title,
     required this.subtitle,
-    required this.backgroundColor,
+    this.backgroundColor = Colors.white,
     required this.iconAsset,
     this.onTap,
   });
@@ -19,52 +19,66 @@ class HomeFeatureCard extends StatelessWidget {
   final String iconAsset;
   final VoidCallback? onTap;
 
-  static const double _radius = 6;
-  static const double _iconSize = 32;
+  static const double _radius = 8;
+  static const double _iconSize =
+      36; // Made icon slightly bigger to match the taller card
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: backgroundColor,
-      borderRadius: BorderRadius.circular(_radius),
-      child: InkWell(
-        onTap: onTap,
+    return Padding(
+      // Reduced the gap between cards from 12 to 8
+      padding: const EdgeInsets.only(bottom: 2.0),
+      child: Material(
+        color: Colors.white,
         borderRadius: BorderRadius.circular(_radius),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-          child: Row(
-            children: [
-              _FeatureIcon(assetPath: iconAsset, size: _iconSize),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimary,
+        shadowColor: Colors.black.withOpacity(0.12), // Smoother, softer shadow
+        elevation: 3,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(_radius),
+          child: Padding(
+            // Increased vertical padding to 24 for extra length/height
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            child: Row(
+              children: [
+                _FeatureIcon(assetPath: iconAsset, size: _iconSize),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 16, // Increased slightly for better balance
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textPrimary,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      subtitle,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 11,
-                        color: AppColors.textSecondary,
-                        height: 1.35,
+                      const SizedBox(height: 6),
+                      Text(
+                        subtitle,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: AppColors.textSecondary,
+                          height: 1.4,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(width: 12),
+                const Icon(
+                  Icons.chevron_right,
+                  color: AppColors.textSecondary,
+                  size: 24, // Matches the new card size perfectly
+                ),
+              ],
+            ),
           ),
         ),
       ),
