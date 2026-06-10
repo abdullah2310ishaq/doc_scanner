@@ -45,6 +45,19 @@ class PdfAssistantStorageService {
     return PdfAssistantSessionModel.fromJson(json);
   }
 
+  Future<File> sessionFile(String sessionId, String fileName) async {
+    final dir = await sessionDirectory(sessionId);
+    return File(p.join(dir.path, fileName));
+  }
+
+  Future<void> writeTextFile(String path, String content) async {
+    final file = File(path);
+    if (!await file.parent.exists()) {
+      await file.parent.create(recursive: true);
+    }
+    await file.writeAsString(content);
+  }
+
   Future<void> deleteSession(String sessionId) async {
     final dir = Directory(
       p.join((await _rootDirectory()).path, sessionId),

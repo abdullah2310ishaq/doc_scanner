@@ -50,7 +50,7 @@
   "homeFeatureOcrSubtitle": "이미지 또는 문서에서 텍스트 스캔",
   "homeFeaturePdfTitle": "PDF 어시스턴트",
   "homeFeaturePdfSubtitle": "PDF 번역 및 텍스트 변환",
-  "homeFeatureChatbotTitle": "AI 챗봇",
+  "homeFeatureChatbotTitle": "PDF에게 질문",
   "homeFeatureChatbotSubtitle": "PDF를 업로드하여 질문하기",
   "homeFeatureCropTitle": "스마트 자르기",
   "homeFeatureCropSubtitle": "자동 자르기, 정리 및 보정",

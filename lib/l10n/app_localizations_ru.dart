@@ -124,7 +124,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get homeFeaturePdfSubtitle => 'Перевод и транскрибация PDF';
 
   @override
-  String get homeFeatureChatbotTitle => 'ИИ Чат-бот';
+  String get homeFeatureChatbotTitle => 'Спросить PDF';
 
   @override
   String get homeFeatureChatbotSubtitle =>

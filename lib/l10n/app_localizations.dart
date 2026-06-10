@@ -341,7 +341,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeFeatureChatbotTitle.
   ///
   /// In en, this message translates to:
-  /// **'AI Chabot'**
+  /// **'Ask PDF'**
   String get homeFeatureChatbotTitle;
 
   /// No description provided for @homeFeatureChatbotSubtitle.
@@ -1307,7 +1307,7 @@ abstract class AppLocalizations {
   /// No description provided for @chatbotTitle.
   ///
   /// In en, this message translates to:
-  /// **'Ask PDF'**
+  /// **'AI Chatbot'**
   String get chatbotTitle;
 
   /// No description provided for @chatbotHistoryButton.

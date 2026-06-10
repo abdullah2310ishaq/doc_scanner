@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as p;
 import 'package:flutter/services.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
@@ -39,7 +40,7 @@ class _PdfAssistantExtractedTextScreenState
 
   Future<void> _loadText() async {
     try {
-      final txtPath = widget.pdfPath.replaceAll('.pdf', '.txt');
+      final txtPath = p.setExtension(widget.pdfPath, '.txt');
       final file = File(txtPath);
       
       if (await file.exists()) {
@@ -91,7 +92,7 @@ class _PdfAssistantExtractedTextScreenState
     if (_content != null && _content!.isNotEmpty) {
       try {
         await PdfAssistantFileActionsService().shareFile(
-          widget.pdfPath.replaceAll('.pdf', '.txt'), // Share the text file if available
+          p.setExtension(widget.pdfPath, '.txt'),
           subject: widget.title,
         );
       } catch (_) {

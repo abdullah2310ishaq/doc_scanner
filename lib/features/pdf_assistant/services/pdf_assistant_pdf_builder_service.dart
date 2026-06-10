@@ -67,7 +67,7 @@ class PdfAssistantPdfBuilderService {
     );
 
     final bytes = await doc.save();
-    await File(outputPath).writeAsBytes(bytes);
+    await _writeBytes(outputPath, bytes);
   }
 
   /// Translated pages PDF (FIXED VERSION)
@@ -158,7 +158,15 @@ class PdfAssistantPdfBuilderService {
     );
 
     final bytes = await doc.save();
-    await File(outputPath).writeAsBytes(bytes);
+    await _writeBytes(outputPath, bytes);
+  }
+
+  Future<void> _writeBytes(String outputPath, List<int> bytes) async {
+    final file = File(outputPath);
+    if (!await file.parent.exists()) {
+      await file.parent.create(recursive: true);
+    }
+    await file.writeAsBytes(bytes);
   }
 
   List<String> _splitIntoParagraphs(String text) {

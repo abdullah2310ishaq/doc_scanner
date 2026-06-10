@@ -122,7 +122,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get homeFeaturePdfSubtitle => 'PDFの翻訳と転写';
 
   @override
-  String get homeFeatureChatbotTitle => 'AIシャボット';
+  String get homeFeatureChatbotTitle => 'PDFに質問';
 
   @override
   String get homeFeatureChatbotSubtitle => 'PDFをアップロードして質問する';

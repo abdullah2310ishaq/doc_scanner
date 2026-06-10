@@ -122,7 +122,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get homeFeaturePdfSubtitle => '翻译和转录 PDF';
 
   @override
-  String get homeFeatureChatbotTitle => 'AI 聊天机器人';
+  String get homeFeatureChatbotTitle => '询问 PDF';
 
   @override
   String get homeFeatureChatbotSubtitle => '上传 PDF 进行提问';

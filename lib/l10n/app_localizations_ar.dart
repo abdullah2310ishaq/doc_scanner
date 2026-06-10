@@ -125,7 +125,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeFeaturePdfSubtitle => 'ترجمة ونسخ PDF';
 
   @override
-  String get homeFeatureChatbotTitle => 'آي شابوت';
+  String get homeFeatureChatbotTitle => 'اسأل PDF';
 
   @override
   String get homeFeatureChatbotSubtitle => 'قم بتحميل ملف PDF لطرح الأسئلة';

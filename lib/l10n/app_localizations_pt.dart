@@ -123,7 +123,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get homeFeaturePdfSubtitle => 'Traduzir e Transcrever PDF';
 
   @override
-  String get homeFeatureChatbotTitle => 'Chatbot de IA';
+  String get homeFeatureChatbotTitle => 'Pergunte ao PDF';
 
   @override
   String get homeFeatureChatbotSubtitle => 'Enviar PDF para fazer perguntas';

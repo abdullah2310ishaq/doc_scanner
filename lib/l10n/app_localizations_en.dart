@@ -123,7 +123,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeFeaturePdfSubtitle => 'Translate & Transcribe PDF';
 
   @override
-  String get homeFeatureChatbotTitle => 'AI Chabot';
+  String get homeFeatureChatbotTitle => 'Ask PDF';
 
   @override
   String get homeFeatureChatbotSubtitle => 'Upload PDF to ask questions';
@@ -650,7 +650,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get languageAuto => 'Detect language';
 
   @override
-  String get chatbotTitle => 'Ask PDF';
+  String get chatbotTitle => 'AI Chatbot';
 
   @override
   String get chatbotHistoryButton => 'Chat history';

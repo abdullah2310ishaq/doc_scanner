@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart' as p;
 
@@ -69,7 +67,8 @@ class PdfAssistantProcessProvider extends ChangeNotifier {
     session = null;
     notifyListeners();
 
-    final sessionId = DateTime.now().millisecondsSinceEpoch.toString();
+    final sessionId =
+        '${DateTime.now().microsecondsSinceEpoch}_${hashCode.abs()}';
 
     try {
       final sessionDir = await _storageService.sessionDirectory(sessionId);
@@ -95,6 +94,7 @@ class PdfAssistantProcessProvider extends ChangeNotifier {
 
       final translatedPath = p.join(sessionDir.path, 'translated.pdf');
       final extractedPath = p.join(sessionDir.path, 'extracted_text.pdf');
+      final extractedTxtPath = p.join(sessionDir.path, 'extracted_text.txt');
 
       await _pdfBuilderService.buildTranslatedPagesPdf(
         outputPath: translatedPath,
@@ -118,8 +118,7 @@ class PdfAssistantProcessProvider extends ChangeNotifier {
         translatedText: translatedFull,
       );
 
-      final extractedTxtPath = extractedPath.replaceAll('.pdf', '.txt');
-      await File(extractedTxtPath).writeAsString(translatedFull);
+      await _storageService.writeTextFile(extractedTxtPath, translatedFull);
 
       _advance(PdfAssistantProcessStep.finalizing);
 

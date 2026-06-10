@@ -48,7 +48,7 @@
   "homeFeatureOcrSubtitle": "Scan text from image or documents",
   "homeFeaturePdfTitle": "PDF Assistant",
   "homeFeaturePdfSubtitle": "Translate & Transcribe PDF",
-  "homeFeatureChatbotTitle": "AI Chabot",
+  "homeFeatureChatbotTitle": "Ask PDF",
   "homeFeatureChatbotSubtitle": "Upload PDF to ask questions",
   "homeFeatureCropTitle": "Smart Crop",
   "homeFeatureCropSubtitle": "Auto crop, clean and enhance",
@@ -242,7 +242,7 @@
   "languageSearchHint": "Search language",
   "languageAuto": "Detect language",
 
-  "chatbotTitle": "Ask PDF",
+  "chatbotTitle": "AI Chatbot",
   "chatbotHistoryButton": "Chat history",
   "chatbotBadge": "Your Smart AI Assistant",
   "chatbotHeadlineChat": "Chat",

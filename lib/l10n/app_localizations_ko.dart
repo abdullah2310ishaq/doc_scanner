@@ -122,7 +122,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get homeFeaturePdfSubtitle => 'PDF 번역 및 텍스트 변환';
 
   @override
-  String get homeFeatureChatbotTitle => 'AI 챗봇';
+  String get homeFeatureChatbotTitle => 'PDF에게 질문';
 
   @override
   String get homeFeatureChatbotSubtitle => 'PDF를 업로드하여 질문하기';

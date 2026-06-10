@@ -50,7 +50,7 @@
   "homeFeatureOcrSubtitle": "画像またはドキュメントからテキストをスキャン",
   "homeFeaturePdfTitle": "PDFアシスタント",
   "homeFeaturePdfSubtitle": "PDFの翻訳と転写",
-  "homeFeatureChatbotTitle": "AIシャボット",
+  "homeFeatureChatbotTitle": "PDFに質問",
   "homeFeatureChatbotSubtitle": "PDFをアップロードして質問する",
   "homeFeatureCropTitle": "スマートクロップ",
   "homeFeatureCropSubtitle": "自動トリミング、クリーン、補正",
