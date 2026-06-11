@@ -254,6 +254,7 @@
   "chatbotHeadlineChat": "チャット",
   "chatbotHeadlineMiddle": "あなたと一緒に",
   "chatbotHeadlinePdf": "PDF",
+  "chatbotHeadlineSubtitle": "PDFをアップロードして何でも質問 — 即座の回答、要約、説明などを取得できます。",
   "chatbotTryAsking": "聞いてみてください",
   "chatbotSuggestSummarize": "このPDFを要約してください",
   "chatbotSuggestKeyPoints": "この PDF の重要なポイント",

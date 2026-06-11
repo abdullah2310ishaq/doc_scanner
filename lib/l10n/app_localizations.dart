@@ -1376,6 +1376,12 @@ abstract class AppLocalizations {
   /// **'PDF'**
   String get chatbotHeadlinePdf;
 
+  /// No description provided for @chatbotHeadlineSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload a PDF and ask anything — get instant answers, summaries, explanations, and more.'**
+  String get chatbotHeadlineSubtitle;
+
   /// No description provided for @chatbotTryAsking.
   ///
   /// In en, this message translates to:
@@ -1415,7 +1421,7 @@ abstract class AppLocalizations {
   /// No description provided for @chatbotUploadHint.
   ///
   /// In en, this message translates to:
-  /// **'Upload a PDF...'**
+  /// **'Upload a PDF'**
   String get chatbotUploadHint;
 
   /// No description provided for @chatbotSheetTitle.

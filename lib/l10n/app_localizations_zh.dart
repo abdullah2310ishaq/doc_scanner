@@ -669,6 +669,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get chatbotHeadlinePdf => 'PDF';
 
   @override
+  String get chatbotHeadlineSubtitle => '上传 PDF 并随意提问 — 获取即时答案、摘要、解释等更多内容。';
+
+  @override
   String get chatbotTryAsking => '试着问问';
 
   @override

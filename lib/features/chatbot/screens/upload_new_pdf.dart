@@ -68,14 +68,7 @@ class _UploadNewPdfScreenState extends State<UploadNewPdfScreen> {
         backgroundColor: AppColors.white,
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
-        title: Text(
-          l10n.chatbotTitle,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-            color: AppColors.textPrimary,
-          ),
-        ),
+
         actions: [
           IconButton(
             onPressed: () async {
@@ -105,6 +98,17 @@ class _UploadNewPdfScreenState extends State<UploadNewPdfScreen> {
                       chatLabel: l10n.chatbotHeadlineChat,
                       middleLabel: l10n.chatbotHeadlineMiddle,
                       pdfLabel: l10n.chatbotHeadlinePdf,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      l10n.chatbotHeadlineSubtitle,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        height: 1.45,
+                        color: Color(0xFF7D7D7D),
+                      ),
                     ),
                     const SizedBox(height: 24),
                     Image.asset(
@@ -269,7 +273,7 @@ class _TipsList extends StatelessWidget {
                   tip,
                   style: const TextStyle(
                     fontSize: 14,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
                   ),
                 ),

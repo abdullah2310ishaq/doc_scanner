@@ -705,6 +705,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get chatbotHeadlinePdf => 'PDF';
 
   @override
+  String get chatbotHeadlineSubtitle =>
+      'Importez un PDF et posez n\'importe quelle question — obtenez des réponses instantanées, des résumés, des explications et plus encore.';
+
+  @override
   String get chatbotTryAsking => 'Essayez de demander';
 
   @override

@@ -254,6 +254,7 @@
   "chatbotHeadlineChat": "나의 ",
   "chatbotHeadlineMiddle": "",
   "chatbotHeadlinePdf": "PDF",
+  "chatbotHeadlineSubtitle": "PDF를 업로드하고 무엇이든 질문하세요 — 즉각적인 답변, 요약, 설명 등을 받아보세요.",
   "chatbotTryAsking": "이렇게 물어보세요",
   "chatbotSuggestSummarize": "이 PDF 요약하기",
   "chatbotSuggestKeyPoints": "이 PDF의 핵심 포인트",

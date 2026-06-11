@@ -688,6 +688,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatbotHeadlinePdf => 'PDF';
 
   @override
+  String get chatbotHeadlineSubtitle =>
+      'Upload a PDF and ask anything — get instant answers, summaries, explanations, and more.';
+
+  @override
   String get chatbotTryAsking => 'Try asking';
 
   @override
@@ -706,7 +710,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chatbotAskQuestions => 'Ask Questions About this PDF';
 
   @override
-  String get chatbotUploadHint => 'Upload a PDF...';
+  String get chatbotUploadHint => 'Upload a PDF';
 
   @override
   String get chatbotSheetTitle => 'Chat with your PDF';

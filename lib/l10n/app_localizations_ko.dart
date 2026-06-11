@@ -674,6 +674,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get chatbotHeadlinePdf => 'PDF';
 
   @override
+  String get chatbotHeadlineSubtitle =>
+      'PDF를 업로드하고 무엇이든 질문하세요 — 즉각적인 답변, 요약, 설명 등을 받아보세요.';
+
+  @override
   String get chatbotTryAsking => '이렇게 물어보세요';
 
   @override
