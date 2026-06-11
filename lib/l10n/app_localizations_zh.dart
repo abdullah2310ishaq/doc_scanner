@@ -1207,6 +1207,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get smartCropSavePdf => '保存 PDF';
 
   @override
+  String get smartCropSavePdfSuccess => 'PDF 保存成功';
+
+  @override
   String get smartCropRenamePdf => '重命名';
 
   @override

@@ -2432,6 +2432,12 @@ abstract class AppLocalizations {
   /// **'Save PDF'**
   String get smartCropSavePdf;
 
+  /// No description provided for @smartCropSavePdfSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF saved successfully'**
+  String get smartCropSavePdfSuccess;
+
   /// No description provided for @smartCropRenamePdf.
   ///
   /// In en, this message translates to:

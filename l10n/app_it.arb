@@ -454,6 +454,7 @@
   "smartCropPdfFileSize": "Dimensione file",
   "smartCropViewPdf": "Visualizza PDF",
   "smartCropSavePdf": "Salva PDF",
+  "smartCropSavePdfSuccess": "PDF salvato con successo",
   "smartCropRenamePdf": "Rinomina",
   "smartCropRenamePdfHint": "Nome del documento",
   "smartCropStepReadingImages": "Lettura immagini",

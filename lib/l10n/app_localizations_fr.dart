@@ -1285,6 +1285,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get smartCropSavePdf => 'Enregistrer le PDF';
 
   @override
+  String get smartCropSavePdfSuccess => 'PDF enregistré avec succès';
+
+  @override
   String get smartCropRenamePdf => 'Renommer';
 
   @override

@@ -379,6 +379,7 @@
   "smartCropPdfFileSize": "حجم الملف",
   "smartCropViewPdf": "عرض قوات الدفاع الشعبي",
   "smartCropSavePdf": "حفظ قوات الدفاع الشعبي",
+  "smartCropSavePdfSuccess": "تم حفظ PDF بنجاح",
   "smartCropRenamePdf": "إعادة تسمية",
   "smartCropRenamePdfHint": "اسم المستند",
   "smartCropStepReadingImages": "قراءة الصور",

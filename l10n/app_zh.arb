@@ -454,6 +454,7 @@
   "smartCropPdfFileSize": "文件大小",
   "smartCropViewPdf": "查看 PDF",
   "smartCropSavePdf": "保存 PDF",
+  "smartCropSavePdfSuccess": "PDF 保存成功",
   "smartCropRenamePdf": "重命名",
   "smartCropRenamePdfHint": "文档名称",
   "smartCropStepReadingImages": "正在读取图片",

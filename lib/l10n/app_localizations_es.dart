@@ -1277,6 +1277,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get smartCropSavePdf => 'Guardar PDF';
 
   @override
+  String get smartCropSavePdfSuccess => 'PDF guardado correctamente';
+
+  @override
   String get smartCropRenamePdf => 'Renombrar';
 
   @override

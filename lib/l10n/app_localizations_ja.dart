@@ -1222,6 +1222,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get smartCropSavePdf => 'PDFを保存';
 
   @override
+  String get smartCropSavePdfSuccess => 'PDFを保存しました';
+
+  @override
   String get smartCropRenamePdf => '名前の変更';
 
   @override

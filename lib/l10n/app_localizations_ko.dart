@@ -1220,6 +1220,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get smartCropSavePdf => 'PDF 저장';
 
   @override
+  String get smartCropSavePdfSuccess => 'PDF가 성공적으로 저장되었습니다';
+
+  @override
   String get smartCropRenamePdf => '이름 바꾸기';
 
   @override

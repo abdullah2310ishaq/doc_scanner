@@ -1243,6 +1243,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get smartCropSavePdf => 'حفظ قوات الدفاع الشعبي';
 
   @override
+  String get smartCropSavePdfSuccess => 'تم حفظ PDF بنجاح';
+
+  @override
   String get smartCropRenamePdf => 'إعادة تسمية';
 
   @override

@@ -7,9 +7,10 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/delete_dialog.dart';
 import '../../../core/widgets/toast.dart';
-import '../../pdf_assistant/services/pdf_assistant_file_actions_service.dart';
 import '../../home/providers/recent_documents_provider.dart';
+import '../../home/screens/main_shell_screen.dart';
 import '../../home/services/recent_documents_service.dart';
+import '../../pdf_assistant/services/pdf_assistant_file_actions_service.dart';
 import '../services/smart_crop_pdf_file_service.dart';
 import 'smart_crop_pdf_view_screen.dart';
 
@@ -62,6 +63,13 @@ class _SmartCropPdfResultScreenState extends State<SmartCropPdfResultScreen> {
     return _fileService.formatFileSize(file.lengthSync());
   }
 
+  void _goHome() {
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute<void>(builder: (_) => const MainShellScreen()),
+      (route) => false,
+    );
+  }
+
   Future<void> _rename() async {
     final l10n = context.l10n;
     final controller = TextEditingController(text: _displayName);
@@ -73,9 +81,7 @@ class _SmartCropPdfResultScreenState extends State<SmartCropPdfResultScreen> {
           title: Text(l10n.smartCropRenamePdf),
           content: TextField(
             controller: controller,
-            decoration: InputDecoration(
-              hintText: l10n.smartCropRenamePdfHint,
-            ),
+            decoration: InputDecoration(hintText: l10n.smartCropRenamePdfHint),
             autofocus: true,
           ),
           actions: [
@@ -125,7 +131,7 @@ class _SmartCropPdfResultScreenState extends State<SmartCropPdfResultScreen> {
     try {
       await _fileService.deletePdf(_pdfPath);
       if (!mounted) return;
-      Navigator.of(context).popUntil((route) => route.isFirst);
+      _goHome();
     } catch (_) {
       if (!mounted) return;
       AppToast.show(context, l10n.commonError);
@@ -162,7 +168,11 @@ class _SmartCropPdfResultScreenState extends State<SmartCropPdfResultScreen> {
       );
       await RecentDocumentsProvider.refreshGlobal();
       if (!mounted) return;
-      AppToast.show(context, l10n.pdfAssistantDownloadSuccess);
+
+      AppToast.show(context, l10n.smartCropSavePdfSuccess);
+      await Future<void>.delayed(const Duration(milliseconds: 1500));
+      if (!mounted) return;
+      _goHome();
     } catch (_) {
       if (!mounted) return;
       AppToast.show(context, l10n.commonError);
@@ -176,139 +186,148 @@ class _SmartCropPdfResultScreenState extends State<SmartCropPdfResultScreen> {
         ? '${widget.pageCount} ${l10n.smartCropPdfPagesLabel}'
         : l10n.smartCropPdfSinglePageLabel;
 
-    return Scaffold(
-      backgroundColor: AppColors.smartCropSoftBackground,
-      appBar: AppBar(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        _goHome();
+      },
+      child: Scaffold(
         backgroundColor: AppColors.smartCropSoftBackground,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
-          onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
-        ),
-        title: Text(
-          l10n.smartCropTitle,
-          style: const TextStyle(
-            color: AppColors.textPrimary,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
+        appBar: AppBar(
+          backgroundColor: AppColors.smartCropSoftBackground,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
+            onPressed: _goHome,
           ),
-        ),
-        actions: [
-          PopupMenuButton<String>(
-            icon: const Icon(Icons.more_vert, color: AppColors.textPrimary),
-            onSelected: (value) {
-              if (value == 'rename') {
-                _rename();
-              } else if (value == 'delete') {
-                _delete();
-              }
-            },
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: 'rename',
-                child: Text(l10n.smartCropRenamePdf),
-              ),
-              const PopupMenuDivider(),
-              PopupMenuItem(
-                value: 'delete',
-                child: Text(
-                  l10n.commonDelete,
-                  style: const TextStyle(color: Colors.redAccent),
-                ),
-              ),
-            ],
+          title: Text(
+            l10n.smartCropTitle,
+            style: const TextStyle(
+              color: AppColors.textPrimary,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
           ),
-        ],
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            children: [
-              const Spacer(flex: 2),
-              Image.asset(
-                'assets/pdf_created.png',
-                width: 180,
-                height: 180,
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) => const Icon(
-                  Icons.picture_as_pdf_outlined,
-                  size: 120,
-                  color: AppColors.smartCropPrimary,
+          actions: [
+            PopupMenuButton<String>(
+              icon: const Icon(Icons.more_vert, color: AppColors.textPrimary),
+              onSelected: (value) {
+                if (value == 'rename') {
+                  _rename();
+                } else if (value == 'delete') {
+                  _delete();
+                }
+              },
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  value: 'rename',
+                  child: Text(l10n.smartCropRenamePdf),
                 ),
-              ),
-              const SizedBox(height: 32),
-              Text(
-                l10n.smartCropPdfSuccess,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: 22,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: -0.3,
-                ),
-              ),
-              const Spacer(flex: 2),
-              _buildMetadataRow(
-                label: l10n.smartCropPdfFileName,
-                value: '$_displayName.pdf',
-              ),
-              _buildMetadataRow(
-                label: l10n.smartCropPdfPagesLabel,
-                value: pagesValue,
-              ),
-              _buildMetadataRow(
-                label: l10n.smartCropPdfFileSize,
-                value: _fileSizeLabel,
-              ),
-              const Spacer(flex: 4),
-              SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: ElevatedButton(
-                  onPressed: File(_pdfPath).existsSync() ? _openView : null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.smartCropPrimary,
-                    foregroundColor: AppColors.white,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
+                const PopupMenuDivider(),
+                PopupMenuItem(
+                  value: 'delete',
                   child: Text(
-                    l10n.smartCropViewPdf,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                    l10n.commonDelete,
+                    style: const TextStyle(color: Colors.redAccent),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              children: [
+                const Spacer(flex: 2),
+                Image.asset(
+                  'assets/pdf_created.png',
+                  width: 180,
+                  height: 180,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) => const Icon(
+                    Icons.picture_as_pdf_outlined,
+                    size: 120,
+                    color: AppColors.smartCropPrimary,
+                  ),
+                ),
+                const SizedBox(height: 32),
+                Text(
+                  l10n.smartCropPdfSuccess,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: AppColors.textPrimary,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -0.3,
+                  ),
+                ),
+                const Spacer(flex: 2),
+                _buildMetadataRow(
+                  label: l10n.smartCropPdfFileName,
+                  value: '$_displayName.pdf',
+                ),
+                _buildMetadataRow(
+                  label: l10n.smartCropPdfPagesLabel,
+                  value: pagesValue,
+                ),
+                _buildMetadataRow(
+                  label: l10n.smartCropPdfFileSize,
+                  value: _fileSizeLabel,
+                ),
+                const Spacer(flex: 4),
+                SizedBox(
+                  width: double.infinity,
+                  height: 52,
+                  child: ElevatedButton(
+                    onPressed: File(_pdfPath).existsSync() ? _openView : null,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.smartCropPrimary,
+                      foregroundColor: AppColors.white,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Text(
+                      l10n.smartCropViewPdf,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 12),
-              SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: OutlinedButton(
-                  onPressed: File(_pdfPath).existsSync() ? _savePdf : null,
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: AppColors.smartCropRetakeBackground,
-                    side: const BorderSide(color: AppColors.smartCropRetakeBorder),
-                    foregroundColor: AppColors.smartCropPrimary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  height: 52,
+                  child: OutlinedButton(
+                    onPressed: File(_pdfPath).existsSync() ? _savePdf : null,
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: AppColors.smartCropRetakeBackground,
+                      side: const BorderSide(
+                        color: AppColors.smartCropRetakeBorder,
+                      ),
+                      foregroundColor: AppColors.smartCropPrimary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    l10n.smartCropSavePdf,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                    child: Text(
+                      l10n.smartCropSavePdf,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
-            ],
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
         ),
       ),
