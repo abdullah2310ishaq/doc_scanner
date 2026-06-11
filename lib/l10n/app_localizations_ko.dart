@@ -239,6 +239,20 @@ class AppLocalizationsKo extends AppLocalizations {
   String get homeRecentScanDocument => '문서 스캔';
 
   @override
+  String get homeRecentDeleteImageTitle => '이미지를 삭제하시겠습니까?';
+
+  @override
+  String get homeRecentDeleteImageMessage =>
+      '이 이미지를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.';
+
+  @override
+  String get homeRecentDeleteImagesTitle => '이미지를 삭제하시겠습니까?';
+
+  @override
+  String get homeRecentDeleteImagesMessage =>
+      '선택한 이미지를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.';
+
+  @override
   String get scanTitle => '스캔';
 
   @override

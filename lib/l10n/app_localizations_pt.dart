@@ -245,6 +245,20 @@ class AppLocalizationsPt extends AppLocalizations {
   String get homeRecentScanDocument => 'Escanear Documento';
 
   @override
+  String get homeRecentDeleteImageTitle => 'Excluir imagem?';
+
+  @override
+  String get homeRecentDeleteImageMessage =>
+      'Tem certeza de que deseja excluir esta imagem? Esta ação não pode ser desfeita.';
+
+  @override
+  String get homeRecentDeleteImagesTitle => 'Excluir imagens?';
+
+  @override
+  String get homeRecentDeleteImagesMessage =>
+      'Tem certeza de que deseja excluir as imagens selecionadas? Esta ação não pode ser desfeita.';
+
+  @override
   String get scanTitle => 'Escanear';
 
   @override

@@ -242,6 +242,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeRecentScanDocument => 'Scan Document';
 
   @override
+  String get homeRecentDeleteImageTitle => 'Delete image';
+
+  @override
+  String get homeRecentDeleteImageMessage =>
+      'Are you sure you want to delete this image ?';
+
+  @override
+  String get homeRecentDeleteImagesTitle => 'Delete images';
+
+  @override
+  String get homeRecentDeleteImagesMessage =>
+      'Are you sure you want to delete the selected images ?';
+
+  @override
   String get scanTitle => 'Scan';
 
   @override

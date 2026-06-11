@@ -244,6 +244,20 @@ class AppLocalizationsDe extends AppLocalizations {
   String get homeRecentScanDocument => 'Scannen';
 
   @override
+  String get homeRecentDeleteImageTitle => 'Bild löschen?';
+
+  @override
+  String get homeRecentDeleteImageMessage =>
+      'Möchten Sie dieses Bild wirklich löschen? Dies kann nicht rückgängig gemacht werden.';
+
+  @override
+  String get homeRecentDeleteImagesTitle => 'Bilder löschen?';
+
+  @override
+  String get homeRecentDeleteImagesMessage =>
+      'Möchten Sie die ausgewählten Bilder wirklich löschen? Dies kann nicht rückgängig gemacht werden.';
+
+  @override
   String get scanTitle => 'Scan';
 
   @override

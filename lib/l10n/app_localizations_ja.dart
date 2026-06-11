@@ -240,6 +240,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get homeRecentScanDocument => 'ドキュメントをスキャンする';
 
   @override
+  String get homeRecentDeleteImageTitle => '画像を削除しますか？';
+
+  @override
+  String get homeRecentDeleteImageMessage => 'この画像を削除してもよろしいですか？この操作は元に戻せません。';
+
+  @override
+  String get homeRecentDeleteImagesTitle => '画像を削除しますか？';
+
+  @override
+  String get homeRecentDeleteImagesMessage =>
+      '選択した画像を削除してもよろしいですか？この操作は元に戻せません。';
+
+  @override
   String get scanTitle => 'スキャン';
 
   @override

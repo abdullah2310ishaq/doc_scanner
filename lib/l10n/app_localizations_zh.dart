@@ -239,6 +239,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get homeRecentScanDocument => '扫描文档';
 
   @override
+  String get homeRecentDeleteImageTitle => '删除图片？';
+
+  @override
+  String get homeRecentDeleteImageMessage => '确定要删除此图片吗？此操作无法撤销。';
+
+  @override
+  String get homeRecentDeleteImagesTitle => '删除图片？';
+
+  @override
+  String get homeRecentDeleteImagesMessage => '确定要删除所选图片吗？此操作无法撤销。';
+
+  @override
   String get scanTitle => '扫描';
 
   @override

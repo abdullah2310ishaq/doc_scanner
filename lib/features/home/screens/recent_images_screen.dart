@@ -106,8 +106,8 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
     final l10n = context.l10n;
     final ok = await DeleteDialog.show(
       context: context,
-      title: l10n.commonDelete,
-      message: l10n.smartCropDeleteImageConfirm,
+      title: l10n.homeRecentDeleteImageTitle,
+      message: l10n.homeRecentDeleteImageMessage,
     );
     if (ok != true || !mounted) return;
     try {
@@ -141,8 +141,8 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
 
     final ok = await DeleteDialog.show(
       context: context,
-      title: l10n.commonDelete,
-      message: l10n.smartCropDeleteImageConfirm,
+      title: l10n.homeRecentDeleteImagesTitle,
+      message: l10n.homeRecentDeleteImagesMessage,
     );
     if (ok != true || !mounted) return;
 

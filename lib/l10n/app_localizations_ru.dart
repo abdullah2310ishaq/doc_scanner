@@ -249,6 +249,20 @@ class AppLocalizationsRu extends AppLocalizations {
   String get homeRecentScanDocument => 'Сканировать документ';
 
   @override
+  String get homeRecentDeleteImageTitle => 'Удалить изображение?';
+
+  @override
+  String get homeRecentDeleteImageMessage =>
+      'Вы уверены, что хотите удалить это изображение? Это действие нельзя отменить.';
+
+  @override
+  String get homeRecentDeleteImagesTitle => 'Удалить изображения?';
+
+  @override
+  String get homeRecentDeleteImagesMessage =>
+      'Вы уверены, что хотите удалить выбранные изображения? Это действие нельзя отменить.';
+
+  @override
   String get scanTitle => 'Сканировать';
 
   @override

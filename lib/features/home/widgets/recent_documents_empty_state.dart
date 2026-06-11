@@ -4,10 +4,7 @@ import '../../../core/theme/app_colors.dart';
 
 /// Centered empty message for Recent PDFs or Recent Images lists.
 class RecentDocumentsEmptyState extends StatelessWidget {
-  const RecentDocumentsEmptyState({
-    super.key,
-    required this.message,
-  });
+  const RecentDocumentsEmptyState({super.key, required this.message});
 
   final String message;
 
@@ -19,10 +16,7 @@ class RecentDocumentsEmptyState extends StatelessWidget {
         child: Text(
           message,
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 16,
-            color: AppColors.textSecondary,
-          ),
+          style: const TextStyle(fontSize: 16, color: AppColors.textSecondary),
         ),
       ),
     );

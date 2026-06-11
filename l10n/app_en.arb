@@ -92,6 +92,10 @@
   "homeRecentUploadPdf": "Upload a PDF",
   "homeRecentUploadImages": "Upload Images",
   "homeRecentScanDocument": "Scan Document",
+  "homeRecentDeleteImageTitle": "Delete image",
+  "homeRecentDeleteImageMessage": "Are you sure you want to delete this image ?",
+  "homeRecentDeleteImagesTitle": "Delete images",
+  "homeRecentDeleteImagesMessage": "Are you sure you want to delete the selected images ?",
 
   "scanTitle": "Scan",
   "scanCapture": "Capture",

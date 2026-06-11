@@ -536,6 +536,30 @@ abstract class AppLocalizations {
   /// **'Scan Document'**
   String get homeRecentScanDocument;
 
+  /// No description provided for @homeRecentDeleteImageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete image'**
+  String get homeRecentDeleteImageTitle;
+
+  /// No description provided for @homeRecentDeleteImageMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this image ?'**
+  String get homeRecentDeleteImageMessage;
+
+  /// No description provided for @homeRecentDeleteImagesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete images'**
+  String get homeRecentDeleteImagesTitle;
+
+  /// No description provided for @homeRecentDeleteImagesMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete the selected images ?'**
+  String get homeRecentDeleteImagesMessage;
+
   /// No description provided for @scanTitle.
   ///
   /// In en, this message translates to:

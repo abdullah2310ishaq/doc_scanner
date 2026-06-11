@@ -243,6 +243,20 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeRecentScanDocument => 'مسح';
 
   @override
+  String get homeRecentDeleteImageTitle => 'حذف الصورة؟';
+
+  @override
+  String get homeRecentDeleteImageMessage =>
+      'هل أنت متأكد أنك تريد حذف هذه الصورة؟ لا يمكن التراجع عن هذا.';
+
+  @override
+  String get homeRecentDeleteImagesTitle => 'حذف الصور؟';
+
+  @override
+  String get homeRecentDeleteImagesMessage =>
+      'هل أنت متأكد أنك تريد حذف الصور المحددة؟ لا يمكن التراجع عن هذا.';
+
+  @override
   String get scanTitle => 'مسح';
 
   @override

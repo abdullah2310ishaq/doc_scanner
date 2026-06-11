@@ -244,6 +244,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get homeRecentScanDocument => 'Escanear documento';
 
   @override
+  String get homeRecentDeleteImageTitle => '¿Eliminar imagen?';
+
+  @override
+  String get homeRecentDeleteImageMessage =>
+      '¿Estás seguro de que quieres eliminar esta imagen? Esta acción no se puede deshacer.';
+
+  @override
+  String get homeRecentDeleteImagesTitle => '¿Eliminar imágenes?';
+
+  @override
+  String get homeRecentDeleteImagesMessage =>
+      '¿Estás seguro de que quieres eliminar las imágenes seleccionadas? Esta acción no se puede deshacer.';
+
+  @override
   String get scanTitle => 'Escanear';
 
   @override
