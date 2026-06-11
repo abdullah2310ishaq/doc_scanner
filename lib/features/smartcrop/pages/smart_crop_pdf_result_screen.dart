@@ -116,8 +116,8 @@ class _SmartCropPdfResultScreenState extends State<SmartCropPdfResultScreen> {
     final l10n = context.l10n;
     final confirmed = await DeleteDialog.show(
       context: context,
-      title: l10n.commonDelete,
-      message: l10n.smartCropDeletePdfConfirm,
+      title: l10n.smartCropDeletePdfTitle,
+      message: l10n.smartCropDeletePdfMessage,
     );
 
     if (confirmed != true || !mounted) return;

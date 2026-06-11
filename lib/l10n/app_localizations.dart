@@ -2372,6 +2372,30 @@ abstract class AppLocalizations {
   /// **'Remove this page from the document?'**
   String get smartCropDeleteImageConfirm;
 
+  /// No description provided for @smartCropDeleteDocumentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete document'**
+  String get smartCropDeleteDocumentTitle;
+
+  /// No description provided for @smartCropDeleteDocumentMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this document ?'**
+  String get smartCropDeleteDocumentMessage;
+
+  /// No description provided for @smartCropDeletePdfTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete PDF?'**
+  String get smartCropDeletePdfTitle;
+
+  /// No description provided for @smartCropDeletePdfMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this PDF? This cannot be undone.'**
+  String get smartCropDeletePdfMessage;
+
   /// No description provided for @smartCropDeletePdfConfirm.
   ///
   /// In en, this message translates to:

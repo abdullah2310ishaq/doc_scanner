@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
+import '../../../core/widgets/delete_dialog.dart';
 import '../../../core/widgets/toast.dart';
 import '../constants/smart_crop_color_filters.dart';
 import '../widgets/smart_crop_preview_nav_button.dart';
@@ -74,27 +75,10 @@ class _SmartCropFiltersScreenState extends State<SmartCropFiltersScreen> {
     if (_paths.isEmpty) return;
 
     final l10n = context.l10n;
-    final confirmed = await showDialog<bool>(
+    final confirmed = await DeleteDialog.show(
       context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          title: Text(l10n.commonDelete),
-          content: Text(l10n.smartCropDeleteImageConfirm),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(false),
-              child: Text(l10n.commonCancel),
-            ),
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(true),
-              child: Text(
-                l10n.commonDelete,
-                style: const TextStyle(color: Colors.redAccent),
-              ),
-            ),
-          ],
-        );
-      },
+      title: l10n.smartCropDeleteDocumentTitle,
+      message: l10n.smartCropDeleteDocumentMessage,
     );
 
     if (confirmed == true && mounted) {

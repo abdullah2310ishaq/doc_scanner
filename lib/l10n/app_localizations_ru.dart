@@ -1240,6 +1240,20 @@ class AppLocalizationsRu extends AppLocalizations {
       'Удалить эту страницу из документа?';
 
   @override
+  String get smartCropDeleteDocumentTitle => 'Удалить документ?';
+
+  @override
+  String get smartCropDeleteDocumentMessage =>
+      'Вы уверены, что хотите удалить этот документ? Это действие нельзя отменить.';
+
+  @override
+  String get smartCropDeletePdfTitle => 'Удалить PDF?';
+
+  @override
+  String get smartCropDeletePdfMessage =>
+      'Вы уверены, что хотите удалить этот PDF? Это действие нельзя отменить.';
+
+  @override
   String get smartCropDeletePdfConfirm =>
       'Удалить этот PDF с вашего устройства?';
 

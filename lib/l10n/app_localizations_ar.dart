@@ -1211,6 +1211,20 @@ class AppLocalizationsAr extends AppLocalizations {
       'هل تريد إزالة هذه الصفحة من المستند؟';
 
   @override
+  String get smartCropDeleteDocumentTitle => 'حذف المستند؟';
+
+  @override
+  String get smartCropDeleteDocumentMessage =>
+      'هل أنت متأكد أنك تريد حذف هذا المستند؟ لا يمكن التراجع عن هذا.';
+
+  @override
+  String get smartCropDeletePdfTitle => 'حذف PDF؟';
+
+  @override
+  String get smartCropDeletePdfMessage =>
+      'هل أنت متأكد أنك تريد حذف ملف PDF هذا؟ لا يمكن التراجع عن هذا.';
+
+  @override
   String get smartCropDeletePdfConfirm => 'هل تريد حذف ملف PDF هذا من جهازك؟';
 
   @override

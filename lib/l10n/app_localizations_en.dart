@@ -1221,6 +1221,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'Remove this page from the document?';
 
   @override
+  String get smartCropDeleteDocumentTitle => 'Delete document';
+
+  @override
+  String get smartCropDeleteDocumentMessage =>
+      'Are you sure you want to delete this document ?';
+
+  @override
+  String get smartCropDeletePdfTitle => 'Delete PDF?';
+
+  @override
+  String get smartCropDeletePdfMessage =>
+      'Are you sure you want to delete this PDF? This cannot be undone.';
+
+  @override
   String get smartCropDeletePdfConfirm => 'Delete this PDF from your device?';
 
   @override

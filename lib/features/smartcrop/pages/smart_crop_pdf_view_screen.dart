@@ -70,9 +70,7 @@ class _SmartCropPdfViewScreenState extends State<SmartCropPdfViewScreen> {
           title: Text(l10n.smartCropRenamePdf),
           content: TextField(
             controller: controller,
-            decoration: InputDecoration(
-              hintText: l10n.smartCropRenamePdfHint,
-            ),
+            decoration: InputDecoration(hintText: l10n.smartCropRenamePdfHint),
             autofocus: true,
           ),
           actions: [
@@ -114,8 +112,8 @@ class _SmartCropPdfViewScreenState extends State<SmartCropPdfViewScreen> {
     final l10n = context.l10n;
     final confirmed = await DeleteDialog.show(
       context: context,
-      title: l10n.commonDelete,
-      message: l10n.smartCropDeletePdfConfirm,
+      title: l10n.smartCropDeletePdfTitle,
+      message: l10n.smartCropDeletePdfMessage,
     );
 
     if (confirmed != true || !mounted) return;
@@ -146,10 +144,7 @@ class _SmartCropPdfViewScreenState extends State<SmartCropPdfViewScreen> {
           _displayName,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
         ),
         actions: [
           PopupMenuButton<String>(
@@ -181,10 +176,7 @@ class _SmartCropPdfViewScreenState extends State<SmartCropPdfViewScreen> {
       body: SafeArea(
         top: false,
         child: file.existsSync()
-            ? SfPdfViewer.file(
-                file,
-                canShowScrollHead: false,
-              )
+            ? SfPdfViewer.file(file, canShowScrollHead: false)
             : Center(
                 child: Text(
                   l10n.commonError,

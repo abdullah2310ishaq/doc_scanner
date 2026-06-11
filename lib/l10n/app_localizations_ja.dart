@@ -1191,6 +1191,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get smartCropDeleteImageConfirm => 'このページをドキュメントから削除しますか?';
 
   @override
+  String get smartCropDeleteDocumentTitle => 'ドキュメントを削除しますか？';
+
+  @override
+  String get smartCropDeleteDocumentMessage =>
+      'このドキュメントを削除してもよろしいですか？この操作は元に戻せません。';
+
+  @override
+  String get smartCropDeletePdfTitle => 'PDFを削除しますか？';
+
+  @override
+  String get smartCropDeletePdfMessage => 'このPDFを削除してもよろしいですか？この操作は元に戻せません。';
+
+  @override
   String get smartCropDeletePdfConfirm => 'この PDF をデバイスから削除しますか?';
 
   @override

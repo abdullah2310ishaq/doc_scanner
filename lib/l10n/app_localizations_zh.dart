@@ -1177,6 +1177,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get smartCropDeleteImageConfirm => '从文档中移除此页？';
 
   @override
+  String get smartCropDeleteDocumentTitle => '删除文档？';
+
+  @override
+  String get smartCropDeleteDocumentMessage => '确定要删除此文档吗？此操作无法撤销。';
+
+  @override
+  String get smartCropDeletePdfTitle => '删除 PDF？';
+
+  @override
+  String get smartCropDeletePdfMessage => '确定要删除此 PDF 吗？此操作无法撤销。';
+
+  @override
   String get smartCropDeletePdfConfirm => '从您的设备中删除此 PDF？';
 
   @override

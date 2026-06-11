@@ -1250,6 +1250,20 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Seite aus dem Dokument entfernen?';
 
   @override
+  String get smartCropDeleteDocumentTitle => 'Dokument löschen?';
+
+  @override
+  String get smartCropDeleteDocumentMessage =>
+      'Möchten Sie dieses Dokument wirklich löschen? Dies kann nicht rückgängig gemacht werden.';
+
+  @override
+  String get smartCropDeletePdfTitle => 'PDF löschen?';
+
+  @override
+  String get smartCropDeletePdfMessage =>
+      'Möchten Sie dieses PDF wirklich löschen? Dies kann nicht rückgängig gemacht werden.';
+
+  @override
   String get smartCropDeletePdfConfirm => 'Dieses PDF von Ihrem Gerät löschen?';
 
   @override

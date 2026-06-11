@@ -1244,6 +1244,20 @@ class AppLocalizationsEs extends AppLocalizations {
       '¿Quitar esta página del documento?';
 
   @override
+  String get smartCropDeleteDocumentTitle => '¿Eliminar documento?';
+
+  @override
+  String get smartCropDeleteDocumentMessage =>
+      '¿Estás seguro de que quieres eliminar este documento? Esta acción no se puede deshacer.';
+
+  @override
+  String get smartCropDeletePdfTitle => '¿Eliminar PDF?';
+
+  @override
+  String get smartCropDeletePdfMessage =>
+      '¿Estás seguro de que quieres eliminar este PDF? Esta acción no se puede deshacer.';
+
+  @override
   String get smartCropDeletePdfConfirm =>
       '¿Eliminar este PDF de tu dispositivo?';
 
