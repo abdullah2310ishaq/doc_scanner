@@ -212,6 +212,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get homeRecentUnfavorite => '取消收藏';
 
   @override
+  String get homeRecentFavoriteAdded => '已添加到收藏';
+
+  @override
+  String get homeRecentFavoriteRemoved => '已从收藏中移除';
+
+  @override
   String get homeRecentPdfEmptyTitle => '暂无 PDF';
 
   @override

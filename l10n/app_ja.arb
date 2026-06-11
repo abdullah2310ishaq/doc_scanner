@@ -91,6 +91,8 @@
   "homeRecentNoSearchResults": "検索に一致するファイルはありません",
   "homeRecentToggleFavorite": "お気に入り",
   "homeRecentUnfavorite": "気に入らない",
+  "homeRecentFavoriteAdded": "お気に入りに追加しました",
+  "homeRecentFavoriteRemoved": "お気に入りから削除しました",
   "homeRecentPdfEmptyTitle": "PDFはまだありません",
   "homeRecentPdfEmptySubtitle": "ドキュメントをアップロードまたはスキャンして、最初の PDF を作成します",
   "homeRecentImageEmptyTitle": "まだ画像がありません",

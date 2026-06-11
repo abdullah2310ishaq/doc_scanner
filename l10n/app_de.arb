@@ -91,6 +91,8 @@
   "homeRecentNoSearchResults": "Keine Treffer",
   "homeRecentToggleFavorite": "Favorit",
   "homeRecentUnfavorite": "Entfernen",
+  "homeRecentFavoriteAdded": "Zu Favoriten hinzugefügt",
+  "homeRecentFavoriteRemoved": "Aus Favoriten entfernt",
   "homeRecentPdfEmptyTitle": "Keine PDFs",
   "homeRecentPdfEmptySubtitle": "PDF hochladen oder scannen",
   "homeRecentImageEmptyTitle": "Keine Bilder",

@@ -220,6 +220,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get homeRecentUnfavorite => 'Удалить из избранного';
 
   @override
+  String get homeRecentFavoriteAdded => 'Добавлено в избранное';
+
+  @override
+  String get homeRecentFavoriteRemoved => 'Удалено из избранного';
+
+  @override
   String get homeRecentPdfEmptyTitle => 'PDF-файлов пока нет';
 
   @override

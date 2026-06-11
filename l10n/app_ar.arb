@@ -61,6 +61,8 @@
   "homeRecentNoSearchResults": "لا توجد نتائج",
   "homeRecentToggleFavorite": "مفضلة",
   "homeRecentUnfavorite": "إلغاء",
+  "homeRecentFavoriteAdded": "تمت الإضافة إلى المفضلة",
+  "homeRecentFavoriteRemoved": "تمت الإزالة من المفضلة",
   "homeRecentPdfEmptyTitle": "لا PDF",
   "homeRecentPdfEmptySubtitle": "ارفع أو امسح لإنشاء PDF",
   "homeRecentImageEmptyTitle": "لا صور",

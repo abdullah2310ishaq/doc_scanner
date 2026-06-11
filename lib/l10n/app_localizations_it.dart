@@ -217,6 +217,12 @@ class AppLocalizationsIt extends AppLocalizations {
   String get homeRecentUnfavorite => 'Rimuovi dai preferiti';
 
   @override
+  String get homeRecentFavoriteAdded => 'Aggiunto ai preferiti';
+
+  @override
+  String get homeRecentFavoriteRemoved => 'Rimosso dai preferiti';
+
+  @override
   String get homeRecentPdfEmptyTitle => 'Nessun PDF disponibile';
 
   @override

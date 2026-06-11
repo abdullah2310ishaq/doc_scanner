@@ -212,6 +212,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get homeRecentUnfavorite => '즐겨찾기 해제';
 
   @override
+  String get homeRecentFavoriteAdded => '즐겨찾기에 추가됨';
+
+  @override
+  String get homeRecentFavoriteRemoved => '즐겨찾기에서 제거됨';
+
+  @override
   String get homeRecentPdfEmptyTitle => '아직 PDF가 없습니다';
 
   @override

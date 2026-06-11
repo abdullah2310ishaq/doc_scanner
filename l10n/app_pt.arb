@@ -91,6 +91,8 @@
   "homeRecentNoSearchResults": "Nenhum arquivo corresponde à sua busca",
   "homeRecentToggleFavorite": "Favoritar",
   "homeRecentUnfavorite": "Desfavoritar",
+  "homeRecentFavoriteAdded": "Adicionado aos favoritos",
+  "homeRecentFavoriteRemoved": "Removido dos favoritos",
   "homeRecentPdfEmptyTitle": "Nenhum PDF ainda",
   "homeRecentPdfEmptySubtitle": "Envie ou escaneie documentos para criar seu primeiro PDF",
   "homeRecentImageEmptyTitle": "Nenhuma imagem ainda",

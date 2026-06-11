@@ -91,6 +91,8 @@
   "homeRecentNoSearchResults": "검색 조건에 맞는 파일이 없습니다",
   "homeRecentToggleFavorite": "즐겨찾기",
   "homeRecentUnfavorite": "즐겨찾기 해제",
+  "homeRecentFavoriteAdded": "즐겨찾기에 추가됨",
+  "homeRecentFavoriteRemoved": "즐겨찾기에서 제거됨",
   "homeRecentPdfEmptyTitle": "아직 PDF가 없습니다",
   "homeRecentPdfEmptySubtitle": "문서를 업로드하거나 스캔하여 첫 번째 PDF를 만들어보세요",
   "homeRecentImageEmptyTitle": "아직 이미지가 없습니다",

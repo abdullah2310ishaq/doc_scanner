@@ -212,6 +212,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get homeRecentUnfavorite => '気に入らない';
 
   @override
+  String get homeRecentFavoriteAdded => 'お気に入りに追加しました';
+
+  @override
+  String get homeRecentFavoriteRemoved => 'お気に入りから削除しました';
+
+  @override
   String get homeRecentPdfEmptyTitle => 'PDFはまだありません';
 
   @override

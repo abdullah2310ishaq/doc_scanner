@@ -100,8 +100,16 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
 
   Future<void> _toggleFavorite(RecentFileModel file) async {
     final l10n = context.l10n;
+    final wasFavorite = file.isFavorite;
     try {
       await context.read<RecentDocumentsProvider>().toggleFavorite(file);
+      if (!mounted) return;
+      AppToast.show(
+        context,
+        wasFavorite
+            ? l10n.homeRecentFavoriteRemoved
+            : l10n.homeRecentFavoriteAdded,
+      );
     } catch (_) {
       if (mounted) AppToast.show(context, l10n.commonError);
     }

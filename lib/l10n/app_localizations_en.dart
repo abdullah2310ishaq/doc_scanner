@@ -213,6 +213,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeRecentUnfavorite => 'Unfavorite';
 
   @override
+  String get homeRecentFavoriteAdded => 'Added to favorites';
+
+  @override
+  String get homeRecentFavoriteRemoved => 'Removed from favorites';
+
+  @override
   String get homeRecentPdfEmptyTitle => 'No PDF yet';
 
   @override

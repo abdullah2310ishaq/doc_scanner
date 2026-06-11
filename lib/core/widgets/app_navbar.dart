@@ -23,14 +23,15 @@ class AppNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
-    final sideMargin = (screenWidth * 0.14).clamp(40.0, 64.0);
+    // ADJUSTMENT: Decreased the percentage and clamp range to make side margins smaller (meaning a wider navbar)
+    final sideMargin = (screenWidth * 0.08).clamp(24.0, 48.0);
 
     return SafeArea(
       top: false,
       child: Padding(
         padding: EdgeInsets.fromLTRB(sideMargin, 0, sideMargin, 16),
         child: Container(
-          height: 64,
+          height: 56, // ADJUSTMENT: Changed height from 64 to 56
           width: double.infinity,
           decoration: BoxDecoration(
             gradient: AppColors.navbarGradient,
@@ -100,7 +101,10 @@ class _NavItem extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(8),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 4,
+            vertical: 4,
+          ), // ADJUSTMENT: Shaved off vertical padding to fit the new 56px height perfectly
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,

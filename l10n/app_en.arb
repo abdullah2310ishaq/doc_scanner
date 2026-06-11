@@ -83,6 +83,8 @@
   "homeRecentNoSearchResults": "No files match your search",
   "homeRecentToggleFavorite": "Favorite",
   "homeRecentUnfavorite": "Unfavorite",
+  "homeRecentFavoriteAdded": "Added to favorites",
+  "homeRecentFavoriteRemoved": "Removed from favorites",
   "homeRecentPdfEmptyTitle": "No PDF yet",
   "homeRecentPdfEmptySubtitle": "Upload or scan documents to create your first PDF",
   "homeRecentImageEmptyTitle": "No Image yet",

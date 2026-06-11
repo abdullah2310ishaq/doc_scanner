@@ -91,6 +91,8 @@
   "homeRecentNoSearchResults": "没有找到符合搜索条件的文件",
   "homeRecentToggleFavorite": "收藏",
   "homeRecentUnfavorite": "取消收藏",
+  "homeRecentFavoriteAdded": "已添加到收藏",
+  "homeRecentFavoriteRemoved": "已从收藏中移除",
   "homeRecentPdfEmptyTitle": "暂无 PDF",
   "homeRecentPdfEmptySubtitle": "上传或扫描文档以创建您的第一个 PDF",
   "homeRecentImageEmptyTitle": "暂无图片",

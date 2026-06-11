@@ -216,6 +216,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeRecentUnfavorite => 'إلغاء';
 
   @override
+  String get homeRecentFavoriteAdded => 'تمت الإضافة إلى المفضلة';
+
+  @override
+  String get homeRecentFavoriteRemoved => 'تمت الإزالة من المفضلة';
+
+  @override
   String get homeRecentPdfEmptyTitle => 'لا PDF';
 
   @override

@@ -482,6 +482,18 @@ abstract class AppLocalizations {
   /// **'Unfavorite'**
   String get homeRecentUnfavorite;
 
+  /// No description provided for @homeRecentFavoriteAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to favorites'**
+  String get homeRecentFavoriteAdded;
+
+  /// No description provided for @homeRecentFavoriteRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from favorites'**
+  String get homeRecentFavoriteRemoved;
+
   /// No description provided for @homeRecentPdfEmptyTitle.
   ///
   /// In en, this message translates to:

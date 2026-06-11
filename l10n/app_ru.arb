@@ -91,6 +91,8 @@
   "homeRecentNoSearchResults": "Файлы не найдены",
   "homeRecentToggleFavorite": "Избранное",
   "homeRecentUnfavorite": "Удалить из избранного",
+  "homeRecentFavoriteAdded": "Добавлено в избранное",
+  "homeRecentFavoriteRemoved": "Удалено из избранного",
   "homeRecentPdfEmptyTitle": "PDF-файлов пока нет",
   "homeRecentPdfEmptySubtitle": "Загрузите или отсканируйте документы, чтобы создать свой первый PDF",
   "homeRecentImageEmptyTitle": "Изображений пока нет",
