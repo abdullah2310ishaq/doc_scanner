@@ -7,7 +7,6 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/delete_dialog.dart';
 import '../../../core/widgets/toast.dart';
-import '../../smartcrop/smart_crop_flow.dart';
 import '../models/recent_file_model.dart';
 import '../providers/recent_documents_provider.dart';
 import '../widgets/recent_documents_empty_state.dart';
@@ -57,18 +56,6 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
     return provider.imageFiles
         .where((f) => f.fileName.toLowerCase().contains(q))
         .toList();
-  }
-
-  Future<void> _uploadImages() async {
-    await SmartCropFlow.pickGalleryImages(context);
-    if (!mounted) return;
-    await context.read<RecentDocumentsProvider>().loadImages();
-  }
-
-  Future<void> _scanDocument() async {
-    await SmartCropFlow.startLiveCamera(context);
-    if (!mounted) return;
-    await context.read<RecentDocumentsProvider>().loadImages();
   }
 
   void _previewImage(RecentFileModel file) {
@@ -197,13 +184,7 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
               ? const Center(child: CircularProgressIndicator())
               : provider.imageFiles.isEmpty
               ? RecentDocumentsEmptyState(
-                  imageAsset: 'assets/no_image.png',
-                  title: l10n.homeRecentImageEmptyTitle,
-                  subtitle: l10n.homeRecentImageEmptySubtitle,
-                  primaryLabel: l10n.homeRecentUploadImages,
-                  secondaryLabel: l10n.homeRecentScanDocument,
-                  onPrimary: _uploadImages,
-                  onSecondary: _scanDocument,
+                  message: l10n.homeRecentImageEmptyTitle,
                 )
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,

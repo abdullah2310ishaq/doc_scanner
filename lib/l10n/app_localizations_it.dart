@@ -223,14 +223,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get homeRecentFavoriteRemoved => 'Rimosso dai preferiti';
 
   @override
-  String get homeRecentPdfEmptyTitle => 'Nessun PDF disponibile';
+  String get homeRecentPdfEmptyTitle => 'Nessun PDF recente';
 
   @override
   String get homeRecentPdfEmptySubtitle =>
       'Carica o scansiona documenti per creare il tuo primo PDF';
 
   @override
-  String get homeRecentImageEmptyTitle => 'Nessuna immagine disponibile';
+  String get homeRecentImageEmptyTitle => 'Nessuna immagine recente';
 
   @override
   String get homeRecentImageEmptySubtitle =>

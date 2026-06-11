@@ -218,13 +218,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get homeRecentFavoriteRemoved => '已从收藏中移除';
 
   @override
-  String get homeRecentPdfEmptyTitle => '暂无 PDF';
+  String get homeRecentPdfEmptyTitle => '暂无最近 PDF';
 
   @override
   String get homeRecentPdfEmptySubtitle => '上传或扫描文档以创建您的第一个 PDF';
 
   @override
-  String get homeRecentImageEmptyTitle => '暂无图片';
+  String get homeRecentImageEmptyTitle => '暂无最近图片';
 
   @override
   String get homeRecentImageEmptySubtitle => '上传或扫描图片以在此处进行整理';

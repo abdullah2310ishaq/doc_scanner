@@ -497,7 +497,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeRecentPdfEmptyTitle.
   ///
   /// In en, this message translates to:
-  /// **'No PDF yet'**
+  /// **'No recent PDFs'**
   String get homeRecentPdfEmptyTitle;
 
   /// No description provided for @homeRecentPdfEmptySubtitle.
@@ -509,7 +509,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeRecentImageEmptyTitle.
   ///
   /// In en, this message translates to:
-  /// **'No Image yet'**
+  /// **'No recent images'**
   String get homeRecentImageEmptyTitle;
 
   /// No description provided for @homeRecentImageEmptySubtitle.

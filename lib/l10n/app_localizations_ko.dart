@@ -218,13 +218,13 @@ class AppLocalizationsKo extends AppLocalizations {
   String get homeRecentFavoriteRemoved => '즐겨찾기에서 제거됨';
 
   @override
-  String get homeRecentPdfEmptyTitle => '아직 PDF가 없습니다';
+  String get homeRecentPdfEmptyTitle => '최근 PDF가 없습니다';
 
   @override
   String get homeRecentPdfEmptySubtitle => '문서를 업로드하거나 스캔하여 첫 번째 PDF를 만들어보세요';
 
   @override
-  String get homeRecentImageEmptyTitle => '아직 이미지가 없습니다';
+  String get homeRecentImageEmptyTitle => '최근 이미지가 없습니다';
 
   @override
   String get homeRecentImageEmptySubtitle => '이미지를 업로드하거나 스캔하여 여기에 정리해보세요';

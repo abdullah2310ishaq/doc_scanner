@@ -218,14 +218,14 @@ class AppLocalizationsJa extends AppLocalizations {
   String get homeRecentFavoriteRemoved => 'お気に入りから削除しました';
 
   @override
-  String get homeRecentPdfEmptyTitle => 'PDFはまだありません';
+  String get homeRecentPdfEmptyTitle => '最近のPDFはありません';
 
   @override
   String get homeRecentPdfEmptySubtitle =>
       'ドキュメントをアップロードまたはスキャンして、最初の PDF を作成します';
 
   @override
-  String get homeRecentImageEmptyTitle => 'まだ画像がありません';
+  String get homeRecentImageEmptyTitle => '最近の画像はありません';
 
   @override
   String get homeRecentImageEmptySubtitle => '画像をアップロードまたはスキャンしてここで整理します';

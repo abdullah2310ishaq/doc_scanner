@@ -222,14 +222,14 @@ class AppLocalizationsPt extends AppLocalizations {
   String get homeRecentFavoriteRemoved => 'Removido dos favoritos';
 
   @override
-  String get homeRecentPdfEmptyTitle => 'Nenhum PDF ainda';
+  String get homeRecentPdfEmptyTitle => 'Nenhum PDF recente';
 
   @override
   String get homeRecentPdfEmptySubtitle =>
       'Envie ou escaneie documentos para criar seu primeiro PDF';
 
   @override
-  String get homeRecentImageEmptyTitle => 'Nenhuma imagem ainda';
+  String get homeRecentImageEmptyTitle => 'Nenhuma imagem recente';
 
   @override
   String get homeRecentImageEmptySubtitle =>

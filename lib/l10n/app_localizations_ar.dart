@@ -222,13 +222,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeRecentFavoriteRemoved => 'تمت الإزالة من المفضلة';
 
   @override
-  String get homeRecentPdfEmptyTitle => 'لا PDF';
+  String get homeRecentPdfEmptyTitle => 'لا توجد ملفات PDF حديثة';
 
   @override
   String get homeRecentPdfEmptySubtitle => 'ارفع أو امسح لإنشاء PDF';
 
   @override
-  String get homeRecentImageEmptyTitle => 'لا صور';
+  String get homeRecentImageEmptyTitle => 'لا توجد صور حديثة';
 
   @override
   String get homeRecentImageEmptySubtitle => 'ارفع أو امسح الصور هنا';

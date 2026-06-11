@@ -226,14 +226,14 @@ class AppLocalizationsRu extends AppLocalizations {
   String get homeRecentFavoriteRemoved => 'Удалено из избранного';
 
   @override
-  String get homeRecentPdfEmptyTitle => 'PDF-файлов пока нет';
+  String get homeRecentPdfEmptyTitle => 'Нет недавних PDF';
 
   @override
   String get homeRecentPdfEmptySubtitle =>
       'Загрузите или отсканируйте документы, чтобы создать свой первый PDF';
 
   @override
-  String get homeRecentImageEmptyTitle => 'Изображений пока нет';
+  String get homeRecentImageEmptyTitle => 'Нет недавних изображений';
 
   @override
   String get homeRecentImageEmptySubtitle =>

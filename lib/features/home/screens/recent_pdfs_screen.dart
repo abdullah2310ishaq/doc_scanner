@@ -1,4 +1,3 @@
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart'; // Svg render karne ke liye add kiya
 import 'package:provider/provider.dart';
@@ -9,7 +8,6 @@ import '../../../core/widgets/l10n_text.dart';
 import '../../../core/widgets/delete_dialog.dart';
 import '../../../core/widgets/toast.dart';
 import '../../smartcrop/pages/smart_crop_pdf_view_screen.dart';
-import '../../smartcrop/smart_crop_flow.dart';
 import '../models/recent_file_model.dart';
 import '../providers/recent_documents_provider.dart';
 import '../services/recent_documents_service.dart';
@@ -59,23 +57,6 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
     return provider.pdfFiles
         .where((f) => f.fileName.toLowerCase().contains(q))
         .toList();
-  }
-
-  Future<void> _uploadPdf() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf'],
-    );
-    final path = result?.files.single.path;
-    if (path == null) return;
-    if (!mounted) return;
-    await context.read<RecentDocumentsProvider>().registerPdf(path);
-  }
-
-  Future<void> _scanDocument() async {
-    await SmartCropFlow.startLiveCamera(context);
-    if (!mounted) return;
-    await context.read<RecentDocumentsProvider>().loadPdfs();
   }
 
   void _openPdf(RecentFileModel file) {
@@ -195,14 +176,7 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
               ? const Center(child: CircularProgressIndicator())
               : provider.pdfFiles.isEmpty
               ? RecentDocumentsEmptyState(
-                  imageAsset:
-                      'assets/no_pdf.png', // Kuch nahi hai toh no_pdf.png
-                  title: l10n.homeRecentPdfEmptyTitle,
-                  subtitle: l10n.homeRecentPdfEmptySubtitle,
-                  primaryLabel: l10n.homeRecentUploadPdf,
-                  secondaryLabel: l10n.homeRecentScanDocument,
-                  onPrimary: _uploadPdf,
-                  onSecondary: _scanDocument,
+                  message: l10n.homeRecentPdfEmptyTitle,
                 )
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
