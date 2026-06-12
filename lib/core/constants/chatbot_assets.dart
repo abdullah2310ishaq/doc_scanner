@@ -7,4 +7,9 @@ abstract final class ChatbotAssets {
   static const String suggestKeyPoints = '$_base/up2.svg';
   static const String suggestExplain = '$_base/up3.svg';
   static const String suggestTranslate = '$_base/up4.svg';
+
+  static const String tipFirst = '$_base/firsticon.svg';
+  static const String tipSecond = '$_base/secondicon.svg';
+  static const String tipThird = '$_base/thirdicon.svg';
+  static const String tipFourth = '$_base/fourthicon.svg';
 }

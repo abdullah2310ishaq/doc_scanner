@@ -64,6 +64,14 @@ class _UploadNewPdfScreenState extends State<UploadNewPdfScreen> {
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: AppBar(
+        title: Text(
+          l10n.homeFeatureChatbotTitle,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+            color: AppColors.textPrimary,
+          ),
+        ),
         centerTitle: true,
         backgroundColor: AppColors.white,
         foregroundColor: AppColors.textPrimary,
@@ -121,11 +129,22 @@ class _UploadNewPdfScreenState extends State<UploadNewPdfScreen> {
                     const SizedBox(height: 16),
                     _TipsList(
                       tips: [
-                        l10n.chatbotSuggestSummarize,
-                        l10n.chatbotSuggestKeyPoints,
-                        l10n.chatbotSuggestExplain,
-                        l10n.chatbotSuggestTranslate,
-                        l10n.chatbotAskQuestions, // Make sure this key exists or map your relevant l10n string
+                        _TipItem(
+                          iconAsset: ChatbotAssets.tipFirst,
+                          text: l10n.chatbotSuggestSummarize,
+                        ),
+                        _TipItem(
+                          iconAsset: ChatbotAssets.tipSecond,
+                          text: l10n.chatbotSuggestKeyPoints,
+                        ),
+                        _TipItem(
+                          iconAsset: ChatbotAssets.tipThird,
+                          text: l10n.chatbotSuggestExplain,
+                        ),
+                        _TipItem(
+                          iconAsset: ChatbotAssets.tipFourth,
+                          text: l10n.chatbotSuggestTranslate,
+                        ),
                       ],
                     ),
                     const SizedBox(height: 24),
@@ -251,10 +270,17 @@ class _TipsDivider extends StatelessWidget {
   }
 }
 
+class _TipItem {
+  const _TipItem({required this.iconAsset, required this.text});
+
+  final String iconAsset;
+  final String text;
+}
+
 class _TipsList extends StatelessWidget {
   const _TipsList({required this.tips});
 
-  final List<String> tips;
+  final List<_TipItem> tips;
 
   @override
   Widget build(BuildContext context) {
@@ -262,18 +288,19 @@ class _TipsList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: tips.map((tip) {
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Icon(Icons.circle, size: 6, color: AppColors.chatbotAccent),
-              const SizedBox(width: 12),
+              SvgPicture.asset(tip.iconAsset, width: 26, height: 26),
+              const SizedBox(width: 18),
               Expanded(
                 child: Text(
-                  tip,
+                  tip.text,
                   style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    height: 1.35,
                     color: AppColors.textPrimary,
                   ),
                 ),
