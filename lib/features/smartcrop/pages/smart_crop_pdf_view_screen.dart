@@ -146,30 +146,61 @@ class _SmartCropPdfViewScreenState extends State<SmartCropPdfViewScreen> {
           overflow: TextOverflow.ellipsis,
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
         ),
+        actionsPadding: const EdgeInsets.only(right: 8),
         actions: [
-          PopupMenuButton<String>(
-            icon: const Icon(Icons.more_vert, color: AppColors.textPrimary),
-            onSelected: (value) {
-              if (value == 'rename') {
-                _rename();
-              } else if (value == 'delete') {
-                _delete();
-              }
-            },
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: 'rename',
-                child: Text(l10n.smartCropRenamePdf),
+          Theme(
+            data: Theme.of(context).copyWith(
+              popupMenuTheme: const PopupMenuThemeData(
+                color: AppColors.white,
+                elevation: 4,
+                surfaceTintColor: AppColors.white,
               ),
-              const PopupMenuDivider(),
-              PopupMenuItem(
-                value: 'delete',
-                child: Text(
-                  l10n.commonDelete,
-                  style: const TextStyle(color: Colors.redAccent),
+            ),
+            child: PopupMenuButton<String>(
+              icon: const Icon(
+                Icons.more_vert,
+                color: AppColors.textPrimary,
+                size: 20,
+              ),
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
+              splashRadius: 18,
+              offset: const Offset(0, 32),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              onSelected: (value) {
+                if (value == 'rename') {
+                  _rename();
+                } else if (value == 'delete') {
+                  _delete();
+                }
+              },
+              itemBuilder: (context) => [
+                PopupMenuItem<String>(
+                  value: 'rename',
+                  height: 32,
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Text(
+                    l10n.smartCropRenamePdf,
+                    style: const TextStyle(fontSize: 13),
+                  ),
                 ),
-              ),
-            ],
+                const PopupMenuDivider(),
+                PopupMenuItem<String>(
+                  value: 'delete',
+                  height: 32,
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Text(
+                    l10n.commonDelete,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: Colors.redAccent,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
