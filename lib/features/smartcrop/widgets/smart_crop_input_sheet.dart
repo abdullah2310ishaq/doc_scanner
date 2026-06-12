@@ -10,7 +10,7 @@ Future<void> showSmartCropInputSheet(
 }) {
   return showModalBottomSheet<void>(
     context: context,
-    backgroundColor: AppColors.white,
+    backgroundColor: const Color(0xFFF5F6FB),
     showDragHandle: true,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
@@ -122,7 +122,7 @@ class _CropInputOptionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: backgroundColor,
+      color: AppColors.white,
       borderRadius: BorderRadius.circular(AppColors.ocrInputOptionRadius),
       child: InkWell(
         onTap: onTap,

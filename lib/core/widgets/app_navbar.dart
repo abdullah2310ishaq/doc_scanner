@@ -30,7 +30,7 @@ class AppNavbar extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.fromLTRB(sideMargin, 0, sideMargin, 16),
         child: Container(
-          height: 52, // ADJUSTMENT: Shrunk slightly from 56 to 52
+          height: 52,
           width: double.infinity,
           decoration: BoxDecoration(
             gradient: AppColors.navbarGradient,
@@ -46,8 +46,9 @@ class AppNavbar extends StatelessWidget {
                 onTap: () => onChanged(AppNavItem.home),
               ),
               const SizedBox(
-                width: 64,
-              ), // ADJUSTMENT: Shrunk width gap from 80 to 64
+                width:
+                    86, // ADJUSTMENT: Reduced from 110 to bring them a bit closer inside
+              ),
               _NavItem(
                 iconData: Icons.settings_rounded,
                 label: settingsLabel,
@@ -77,8 +78,7 @@ class _NavItem extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
 
-  static const double _iconSize =
-      22; // ADJUSTMENT: Scaled icon down down from 24 to 22
+  static const double _iconSize = 22;
 
   Color get _iconColor =>
       isSelected ? AppColors.white : AppColors.white.withValues(alpha: 0.7);
@@ -103,10 +103,7 @@ class _NavItem extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(8),
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 4,
-            vertical: 3, // ADJUSTMENT: Trimmed slightly from 4 to 3
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 3),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -118,9 +115,10 @@ class _NavItem extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontSize:
-                      10.5, // ADJUSTMENT: Scaled text down marginally from 11 to 10.5
-                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                  fontSize: 11,
+                  fontWeight: isSelected
+                      ? FontWeight.bold
+                      : FontWeight.bold, // Kept the bolder text
                   color: _iconColor,
                 ),
               ),

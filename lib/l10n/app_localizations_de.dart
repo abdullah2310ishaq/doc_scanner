@@ -905,26 +905,26 @@ class AppLocalizationsDe extends AppLocalizations {
   String get pdfAssistantTranslateTo => 'Übersetzen nach';
 
   @override
-  String get pdfAssistantTranslateToOptional => 'Translate To (optional)';
+  String get pdfAssistantTranslateToOptional => 'Übersetzen nach (optional)';
 
   @override
-  String get pdfAssistantNoTranslation => 'No translation';
+  String get pdfAssistantNoTranslation => 'Keine Übersetzung';
 
   @override
-  String get pdfAssistantExtractedPdfTitle => 'Extracted PDF';
+  String get pdfAssistantExtractedPdfTitle => 'Extrahiertes PDF';
 
   @override
   String get pdfAssistantExtractedPdfDescription =>
-      'Text extracted from your PDF pages';
+      'Aus Ihren PDF-Seiten extrahierter Text';
 
   @override
-  String get pdfAssistantExtractedTextOnlyTitle => 'Extracted text';
+  String get pdfAssistantExtractedTextOnlyTitle => 'Extrahierter Text';
 
   @override
-  String get pdfAssistantStepPreparingContent => 'Preparing content…';
+  String get pdfAssistantStepPreparingContent => 'Inhalt wird vorbereitet…';
 
   @override
-  String get pdfAssistantStepGeneratingPdfNeutral => 'Generating PDF…';
+  String get pdfAssistantStepGeneratingPdfNeutral => 'PDF wird erstellt…';
 
   @override
   String get pdfAssistantStartProcessing => 'Beginnen Sie mit der Verarbeitung';

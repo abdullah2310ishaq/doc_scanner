@@ -859,26 +859,25 @@ class AppLocalizationsZh extends AppLocalizations {
   String get pdfAssistantTranslateTo => '翻译至';
 
   @override
-  String get pdfAssistantTranslateToOptional => 'Translate To (optional)';
+  String get pdfAssistantTranslateToOptional => '翻译至（可选）';
 
   @override
-  String get pdfAssistantNoTranslation => 'No translation';
+  String get pdfAssistantNoTranslation => '不翻译';
 
   @override
-  String get pdfAssistantExtractedPdfTitle => 'Extracted PDF';
+  String get pdfAssistantExtractedPdfTitle => '提取的 PDF';
 
   @override
-  String get pdfAssistantExtractedPdfDescription =>
-      'Text extracted from your PDF pages';
+  String get pdfAssistantExtractedPdfDescription => '从 PDF 页面提取的文本';
 
   @override
-  String get pdfAssistantExtractedTextOnlyTitle => 'Extracted text';
+  String get pdfAssistantExtractedTextOnlyTitle => '提取的文本';
 
   @override
-  String get pdfAssistantStepPreparingContent => 'Preparing content…';
+  String get pdfAssistantStepPreparingContent => '正在准备内容…';
 
   @override
-  String get pdfAssistantStepGeneratingPdfNeutral => 'Generating PDF…';
+  String get pdfAssistantStepGeneratingPdfNeutral => '正在生成 PDF…';
 
   @override
   String get pdfAssistantStartProcessing => '开始处理';

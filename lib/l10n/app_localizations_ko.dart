@@ -866,26 +866,25 @@ class AppLocalizationsKo extends AppLocalizations {
   String get pdfAssistantTranslateTo => '번역 대상 언어';
 
   @override
-  String get pdfAssistantTranslateToOptional => 'Translate To (optional)';
+  String get pdfAssistantTranslateToOptional => '번역 대상 (선택 사항)';
 
   @override
-  String get pdfAssistantNoTranslation => 'No translation';
+  String get pdfAssistantNoTranslation => '번역 없음';
 
   @override
-  String get pdfAssistantExtractedPdfTitle => 'Extracted PDF';
+  String get pdfAssistantExtractedPdfTitle => '추출된 PDF';
 
   @override
-  String get pdfAssistantExtractedPdfDescription =>
-      'Text extracted from your PDF pages';
+  String get pdfAssistantExtractedPdfDescription => 'PDF 페이지에서 추출한 텍스트';
 
   @override
-  String get pdfAssistantExtractedTextOnlyTitle => 'Extracted text';
+  String get pdfAssistantExtractedTextOnlyTitle => '추출된 텍스트';
 
   @override
-  String get pdfAssistantStepPreparingContent => 'Preparing content…';
+  String get pdfAssistantStepPreparingContent => '콘텐츠 준비 중…';
 
   @override
-  String get pdfAssistantStepGeneratingPdfNeutral => 'Generating PDF…';
+  String get pdfAssistantStepGeneratingPdfNeutral => 'PDF 생성 중…';
 
   @override
   String get pdfAssistantStartProcessing => '처리 시작';

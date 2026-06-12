@@ -11,7 +11,7 @@ Future<void> showOcrInputMethodSheet(
 }) {
   return showModalBottomSheet<void>(
     context: context,
-    backgroundColor: AppColors.white,
+    backgroundColor: Color(0xFFF5F6FB),
     showDragHandle: true,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
@@ -122,7 +122,12 @@ class _OcrInputOptionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: backgroundColor,
+      color: AppColors
+          .white, // ADJUSTMENT: Fixed unused background color parameter
+      elevation: 4, // ADJUSTMENT: Added elevation for the raised look
+      shadowColor: Colors.black.withValues(
+        alpha: 0.15,
+      ), // ADJUSTMENT: Added a soft shadow to make the elevation look cleaner
       borderRadius: BorderRadius.circular(AppColors.ocrInputOptionRadius),
       child: InkWell(
         onTap: onTap,

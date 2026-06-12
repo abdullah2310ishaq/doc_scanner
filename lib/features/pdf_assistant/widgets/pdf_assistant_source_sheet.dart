@@ -11,7 +11,7 @@ import '../services/pdf_assistant_storage_service.dart';
 Future<void> showPdfAssistantSourceSheet(BuildContext context) {
   return showModalBottomSheet<void>(
     context: context,
-    backgroundColor: AppColors.white,
+    backgroundColor: const Color(0xFFF5F6FB),
     isScrollControlled: true,
     showDragHandle: true,
     shape: const RoundedRectangleBorder(
@@ -128,7 +128,7 @@ class _OptionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: backgroundColor,
+      color: AppColors.white,
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
         onTap: onTap,

@@ -868,26 +868,25 @@ class AppLocalizationsJa extends AppLocalizations {
   String get pdfAssistantTranslateTo => '翻訳先';
 
   @override
-  String get pdfAssistantTranslateToOptional => 'Translate To (optional)';
+  String get pdfAssistantTranslateToOptional => '翻訳先（任意）';
 
   @override
-  String get pdfAssistantNoTranslation => 'No translation';
+  String get pdfAssistantNoTranslation => '翻訳なし';
 
   @override
-  String get pdfAssistantExtractedPdfTitle => 'Extracted PDF';
+  String get pdfAssistantExtractedPdfTitle => '抽出されたPDF';
 
   @override
-  String get pdfAssistantExtractedPdfDescription =>
-      'Text extracted from your PDF pages';
+  String get pdfAssistantExtractedPdfDescription => 'PDFページから抽出されたテキスト';
 
   @override
-  String get pdfAssistantExtractedTextOnlyTitle => 'Extracted text';
+  String get pdfAssistantExtractedTextOnlyTitle => '抽出されたテキスト';
 
   @override
-  String get pdfAssistantStepPreparingContent => 'Preparing content…';
+  String get pdfAssistantStepPreparingContent => 'コンテンツを準備中…';
 
   @override
-  String get pdfAssistantStepGeneratingPdfNeutral => 'Generating PDF…';
+  String get pdfAssistantStepGeneratingPdfNeutral => 'PDFを生成中…';
 
   @override
   String get pdfAssistantStartProcessing => '処理の開始';
