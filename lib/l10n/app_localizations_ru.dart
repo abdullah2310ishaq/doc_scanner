@@ -1240,6 +1240,13 @@ class AppLocalizationsRu extends AppLocalizations {
       'Удалить эту страницу из документа?';
 
   @override
+  String get smartCropDeleteCapturedPageTitle => 'Удалить страницу';
+
+  @override
+  String get smartCropDeleteCapturedPageMessage =>
+      'Вы уверены, что хотите удалить эту страницу?';
+
+  @override
   String get smartCropDeleteDocumentTitle => 'Удалить документ?';
 
   @override

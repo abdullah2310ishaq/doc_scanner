@@ -1211,6 +1211,13 @@ class AppLocalizationsAr extends AppLocalizations {
       'هل تريد إزالة هذه الصفحة من المستند؟';
 
   @override
+  String get smartCropDeleteCapturedPageTitle => 'حذف الصفحة';
+
+  @override
+  String get smartCropDeleteCapturedPageMessage =>
+      'هل أنت متأكد أنك تريد حذف هذه الصفحة؟';
+
+  @override
   String get smartCropDeleteDocumentTitle => 'حذف المستند؟';
 
   @override

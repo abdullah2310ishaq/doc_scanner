@@ -451,6 +451,8 @@
   "smartCropPdfSinglePageLabel": "1ページ",
   "smartCropImageCopied": "コピーされました",
   "smartCropDeleteImageConfirm": "このページをドキュメントから削除しますか?",
+  "smartCropDeleteCapturedPageTitle": "ページを削除",
+  "smartCropDeleteCapturedPageMessage": "このページを削除してもよろしいですか？",
   "smartCropDeleteDocumentTitle": "ドキュメントを削除しますか？",
   "smartCropDeleteDocumentMessage": "このドキュメントを削除してもよろしいですか？この操作は元に戻せません。",
   "smartCropDeletePdfTitle": "PDFを削除しますか？",

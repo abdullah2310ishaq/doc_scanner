@@ -451,6 +451,8 @@
   "smartCropPdfSinglePageLabel": "1 страница",
   "smartCropImageCopied": "Скопировано",
   "smartCropDeleteImageConfirm": "Удалить эту страницу из документа?",
+  "smartCropDeleteCapturedPageTitle": "Удалить страницу",
+  "smartCropDeleteCapturedPageMessage": "Вы уверены, что хотите удалить эту страницу?",
   "smartCropDeleteDocumentTitle": "Удалить документ?",
   "smartCropDeleteDocumentMessage": "Вы уверены, что хотите удалить этот документ? Это действие нельзя отменить.",
   "smartCropDeletePdfTitle": "Удалить PDF?",

@@ -451,6 +451,8 @@
   "smartCropPdfSinglePageLabel": "1 页",
   "smartCropImageCopied": "已复制",
   "smartCropDeleteImageConfirm": "从文档中移除此页？",
+  "smartCropDeleteCapturedPageTitle": "删除页面",
+  "smartCropDeleteCapturedPageMessage": "确定要删除此页面吗？",
   "smartCropDeleteDocumentTitle": "删除文档？",
   "smartCropDeleteDocumentMessage": "确定要删除此文档吗？此操作无法撤销。",
   "smartCropDeletePdfTitle": "删除 PDF？",

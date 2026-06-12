@@ -376,6 +376,8 @@
   "smartCropPdfSinglePageLabel": "1 صفحة",
   "smartCropImageCopied": "منقول",
   "smartCropDeleteImageConfirm": "هل تريد إزالة هذه الصفحة من المستند؟",
+  "smartCropDeleteCapturedPageTitle": "حذف الصفحة",
+  "smartCropDeleteCapturedPageMessage": "هل أنت متأكد أنك تريد حذف هذه الصفحة؟",
   "smartCropDeleteDocumentTitle": "حذف المستند؟",
   "smartCropDeleteDocumentMessage": "هل أنت متأكد أنك تريد حذف هذا المستند؟ لا يمكن التراجع عن هذا.",
   "smartCropDeletePdfTitle": "حذف PDF؟",

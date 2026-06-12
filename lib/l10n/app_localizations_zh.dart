@@ -1176,6 +1176,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get smartCropDeleteImageConfirm => '从文档中移除此页？';
 
   @override
+  String get smartCropDeleteCapturedPageTitle => '删除页面';
+
+  @override
+  String get smartCropDeleteCapturedPageMessage => '确定要删除此页面吗？';
+
+  @override
   String get smartCropDeleteDocumentTitle => '删除文档？';
 
   @override

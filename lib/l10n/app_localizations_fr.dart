@@ -1252,6 +1252,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get smartCropDeleteImageConfirm => 'Retirer cette page du document ?';
 
   @override
+  String get smartCropDeleteCapturedPageTitle => 'Supprimer la page';
+
+  @override
+  String get smartCropDeleteCapturedPageMessage =>
+      'Êtes-vous sûr de vouloir supprimer cette page ?';
+
+  @override
   String get smartCropDeleteDocumentTitle => 'Supprimer le document ?';
 
   @override

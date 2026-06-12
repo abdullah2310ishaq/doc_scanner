@@ -1188,6 +1188,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get smartCropDeleteImageConfirm => '이 페이지를 문서에서 제거하시겠습니까?';
 
   @override
+  String get smartCropDeleteCapturedPageTitle => '페이지 삭제';
+
+  @override
+  String get smartCropDeleteCapturedPageMessage => '이 페이지를 삭제하시겠습니까?';
+
+  @override
   String get smartCropDeleteDocumentTitle => '문서를 삭제하시겠습니까?';
 
   @override

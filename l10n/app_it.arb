@@ -451,6 +451,8 @@
   "smartCropPdfSinglePageLabel": "1 pagina",
   "smartCropImageCopied": "Copiato",
   "smartCropDeleteImageConfirm": "Rimuovere questa pagina dal documento?",
+  "smartCropDeleteCapturedPageTitle": "Elimina pagina",
+  "smartCropDeleteCapturedPageMessage": "Sei sicuro di voler eliminare questa pagina ?",
   "smartCropDeleteDocumentTitle": "Eliminare il documento?",
   "smartCropDeleteDocumentMessage": "Sei sicuro di voler eliminare questo documento? Questa azione non può essere annullata.",
   "smartCropDeletePdfTitle": "Eliminare il PDF?",

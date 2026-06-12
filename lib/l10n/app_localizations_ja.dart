@@ -1190,6 +1190,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get smartCropDeleteImageConfirm => 'このページをドキュメントから削除しますか?';
 
   @override
+  String get smartCropDeleteCapturedPageTitle => 'ページを削除';
+
+  @override
+  String get smartCropDeleteCapturedPageMessage => 'このページを削除してもよろしいですか？';
+
+  @override
   String get smartCropDeleteDocumentTitle => 'ドキュメントを削除しますか？';
 
   @override

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../../core/constants/smart_crop_limits.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
+import '../../../core/widgets/delete_dialog.dart';
 import '../providers/smart_crop_session_provider.dart';
 import '../services/smart_crop_edge_detect_service.dart';
 import '../smart_crop_flow.dart';
@@ -53,6 +54,22 @@ class _SmartCropCapturedScreenState extends State<SmartCropCapturedScreen> {
   }
 
   /// Runs after UI is visible so gallery pick does not block navigation.
+  Future<void> _confirmRemovePage(int index) async {
+    final l10n = context.l10n;
+    final confirmed = await DeleteDialog.show(
+      context: context,
+      title: l10n.smartCropDeleteCapturedPageTitle,
+      message: l10n.smartCropDeleteCapturedPageMessage,
+    );
+    if (confirmed != true || !mounted) return;
+
+    final session = context.read<SmartCropSessionProvider>();
+    session.removeAt(index);
+    if (session.isEmpty && mounted) {
+      Navigator.of(context).pop();
+    }
+  }
+
   Future<void> _preDetectGalleryCornersInBackground() async {
     if (!mounted) return;
 
@@ -126,7 +143,7 @@ class _SmartCropCapturedScreenState extends State<SmartCropCapturedScreen> {
                 ),
                 Expanded(
                   child: _CapturedGrid(
-                    onRemove: session.removeAt,
+                    onRemove: _confirmRemovePage,
                     onTap: (index) => SmartCropPhotoPreviewScreen.open(
                       context,
                       initialIndex: index,
@@ -198,7 +215,7 @@ class _CapturedGrid extends StatelessWidget {
     this.onAddPhoto,
   });
 
-  final void Function(int index) onRemove;
+  final Future<void> Function(int index) onRemove;
   final void Function(int index) onTap;
   final VoidCallback? onAddPhoto;
 

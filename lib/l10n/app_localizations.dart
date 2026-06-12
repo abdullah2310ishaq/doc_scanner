@@ -2372,6 +2372,18 @@ abstract class AppLocalizations {
   /// **'Remove this page from the document?'**
   String get smartCropDeleteImageConfirm;
 
+  /// No description provided for @smartCropDeleteCapturedPageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete page'**
+  String get smartCropDeleteCapturedPageTitle;
+
+  /// No description provided for @smartCropDeleteCapturedPageMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want this page to be deleted ?'**
+  String get smartCropDeleteCapturedPageMessage;
+
   /// No description provided for @smartCropDeleteDocumentTitle.
   ///
   /// In en, this message translates to:
