@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:doc_scanner/ads/app_open.dart';
+import 'package:doc_scanner/ads/native_ad_language.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -15,13 +16,17 @@ import 'features/home/providers/recent_documents_provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MobileAds.instance.initialize();
-  if (Platform.isAndroid) {
-    await MediaStore.ensureInitialized();
-    MediaStore.appFolder = 'DocScanner';
-  }
 
   final connectivityProvider = ConnectivityProvider();
   await connectivityProvider.initialize();
+
+  if (Platform.isAndroid) {
+    await MediaStore.ensureInitialized();
+    MediaStore.appFolder = 'DocScanner';
+    NativeAdLanguageCache.instance.ensureLoaded(
+      isOnline: connectivityProvider.isOnline,
+    );
+  }
 
   final localeService = LocaleService();
   await localeService.initialize();
@@ -42,8 +47,16 @@ Future<void> main() async {
     ),
   );
 
+  final view = WidgetsBinding.instance.platformDispatcher.views.first;
+  final rootMediaQuery = MediaQueryData.fromView(view);
+
   runApp(
-    MultiProvider(
+    MediaQuery(
+      data: rootMediaQuery.copyWith(
+        textScaler: TextScaler.noScaling,
+        padding: rootMediaQuery.viewPadding,
+      ),
+      child: MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: connectivityProvider),
         ChangeNotifierProvider.value(value: localeService),
@@ -53,6 +66,7 @@ Future<void> main() async {
       ],
       // Yahan DocScannerApp ko AppLifecycleObserver ke andar wrap kar diya hai
       child: const AppLifecycleObserver(child: DocScannerApp()),
+      ),
     ),
   );
 }

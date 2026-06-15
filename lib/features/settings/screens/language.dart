@@ -82,6 +82,37 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
           ),
         ),
         centerTitle: false,
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 12.w),
+            child: Material(
+              color: _selectedLanguage == null ? Colors.grey.shade200 : _accent,
+              shape: const StadiumBorder(),
+              elevation: _selectedLanguage == null ? 0 : 2,
+              shadowColor: _accent.withValues(alpha: 0.35),
+              child: InkWell(
+                customBorder: const StadiumBorder(),
+                onTap: _selectedLanguage == null ? null : _applyAndReturn,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 10.h,
+                  ),
+                  child: Text(
+                    l10n.settingsLanguageApply,
+                    style: TextStyle(
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w700,
+                      color: _selectedLanguage == null
+                          ? Colors.grey.shade400
+                          : Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Stack(
@@ -92,15 +123,15 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                 padding: EdgeInsets.only(
                   left: 20.w,
                   right: 20.w,
-                  top: 16.h,
-                  bottom: 220.h,
+                  top: 12.h,
+                  bottom: 130.h,
                 ),
                 itemCount: appLanguageOptions.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 2.3,
-                  crossAxisSpacing: 16.w,
-                  mainAxisSpacing: 16.h,
+                  childAspectRatio: 2.4,
+                  crossAxisSpacing: 12.w,
+                  mainAxisSpacing: 12.h,
                 ),
                 itemBuilder: (_, index) {
                   final language = appLanguageOptions[index];
@@ -110,7 +141,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                     duration: const Duration(milliseconds: 200),
                     curve: Curves.easeInOut,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16.r),
+                      borderRadius: BorderRadius.circular(12.r),
                       boxShadow: isSelected
                           ? [
                               BoxShadow(
@@ -125,6 +156,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                       language: language,
                       isSelected: isSelected,
                       accentColor: _accent,
+                      compact: true,
                       onTap: () {
                         setState(() => _selectedLanguage = language.code);
                       },
@@ -137,50 +169,8 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
             Positioned(
               left: 20.w,
               right: 20.w,
-              bottom: 84.h,
-              child: const NativeAdLanguage(),
-            ),
-
-            Positioned(
-              left: 20.w,
-              right: 20.w,
               bottom: 16.h,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color: (_selectedLanguage == null
-                          ? Colors.transparent
-                          : _accent.withOpacity(0.25)),
-                      blurRadius: 20,
-                      offset: const Offset(0, 10),
-                    ),
-                  ],
-                ),
-                child: ElevatedButton(
-                  onPressed: _selectedLanguage == null ? null : _applyAndReturn,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: _accent,
-                    foregroundColor: Colors.white,
-                    disabledBackgroundColor: Colors.grey[200],
-                    disabledForegroundColor: Colors.grey[400],
-                    elevation: 0,
-                    minimumSize: Size(double.infinity, 56.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.r),
-                    ),
-                  ),
-                  child: Text(
-                    l10n.settingsLanguageApply,
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: -0.1,
-                    ),
-                  ),
-                ),
-              ),
+              child: const NativeAdLanguage(),
             ),
           ],
         ),

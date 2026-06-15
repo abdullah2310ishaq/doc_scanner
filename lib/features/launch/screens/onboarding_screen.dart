@@ -6,7 +6,7 @@ import 'package:lottie/lottie.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
-import '../../home/screens/main_shell_screen.dart';
+import '../../settings/screens/first_language.dart';
 import '../services/app_launch_prefs_service.dart';
 
 /// Four-page intro shown on first launch ([PageView]).
@@ -68,7 +68,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       return;
     }
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const MainShellScreen()),
+      MaterialPageRoute(builder: (_) => const FirstTimeLanguageSelectionScreen()),
     );
   }
 
@@ -137,6 +137,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: Scaffold(
         backgroundColor: AppColors.smartCropSoftBackground,
         body: SafeArea(
+          bottom: false,
           child: Column(
             children: [
               if (showSkip)
@@ -254,7 +255,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
               const SizedBox(height: 24),
               Padding(
-                padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                padding: EdgeInsets.fromLTRB(
+                  24,
+                  0,
+                  24,
+                  16 + MediaQuery.viewPaddingOf(context).bottom,
+                ),
                 child: SizedBox(
                   width: double.infinity,
                   height: 52,
@@ -291,7 +297,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 Icon(
                                   Icons.arrow_forward_ios,
                                   color: AppColors.white,
-                                  size: 20,
+                                  size: 16,
                                 ),
                               ],
                             )

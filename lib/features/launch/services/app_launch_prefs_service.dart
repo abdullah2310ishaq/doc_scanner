@@ -26,4 +26,14 @@ class AppLaunchPrefsService {
     final prefs = await _prefs;
     await prefs.setBool(PrefsKeys.hasCompletedOnboarding, true);
   }
+
+  Future<bool> hasSelectedInitialLanguage() async {
+    final prefs = await _prefs;
+    return prefs.getBool(PrefsKeys.hasSelectedInitialLanguage) ?? false;
+  }
+
+  Future<void> setInitialLanguageSelected() async {
+    final prefs = await _prefs;
+    await prefs.setBool(PrefsKeys.hasSelectedInitialLanguage, true);
+  }
 }

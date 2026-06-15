@@ -46,10 +46,10 @@ class TranslateResultScreen extends StatelessWidget {
     );
   }
 
-  void gobacktohome(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => MainShellScreen()),
+  void _goHome(BuildContext context) {
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute<void>(builder: (_) => const MainShellScreen()),
+      (route) => false,
     );
   }
 
@@ -126,7 +126,11 @@ class TranslateResultScreen extends StatelessWidget {
     final connectivity = context.read<ConnectivityProvider>();
 
     if (!NetworkGuard.canProceed(connectivity)) {
-      AppToast.show(context, l10n.errorNoInternetFeatures);
+      AppToast.show(
+        context,
+        l10n.errorNoInternetFeatures,
+        backgroundColor: AppToast.errorBackground,
+      );
       return;
     }
 
@@ -227,7 +231,15 @@ class TranslateResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    return Scaffold(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) {
+          return;
+        }
+        _goHome(context);
+      },
+      child: Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
       appBar: AppBar(
         title: Text(
@@ -240,7 +252,7 @@ class TranslateResultScreen extends StatelessWidget {
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => gobacktohome(context),
+          onPressed: () => _goHome(context),
         ),
         backgroundColor: AppColors.scaffoldBackground,
         foregroundColor: AppColors.textPrimary,
@@ -342,6 +354,7 @@ class TranslateResultScreen extends StatelessWidget {
           );
         },
       ),
+    ),
     );
   }
 }

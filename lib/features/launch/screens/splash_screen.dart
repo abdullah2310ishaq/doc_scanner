@@ -5,6 +5,7 @@ import '../../../ads/inter.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../home/screens/main_shell_screen.dart';
+import '../../settings/screens/first_language.dart';
 import '../services/app_launch_prefs_service.dart';
 import 'onboarding_screen.dart';
 
@@ -34,6 +35,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
     final isFirstLaunch = await _launchPrefs.isFirstLaunch();
     final hasCompletedOnboarding = await _launchPrefs.hasCompletedOnboarding();
+    final hasSelectedInitialLanguage = await _launchPrefs
+        .hasSelectedInitialLanguage();
 
     if (!mounted) {
       return;
@@ -41,12 +44,23 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (isFirstLaunch) {
       await _launchPrefs.markFirstLaunchSeen();
-      _navigateAfterSplash(hasCompletedOnboarding);
+      _navigateAfterSplash(
+        hasCompletedOnboarding: hasCompletedOnboarding,
+        hasSelectedInitialLanguage: hasSelectedInitialLanguage,
+      );
       return;
     }
 
     if (!hasCompletedOnboarding) {
-      _navigateAfterSplash(false);
+      _navigateAfterSplash(
+        hasCompletedOnboarding: false,
+        hasSelectedInitialLanguage: hasSelectedInitialLanguage,
+      );
+      return;
+    }
+
+    if (!hasSelectedInitialLanguage) {
+      _goFirstLanguage();
       return;
     }
 
@@ -68,17 +82,37 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  void _navigateAfterSplash(bool hasCompletedOnboarding) {
+  void _navigateAfterSplash({
+    required bool hasCompletedOnboarding,
+    required bool hasSelectedInitialLanguage,
+  }) {
     if (!mounted) {
       return;
     }
 
-    final Widget nextScreen = hasCompletedOnboarding
-        ? const MainShellScreen()
-        : const OnboardingScreen();
+    final Widget nextScreen;
+    if (!hasCompletedOnboarding) {
+      nextScreen = const OnboardingScreen();
+    } else if (!hasSelectedInitialLanguage) {
+      nextScreen = const FirstTimeLanguageSelectionScreen();
+    } else {
+      nextScreen = const MainShellScreen();
+    }
+
+    Navigator.of(
+      context,
+    ).pushReplacement(MaterialPageRoute<void>(builder: (_) => nextScreen));
+  }
+
+  void _goFirstLanguage() {
+    if (!mounted) {
+      return;
+    }
 
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute<void>(builder: (_) => nextScreen),
+      MaterialPageRoute<void>(
+        builder: (_) => const FirstTimeLanguageSelectionScreen(),
+      ),
     );
   }
 

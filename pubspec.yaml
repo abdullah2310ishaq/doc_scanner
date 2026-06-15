@@ -59,9 +59,9 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: assets/home/scanner.png
+  image_path: assets/photo.png
   adaptive_icon_background: "#000000"
-  adaptive_icon_foreground: assets/home/scanner.png
+  adaptive_icon_foreground: assets/photo.png
   remove_alpha_ios: true
   background_color_ios: "#000000"
   min_sdk_android: 21

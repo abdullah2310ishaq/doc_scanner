@@ -25,6 +25,7 @@ class DocScannerApp extends StatelessWidget {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               navigatorKey: appNavigatorKey,
+              navigatorObservers: [appRouteObserver],
               locale: localeService.locale,
               onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
               theme: AppTheme.light,
@@ -36,8 +37,15 @@ class DocScannerApp extends StatelessWidget {
               ],
               supportedLocales: AppLocalizations.supportedLocales,
               builder: (context, child) {
-                return ConnectivityListener(
-                  child: child ?? const SizedBox.shrink(),
+                final mediaQuery = MediaQuery.of(context);
+                return MediaQuery(
+                  data: mediaQuery.copyWith(
+                    textScaler: TextScaler.noScaling,
+                    padding: mediaQuery.viewPadding,
+                  ),
+                  child: ConnectivityListener(
+                    child: child ?? const SizedBox.shrink(),
+                  ),
                 );
               },
               home: const SplashScreen(),

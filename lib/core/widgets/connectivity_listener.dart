@@ -62,7 +62,10 @@ class _ConnectivityListenerState extends State<ConnectivityListener>
 
     if (wasOnline == true && isOnline == false && !_offlineToastShown) {
       _offlineToastShown = true;
-      AppToast.showGlobal(context.l10n.errorNoInternetFeatures);
+      AppToast.showGlobal(
+        context.l10n.errorNoInternetFeatures,
+        backgroundColor: AppToast.errorBackground,
+      );
     }
 
     if (isOnline) {

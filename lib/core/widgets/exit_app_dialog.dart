@@ -95,7 +95,7 @@ class ExitAppDialog {
                           onPressed: () =>
                               Navigator.of(dialogContext).pop(true),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.redAccent,
+                            backgroundColor: AppColors.textLink,
                             foregroundColor: AppColors.white,
                             elevation: 0,
                             padding: const EdgeInsets.symmetric(vertical: 12),
