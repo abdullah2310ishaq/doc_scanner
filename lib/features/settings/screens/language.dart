@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../../ads/native_ad_language.dart';
 import '../../../core/services/locale_service.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../models/app_language_option.dart';
@@ -92,8 +93,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                   left: 20.w,
                   right: 20.w,
                   top: 16.h,
-                  bottom: 100
-                      .h, // Padding at bottom to ensure items don't hide behind floating button
+                  bottom: 220.h,
                 ),
                 itemCount: appLanguageOptions.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -134,7 +134,13 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
               ),
             ),
 
-            // Sticky Bottom Premium Action Button
+            Positioned(
+              left: 20.w,
+              right: 20.w,
+              bottom: 84.h,
+              child: const NativeAdLanguage(),
+            ),
+
             Positioned(
               left: 20.w,
               right: 20.w,

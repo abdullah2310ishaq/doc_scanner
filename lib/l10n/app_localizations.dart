@@ -2000,6 +2000,18 @@ abstract class AppLocalizations {
   /// **'AI-powered document scanning'**
   String get splashTagline;
 
+  /// No description provided for @splashAdDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'This action may lead to an ad'**
+  String get splashAdDisclaimer;
+
+  /// No description provided for @adLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Ad loading...'**
+  String get adLoading;
+
   /// No description provided for @onboardingPage1Title.
   ///
   /// In en, this message translates to:
@@ -2246,6 +2258,30 @@ abstract class AppLocalizations {
   /// **'Apply crop'**
   String get smartCropAdjustCornersConfirm;
 
+  /// No description provided for @smartCropPresetAuto.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto detect'**
+  String get smartCropPresetAuto;
+
+  /// No description provided for @smartCropPresetCenter.
+  ///
+  /// In en, this message translates to:
+  /// **'Center page'**
+  String get smartCropPresetCenter;
+
+  /// No description provided for @smartCropPresetFull.
+  ///
+  /// In en, this message translates to:
+  /// **'Full image'**
+  String get smartCropPresetFull;
+
+  /// No description provided for @smartCropUploadIntroGoogleScanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Google Scanner (Best crop)'**
+  String get smartCropUploadIntroGoogleScanner;
+
   /// No description provided for @smartCropDetectingEdges.
   ///
   /// In en, this message translates to:
@@ -2467,6 +2503,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reading Images'**
   String get smartCropStepReadingImages;
+
+  /// No description provided for @smartCropImportReadingProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading {done} of {total}…'**
+  String smartCropImportReadingProgress(int done, int total);
+
+  /// No description provided for @smartCropImportPartialFailure.
+  ///
+  /// In en, this message translates to:
+  /// **'{failed} of {total} images could not be imported'**
+  String smartCropImportPartialFailure(int failed, int total);
 
   /// No description provided for @smartCropStepDetectingEdges.
   ///

@@ -1035,6 +1035,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get splashTagline => 'Escaneo de documentos con tecnología de IA';
 
   @override
+  String get splashAdDisclaimer => 'This action may lead to an ad';
+
+  @override
+  String get adLoading => 'Ad loading...';
+
+  @override
   String get onboardingPage1Title => 'Escanea texto\nen segundos';
 
   @override
@@ -1171,6 +1177,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get smartCropAdjustCornersConfirm => 'Aplicar recorte';
 
   @override
+  String get smartCropPresetAuto => 'Auto detect';
+
+  @override
+  String get smartCropPresetCenter => 'Center page';
+
+  @override
+  String get smartCropPresetFull => 'Full image';
+
+  @override
+  String get smartCropUploadIntroGoogleScanner => 'Google Scanner (Best crop)';
+
+  @override
   String get smartCropDetectingEdges => 'Detectando bordes del documento…';
 
   @override
@@ -1294,6 +1312,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get smartCropStepReadingImages => 'Leyendo imágenes';
+
+  @override
+  String smartCropImportReadingProgress(int done, int total) {
+    return 'Reading $done of $total…';
+  }
+
+  @override
+  String smartCropImportPartialFailure(int failed, int total) {
+    return '$failed of $total images could not be imported';
+  }
 
   @override
   String get smartCropStepDetectingEdges => 'Detectando bordes';

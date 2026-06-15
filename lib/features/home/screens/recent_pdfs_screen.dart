@@ -1,5 +1,6 @@
+import 'package:doc_scanner/ads/banner_ad_recent_pdf.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart'; // Svg render karne ke liye add kiya
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/theme/app_colors.dart';
@@ -175,9 +176,7 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
           body: provider.isLoadingPdfs
               ? const Center(child: CircularProgressIndicator())
               : provider.pdfFiles.isEmpty
-              ? RecentDocumentsEmptyState(
-                  message: l10n.homeRecentPdfEmptyTitle,
-                )
+              ? RecentDocumentsEmptyState(message: l10n.homeRecentPdfEmptyTitle)
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -270,8 +269,11 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
                               ),
                             )
                           : ListView.builder(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
+                              padding: const EdgeInsets.only(
+                                left: 16,
+                                right: 16,
+                                bottom:
+                                    16, // Padding taake last card banner ke piche na dhab jaye
                               ),
                               itemCount: files.length,
                               itemBuilder: (context, index) {
@@ -350,83 +352,94 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
                                     trailing: _selectMode
                                         ? null
                                         : Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        if (file.isFavorite)
-                                          const Icon(
-                                            Icons.star,
-                                            color: Colors.amber,
-                                            size: 20,
-                                          ),
-                                        Theme(
-                                          data: Theme.of(context).copyWith(
-                                            popupMenuTheme:
-                                                const PopupMenuThemeData(
-                                                  color: Colors.white,
-                                                  elevation: 4,
-                                                  surfaceTintColor:
-                                                      Colors.white,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              if (file.isFavorite)
+                                                const Icon(
+                                                  Icons.star,
+                                                  color: Colors.amber,
+                                                  size: 20,
                                                 ),
-                                          ),
-                                          child: PopupMenuButton<String>(
-                                            icon: const Icon(
-                                              Icons.more_vert,
-                                              color: Colors.grey,
-                                              size: 20,
-                                            ),
-                                            padding: EdgeInsets.zero,
-                                            constraints: const BoxConstraints(),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                            onSelected: (value) async {
-                                              if (value == 'share') {
-                                                _share(file);
-                                              } else if (value == 'delete') {
-                                                _delete(file);
-                                              } else if (value == 'favorite') {
-                                                _toggleFavorite(file);
-                                              }
-                                            },
-                                            itemBuilder: (BuildContext context) => [
-                                              PopupMenuItem<String>(
-                                                value: 'share',
-                                                height: 36,
-                                                child: L10nText(
-                                                  l10n.commonShare,
-                                                  style: const TextStyle(
-                                                    fontSize: 13,
-                                                  ),
+                                              Theme(
+                                                data: Theme.of(context).copyWith(
+                                                  popupMenuTheme:
+                                                      const PopupMenuThemeData(
+                                                        color: Colors.white,
+                                                        elevation: 4,
+                                                        surfaceTintColor:
+                                                            Colors.white,
+                                                      ),
                                                 ),
-                                              ),
-                                              PopupMenuItem<String>(
-                                                value: 'delete',
-                                                height: 36,
-                                                child: L10nText(
-                                                  l10n.commonDelete,
-                                                  style: const TextStyle(
-                                                    fontSize: 13,
+                                                child: PopupMenuButton<String>(
+                                                  icon: const Icon(
+                                                    Icons.more_vert,
+                                                    color: Colors.grey,
+                                                    size: 20,
                                                   ),
-                                                ),
-                                              ),
-                                              PopupMenuItem<String>(
-                                                value: 'favorite',
-                                                height: 36,
-                                                child: L10nText(
-                                                  file.isFavorite
-                                                      ? l10n.homeRecentUnfavorite
-                                                      : l10n.homeRecentToggleFavorite,
-                                                  style: const TextStyle(
-                                                    fontSize: 13,
+                                                  padding: EdgeInsets.zero,
+                                                  constraints:
+                                                      const BoxConstraints(),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          8,
+                                                        ),
                                                   ),
+                                                  onSelected: (value) async {
+                                                    if (value == 'share') {
+                                                      _share(file);
+                                                    } else if (value ==
+                                                        'delete') {
+                                                      _delete(file);
+                                                    } else if (value ==
+                                                        'favorite') {
+                                                      _toggleFavorite(file);
+                                                    }
+                                                  },
+                                                  itemBuilder:
+                                                      (
+                                                        BuildContext context,
+                                                      ) => [
+                                                        PopupMenuItem<String>(
+                                                          value: 'share',
+                                                          height: 36,
+                                                          child: L10nText(
+                                                            l10n.commonShare,
+                                                            style:
+                                                                const TextStyle(
+                                                                  fontSize: 13,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                        PopupMenuItem<String>(
+                                                          value: 'delete',
+                                                          height: 36,
+                                                          child: L10nText(
+                                                            l10n.commonDelete,
+                                                            style:
+                                                                const TextStyle(
+                                                                  fontSize: 13,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                        PopupMenuItem<String>(
+                                                          value: 'favorite',
+                                                          height: 36,
+                                                          child: L10nText(
+                                                            file.isFavorite
+                                                                ? l10n.homeRecentUnfavorite
+                                                                : l10n.homeRecentToggleFavorite,
+                                                            style:
+                                                                const TextStyle(
+                                                                  fontSize: 13,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ],
                                                 ),
                                               ),
                                             ],
                                           ),
-                                        ),
-                                      ],
-                                    ),
                                     onTap: () {
                                       if (_selectMode) {
                                         setState(() {
@@ -447,9 +460,15 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
                     ),
                   ],
                 ),
-          bottomNavigationBar: _selectMode
-              ? SafeArea(
-                  child: Container(
+
+          // Unified Bottom Bar: SafeArea ke andar wrap kiya gaya hai structural stability ke liye
+          bottomNavigationBar: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Jab multi-select active hoga tab delete bar automatic banner ke upar pop up ho jaye ga
+                if (_selectMode)
+                  Container(
                     height: 56,
                     margin: const EdgeInsets.fromLTRB(16, 0, 16, 12),
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -484,8 +503,15 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
                       ],
                     ),
                   ),
-                )
-              : null,
+
+                // Static Persistent Ad banner jo hamesha lower most layer par active rehta hai
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 4),
+                  child: AdBannerWidget(),
+                ),
+              ],
+            ),
+          ),
         );
       },
     );

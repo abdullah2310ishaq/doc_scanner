@@ -103,17 +103,15 @@ class TranslateResultScreen extends StatelessWidget {
       completeFileDescription: isPng
           ? l10n.translateDownloadTranslatedTextDescription
           : l10n.translateDownloadCompleteFileDescription,
-      onSelectedText: () => _export(
-        context,
-        provider,
-        format,
-        TranslateExportScope.selectedText,
-      ),
+      onSelectedText: () =>
+          _export(context, provider, format, TranslateExportScope.selectedText),
       onCompleteFile: () => _export(
         context,
         provider,
         format,
-        isPng ? TranslateExportScope.translatedText : TranslateExportScope.completeFile,
+        isPng
+            ? TranslateExportScope.translatedText
+            : TranslateExportScope.completeFile,
       ),
     );
   }
@@ -132,7 +130,9 @@ class TranslateResultScreen extends StatelessWidget {
       return;
     }
 
-    final needsTranslation = scope == TranslateExportScope.completeFile || scope == TranslateExportScope.translatedText;
+    final needsTranslation =
+        scope == TranslateExportScope.completeFile ||
+        scope == TranslateExportScope.translatedText;
     if (needsTranslation && !provider.hasTranslation) {
       AppToast.show(context, l10n.translateExportNeedsTranslation);
       return;
@@ -191,7 +191,10 @@ class TranslateResultScreen extends StatelessWidget {
     }
   }
 
-  String _translateErrorMessage(AppLocalizations l10n, TranslateFailure? failure) {
+  String _translateErrorMessage(
+    AppLocalizations l10n,
+    TranslateFailure? failure,
+  ) {
     return switch (failure) {
       TranslateFailure.unsupportedLanguage =>
         l10n.errorTranslateUnsupportedLanguage,
@@ -202,7 +205,10 @@ class TranslateResultScreen extends StatelessWidget {
     };
   }
 
-  void _openLanguageSheet(BuildContext context, TranslateResultProvider provider) {
+  void _openLanguageSheet(
+    BuildContext context,
+    TranslateResultProvider provider,
+  ) {
     final l10n = context.l10n;
 
     showTranslateLanguageSheet(

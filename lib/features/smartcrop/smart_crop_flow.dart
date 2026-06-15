@@ -10,11 +10,13 @@ import '../../core/widgets/toast.dart';
 import '../home/providers/recent_documents_provider.dart';
 import '../home/services/recent_documents_service.dart';
 import '../ocr/services/image_picker_service.dart';
+import 'models/smart_crop_gallery_import_result.dart';
 import 'pages/multiple_images_first_page.dart';
 import 'pages/smart_crop_captured_screen.dart';
 import 'providers/smart_crop_session_provider.dart';
 import 'services/smart_crop_gallery_import_service.dart';
 import 'services/smart_crop_mlkit_scan_service.dart';
+import 'widgets/smart_crop_input_sheet.dart';
 
 abstract final class SmartCropFlow {
   static final _mlKitScan = SmartCropMlKitScanService();
@@ -39,11 +41,88 @@ abstract final class SmartCropFlow {
     );
   }
 
-  static Future<void> captureAnotherPage(
+  /// Google ML Kit scanner with gallery import — best auto-crop quality.
+  static Future<void> startMlKitGalleryScan(BuildContext context) async {
+    if (!_guardAndroid(context)) return;
+
+    await _scanWithMlKit(
+      context,
+      pageLimit: SmartCropLimits.maxPages,
+      isGalleryImport: true,
+    );
+  }
+
+  /// Retake / add another page — gallery sessions reopen gallery; camera shows pick sheet.
+  static Future<void> addAnotherPage(
     BuildContext context, {
     required SmartCropSessionProvider session,
   }) async {
     if (!_guardAndroid(context) || !session.canAddMore) return;
+
+    if (session.source == SmartCropSessionSource.gallery) {
+      await _addPagesFromGallery(context, session: session);
+      return;
+    }
+
+    await showSmartCropInputSheet(
+      context,
+      onLiveCamera: () => _addPagesFromCamera(context, session: session),
+      onUploadImage: () => _addPagesFromGallery(context, session: session),
+    );
+  }
+
+  /// Swap one gallery page (retake) without adding a new slot.
+  static Future<void> replacePageAt(
+    BuildContext context, {
+    required SmartCropSessionProvider session,
+    required int index,
+  }) async {
+    if (!_guardAndroid(context)) return;
+    if (index < 0 || index >= session.pageCount) return;
+
+    final hasPermission =
+        await _permissions.hasGalleryPermission() ||
+        await _permissions.requestGalleryPermission();
+    if (!hasPermission) {
+      if (context.mounted) {
+        AppToast.show(context, context.l10n.permissionStorageMessage);
+      }
+      return;
+    }
+
+    try {
+      final picked = await ImagePickerService().pickMultipleImagesFromGallery(
+        max: 1,
+      );
+      if (picked.isEmpty || !context.mounted) return;
+
+      final result = await _importWithLoadingDialog(
+        context,
+        sourcePaths: picked,
+      );
+      if (!context.mounted) return;
+
+      _showImportResultToast(context, result, picked.length);
+
+      if (result.paths.isEmpty) return;
+
+      final path = result.paths.first;
+      await RecentDocumentsService().registerImage(path);
+      session.replacePage(index, path);
+      session.source = SmartCropSessionSource.gallery;
+      await RecentDocumentsProvider.refreshGlobal();
+    } catch (e) {
+      if (context.mounted) {
+        AppToast.show(context, context.l10n.commonError);
+      }
+    }
+  }
+
+  static Future<void> _addPagesFromCamera(
+    BuildContext context, {
+    required SmartCropSessionProvider session,
+  }) async {
+    if (!session.canAddMore) return;
 
     final remaining = SmartCropLimits.maxPages - session.pageCount;
     try {
@@ -59,6 +138,7 @@ abstract final class SmartCropFlow {
         await recentDocs.registerImage(path);
         session.addPage(path, isMlKitProcessed: true);
       }
+      session.source = SmartCropSessionSource.camera;
       await RecentDocumentsProvider.refreshGlobal();
     } catch (e) {
       if (context.mounted) {
@@ -70,6 +150,146 @@ abstract final class SmartCropFlow {
         );
       }
     }
+  }
+
+  static Future<void> _addPagesFromGallery(
+    BuildContext context, {
+    required SmartCropSessionProvider session,
+  }) async {
+    if (!session.canAddMore) return;
+
+    final hasPermission =
+        await _permissions.hasGalleryPermission() ||
+        await _permissions.requestGalleryPermission();
+    if (!hasPermission) {
+      if (context.mounted) {
+        AppToast.show(context, context.l10n.permissionStorageMessage);
+      }
+      return;
+    }
+
+    final remaining = SmartCropLimits.maxPages - session.pageCount;
+
+    try {
+      final picked = await ImagePickerService().pickMultipleImagesFromGallery(
+        max: remaining,
+      );
+      if (picked.isEmpty || !context.mounted) return;
+
+      final result = await _importWithLoadingDialog(
+        context,
+        sourcePaths: picked,
+      );
+      if (!context.mounted) return;
+
+      _showImportResultToast(context, result, picked.length);
+
+      if (result.paths.isEmpty) return;
+
+      final recentDocs = RecentDocumentsService();
+      for (final path in result.paths) {
+        if (!session.canAddMore) break;
+        await recentDocs.registerImage(path);
+        session.addPage(path);
+      }
+      session.source = SmartCropSessionSource.gallery;
+      await RecentDocumentsProvider.refreshGlobal();
+    } catch (e) {
+      if (context.mounted) {
+        AppToast.show(context, context.l10n.commonError);
+      }
+    }
+  }
+
+  static Future<SmartCropGalleryImportResult> _importWithLoadingDialog(
+    BuildContext context, {
+    required List<String> sourcePaths,
+  }) async {
+    var loadingShown = false;
+    final progressLabel = ValueNotifier<String>(
+      context.l10n.smartCropStepReadingImages,
+    );
+
+    void showLoading() {
+      if (!context.mounted || loadingShown) return;
+      loadingShown = true;
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (dialogContext) {
+          return PopScope(
+            canPop: false,
+            child: Center(
+              child: ValueListenableBuilder<String>(
+                valueListenable: progressLabel,
+                builder: (_, label, __) {
+                  return Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const CircularProgressIndicator(),
+                          const SizedBox(height: 16),
+                          Text(
+                            label,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          );
+        },
+      );
+    }
+
+    void hideLoading() {
+      if (!context.mounted || !loadingShown) return;
+      loadingShown = false;
+      Navigator.of(context, rootNavigator: true).pop();
+    }
+
+    showLoading();
+
+    try {
+      final result = await _galleryImport.importImages(
+        sourcePaths,
+        onProgress: (done, total) {
+          progressLabel.value = context.l10n.smartCropImportReadingProgress(
+            done,
+            total,
+          );
+        },
+      );
+      hideLoading();
+      return result;
+    } catch (e) {
+      hideLoading();
+      rethrow;
+    } finally {
+      progressLabel.dispose();
+    }
+  }
+
+  static void _showImportResultToast(
+    BuildContext context,
+    SmartCropGalleryImportResult result,
+    int pickedCount,
+  ) {
+    if (result.totalSkipped <= 0) return;
+
+    AppToast.show(
+      context,
+      context.l10n.smartCropImportPartialFailure(
+        result.totalSkipped,
+        pickedCount,
+      ),
+    );
   }
 
   static Future<void> pickFromGallery(BuildContext context) async {
@@ -94,74 +314,35 @@ abstract final class SmartCropFlow {
       return;
     }
 
-    var loadingShown = false;
-
-    void showLoading() {
-      if (!context.mounted || loadingShown) return;
-      loadingShown = true;
-      showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (dialogContext) {
-          final l10n = dialogContext.l10n;
-          return PopScope(
-            canPop: false,
-            child: Center(
-              child: Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const CircularProgressIndicator(),
-                      const SizedBox(height: 16),
-                      Text(
-                        l10n.smartCropStepReadingImages,
-                        style: const TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
-      );
-    }
-
-    void hideLoading() {
-      if (!context.mounted || !loadingShown) return;
-      loadingShown = false;
-      Navigator.of(context, rootNavigator: true).pop();
-    }
-
     try {
       final picked = await ImagePickerService().pickMultipleImagesFromGallery(
         max: SmartCropLimits.maxPages,
       );
       if (picked.isEmpty || !context.mounted) return;
 
-      showLoading();
+      final result = await _importWithLoadingDialog(
+        context,
+        sourcePaths: picked,
+      );
+      if (!context.mounted) return;
 
-      final paths = await _galleryImport.importImages(picked);
-      if (paths.isEmpty) {
-        hideLoading();
-        if (context.mounted) {
-          AppToast.show(context, context.l10n.commonError);
-        }
+      _showImportResultToast(context, result, picked.length);
+
+      if (result.paths.isEmpty) {
+        AppToast.show(context, context.l10n.commonError);
         return;
       }
 
       final recentDocs = RecentDocumentsService();
-      for (final path in paths) {
+      for (final path in result.paths) {
         await recentDocs.registerImage(path);
       }
       await RecentDocumentsProvider.refreshGlobal();
 
-      final session = _newSession();
-      session.setFromPaths(paths);
+      final session = _newSession()
+        ..source = SmartCropSessionSource.gallery
+        ..setFromPaths(result.paths);
 
-      hideLoading();
       if (!context.mounted) return;
 
       await SmartCropCapturedScreen.open(
@@ -170,7 +351,6 @@ abstract final class SmartCropFlow {
         replaceCurrentRoute: replaceCurrentRoute,
       );
     } catch (e) {
-      hideLoading();
       if (context.mounted) {
         AppToast.show(context, context.l10n.commonError);
       }
@@ -195,8 +375,9 @@ abstract final class SmartCropFlow {
       }
       await RecentDocumentsProvider.refreshGlobal();
 
-      final session = _newSession();
-      session.setFromPaths(paths, isMlKitProcessed: true);
+      final session = _newSession()
+        ..source = SmartCropSessionSource.camera
+        ..setFromPaths(paths, isMlKitProcessed: true);
       if (!context.mounted) return;
       await SmartCropCapturedScreen.open(context, session: session);
     } catch (e) {

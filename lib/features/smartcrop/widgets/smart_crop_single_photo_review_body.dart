@@ -12,7 +12,9 @@ class SmartCropSinglePhotoReviewBody extends StatefulWidget {
     required this.imagePaths,
     this.initialIndex = 0,
     required this.onCrop,
+    this.onRetake,
     this.onAddAnother,
+    this.showRetake = false,
     this.showAddAnother = false,
     this.onPageChanged,
   });
@@ -20,7 +22,9 @@ class SmartCropSinglePhotoReviewBody extends StatefulWidget {
   final List<String> imagePaths;
   final int initialIndex;
   final VoidCallback onCrop;
+  final VoidCallback? onRetake;
   final VoidCallback? onAddAnother;
+  final bool showRetake;
   final bool showAddAnother;
   final ValueChanged<int>? onPageChanged;
 
@@ -98,6 +102,34 @@ class _SmartCropSinglePhotoReviewBodyState
                 : SmartCropFramedImage(path: paths[index]),
           ),
           const SizedBox(height: 24),
+          if (widget.showRetake && widget.onRetake != null) ...[
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: OutlinedButton(
+                onPressed: widget.onRetake,
+                style: OutlinedButton.styleFrom(
+                  backgroundColor: AppColors.smartCropRetakeBackground,
+                  foregroundColor: AppColors.smartCropRetakeText,
+                  side: const BorderSide(
+                    color: AppColors.smartCropRetakeBorder,
+                    width: 1.5,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Text(
+                  l10n.smartCropCapturedRetake,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+          ],
           if (widget.showAddAnother && widget.onAddAnother != null) ...[
             SizedBox(
               width: double.infinity,
@@ -116,7 +148,7 @@ class _SmartCropSinglePhotoReviewBodyState
                   ),
                 ),
                 child: Text(
-                  l10n.smartCropCapturedRetakeAnotherPhoto,
+                  l10n.smartCropCapturedAnotherPhoto,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -175,7 +207,11 @@ class SmartCropFramedImage extends StatelessWidget {
         color: AppColors.smartCropCanvas,
         border: Border.all(color: borderColor, width: borderWidth),
       ),
-      child: Image.file(File(path), fit: BoxFit.contain),
+      child: Image.file(
+        File(path),
+        fit: BoxFit.contain,
+        cacheWidth: 1200,
+      ),
     );
   }
 }

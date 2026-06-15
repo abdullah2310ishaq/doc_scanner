@@ -127,6 +127,14 @@ DetectedDocumentCorners get defaultGuideCorners => const DetectedDocumentCorners
       bottomLeft: Offset(0.08, 0.82),
     );
 
+/// Nearly full frame with a small inset — screenshots / flat scans.
+DetectedDocumentCorners get fullImageInsetCorners => const DetectedDocumentCorners(
+      topLeft: Offset(0.02, 0.02),
+      topRight: Offset(0.98, 0.02),
+      bottomRight: Offset(0.98, 0.98),
+      bottomLeft: Offset(0.02, 0.98),
+    );
+
 DetectedDocumentCorners detectDocumentCorners(String imagePath) {
   final result = _detectPaperQuad(imagePath, maxWidth: 1000);
   return DetectedDocumentCorners(
@@ -189,11 +197,12 @@ DetectedDocumentCorners _cornersFromResult(_DetectResult result) {
 }
 
 _DetectResult _fallbackQuad() {
+  final guide = defaultGuideCorners;
   return _DetectResult(
-    const Offset(0.04, 0.04),
-    const Offset(0.96, 0.04),
-    const Offset(0.96, 0.96),
-    const Offset(0.04, 0.96),
+    guide.topLeft,
+    guide.topRight,
+    guide.bottomRight,
+    guide.bottomLeft,
   );
 }
 

@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:doc_scanner/ads/app_open.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:media_store_plus/media_store_plus.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +14,7 @@ import 'features/home/providers/recent_documents_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await MobileAds.instance.initialize();
   if (Platform.isAndroid) {
     await MediaStore.ensureInitialized();
     MediaStore.appFolder = 'DocScanner';
@@ -49,7 +51,48 @@ Future<void> main() async {
           create: (_) => RecentDocumentsProvider()..loadSummary(),
         ),
       ],
-      child: const DocScannerApp(),
+      // Yahan DocScannerApp ko AppLifecycleObserver ke andar wrap kar diya hai
+      child: const AppLifecycleObserver(child: DocScannerApp()),
     ),
   );
+}
+
+/// Global Lifecycle Observer Component jo App Open Ads ko trigger karega
+class AppLifecycleObserver extends StatefulWidget {
+  final Widget child;
+  const AppLifecycleObserver({super.key, required this.child});
+
+  @override
+  State<AppLifecycleObserver> createState() => _AppLifecycleObserverState();
+}
+
+class _AppLifecycleObserverState extends State<AppLifecycleObserver> {
+  late final AppOpenAdService _adService;
+  late final AppLifecycleListener _lifecycleListener;
+
+  @override
+  void initState() {
+    super.initState();
+    // App ke start hote hi pehla ad background cache mein load hona shuru ho jayega
+    _adService = AppOpenAdService()..loadAd();
+
+    // Modern Flutter Lifecycle Listener Setup
+    _lifecycleListener = AppLifecycleListener(
+      onResume: () {
+        // User jab bhi camera, gallery ya background se wapas screen par aayega, instant ad chalega
+        _adService.showAdIfAvailable();
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _lifecycleListener.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.child;
+  }
 }

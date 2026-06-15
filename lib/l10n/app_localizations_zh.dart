@@ -982,6 +982,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get splashTagline => 'AI 驱动的文档扫描';
 
   @override
+  String get splashAdDisclaimer => 'This action may lead to an ad';
+
+  @override
+  String get adLoading => 'Ad loading...';
+
+  @override
   String get onboardingPage1Title => '几秒内\n扫描文字';
 
   @override
@@ -1105,6 +1111,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get smartCropAdjustCornersConfirm => '应用裁剪';
 
   @override
+  String get smartCropPresetAuto => 'Auto detect';
+
+  @override
+  String get smartCropPresetCenter => 'Center page';
+
+  @override
+  String get smartCropPresetFull => 'Full image';
+
+  @override
+  String get smartCropUploadIntroGoogleScanner => 'Google Scanner (Best crop)';
+
+  @override
   String get smartCropDetectingEdges => '正在检测文档边缘…';
 
   @override
@@ -1222,6 +1240,16 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get smartCropStepReadingImages => '正在读取图片';
+
+  @override
+  String smartCropImportReadingProgress(int done, int total) {
+    return 'Reading $done of $total…';
+  }
+
+  @override
+  String smartCropImportPartialFailure(int failed, int total) {
+    return '$failed of $total images could not be imported';
+  }
 
   @override
   String get smartCropStepDetectingEdges => '正在检测边缘';

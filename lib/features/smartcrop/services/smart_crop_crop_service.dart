@@ -131,7 +131,7 @@ class SmartCropCropService {
     }
 
     SmartCropPageModel finalPageConfig = page;
-    if (!page.cornersLocked) {
+    if (!page.cornersLocked && !page.hasPreDetectedCorners) {
       final flat = await compute(detectDocumentCornersFlat, page.imagePath);
       finalPageConfig = page.copyWith(
         topLeft: Offset(flat[0], flat[1]),

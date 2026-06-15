@@ -990,6 +990,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get splashTagline => 'AI 기반 문서 스캔';
 
   @override
+  String get splashAdDisclaimer => 'This action may lead to an ad';
+
+  @override
+  String get adLoading => 'Ad loading...';
+
+  @override
   String get onboardingPage1Title => '몇 초 만에\n텍스트 스캔';
 
   @override
@@ -1117,6 +1123,18 @@ class AppLocalizationsKo extends AppLocalizations {
   String get smartCropAdjustCornersConfirm => '자르기 적용';
 
   @override
+  String get smartCropPresetAuto => 'Auto detect';
+
+  @override
+  String get smartCropPresetCenter => 'Center page';
+
+  @override
+  String get smartCropPresetFull => 'Full image';
+
+  @override
+  String get smartCropUploadIntroGoogleScanner => 'Google Scanner (Best crop)';
+
+  @override
   String get smartCropDetectingEdges => '문서 가장자리 감지 중…';
 
   @override
@@ -1235,6 +1253,16 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get smartCropStepReadingImages => '이미지 읽는 중';
+
+  @override
+  String smartCropImportReadingProgress(int done, int total) {
+    return 'Reading $done of $total…';
+  }
+
+  @override
+  String smartCropImportPartialFailure(int failed, int total) {
+    return '$failed of $total images could not be imported';
+  }
 
   @override
   String get smartCropStepDetectingEdges => '가장자리 감지 중';

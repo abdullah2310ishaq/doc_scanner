@@ -3,9 +3,26 @@ import 'package:flutter/foundation.dart';
 import '../../../core/constants/smart_crop_limits.dart';
 import '../models/smart_crop_page_model.dart';
 
+/// How the user started adding images in this session.
+enum SmartCropSessionSource {
+  gallery,
+  camera,
+}
+
 /// Holds all captures in one smart-crop session (ML Kit on Android).
 class SmartCropSessionProvider extends ChangeNotifier {
   final List<SmartCropPageModel> _pages = [];
+
+  SmartCropSessionSource source = SmartCropSessionSource.camera;
+
+  int? _pendingCornerDetectIndex;
+
+  /// Index that needs edge pre-detect after add/replace; consumed by captured screen.
+  int? consumePendingCornerDetectIndex() {
+    final index = _pendingCornerDetectIndex;
+    _pendingCornerDetectIndex = null;
+    return index;
+  }
 
   List<SmartCropPageModel> get pages => List.unmodifiable(_pages);
   int get pageCount => _pages.length;
@@ -44,12 +61,14 @@ class SmartCropSessionProvider extends ChangeNotifier {
         isCameraScanned: isCameraScanned,
       ),
     );
+    _pendingCornerDetectIndex = _pages.length - 1;
     notifyListeners();
   }
 
   void replacePage(int index, String imagePath) {
     if (index < 0 || index >= _pages.length) return;
-    _pages[index] = _pages[index].copyWith(imagePath: imagePath);
+    _pages[index] = SmartCropPageModel(imagePath: imagePath);
+    _pendingCornerDetectIndex = index;
     notifyListeners();
   }
 

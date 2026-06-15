@@ -9,7 +9,6 @@ import '../smart_crop_flow.dart';
 class MultipleImagesFirstPage extends StatelessWidget {
   const MultipleImagesFirstPage({super.key});
 
-
   static Future<void> open(BuildContext context) {
     return Navigator.of(context).push(
       MaterialPageRoute<void>(builder: (_) => const MultipleImagesFirstPage()),
@@ -124,6 +123,7 @@ class MultipleImagesFirstPage extends StatelessWidget {
                   child: Text(l10n.smartCropUploadIntroSelectImages),
                 ),
               ),
+              const SizedBox(height: 12),
             ],
           ),
         ),

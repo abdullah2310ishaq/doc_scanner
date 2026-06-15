@@ -364,6 +364,8 @@
   "onboardingStart": "Get Started →",
 
   "splashTagline": "AI-powered document scanning",
+  "splashAdDisclaimer": "This action may lead to an ad",
+  "adLoading": "Ad loading...",
 
   "onboardingPage1Title": "Scan Text \nin Seconds",
   "onboardingPage1Description": "Capture text from images with fast AI-powered OCR scanning.",
@@ -408,6 +410,10 @@
   "smartCropAdjustCornersTitle": "Adjust corners",
   "smartCropAdjustCornersHint": "Drag the purple corners to match the document edges",
   "smartCropAdjustCornersConfirm": "Apply crop",
+  "smartCropPresetAuto": "Auto detect",
+  "smartCropPresetCenter": "Center page",
+  "smartCropPresetFull": "Full image",
+  "smartCropUploadIntroGoogleScanner": "Google Scanner (Best crop)",
   "smartCropDetectingEdges": "Detecting document edges…",
   "smartCropAndroidOnly": "Smart scan is available on Android only.",
   "smartCropPageIndicator": "{current}/{total}",
@@ -466,6 +472,20 @@
   "smartCropRenamePdf": "Rename",
   "smartCropRenamePdfHint": "Document name",
   "smartCropStepReadingImages": "Reading Images",
+  "smartCropImportReadingProgress": "Reading {done} of {total}…",
+  "@smartCropImportReadingProgress": {
+    "placeholders": {
+      "done": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "smartCropImportPartialFailure": "{failed} of {total} images could not be imported",
+  "@smartCropImportPartialFailure": {
+    "placeholders": {
+      "failed": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
   "smartCropStepDetectingEdges": "Detecting document edges",
   "smartCropStepCroppingImages": "Cropping Images",
   "smartCropStepGeneratingPdf": "Generating PDF",

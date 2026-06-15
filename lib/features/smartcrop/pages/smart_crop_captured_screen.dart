@@ -7,6 +7,7 @@ import '../../../core/constants/smart_crop_limits.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/delete_dialog.dart';
+import '../models/smart_crop_page_model.dart';
 import '../providers/smart_crop_session_provider.dart';
 import '../services/smart_crop_edge_detect_service.dart';
 import '../smart_crop_flow.dart';
@@ -44,13 +45,41 @@ class SmartCropCapturedScreen extends StatefulWidget {
 
 class _SmartCropCapturedScreenState extends State<SmartCropCapturedScreen> {
   final _edgeDetect = SmartCropEdgeDetectService();
+  SmartCropSessionProvider? _session;
+  int _preDetectedPageCount = 0;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _preDetectGalleryCornersInBackground();
+      if (!mounted) return;
+      _session = context.read<SmartCropSessionProvider>();
+      _preDetectedPageCount = _session!.pageCount;
+      _session!.addListener(_onSessionChanged);
+      _preDetectPagesFromIndex(0);
     });
+  }
+
+  @override
+  void dispose() {
+    _session?.removeListener(_onSessionChanged);
+    super.dispose();
+  }
+
+  void _onSessionChanged() {
+    final session = _session;
+    if (session == null || !mounted) return;
+
+    final pendingIndex = session.consumePendingCornerDetectIndex();
+    if (pendingIndex != null) {
+      _preDetectPagesFromIndex(pendingIndex);
+    }
+
+    if (session.pageCount > _preDetectedPageCount) {
+      _preDetectedPageCount = session.pageCount;
+    } else if (session.pageCount < _preDetectedPageCount) {
+      _preDetectedPageCount = session.pageCount;
+    }
   }
 
   /// Runs after UI is visible so gallery pick does not block navigation.
@@ -70,17 +99,16 @@ class _SmartCropCapturedScreenState extends State<SmartCropCapturedScreen> {
     }
   }
 
-  Future<void> _preDetectGalleryCornersInBackground() async {
+  Future<void> _preDetectPagesFromIndex(int startIndex) async {
     if (!mounted) return;
 
     final session = context.read<SmartCropSessionProvider>();
-    if (session.allPagesAlreadyScanned) return;
 
-    for (var i = 0; i < session.pageCount; i++) {
+    for (var i = startIndex; i < session.pageCount; i++) {
       if (!mounted) return;
 
       final page = session.pages[i];
-      if (page.cornersLocked) continue;
+      if (page.isAlreadyScanned || page.cornersLocked) continue;
 
       final result =
           await _edgeDetect.detectCornersWithConfidence(page.imagePath);
@@ -91,7 +119,11 @@ class _SmartCropCapturedScreenState extends State<SmartCropCapturedScreen> {
           topRight: result.corners.topRight,
           bottomRight: result.corners.bottomRight,
           bottomLeft: result.corners.bottomLeft,
-          cornersLocked: result.confidence >= 0.7 && !result.isFallback,
+          detectionConfidence: result.confidence,
+          detectionIsFallback: result.isFallback,
+          cornersLocked: result.confidence >=
+                  SmartCropPageModel.autoLockConfidenceThreshold &&
+              !result.isFallback,
         ),
       );
     }
@@ -149,7 +181,7 @@ class _SmartCropCapturedScreenState extends State<SmartCropCapturedScreen> {
                       initialIndex: index,
                     ),
                     onAddPhoto: session.canAddMore
-                        ? () => SmartCropFlow.captureAnotherPage(
+                        ? () => SmartCropFlow.addAnotherPage(
                               context,
                               session: session,
                             )
@@ -194,8 +226,16 @@ class _SingleCapturedScreen extends StatelessWidget {
       ),
       body: SmartCropSinglePhotoReviewBody(
         imagePaths: [path],
+        showRetake: session.source == SmartCropSessionSource.gallery,
+        onRetake: session.source == SmartCropSessionSource.gallery
+            ? () => SmartCropFlow.replacePageAt(
+                  context,
+                  session: session,
+                  index: 0,
+                )
+            : null,
         showAddAnother: session.canAddMore,
-        onAddAnother: () => SmartCropFlow.captureAnotherPage(
+        onAddAnother: () => SmartCropFlow.addAnotherPage(
           context,
           session: session,
         ),
@@ -297,6 +337,7 @@ class _CapturedGrid extends StatelessWidget {
                 child: Image.file(
                   File(page.imagePath),
                   fit: BoxFit.cover,
+                  cacheWidth: 360,
                 ),
               ),
               Positioned(
@@ -345,7 +386,7 @@ class _CapturedActions extends StatelessWidget {
         children: [
           if (session.canAddMore) ...[
             OutlinedButton(
-              onPressed: () => SmartCropFlow.captureAnotherPage(
+              onPressed: () => SmartCropFlow.addAnotherPage(
                 context,
                 session: context.read<SmartCropSessionProvider>(),
               ),

@@ -5,6 +5,8 @@ import 'package:image/image.dart' as img;
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
+import '../models/smart_crop_gallery_import_result.dart';
+
 class _GalleryImportJob {
   const _GalleryImportJob({
     required this.sourcePath,
@@ -19,6 +21,8 @@ class _GalleryImportJob {
   final int stamp;
 }
 
+const _maxImportEdge = 3000;
+
 String? _importGalleryImageInIsolate(_GalleryImportJob job) {
   final source = File(job.sourcePath);
   if (!source.existsSync()) return null;
@@ -29,8 +33,19 @@ String? _importGalleryImageInIsolate(_GalleryImportJob job) {
   final decoded = img.decodeImage(bytes);
   if (decoded == null) return null;
 
-  final oriented = img.bakeOrientation(decoded);
-  final jpgBytes = img.encodeJpg(oriented, quality: 95);
+  var oriented = img.bakeOrientation(decoded);
+  final longestEdge = oriented.width > oriented.height
+      ? oriented.width
+      : oriented.height;
+  if (longestEdge > _maxImportEdge) {
+    oriented = img.copyResize(
+      oriented,
+      width: oriented.width >= oriented.height ? _maxImportEdge : null,
+      height: oriented.height > oriented.width ? _maxImportEdge : null,
+    );
+  }
+
+  final jpgBytes = img.encodeJpg(oriented, quality: 92);
 
   final destPath =
       p.join(job.dirPath, 'gallery_${job.stamp}_${job.index}.jpg');
@@ -49,27 +64,63 @@ class SmartCropGalleryImportService {
     '.heif',
   };
 
-  Future<List<String>> importImages(List<String> sourcePaths) async {
-    if (sourcePaths.isEmpty) return [];
+  Future<SmartCropGalleryImportResult> importImages(
+    List<String> sourcePaths, {
+    void Function(int done, int total)? onProgress,
+  }) async {
+    if (sourcePaths.isEmpty) {
+      return const SmartCropGalleryImportResult(paths: []);
+    }
+
+    final supported = <String>[];
+    var unsupportedCount = 0;
+    for (final path in sourcePaths) {
+      if (hasSupportedExtension(path)) {
+        supported.add(path);
+      } else {
+        unsupportedCount++;
+      }
+    }
+
+    if (supported.isEmpty) {
+      return SmartCropGalleryImportResult(
+        paths: const [],
+        unsupportedCount: unsupportedCount,
+        failedCount: 0,
+      );
+    }
 
     final dir = await _importDirectory();
     final stamp = DateTime.now().millisecondsSinceEpoch;
-    final results = <String>[];
+    final total = supported.length;
+    var done = 0;
 
-    for (var i = 0; i < sourcePaths.length; i++) {
-      final imported = await compute(
+    final futures = supported.asMap().entries.map((entry) {
+      final i = entry.key;
+      final path = entry.value;
+      return compute(
         _importGalleryImageInIsolate,
         _GalleryImportJob(
-          sourcePath: sourcePaths[i],
+          sourcePath: path,
           dirPath: dir.path,
           index: i,
           stamp: stamp,
         ),
-      );
-      if (imported != null) results.add(imported);
-    }
+      ).then((importedPath) {
+        done++;
+        onProgress?.call(done, total);
+        return importedPath;
+      });
+    });
 
-    return results;
+    final results = await Future.wait(futures);
+    final imported = results.whereType<String>().toList();
+
+    return SmartCropGalleryImportResult(
+      paths: imported,
+      failedCount: total - imported.length,
+      unsupportedCount: unsupportedCount,
+    );
   }
 
   Future<Directory> _importDirectory() async {

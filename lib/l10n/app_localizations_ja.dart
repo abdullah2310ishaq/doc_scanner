@@ -991,6 +991,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get splashTagline => 'AIを活用したドキュメントスキャン';
 
   @override
+  String get splashAdDisclaimer => 'This action may lead to an ad';
+
+  @override
+  String get adLoading => 'Ad loading...';
+
+  @override
   String get onboardingPage1Title => '数秒で\nテキストスキャン';
 
   @override
@@ -1119,6 +1125,18 @@ class AppLocalizationsJa extends AppLocalizations {
   String get smartCropAdjustCornersConfirm => 'クロップを適用する';
 
   @override
+  String get smartCropPresetAuto => 'Auto detect';
+
+  @override
+  String get smartCropPresetCenter => 'Center page';
+
+  @override
+  String get smartCropPresetFull => 'Full image';
+
+  @override
+  String get smartCropUploadIntroGoogleScanner => 'Google Scanner (Best crop)';
+
+  @override
   String get smartCropDetectingEdges => '原稿の端を検出中…';
 
   @override
@@ -1237,6 +1255,16 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get smartCropStepReadingImages => '画像の読み取り';
+
+  @override
+  String smartCropImportReadingProgress(int done, int total) {
+    return 'Reading $done of $total…';
+  }
+
+  @override
+  String smartCropImportPartialFailure(int failed, int total) {
+    return '$failed of $total images could not be imported';
+  }
 
   @override
   String get smartCropStepDetectingEdges => '原稿の端を検出する';

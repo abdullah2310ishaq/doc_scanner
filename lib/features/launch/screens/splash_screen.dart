@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+
+import '../../../ads/inter.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../home/screens/main_shell_screen.dart';
@@ -16,29 +18,78 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final AppLaunchPrefsService _launchPrefs = AppLaunchPrefsService();
+  final InterstitialAdService _interstitialService = InterstitialAdService();
+
+  bool _showAdDisclaimer = false;
 
   @override
   void initState() {
     super.initState();
+    _interstitialService.loadAd();
     _startLaunchFlow();
   }
 
   Future<void> _startLaunchFlow() async {
     await Future<void>.delayed(const Duration(milliseconds: 1500));
 
-    // Pre-fetching initialization preferences
-    await _launchPrefs.markFirstLaunchSeen();
+    final isFirstLaunch = await _launchPrefs.isFirstLaunch();
     final hasCompletedOnboarding = await _launchPrefs.hasCompletedOnboarding();
 
-    if (!mounted) return;
+    if (!mounted) {
+      return;
+    }
+
+    if (isFirstLaunch) {
+      await _launchPrefs.markFirstLaunchSeen();
+      _navigateAfterSplash(hasCompletedOnboarding);
+      return;
+    }
+
+    if (!hasCompletedOnboarding) {
+      _navigateAfterSplash(false);
+      return;
+    }
+
+    setState(() => _showAdDisclaimer = true);
+
+    final adReady = await _interstitialService.waitUntilReady();
+    if (!mounted) {
+      return;
+    }
+
+    if (adReady) {
+      _interstitialService.showAdWithLoading(
+        context: context,
+        loadingMessage: context.l10n.adLoading,
+        onAdDismissed: _goHome,
+      );
+    } else {
+      _goHome();
+    }
+  }
+
+  void _navigateAfterSplash(bool hasCompletedOnboarding) {
+    if (!mounted) {
+      return;
+    }
 
     final Widget nextScreen = hasCompletedOnboarding
         ? const MainShellScreen()
         : const OnboardingScreen();
 
-    Navigator.of(
-      context,
-    ).pushReplacement(MaterialPageRoute(builder: (_) => nextScreen));
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute<void>(builder: (_) => nextScreen),
+    );
+  }
+
+  void _goHome() {
+    if (!mounted) {
+      return;
+    }
+
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute<void>(builder: (_) => const MainShellScreen()),
+    );
   }
 
   @override
@@ -50,7 +101,6 @@ class _SplashScreenState extends State<SplashScreen> {
       body: SafeArea(
         child: Stack(
           children: [
-            // Center Content: Lottie aur App Title Text
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -73,11 +123,11 @@ class _SplashScreenState extends State<SplashScreen> {
                       children: [
                         const TextSpan(
                           text: 'AI ',
-                          style: TextStyle(color: Colors.blueAccent),
+                          style: TextStyle(color: AppColors.textLink),
                         ),
                         TextSpan(
                           text: l10n.appTitle.replaceAll('AI', '').trim(),
-                          style: const TextStyle(color: Colors.black87),
+                          style: const TextStyle(color: AppColors.textPrimary),
                         ),
                       ],
                     ),
@@ -85,24 +135,39 @@ class _SplashScreenState extends State<SplashScreen> {
                 ],
               ),
             ),
-
-            // Bottom Content: Circular progress indicator placed exactly where the old loader was
-            const Positioned(
-              bottom:
-                  48, // Purane linear bar ki jagah bottom se perfect spacing
+            Positioned(
+              bottom: 48,
               left: 0,
               right: 0,
-              child: Center(
-                child: SizedBox(
-                  width: 28,
-                  height: 28,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 3,
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      Colors.blueAccent,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(
+                    width: 28,
+                    height: 28,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 3,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        AppColors.textLink,
+                      ),
                     ),
                   ),
-                ),
+                  if (_showAdDisclaimer) ...[
+                    const SizedBox(height: 16),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 32),
+                      child: Text(
+                        l10n.splashAdDisclaimer,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: AppColors.textSecondary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
               ),
             ),
           ],

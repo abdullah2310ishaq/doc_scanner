@@ -49,27 +49,17 @@ class _SmartCropCropProcessingScreenState
     WidgetsBinding.instance.addPostFrameCallback((_) => _runCrop());
   }
 
-  static const _minTotalDuration = Duration(milliseconds: 3500);
-
   Future<void> _runCrop() async {
     if (widget.pages.isEmpty) {
       if (mounted) Navigator.of(context).pop();
       return;
     }
 
-    final started = DateTime.now();
-
     try {
-      // Phase 1: Reading Images
-      _updateProgress(ProcessingStep.reading, 0.25, 0.15);
-      await Future<void>.delayed(const Duration(milliseconds: 700));
+      _updateProgress(ProcessingStep.reading, 0.2, 0.15);
+      _updateProgress(ProcessingStep.detecting, 0.45, 0.35);
+      _updateProgress(ProcessingStep.cropping, 0.65, 0.55);
 
-      // Phase 2: Detecting document edges
-      _updateProgress(ProcessingStep.detecting, 0.50, 0.40);
-      await Future<void>.delayed(const Duration(milliseconds: 900));
-
-      // Phase 3: Cropping Images (actual work; ML Kit pages pass-through + trim)
-      _updateProgress(ProcessingStep.cropping, 0.75, 0.65);
       final croppedPaths = await _cropService.cropAllPages(widget.pages);
       final recentDocs = RecentDocumentsService();
       for (final path in croppedPaths) {
@@ -77,16 +67,8 @@ class _SmartCropCropProcessingScreenState
       }
       await RecentDocumentsProvider.refreshGlobal();
 
-      // Phase 4: Preparing for filters
-      _updateProgress(ProcessingStep.generating, 0.95, 0.90);
-      await Future<void>.delayed(const Duration(milliseconds: 600));
-
+      _updateProgress(ProcessingStep.generating, 0.9, 0.85);
       _updateProgress(ProcessingStep.completed, 1.0, 1.0);
-
-      final elapsed = DateTime.now().difference(started);
-      if (elapsed < _minTotalDuration) {
-        await Future.delayed(_minTotalDuration - elapsed);
-      }
 
       if (!mounted) return;
 
