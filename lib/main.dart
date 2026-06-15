@@ -47,16 +47,8 @@ Future<void> main() async {
     ),
   );
 
-  final view = WidgetsBinding.instance.platformDispatcher.views.first;
-  final rootMediaQuery = MediaQueryData.fromView(view);
-
   runApp(
-    MediaQuery(
-      data: rootMediaQuery.copyWith(
-        textScaler: TextScaler.noScaling,
-        padding: rootMediaQuery.viewPadding,
-      ),
-      child: MultiProvider(
+    MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: connectivityProvider),
         ChangeNotifierProvider.value(value: localeService),
@@ -64,9 +56,8 @@ Future<void> main() async {
           create: (_) => RecentDocumentsProvider()..loadSummary(),
         ),
       ],
-      // Yahan DocScannerApp ko AppLifecycleObserver ke andar wrap kar diya hai
+      // Root par fuzool MediaQuery hata kar AppLifecycleObserver ko clean wrap kiya
       child: const AppLifecycleObserver(child: DocScannerApp()),
-      ),
     ),
   );
 }
@@ -87,13 +78,10 @@ class _AppLifecycleObserverState extends State<AppLifecycleObserver> {
   @override
   void initState() {
     super.initState();
-    // App ke start hote hi pehla ad background cache mein load hona shuru ho jayega
     _adService = AppOpenAdService()..loadAd();
 
-    // Modern Flutter Lifecycle Listener Setup
     _lifecycleListener = AppLifecycleListener(
       onResume: () {
-        // User jab bhi camera, gallery ya background se wapas screen par aayega, instant ad chalega
         _adService.showAdIfAvailable();
       },
     );

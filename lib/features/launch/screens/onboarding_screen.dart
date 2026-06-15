@@ -68,7 +68,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       return;
     }
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const FirstTimeLanguageSelectionScreen()),
+      MaterialPageRoute(
+        builder: (_) => const FirstTimeLanguageSelectionScreen(),
+      ),
     );
   }
 
@@ -254,60 +256,63 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 }),
               ),
               const SizedBox(height: 24),
-              Padding(
-                padding: EdgeInsets.fromLTRB(
-                  24,
-                  0,
-                  24,
-                  16 + MediaQuery.viewPaddingOf(context).bottom,
-                ),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 52,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      gradient: AppColors.onboardingCtaGradient,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: ElevatedButton(
-                      onPressed: isLastPage ? _finishOnboarding : _goToNextPage,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        shadowColor: Colors.transparent,
-                        foregroundColor: AppColors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+
+              // ⚠️ Permanent Edge-to-Edge display fix implemented here
+              SafeArea(
+                top: false,
+                bottom: true, // System navbar layout listener active karega
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 52,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: AppColors.onboardingCtaGradient,
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      child: isLastPage
-                          ? Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  l10n.onboardingStart
-                                      .replaceAll('→', '')
-                                      .trimRight(),
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
+                      child: ElevatedButton(
+                        onPressed: isLastPage
+                            ? _finishOnboarding
+                            : _goToNextPage,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                          foregroundColor: AppColors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: isLastPage
+                            ? Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    l10n.onboardingStart
+                                        .replaceAll('→', '')
+                                        .trimRight(),
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
+                                  const SizedBox(width: 8),
+                                  const Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: AppColors.white,
+                                    size: 16,
+                                  ),
+                                ],
+                              )
+                            : Text(
+                                l10n.commonContinue,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                                const SizedBox(width: 8),
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: AppColors.white,
-                                  size: 16,
-                                ),
-                              ],
-                            )
-                          : Text(
-                              l10n.commonContinue,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
                               ),
-                            ),
+                      ),
                     ),
                   ),
                 ),

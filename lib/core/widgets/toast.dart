@@ -58,15 +58,22 @@ class AppToast {
     String message, {
     required Color backgroundColor,
   }) {
+    final isErrorToast = backgroundColor == errorBackground;
+
     late final OverlayEntry entry;
     entry = OverlayEntry(
       builder: (overlayContext) => Positioned(
-        top: MediaQuery.paddingOf(overlayContext).top + 130,
+        top:
+            MediaQuery.paddingOf(overlayContext).top +
+            (isErrorToast ? 72 : 130),
         left: 16,
         right: 16,
         child: _ToastWidget(
           message: message,
           backgroundColor: backgroundColor,
+          borderRadius: isErrorToast ? 8 : 24,
+          fontSize: isErrorToast ? 13 : 14,
+          verticalPadding: isErrorToast ? 8 : 10,
         ),
       ),
     );
@@ -85,10 +92,16 @@ class _ToastWidget extends StatelessWidget {
   const _ToastWidget({
     required this.message,
     required this.backgroundColor,
+    required this.borderRadius,
+    required this.fontSize,
+    required this.verticalPadding,
   });
 
   final String message;
   final Color backgroundColor;
+  final double borderRadius;
+  final double fontSize;
+  final double verticalPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -96,16 +109,22 @@ class _ToastWidget extends StatelessWidget {
       color: Colors.transparent,
       child: Center(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: verticalPadding,
+          ),
           decoration: BoxDecoration(
             color: backgroundColor,
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: BorderRadius.circular(borderRadius),
           ),
           child: Text(
             message,
-            style: const TextStyle(
+            textAlign: TextAlign.center,
+            style: TextStyle(
               color: Colors.white,
+              fontSize: fontSize,
               fontWeight: FontWeight.w600,
+              height: 1.3,
             ),
           ),
         ),
