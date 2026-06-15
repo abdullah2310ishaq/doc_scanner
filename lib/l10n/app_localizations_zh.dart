@@ -982,10 +982,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get splashTagline => 'AI 驱动的文档扫描';
 
   @override
-  String get splashAdDisclaimer => 'This action may lead to an ad';
+  String get splashAdDisclaimer => '此操作可能会显示广告';
 
   @override
-  String get adLoading => 'Ad loading...';
+  String get adLoading => '广告加载中...';
 
   @override
   String get onboardingPage1Title => '几秒内\n扫描文字';
@@ -1111,16 +1111,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get smartCropAdjustCornersConfirm => '应用裁剪';
 
   @override
-  String get smartCropPresetAuto => 'Auto detect';
+  String get smartCropPresetAuto => '自动检测';
 
   @override
-  String get smartCropPresetCenter => 'Center page';
+  String get smartCropPresetCenter => '居中页面';
 
   @override
-  String get smartCropPresetFull => 'Full image';
+  String get smartCropPresetFull => '完整图片';
 
   @override
-  String get smartCropUploadIntroGoogleScanner => 'Google Scanner (Best crop)';
+  String get smartCropUploadIntroGoogleScanner => 'Google Scanner（最佳裁剪）';
 
   @override
   String get smartCropDetectingEdges => '正在检测文档边缘…';
@@ -1243,12 +1243,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String smartCropImportReadingProgress(int done, int total) {
-    return 'Reading $done of $total…';
+    return '正在读取 $done/$total…';
   }
 
   @override
   String smartCropImportPartialFailure(int failed, int total) {
-    return '$failed of $total images could not be imported';
+    return '$total 张图片中有 $failed 张无法导入';
   }
 
   @override

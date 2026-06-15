@@ -1033,10 +1033,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get splashTagline => 'Сканирование документов на базе ИИ';
 
   @override
-  String get splashAdDisclaimer => 'This action may lead to an ad';
+  String get splashAdDisclaimer =>
+      'Это действие может привести к показу рекламы';
 
   @override
-  String get adLoading => 'Ad loading...';
+  String get adLoading => 'Загрузка рекламы...';
 
   @override
   String get onboardingPage1Title => 'Скан текста\nза секунды';
@@ -1173,16 +1174,17 @@ class AppLocalizationsRu extends AppLocalizations {
   String get smartCropAdjustCornersConfirm => 'Применить обрезку';
 
   @override
-  String get smartCropPresetAuto => 'Auto detect';
+  String get smartCropPresetAuto => 'Автоопределение';
 
   @override
-  String get smartCropPresetCenter => 'Center page';
+  String get smartCropPresetCenter => 'Центр страницы';
 
   @override
-  String get smartCropPresetFull => 'Full image';
+  String get smartCropPresetFull => 'Полное изображение';
 
   @override
-  String get smartCropUploadIntroGoogleScanner => 'Google Scanner (Best crop)';
+  String get smartCropUploadIntroGoogleScanner =>
+      'Google Scanner (Лучшая обрезка)';
 
   @override
   String get smartCropDetectingEdges => 'Определение краев документа…';
@@ -1311,12 +1313,12 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String smartCropImportReadingProgress(int done, int total) {
-    return 'Reading $done of $total…';
+    return 'Чтение $done из $total…';
   }
 
   @override
   String smartCropImportPartialFailure(int failed, int total) {
-    return '$failed of $total images could not be imported';
+    return 'Не удалось импортировать $failed из $total изображений';
   }
 
   @override

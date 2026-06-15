@@ -1036,10 +1036,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get splashTagline => 'Scansione documenti basata su IA';
 
   @override
-  String get splashAdDisclaimer => 'This action may lead to an ad';
+  String get splashAdDisclaimer =>
+      'Questa azione potrebbe mostrare un annuncio';
 
   @override
-  String get adLoading => 'Ad loading...';
+  String get adLoading => 'Caricamento annuncio...';
 
   @override
   String get onboardingPage1Title => 'Scansiona testo\nin pochi secondi';
@@ -1179,16 +1180,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String get smartCropAdjustCornersConfirm => 'Applica ritaglio';
 
   @override
-  String get smartCropPresetAuto => 'Auto detect';
+  String get smartCropPresetAuto => 'Rilevamento automatico';
 
   @override
-  String get smartCropPresetCenter => 'Center page';
+  String get smartCropPresetCenter => 'Pagina centrata';
 
   @override
-  String get smartCropPresetFull => 'Full image';
+  String get smartCropPresetFull => 'Immagine intera';
 
   @override
-  String get smartCropUploadIntroGoogleScanner => 'Google Scanner (Best crop)';
+  String get smartCropUploadIntroGoogleScanner =>
+      'Google Scanner (Miglior ritaglio)';
 
   @override
   String get smartCropDetectingEdges => 'Rilevamento dei bordi del documento…';
@@ -1317,12 +1319,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String smartCropImportReadingProgress(int done, int total) {
-    return 'Reading $done of $total…';
+    return 'Lettura di $done su $total…';
   }
 
   @override
   String smartCropImportPartialFailure(int failed, int total) {
-    return '$failed of $total images could not be imported';
+    return '$failed di $total immagini non sono state importate';
   }
 
   @override

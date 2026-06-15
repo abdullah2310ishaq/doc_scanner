@@ -1011,10 +1011,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get splashTagline => 'مسح المستندات ضوئيًا باستخدام الذكاء الاصطناعي';
 
   @override
-  String get splashAdDisclaimer => 'This action may lead to an ad';
+  String get splashAdDisclaimer => 'قد يؤدي هذا الإجراء إلى إعلان';
 
   @override
-  String get adLoading => 'Ad loading...';
+  String get adLoading => 'جارٍ تحميل الإعلان...';
 
   @override
   String get onboardingPage1Title => 'مسح النص\nبالثواني';
@@ -1145,16 +1145,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get smartCropAdjustCornersConfirm => 'تطبيق المحاصيل';
 
   @override
-  String get smartCropPresetAuto => 'Auto detect';
+  String get smartCropPresetAuto => 'اكتشاف تلقائي';
 
   @override
-  String get smartCropPresetCenter => 'Center page';
+  String get smartCropPresetCenter => 'صفحة مركزية';
 
   @override
-  String get smartCropPresetFull => 'Full image';
+  String get smartCropPresetFull => 'الصورة كاملة';
 
   @override
-  String get smartCropUploadIntroGoogleScanner => 'Google Scanner (Best crop)';
+  String get smartCropUploadIntroGoogleScanner =>
+      'Google Scanner (أفضل اقتصاص)';
 
   @override
   String get smartCropDetectingEdges => 'جارٍ اكتشاف حواف المستند...';
@@ -1281,12 +1282,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String smartCropImportReadingProgress(int done, int total) {
-    return 'Reading $done of $total…';
+    return 'قراءة $done من $total…';
   }
 
   @override
   String smartCropImportPartialFailure(int failed, int total) {
-    return '$failed of $total images could not be imported';
+    return 'تعذر استيراد $failed من $total صورة';
   }
 
   @override
