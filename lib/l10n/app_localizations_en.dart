@@ -9,7 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'Doc Scanner';
+  String get appTitle => 'Document Scanner';
 
   @override
   String get commonOk => 'OK';

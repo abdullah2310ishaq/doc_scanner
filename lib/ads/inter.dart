@@ -4,7 +4,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../core/theme/app_colors.dart';
 
 class InterstitialAdService {
-  final String _adUnitId = 'ca-app-pub-3940256099942544/1033173712';
+  final String _adUnitId = 'ca-app-pub-7182112310194934/4045490125';
 
   InterstitialAd? _interstitialAd;
   bool _isAvailable = false;

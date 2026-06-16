@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:doc_scanner/ads/app_open.dart';
 import 'package:doc_scanner/ads/native_ad_language.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -15,6 +16,7 @@ import 'features/home/providers/recent_documents_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await MobileAds.instance.initialize();
 
   final connectivityProvider = ConnectivityProvider();
@@ -72,18 +74,16 @@ class AppLifecycleObserver extends StatefulWidget {
 }
 
 class _AppLifecycleObserverState extends State<AppLifecycleObserver> {
-  late final AppOpenAdService _adService;
   late final AppLifecycleListener _lifecycleListener;
 
   @override
   void initState() {
     super.initState();
-    _adService = AppOpenAdService()..loadAd();
+    AppOpenAdService.instance.loadAd();
 
     _lifecycleListener = AppLifecycleListener(
-      onResume: () {
-        _adService.showAdIfAvailable();
-      },
+      onHide: AppOpenAdService.instance.onAppHidden,
+      onShow: AppOpenAdService.instance.onAppShown,
     );
   }
 

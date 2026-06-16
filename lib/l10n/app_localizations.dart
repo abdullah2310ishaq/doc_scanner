@@ -119,7 +119,7 @@ abstract class AppLocalizations {
   /// Application name shown in launcher and about
   ///
   /// In en, this message translates to:
-  /// **'Doc Scanner'**
+  /// **'Document Scanner'**
   String get appTitle;
 
   /// OK button text

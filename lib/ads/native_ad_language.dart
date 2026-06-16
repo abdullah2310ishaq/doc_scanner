@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import '../core/providers/connectivity_provider.dart';
+import 'native_ad_sizes.dart';
 
 /// Keeps one language-screen native ad in memory for the app session.
 class NativeAdLanguageCache {
@@ -14,7 +14,7 @@ class NativeAdLanguageCache {
   static final NativeAdLanguageCache instance = NativeAdLanguageCache._();
 
   static const String _androidTestAdUnitId =
-      'ca-app-pub-3940256099942544/2247696110';
+      'ca-app-pub-7182112310194934/4683489221';
 
   NativeAd? _nativeAd;
   bool _isLoaded = false;
@@ -121,9 +121,12 @@ class _NativeAdLanguageState extends State<NativeAdLanguage> {
     }
 
     return SizedBox(
-      height: 125.h,
+      height: NativeAdSizes.bannerHeight,
       width: double.infinity,
-      child: AdWidget(ad: ad),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: AdWidget(ad: ad),
+      ),
     );
   }
 }

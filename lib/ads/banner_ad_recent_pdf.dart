@@ -13,7 +13,7 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
   bool _isLoaded = false;
 
   // Google ki official testing Banner ID Android ke liye
-  final String _adUnitId = 'ca-app-pub-3940256099942544/6300978111';
+  final String _adUnitId = 'ca-app-pub-7182112310194934/6710886760';
 
   @override
   void initState() {

@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
 
-  "appTitle": "Doc Scanner",
+  "appTitle": "Document Scanner",
   "@appTitle": { "description": "Application name shown in launcher and about" },
 
   "commonOk": "OK",

@@ -1,14 +1,56 @@
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+/// App open ads — only when user returns from background, not on cold start
+/// or right after splash interstitial.
 class AppOpenAdService {
-  // Google ki official testing App Open Ad ID Android ke liye
-  final String _adUnitId = 'ca-app-pub-3940256099942544/9257395921';
+  AppOpenAdService._();
+
+  static final AppOpenAdService instance = AppOpenAdService._();
+
+  final String _adUnitId = 'ca-app-pub-7182112310194934/1419326783';
 
   AppOpenAd? _appOpenAd;
   bool _isShowingAd = false;
+  bool _hasHandledColdStart = false;
+  bool _isInBackground = false;
+  bool _blockNextForegroundShow = false;
 
-  /// Ad ko cache/background mein preload karne ke liye function
+  bool get isAdAvailable => _appOpenAd != null;
+
+  /// Skip the next foreground show (e.g. right after splash interstitial).
+  void blockNextForegroundShow() {
+    _blockNextForegroundShow = true;
+  }
+
+  void onAppHidden() {
+    _isInBackground = true;
+  }
+
+  void onAppShown() {
+    if (!_hasHandledColdStart) {
+      _hasHandledColdStart = true;
+      return;
+    }
+
+    if (!_isInBackground) {
+      return;
+    }
+
+    _isInBackground = false;
+
+    if (_blockNextForegroundShow) {
+      _blockNextForegroundShow = false;
+      return;
+    }
+
+    showAdIfAvailable();
+  }
+
   void loadAd() {
+    if (_appOpenAd != null || _isShowingAd) {
+      return;
+    }
+
     AppOpenAd.load(
       adUnitId: _adUnitId,
       request: const AdRequest(),
@@ -23,23 +65,16 @@ class AppOpenAdService {
     );
   }
 
-  /// Check karna ke kya memory mein ad preloaded betha hai ya nahi
-  bool get isAdAvailable => _appOpenAd != null;
-
-  /// Ad ko bina kisi delay ya restriction ke screen par show karne ka logic
   void showAdIfAvailable() {
-    // 1. Agar ad preloaded nahi hai, to naya load karo aur skip karo
     if (!isAdAvailable) {
       loadAd();
       return;
     }
 
-    // 2. Agar koi ad pehle se screen par open hai, to dobara trigger mat karo
     if (_isShowingAd) {
       return;
     }
 
-    // Full screen callbacks set karna taake states manage ho sakein
     _appOpenAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (ad) {
         _isShowingAd = true;
@@ -48,7 +83,7 @@ class AppOpenAdService {
         _isShowingAd = false;
         ad.dispose();
         _appOpenAd = null;
-        loadAd(); // Agli dafa ke liye naya ad cache mein preload kar lo
+        loadAd();
       },
       onAdFailedToShowFullScreenContent: (ad, error) {
         _isShowingAd = false;

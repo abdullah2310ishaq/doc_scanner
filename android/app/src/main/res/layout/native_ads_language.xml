@@ -56,7 +56,7 @@
                     android:paddingVertical="4dp"
                     android:text="Ad"
                     android:textColor="@color/ad_cta_text"
-                    android:textSize="10sp"
+                    android:textSize="10dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -68,7 +68,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:textColor="@color/ad_text_primary"
-                    android:textSize="14sp"
+                    android:textSize="14dp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -81,7 +81,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/ad_text_secondary"
-                android:textSize="12sp"
+                android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ad_app_icon"
@@ -106,7 +106,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:textColor="@color/ad_cta_text"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

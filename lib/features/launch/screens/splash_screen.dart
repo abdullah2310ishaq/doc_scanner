@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../ads/app_open.dart';
 import '../../../ads/inter.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
@@ -72,6 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     if (adReady) {
+      AppOpenAdService.instance.blockNextForegroundShow();
       _interstitialService.showAdWithLoading(
         context: context,
         loadingMessage: context.l10n.adLoading,

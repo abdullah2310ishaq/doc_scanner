@@ -2,8 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:provider/provider.dart';
 
-/// Native ad for the home screen — uses Android factory [listTileMedium].
+import '../core/providers/connectivity_provider.dart';
+import 'native_ad_sizes.dart';
+
+/// Native ad for the home screen — same compact layout as language screen.
 class NativeAdHome extends StatefulWidget {
   const NativeAdHome({super.key});
 
@@ -16,7 +20,7 @@ class _NativeAdHomeState extends State<NativeAdHome> {
   bool _isLoaded = false;
 
   static const String _androidTestAdUnitId =
-      'ca-app-pub-3940256099942544/2247696110';
+      'ca-app-pub-7182112310194934/4683489221';
 
   @override
   void initState() {
@@ -29,7 +33,7 @@ class _NativeAdHomeState extends State<NativeAdHome> {
   void _loadAd() {
     _nativeAd = NativeAd(
       adUnitId: _androidTestAdUnitId,
-      factoryId: 'listTileMedium',
+      factoryId: 'listTileLanguage',
       request: const AdRequest(),
       listener: NativeAdListener(
         onAdLoaded: (ad) {
@@ -52,16 +56,20 @@ class _NativeAdHomeState extends State<NativeAdHome> {
 
   @override
   Widget build(BuildContext context) {
-    if (!_isLoaded || _nativeAd == null) {
+    final isOnline = context.watch<ConnectivityProvider>().isOnline;
+    if (!isOnline || !_isLoaded || _nativeAd == null) {
       return const SizedBox.shrink();
     }
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: SizedBox(
-        height: 130,
+        height: NativeAdSizes.bannerHeight,
         width: double.infinity,
-        child: AdWidget(ad: _nativeAd!),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: AdWidget(ad: _nativeAd!),
+        ),
       ),
     );
   }
