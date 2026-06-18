@@ -113,7 +113,6 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
       final navigator = Navigator.of(context);
       final loadingMessage = context.l10n.adLoading;
 
-      // Leave paywall before the ad so it does not flash when the ad closes.
       if (widget.replaceOnExit) {
         navigator.pushReplacement(
           MaterialPageRoute<void>(builder: (_) => widget.nextScreen),
@@ -155,7 +154,6 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
     final subscription = context.watch<SubscriptionProvider>();
     final primaryColor = AppColors.textLink;
 
-    // Fixed Dummy Prices for precise presentation scaling
     const String dummyWeeklyPrice = "Rs 500.00";
     const String dummyWeeklyThenPrice = "Rs 1,900.00";
     const String dummyYearlyPrice = "Rs 9,900.00";
@@ -172,14 +170,13 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
         _onClose();
       },
       child: Scaffold(
-        backgroundColor: Color(0xFFFFFFFF),
+        backgroundColor: const Color(0xFFFFFFFF),
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // 1. Top Close Button Alignment Layer
                 Align(
                   alignment: Alignment.topLeft,
                   child: IconButton(
@@ -189,7 +186,6 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                 ),
                 const Spacer(flex: 1),
 
-                // 2. Main Premium Headline Header text
                 RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
@@ -212,14 +208,12 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                 ),
                 SizedBox(height: 24.h),
 
-                // 3. Dynamic Scaled Features List
                 _buildFeatureRow(l10n.proFeatureUnlimitedScans, primaryColor),
                 _buildFeatureRow(l10n.proFeatureOcr, primaryColor),
                 _buildFeatureRow(l10n.proFeaturePdf, primaryColor),
                 _buildFeatureRow(l10n.proFeatureAi, primaryColor),
                 SizedBox(height: 24.h),
 
-                // 4. Enable Trial Logic Switch Box Container
                 Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: 12.w,
@@ -254,7 +248,6 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                 ),
                 SizedBox(height: 20.h),
 
-                // 5. Subscription Cards Segment Stack Layout
                 Stack(
                   clipBehavior: Clip.none,
                   children: [
@@ -346,7 +339,6 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                 ),
                 SizedBox(height: 14.h),
 
-                // 6. Yearly Plan Card Container Layout
                 GestureDetector(
                   onTap: () => setState(() => _isTrialEnabled = false),
                   child: Container(
@@ -388,7 +380,7 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              "Rs 190.38", // Kept matching to initial visual asset specification
+                              "Rs 190.38",
                               style: TextStyle(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.bold,
@@ -415,32 +407,47 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                     child: const Center(child: CircularProgressIndicator()),
                   ),
 
-                // 7. Core Interactive Action Trigger Button
-                ElevatedButton(
-                  onPressed: canPurchase ? _onContinue : null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryColor,
-                    disabledBackgroundColor: primaryColor.withValues(
-                      alpha: 0.4,
+                // 7. Gradient Continue Button Wrap Integration
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [
+                        Color(0xFF1966FE), // 0%
+                        Color(0xFF635CF1), // 99.62%
+                      ],
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 16.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14.r),
-                    ),
-                    elevation: 0,
+                    borderRadius: BorderRadius.circular(14.r),
                   ),
-                  child: Text(
-                    l10n.proContinue,
-                    style: TextStyle(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                  child: ElevatedButton(
+                    onPressed: canPurchase ? _onContinue : null,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      foregroundColor: AppColors.white,
+                      disabledBackgroundColor: Colors.transparent,
+                      disabledForegroundColor: AppColors.white.withValues(
+                        alpha: 0.5,
+                      ),
+                      shadowColor: Colors.transparent,
+                      padding: EdgeInsets.symmetric(vertical: 16.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14.r),
+                      ),
+                      elevation: 0,
+                    ),
+                    child: Text(
+                      l10n.proContinue,
+                      style: TextStyle(
+                        fontSize: 22.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(height: 16.h),
 
-                // 8. Dynamic Disclaimer Footer Text Context Integration
                 Text(
                   _isTrialEnabled
                       ? "After 3 days free - then weekly subscription for $dummyYearlyPrice will start. Cancel anytime 24 hours before renewal"
