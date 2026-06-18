@@ -4,9 +4,11 @@ import 'package:provider/provider.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/toast.dart';
+import '../../../in_app/paywall_routes.dart';
+import '../../subscription/providers/subscription_provider.dart';
 import '../providers/chatbot_analyze_provider.dart';
 import '../providers/chatbot_chat_provider.dart';
-import 'chatbot_chat_screen.dart'; // Ab direct isko call karenge
+import 'chatbot_chat_screen.dart';
 
 enum StepStatus { pending, loading, completed }
 
@@ -33,6 +35,30 @@ class AnalyzeScreen extends StatefulWidget {
 
 class _AnalyzeScreenState extends State<AnalyzeScreen> {
   bool _navigated = false;
+  bool _paywallGatePassed = false;
+  bool _paywallGateStarted = false;
+
+  Future<void> _runPaywallGateIfNeeded(ChatbotAnalyzeProvider provider) async {
+    if (_paywallGateStarted || _paywallGatePassed) {
+      return;
+    }
+    if (provider.status != ChatbotAnalyzeStatus.success) {
+      return;
+    }
+
+    final isPro = context.read<SubscriptionProvider>().isPro;
+    if (isPro) {
+      setState(() => _paywallGatePassed = true);
+      return;
+    }
+
+    _paywallGateStarted = true;
+    await PaywallRoutes.openFeatureGate(context);
+    if (!mounted) {
+      return;
+    }
+    setState(() => _paywallGatePassed = true);
+  }
 
   void _onAnalyzeUpdate(ChatbotAnalyzeProvider provider) {
     if (_navigated || provider.status != ChatbotAnalyzeStatus.success) {
@@ -40,21 +66,32 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
     }
 
     final session = provider.session;
-    if (session == null) return;
+    if (session == null) {
+      return;
+    }
+
+    if (!_paywallGatePassed) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _runPaywallGateIfNeeded(provider);
+      });
+      return;
+    }
 
     _navigated = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
+      if (!mounted) {
+        return;
+      }
 
-      // 👉 PURANI ROUTING REMOVE KAR KE DIRECT CHAT SCREEN PAR LE GAYE HAIN
       Navigator.of(context).pushReplacement(
         MaterialPageRoute<void>(
           builder: (_) => ChangeNotifierProvider(
-            create: (_) => ChatbotChatProvider(sessionId: session.id)..loadSession(),
+            create: (_) =>
+                ChatbotChatProvider(sessionId: session.id)..loadSession(),
             child: ChatbotChatScreen(
               sessionId: session.id,
               displayName: session.displayName,
-              initialSummary: session.summary, // Summary dynamic pass ho rahi hai dashboard view ke liye
+              initialSummary: session.summary,
             ),
           ),
         ),

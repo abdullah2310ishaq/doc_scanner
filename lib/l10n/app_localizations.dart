@@ -1304,6 +1304,138 @@ abstract class AppLocalizations {
   /// **'Purchase could not be completed'**
   String get proPurchaseFailed;
 
+  /// No description provided for @proPaywallTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Pro Access'**
+  String get proPaywallTitle;
+
+  /// No description provided for @proPaywallTitleGet.
+  ///
+  /// In en, this message translates to:
+  /// **'Get'**
+  String get proPaywallTitleGet;
+
+  /// No description provided for @proPaywallTitlePro.
+  ///
+  /// In en, this message translates to:
+  /// **'Pro'**
+  String get proPaywallTitlePro;
+
+  /// No description provided for @proPaywallTitleAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Access'**
+  String get proPaywallTitleAccess;
+
+  /// No description provided for @proEnableTrial.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Trial'**
+  String get proEnableTrial;
+
+  /// No description provided for @proTrialPlanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'3-Day Full Access'**
+  String get proTrialPlanTitle;
+
+  /// No description provided for @proYearlyPlanTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly'**
+  String get proYearlyPlanTitle;
+
+  /// No description provided for @proContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get proContinue;
+
+  /// No description provided for @proTrialDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'After 3 days free - then weekly subscription for {price} will start. Cancel anytime 24 hours before renewal.'**
+  String proTrialDisclaimer(String price);
+
+  /// No description provided for @proYearlyDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly subscription for {price}/year. Cancel anytime at least 24 hours before renewal.'**
+  String proYearlyDisclaimer(String price);
+
+  /// No description provided for @proTrialThenPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'then {price}/week'**
+  String proTrialThenPrice(String price);
+
+  /// No description provided for @proPerWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'per week'**
+  String get proPerWeek;
+
+  /// No description provided for @proYearlySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'just {price} per year'**
+  String proYearlySubtitle(String price);
+
+  /// No description provided for @proSaveBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Save 86%'**
+  String get proSaveBadge;
+
+  /// No description provided for @proFeatureUnlimitedScans.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlimited Document Scans'**
+  String get proFeatureUnlimitedScans;
+
+  /// No description provided for @proFeatureOcr.
+  ///
+  /// In en, this message translates to:
+  /// **'Accurate OCR Recognition'**
+  String get proFeatureOcr;
+
+  /// No description provided for @proFeaturePdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced PDF Tools'**
+  String get proFeaturePdf;
+
+  /// No description provided for @proFeatureAi.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart AI Assistance'**
+  String get proFeatureAi;
+
+  /// No description provided for @proStoreUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Store is not available right now. Please try again later.'**
+  String get proStoreUnavailable;
+
+  /// No description provided for @proSplashEnable.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable'**
+  String get proSplashEnable;
+
+  /// No description provided for @proSplashTrialDays.
+  ///
+  /// In en, this message translates to:
+  /// **'3-day trial'**
+  String get proSplashTrialDays;
+
+  /// No description provided for @proSplashTrialEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'is enabled!'**
+  String get proSplashTrialEnabled;
+
   /// No description provided for @exportPdf.
   ///
   /// In en, this message translates to:

@@ -49,28 +49,5 @@ class PermissionService {
     return status.isGranted;
   }
 
-  /// Gallery / photo library (Android 13+ uses photos; older uses storage).
-  Future<bool> hasGalleryPermission() async {
-    if (!Platform.isAndroid) return true;
-
-    if (await Permission.photos.isGranted) return true;
-    if (await Permission.storage.isGranted) return true;
-    return false;
-  }
-
-  Future<bool> requestGalleryPermission() async {
-    if (!Platform.isAndroid) return true;
-
-    var photos = await Permission.photos.request();
-    if (photos.isGranted) return true;
-
-    if (await needsStoragePermission()) {
-      final storage = await Permission.storage.request();
-      if (storage.isGranted) return true;
-    }
-
-    return false;
-  }
-
   Future<bool> openSettings() => openAppSettings();
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+import 'ad_unit_ids.dart';
+
 class AdBannerWidget extends StatefulWidget {
   const AdBannerWidget({super.key});
 
@@ -12,8 +14,7 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
   BannerAd? _bannerAd;
   bool _isLoaded = false;
 
-  // Google ki official testing Banner ID Android ke liye
-  final String _adUnitId = 'ca-app-pub-7182112310194934/6710886760';
+  final String _adUnitId = AdUnitIds.banner;
 
   @override
   void initState() {

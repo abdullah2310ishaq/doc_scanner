@@ -1,5 +1,7 @@
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+import 'ad_unit_ids.dart';
+
 /// App open ads — only when user returns from background, not on cold start
 /// or right after splash interstitial.
 class AppOpenAdService {
@@ -7,7 +9,7 @@ class AppOpenAdService {
 
   static final AppOpenAdService instance = AppOpenAdService._();
 
-  final String _adUnitId = 'ca-app-pub-7182112310194934/1419326783';
+  final String _adUnitId = AdUnitIds.appOpen;
 
   AppOpenAd? _appOpenAd;
   bool _isShowingAd = false;

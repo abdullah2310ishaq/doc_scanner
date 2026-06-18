@@ -239,6 +239,48 @@
   "proLimitLive": "Live translate is available in Pro",
   "proPurchaseSuccess": "Welcome to Pro!",
   "proPurchaseFailed": "Purchase could not be completed",
+  "proPaywallTitle": "Get Pro Access",
+  "proPaywallTitleGet": "Get",
+  "proPaywallTitlePro": "Pro",
+  "proPaywallTitleAccess": "Access",
+  "proEnableTrial": "Enable Trial",
+  "proTrialPlanTitle": "3-Day Full Access",
+  "proYearlyPlanTitle": "Yearly",
+  "proContinue": "Continue",
+  "proTrialDisclaimer": "After 3 days free - then weekly subscription for {price} will start. Cancel anytime 24 hours before renewal.",
+  "@proTrialDisclaimer": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proYearlyDisclaimer": "Yearly subscription for {price}/year. Cancel anytime at least 24 hours before renewal.",
+  "@proYearlyDisclaimer": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proTrialThenPrice": "then {price}/week",
+  "@proTrialThenPrice": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proPerWeek": "per week",
+  "proYearlySubtitle": "just {price} per year",
+  "@proYearlySubtitle": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proSaveBadge": "Save 86%",
+  "proFeatureUnlimitedScans": "Unlimited Document Scans",
+  "proFeatureOcr": "Accurate OCR Recognition",
+  "proFeaturePdf": "Advanced PDF Tools",
+  "proFeatureAi": "Smart AI Assistance",
+  "proStoreUnavailable": "Store is not available right now. Please try again later.",
+  "proSplashEnable": "Enable",
+  "proSplashTrialDays": "3-day trial",
+  "proSplashTrialEnabled": "is enabled!",
 
   "exportPdf": "Export PDF",
   "exportImage": "Export image",

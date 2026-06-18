@@ -5,6 +5,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import '../core/providers/connectivity_provider.dart';
+import 'ad_unit_ids.dart';
 import 'native_ad_sizes.dart';
 
 /// Keeps one language-screen native ad in memory for the app session.
@@ -13,8 +14,7 @@ class NativeAdLanguageCache {
 
   static final NativeAdLanguageCache instance = NativeAdLanguageCache._();
 
-  static const String _androidTestAdUnitId =
-      'ca-app-pub-7182112310194934/4683489221';
+  static final String _androidTestAdUnitId = AdUnitIds.native;
 
   NativeAd? _nativeAd;
   bool _isLoaded = false;

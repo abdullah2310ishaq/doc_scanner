@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../core/theme/app_colors.dart';
+import 'ad_unit_ids.dart';
 
 class InterstitialAdService {
-  final String _adUnitId = 'ca-app-pub-7182112310194934/4045490125';
+  final String _adUnitId = AdUnitIds.interstitial;
 
   InterstitialAd? _interstitialAd;
   bool _isAvailable = false;

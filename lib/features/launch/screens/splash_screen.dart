@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
-import '../../../ads/app_open.dart';
-import '../../../ads/inter.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
+import '../../../features/subscription/providers/subscription_provider.dart';
+import '../../../in_app/paywall.dart';
 import '../../home/screens/main_shell_screen.dart';
 import '../../settings/screens/first_language.dart';
 import '../services/app_launch_prefs_service.dart';
@@ -20,19 +21,25 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final AppLaunchPrefsService _launchPrefs = AppLaunchPrefsService();
-  final InterstitialAdService _interstitialService = InterstitialAdService();
-
-  bool _showAdDisclaimer = false;
 
   @override
   void initState() {
     super.initState();
-    _interstitialService.loadAd();
     _startLaunchFlow();
   }
 
   Future<void> _startLaunchFlow() async {
     await Future<void>.delayed(const Duration(milliseconds: 1500));
+
+    if (!mounted) {
+      return;
+    }
+
+    final subscription = context.read<SubscriptionProvider>();
+    if (subscription.isPro) {
+      _goHome();
+      return;
+    }
 
     final isFirstLaunch = await _launchPrefs.isFirstLaunch();
     final hasCompletedOnboarding = await _launchPrefs.hasCompletedOnboarding();
@@ -65,23 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
       return;
     }
 
-    setState(() => _showAdDisclaimer = true);
-
-    final adReady = await _interstitialService.waitUntilReady();
-    if (!mounted) {
-      return;
-    }
-
-    if (adReady) {
-      AppOpenAdService.instance.blockNextForegroundShow();
-      _interstitialService.showAdWithLoading(
-        context: context,
-        loadingMessage: context.l10n.adLoading,
-        onAdDismissed: _goHome,
-      );
-    } else {
-      _goHome();
-    }
+    _goPaywall(showAdOnClose: true);
   }
 
   void _navigateAfterSplash({
@@ -114,6 +105,22 @@ class _SplashScreenState extends State<SplashScreen> {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute<void>(
         builder: (_) => const FirstTimeLanguageSelectionScreen(),
+      ),
+    );
+  }
+
+  void _goPaywall({required bool showAdOnClose}) {
+    if (!mounted) {
+      return;
+    }
+
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute<void>(
+        builder: (_) => ProAccessScreen(
+          nextScreen: const MainShellScreen(),
+          initialTrialEnabled: false,
+          showAdOnClose: showAdOnClose,
+        ),
       ),
     );
   }
@@ -171,14 +178,14 @@ class _SplashScreenState extends State<SplashScreen> {
                 ],
               ),
             ),
-            Positioned(
+            const Positioned(
               bottom: 48,
               left: 0,
               right: 0,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const SizedBox(
+                  SizedBox(
                     width: 28,
                     height: 28,
                     child: CircularProgressIndicator(
@@ -188,21 +195,6 @@ class _SplashScreenState extends State<SplashScreen> {
                       ),
                     ),
                   ),
-                  if (_showAdDisclaimer) ...[
-                    const SizedBox(height: 16),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 32),
-                      child: Text(
-                        l10n.splashAdDisclaimer,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 13,
-                          color: AppColors.textSecondary,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
                 ],
               ),
             ),

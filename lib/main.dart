@@ -13,6 +13,7 @@ import 'app.dart';
 import 'core/providers/connectivity_provider.dart';
 import 'core/services/locale_service.dart';
 import 'features/home/providers/recent_documents_provider.dart';
+import 'features/subscription/providers/subscription_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +33,9 @@ Future<void> main() async {
 
   final localeService = LocaleService();
   await localeService.initialize();
+
+  final subscriptionProvider = SubscriptionProvider();
+  await subscriptionProvider.initialize();
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -57,6 +61,7 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (_) => RecentDocumentsProvider()..loadSummary(),
         ),
+        ChangeNotifierProvider.value(value: subscriptionProvider),
       ],
       // Root par fuzool MediaQuery hata kar AppLifecycleObserver ko clean wrap kiya
       child: const AppLifecycleObserver(child: DocScannerApp()),

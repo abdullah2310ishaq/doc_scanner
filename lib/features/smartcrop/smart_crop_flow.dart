@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/constants/smart_crop_limits.dart';
-import '../../core/services/permission_service.dart';
 import '../../core/utils/l10n_extension.dart';
 import '../../core/widgets/toast.dart';
 import '../home/providers/recent_documents_provider.dart';
@@ -21,7 +20,6 @@ import 'widgets/smart_crop_input_sheet.dart';
 abstract final class SmartCropFlow {
   static final _mlKitScan = SmartCropMlKitScanService();
   static final _galleryImport = SmartCropGalleryImportService();
-  static final _permissions = PermissionService();
   static SmartCropSessionProvider _newSession() => SmartCropSessionProvider();
 
   static bool _guardAndroid(BuildContext context) {
@@ -79,16 +77,6 @@ abstract final class SmartCropFlow {
   }) async {
     if (!_guardAndroid(context)) return;
     if (index < 0 || index >= session.pageCount) return;
-
-    final hasPermission =
-        await _permissions.hasGalleryPermission() ||
-        await _permissions.requestGalleryPermission();
-    if (!hasPermission) {
-      if (context.mounted) {
-        AppToast.show(context, context.l10n.permissionStorageMessage);
-      }
-      return;
-    }
 
     try {
       final picked = await ImagePickerService().pickMultipleImagesFromGallery(
@@ -157,16 +145,6 @@ abstract final class SmartCropFlow {
     required SmartCropSessionProvider session,
   }) async {
     if (!session.canAddMore) return;
-
-    final hasPermission =
-        await _permissions.hasGalleryPermission() ||
-        await _permissions.requestGalleryPermission();
-    if (!hasPermission) {
-      if (context.mounted) {
-        AppToast.show(context, context.l10n.permissionStorageMessage);
-      }
-      return;
-    }
 
     final remaining = SmartCropLimits.maxPages - session.pageCount;
 
@@ -303,16 +281,6 @@ abstract final class SmartCropFlow {
     bool replaceCurrentRoute = false,
   }) async {
     if (!_guardAndroid(context)) return;
-
-    final hasPermission =
-        await _permissions.hasGalleryPermission() ||
-        await _permissions.requestGalleryPermission();
-    if (!hasPermission) {
-      if (context.mounted) {
-        AppToast.show(context, context.l10n.permissionStorageMessage);
-      }
-      return;
-    }
 
     try {
       final picked = await ImagePickerService().pickMultipleImagesFromGallery(

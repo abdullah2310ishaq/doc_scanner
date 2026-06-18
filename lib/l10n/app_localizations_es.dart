@@ -664,6 +664,81 @@ class AppLocalizationsEs extends AppLocalizations {
   String get proPurchaseFailed => 'No se pudo completar la compra';
 
   @override
+  String get proPaywallTitle => 'Get Pro Access';
+
+  @override
+  String get proPaywallTitleGet => 'Get';
+
+  @override
+  String get proPaywallTitlePro => 'Pro';
+
+  @override
+  String get proPaywallTitleAccess => 'Access';
+
+  @override
+  String get proEnableTrial => 'Enable Trial';
+
+  @override
+  String get proTrialPlanTitle => '3-Day Full Access';
+
+  @override
+  String get proYearlyPlanTitle => 'Yearly';
+
+  @override
+  String get proContinue => 'Continue';
+
+  @override
+  String proTrialDisclaimer(String price) {
+    return 'After 3 days free - then weekly subscription for $price will start. Cancel anytime 24 hours before renewal.';
+  }
+
+  @override
+  String proYearlyDisclaimer(String price) {
+    return 'Yearly subscription for $price/year. Cancel anytime at least 24 hours before renewal.';
+  }
+
+  @override
+  String proTrialThenPrice(String price) {
+    return 'then $price/week';
+  }
+
+  @override
+  String get proPerWeek => 'per week';
+
+  @override
+  String proYearlySubtitle(String price) {
+    return 'just $price per year';
+  }
+
+  @override
+  String get proSaveBadge => 'Save 86%';
+
+  @override
+  String get proFeatureUnlimitedScans => 'Unlimited Document Scans';
+
+  @override
+  String get proFeatureOcr => 'Accurate OCR Recognition';
+
+  @override
+  String get proFeaturePdf => 'Advanced PDF Tools';
+
+  @override
+  String get proFeatureAi => 'Smart AI Assistance';
+
+  @override
+  String get proStoreUnavailable =>
+      'Store is not available right now. Please try again later.';
+
+  @override
+  String get proSplashEnable => 'Enable';
+
+  @override
+  String get proSplashTrialDays => '3-day trial';
+
+  @override
+  String get proSplashTrialEnabled => 'is enabled!';
+
+  @override
   String get exportPdf => 'Exportar PDF';
 
   @override

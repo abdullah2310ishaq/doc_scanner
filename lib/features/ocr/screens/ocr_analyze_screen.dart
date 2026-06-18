@@ -7,7 +7,9 @@ import 'package:provider/provider.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
+import '../../../in_app/paywall_routes.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../subscription/providers/subscription_provider.dart';
 import '../models/ocr_text_block.dart';
 import '../providers/ocr_analyze_provider.dart';
 import '../utils/ocr_image_layout.dart';
@@ -16,7 +18,7 @@ import 'ocr_no_text_screen.dart';
 import '../widgets/ocr_analyze_action_bar.dart';
 import '../widgets/ocr_text_highlight_overlay.dart';
 
-class OcrAnalyzeScreen extends StatelessWidget {
+class OcrAnalyzeScreen extends StatefulWidget {
   const OcrAnalyzeScreen({super.key});
 
   static Future<void> open(
@@ -31,7 +33,40 @@ class OcrAnalyzeScreen extends StatelessWidget {
       ),
     );
 
+    if (replaceCurrentRoute) {
+      return Navigator.of(context).pushReplacement(route);
+    }
     return Navigator.of(context).push(route);
+  }
+
+  @override
+  State<OcrAnalyzeScreen> createState() => _OcrAnalyzeScreenState();
+}
+
+class _OcrAnalyzeScreenState extends State<OcrAnalyzeScreen> {
+  bool _paywallGatePassed = false;
+  bool _paywallGateStarted = false;
+
+  Future<void> _runPaywallGateIfNeeded(OcrAnalyzeProvider provider) async {
+    if (_paywallGateStarted || _paywallGatePassed) {
+      return;
+    }
+    if (provider.status != OcrAnalyzeStatus.ready) {
+      return;
+    }
+
+    final isPro = context.read<SubscriptionProvider>().isPro;
+    if (isPro) {
+      setState(() => _paywallGatePassed = true);
+      return;
+    }
+
+    _paywallGateStarted = true;
+    await PaywallRoutes.openOcrGate(context);
+    if (!mounted) {
+      return;
+    }
+    setState(() => _paywallGatePassed = true);
   }
 
   @override
@@ -44,12 +79,18 @@ class OcrAnalyzeScreen extends StatelessWidget {
           return const OcrNoTextScreen();
         }
 
+        if (provider.status == OcrAnalyzeStatus.ready && !_paywallGatePassed) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _runPaywallGateIfNeeded(provider);
+          });
+        }
+
         return Scaffold(
           backgroundColor: AppColors.scaffoldBackground,
           appBar: AppBar(
             title: Text(
               l10n.ocrAnalyzeTitle,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: AppColors.textPrimary,
@@ -72,19 +113,7 @@ class OcrAnalyzeScreen extends StatelessWidget {
   ) {
     switch (provider.status) {
       case OcrAnalyzeStatus.loading:
-        return Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const CircularProgressIndicator(),
-              const SizedBox(height: 16),
-              Text(
-                l10n.ocrAnalyzeProcessing,
-                style: const TextStyle(color: AppColors.textSecondary),
-              ),
-            ],
-          ),
-        );
+        return _buildProcessingView(l10n);
       case OcrAnalyzeStatus.empty:
         return const SizedBox.shrink();
       case OcrAnalyzeStatus.error:
@@ -112,6 +141,9 @@ class OcrAnalyzeScreen extends StatelessWidget {
           ),
         );
       case OcrAnalyzeStatus.ready:
+        if (!_paywallGatePassed) {
+          return _buildProcessingView(l10n);
+        }
         final result = provider.result;
         if (result == null) {
           return Center(child: Text(l10n.ocrEmpty));
@@ -127,6 +159,22 @@ class OcrAnalyzeScreen extends StatelessWidget {
           emptyMessage: l10n.ocrEmpty,
         );
     }
+  }
+
+  Widget _buildProcessingView(AppLocalizations l10n) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const CircularProgressIndicator(),
+          const SizedBox(height: 16),
+          Text(
+            l10n.ocrAnalyzeProcessing,
+            style: const TextStyle(color: AppColors.textSecondary),
+          ),
+        ],
+      ),
+    );
   }
 }
 

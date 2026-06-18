@@ -5,8 +5,10 @@ import 'package:provider/provider.dart';
 import '../../../core/constants/home_assets.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
+import '../../../in_app/paywall_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../core/widgets/toast.dart';
+import '../../subscription/providers/subscription_provider.dart';
 import '../../translate/models/translate_language.dart';
 import '../providers/pdf_assistant_process_provider.dart';
 import 'pdf_assistant_result_screen.dart';
@@ -28,9 +30,17 @@ class PdfAssistantProcessingScreen extends StatefulWidget {
     required String originalPath,
     required String displayName,
     required TranslateLanguage targetLanguage,
-  }) {
+  }) async {
+    final isPro = context.read<SubscriptionProvider>().isPro;
+    if (!isPro) {
+      await PaywallRoutes.openFeatureGate(context);
+      if (!context.mounted) {
+        return;
+      }
+    }
+
     final l10n = AppLocalizations.of(context);
-    return Navigator.of(context).push(
+    await Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => ChangeNotifierProvider(
           create: (_) => PdfAssistantProcessProvider(

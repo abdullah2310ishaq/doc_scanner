@@ -6,6 +6,7 @@ import '../../../ads/native_ad_language.dart';
 import '../../../core/services/locale_service.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/app_exit_guard.dart';
+import '../../../in_app/in_app_splash_first.dart';
 import '../../home/screens/main_shell_screen.dart';
 import '../../launch/services/app_launch_prefs_service.dart';
 import '../models/app_language_option.dart';
@@ -47,7 +48,9 @@ class _FirstTimeLanguageSelectionScreenState
       return;
     }
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const MainShellScreen()),
+      MaterialPageRoute<void>(
+        builder: (_) => const SplashProScreen(nextScreen: MainShellScreen()),
+      ),
     );
   }
 
@@ -65,12 +68,13 @@ class _FirstTimeLanguageSelectionScreenState
           automaticallyImplyLeading: false,
           title: Text(
             l10n.settingsChooseLanguage,
-            style: const TextStyle(
-              fontSize: 20,
+            style: TextStyle(
+              fontSize: 24.sp,
               fontWeight: FontWeight.bold,
               color: Colors.black87,
             ),
           ),
+
           actions: [
             Padding(
               padding: EdgeInsets.only(right: 16.w),
@@ -113,7 +117,7 @@ class _FirstTimeLanguageSelectionScreenState
                   itemCount: appLanguageOptions.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    childAspectRatio: 2.4,
+                    childAspectRatio: 2.65,
                     crossAxisSpacing: 12.w,
                     mainAxisSpacing: 12.h,
                   ),
@@ -125,7 +129,7 @@ class _FirstTimeLanguageSelectionScreenState
                       language: language,
                       isSelected: isSelected,
                       accentColor: _accent,
-                      compact: true,
+                      large: true,
                       onTap: () {
                         setState(() => _selectedLanguage = language.code);
                       },

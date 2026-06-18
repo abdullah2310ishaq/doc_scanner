@@ -5,6 +5,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import '../core/providers/connectivity_provider.dart';
+import 'ad_unit_ids.dart';
 import 'native_ad_sizes.dart';
 
 /// Native ad for the home screen — same compact layout as language screen.
@@ -19,8 +20,7 @@ class _NativeAdHomeState extends State<NativeAdHome> {
   NativeAd? _nativeAd;
   bool _isLoaded = false;
 
-  static const String _androidTestAdUnitId =
-      'ca-app-pub-7182112310194934/4683489221';
+  static final String _androidTestAdUnitId = AdUnitIds.native;
 
   @override
   void initState() {

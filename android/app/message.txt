@@ -1,0 +1,55 @@
+I can't trace it for you directly—the merge report that pinpoints the source lives in your local build output, which I don't have access to. But here's exactly how to find it, plus my best read on likely suspects based on your manifest.
+
+## Run this to get the answer
+
+From your project root:
+
+```bash
+cd android
+./gradlew :app:processReleaseManifest --stacktrace
+```
+
+Then open:
+```
+android/app/build/outputs/logs/manifest-merger-release-report.txt
+```
+
+Search the file for `READ_MEDIA_IMAGES`. Each permission line shows its origin, like:
+
+```
+uses-permission#android.permission.READ_MEDIA_IMAGES
+ADDED from [:image_picker_android] AndroidManifest.xml:12:5-78
+```
+
+The `from [...]` part names the exact library.
+
+## Faster alternative—grep your dependencies
+
+If you don't want to build, search the merged intermediate manifests directly:
+
+```bash
+# From project root
+grep -rl "READ_MEDIA_IMAGES" ~/.gradle/caches/ android/
+
+# Or check each plugin's bundled manifest
+find ~/.pub-cache -name "AndroidManifest.xml" | xargs grep -l "READ_MEDIA"
+```
+
+## Likely culprits in your case
+
+Given your app does OCR, PDF, and image uploads, the permission is almost certainly injected by one of these:
+
+The strongest candidate is **`image_picker`** (specifically `image_picker_android`). Older versions declared `READ_MEDIA_IMAGES` and `READ_MEDIA_VIDEO` outright; newer versions (0.8.9+) switched to the Android Photo Picker and dropped them. If you're on an older version, upgrading often removes the permission entirely.
+
+Other possibilities, in rough order of likelihood for your feature set:
+- **`file_picker`** — used for PDF uploads; some versions pull in media permissions
+- **`flutter_image_compress`** or any gallery/saver plugin (e.g. `gal`, `image_gallery_saver`)
+- **`google_mobile_ads`** — less likely to add these two specifically, but worth ruling out since you have AdMob
+
+## Quickest path forward
+
+1. Check your `pubspec.yaml` for `image_picker` and `file_picker` versions.
+2. Run `flutter pub outdated` and upgrade them—newer releases frequently fix this by adopting the Photo Picker.
+3. If a plugin still injects it and you don't need video access, keep the `tools:node="remove"` override I gave you for `READ_MEDIA_VIDEO` at minimum.
+
+If you paste your `pubspec.yaml` dependency list, I can tell you which specific lines are the probable source and what versions to move to.

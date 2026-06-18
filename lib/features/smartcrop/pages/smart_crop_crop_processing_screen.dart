@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/toast.dart';
-import '../models/smart_crop_page_model.dart';
-import '../../home/providers/recent_documents_provider.dart';
+import '../../../in_app/paywall_routes.dart';
+import '../../subscription/providers/subscription_provider.dart';
+import '../models/smart_crop_page_model.dart';import '../../home/providers/recent_documents_provider.dart';
 import '../../home/services/recent_documents_service.dart';
 import '../services/smart_crop_crop_service.dart';
 import 'smart_crop_filters_screen.dart';
@@ -72,16 +75,28 @@ class _SmartCropCropProcessingScreenState
 
       if (!mounted) return;
 
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute<void>(
-          builder: (_) => SmartCropFiltersScreen(imagePaths: croppedPaths),
-        ),
-      );
+      await _goToFiltersAfterGate(croppedPaths);
     } catch (_) {
       if (!mounted) return;
       AppToast.show(context, context.l10n.commonError);
       Navigator.of(context).pop();
     }
+  }
+
+  Future<void> _goToFiltersAfterGate(List<String> croppedPaths) async {
+    final isPro = context.read<SubscriptionProvider>().isPro;
+    if (!isPro) {
+      await PaywallRoutes.openFeatureGate(context);
+      if (!mounted) {
+        return;
+      }
+    }
+
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute<void>(
+        builder: (_) => SmartCropFiltersScreen(imagePaths: croppedPaths),
+      ),
+    );
   }
 
   void _updateProgress(ProcessingStep step, double circular, double linear) {

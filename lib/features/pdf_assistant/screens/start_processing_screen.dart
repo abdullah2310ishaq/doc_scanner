@@ -116,7 +116,7 @@ class _StartProcessingScreenState extends State<StartProcessingScreen> {
     );
   }
 
-  void _startProcessing() {
+  Future<void> _startProcessing() async {
     final path = _pdfPath;
     final language = _targetLanguage;
     final l10n = context.l10n;
@@ -135,7 +135,7 @@ class _StartProcessingScreenState extends State<StartProcessingScreen> {
       return;
     }
 
-    PdfAssistantProcessingScreen.open(
+    await PdfAssistantProcessingScreen.open(
       context,
       originalPath: path,
       displayName: _displayName ?? _storage.displayNameFromPath(path),

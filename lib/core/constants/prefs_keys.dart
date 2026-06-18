@@ -4,4 +4,5 @@ abstract final class PrefsKeys {
   static const String hasCompletedOnboarding = 'hasCompletedOnboarding';
   static const String hasSelectedInitialLanguage = 'hasSelectedInitialLanguage';
   static const String appLocaleCode = 'app_locale_code';
+  static const String isProUser = 'isProUser';
 }

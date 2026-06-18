@@ -12,6 +12,7 @@ class LanguageOptionCard extends StatelessWidget {
     required this.accentColor,
     required this.onTap,
     this.compact = false,
+    this.large = false,
   });
 
   final AppLanguageOption language;
@@ -19,16 +20,17 @@ class LanguageOptionCard extends StatelessWidget {
   final Color accentColor;
   final VoidCallback onTap;
   final bool compact;
+  final bool large;
 
   @override
   Widget build(BuildContext context) {
-    final radius = compact ? 10.r : 14.r;
-    final flagSize = compact ? 22.w : 30.w;
-    final fontSize = compact ? 12.sp : 15.sp;
-    final horizontalPadding = compact ? 8.w : 12.w;
-    final verticalPadding = compact ? 6.h : 10.h;
-    final gap = compact ? 6.w : 10.w;
-    final checkSize = compact ? 14.sp : 18.sp;
+    final radius = large ? 12.r : (compact ? 10.r : 14.r);
+    final flagSize = large ? 28.w : (compact ? 22.w : 30.w);
+    final fontSize = large ? 14.sp : (compact ? 12.sp : 15.sp);
+    final horizontalPadding = large ? 10.w : (compact ? 8.w : 12.w);
+    final verticalPadding = large ? 6.h : (compact ? 6.h : 10.h);
+    final gap = large ? 8.w : (compact ? 6.w : 10.w);
+    final checkSize = large ? 16.sp : (compact ? 14.sp : 18.sp);
 
     return InkWell(
       borderRadius: BorderRadius.circular(radius),
@@ -51,7 +53,7 @@ class LanguageOptionCard extends StatelessWidget {
               color: isSelected
                   ? accentColor.withValues(alpha: 0.12)
                   : Colors.black.withValues(alpha: 0.03),
-              blurRadius: compact ? 6 : 8,
+              blurRadius: large ? 7 : (compact ? 6 : 8),
               offset: const Offset(0, 2),
             ),
           ],
