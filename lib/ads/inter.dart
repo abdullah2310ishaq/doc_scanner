@@ -61,16 +61,12 @@ class InterstitialAdService {
     required BuildContext context,
     required String loadingMessage,
     required VoidCallback onAdDismissed,
+    VoidCallback? onLoadingDismissed,
   }) {
-    if (!isAdAvailable) {
-      loadAd();
-      onAdDismissed();
-      return;
-    }
-
     showDialog<void>(
       context: context,
       barrierDismissible: false,
+      useRootNavigator: true,
       builder: (dialogContext) {
         return PopScope(
           canPop: false,
@@ -100,17 +96,18 @@ class InterstitialAdService {
       },
     );
 
+    final rootNavigator = Navigator.of(context, rootNavigator: true);
+
     Future<void>.delayed(const Duration(milliseconds: 800), () {
-      if (!context.mounted) {
-        return;
+      if (rootNavigator.mounted && rootNavigator.canPop()) {
+        rootNavigator.pop();
       }
 
-      if (Navigator.canPop(context)) {
-        Navigator.pop(context);
-      }
+      onLoadingDismissed?.call();
 
       final ad = _interstitialAd;
       if (ad == null) {
+        loadAd();
         onAdDismissed();
         return;
       }

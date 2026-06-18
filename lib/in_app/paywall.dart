@@ -113,25 +113,23 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
       final navigator = Navigator.of(context);
       final loadingMessage = context.l10n.adLoading;
 
-      if (widget.replaceOnExit) {
-        navigator.pushReplacement(
-          MaterialPageRoute<void>(builder: (_) => widget.nextScreen),
-        );
-      } else {
-        navigator.pop();
-      }
-
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        final overlayContext = navigator.overlay?.context;
-        if (overlayContext == null || !overlayContext.mounted) {
-          return;
-        }
-        _interstitialService.showAdWithLoading(
-          context: overlayContext,
-          loadingMessage: loadingMessage,
-          onAdDismissed: () {},
-        );
-      });
+      _interstitialService.showAdWithLoading(
+        context: context,
+        loadingMessage: loadingMessage,
+        onLoadingDismissed: () {
+          if (!navigator.mounted) {
+            return;
+          }
+          if (widget.replaceOnExit) {
+            navigator.pushReplacement(
+              MaterialPageRoute<void>(builder: (_) => widget.nextScreen),
+            );
+          } else {
+            navigator.pop();
+          }
+        },
+        onAdDismissed: () {},
+      );
       return;
     }
     _exitToNext();
