@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:doc_scanner/ads/app_open.dart';
 import 'package:doc_scanner/ads/native_ad_language.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -10,6 +11,7 @@ import 'package:media_store_plus/media_store_plus.dart';
 import 'package:provider/provider.dart';
 
 import 'app.dart';
+import 'core/constants/debug_flags.dart';
 import 'core/providers/connectivity_provider.dart';
 import 'core/services/locale_service.dart';
 import 'features/home/providers/recent_documents_provider.dart';
@@ -23,19 +25,29 @@ Future<void> main() async {
   final connectivityProvider = ConnectivityProvider();
   await connectivityProvider.initialize();
 
-  if (Platform.isAndroid) {
-    await MediaStore.ensureInitialized();
-    MediaStore.appFolder = 'DocScanner';
-    NativeAdLanguageCache.instance.ensureLoaded(
-      isOnline: connectivityProvider.isOnline,
-    );
-  }
-
   final localeService = LocaleService();
   await localeService.initialize();
 
   final subscriptionProvider = SubscriptionProvider();
   await subscriptionProvider.initialize();
+
+  if (kDebugMode && kDebugForcePro) {
+    await subscriptionProvider.debugSetPro(true);
+  }
+
+  AppOpenAdService.instance.configure(
+    shouldShowAds: () => !subscriptionProvider.isPro,
+  );
+
+  if (Platform.isAndroid) {
+    await MediaStore.ensureInitialized();
+    MediaStore.appFolder = 'DocScanner';
+    if (!subscriptionProvider.isPro) {
+      NativeAdLanguageCache.instance.ensureLoaded(
+        isOnline: connectivityProvider.isOnline,
+      );
+    }
+  }
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

@@ -51,6 +51,9 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
       _subscription = context.read<SubscriptionProvider>();
       _subscription?.addListener(_onSubscriptionChanged);
       _ensureBillingReady();
+      if (_subscription?.isPro == true) {
+        _exitToNext();
+      }
     });
   }
 

@@ -5,6 +5,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import '../core/providers/connectivity_provider.dart';
+import '../features/subscription/providers/subscription_provider.dart';
 import 'ad_unit_ids.dart';
 import 'native_ad_sizes.dart';
 
@@ -92,6 +93,10 @@ class _NativeAdLanguageState extends State<NativeAdLanguage> {
       return;
     }
 
+    if (context.read<SubscriptionProvider>().isPro) {
+      return;
+    }
+
     final isOnline = context.read<ConnectivityProvider>().isOnline;
     _cache.ensureLoaded(isOnline: isOnline);
   }
@@ -110,6 +115,10 @@ class _NativeAdLanguageState extends State<NativeAdLanguage> {
 
   @override
   Widget build(BuildContext context) {
+    if (context.watch<SubscriptionProvider>().isPro) {
+      return const SizedBox.shrink();
+    }
+
     final isOnline = context.watch<ConnectivityProvider>().isOnline;
     if (!isOnline) {
       return const SizedBox.shrink();

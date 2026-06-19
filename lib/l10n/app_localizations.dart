@@ -1355,7 +1355,7 @@ abstract class AppLocalizations {
   /// No description provided for @proTrialDisclaimer.
   ///
   /// In en, this message translates to:
-  /// **'After 3 days free - then weekly subscription for {price} will start. Cancel anytime 24 hours before renewal.'**
+  /// **'After 3 days - then weekly subscription for {price} will start. Cancel anytime 24 hours before renewal.'**
   String proTrialDisclaimer(String price);
 
   /// No description provided for @proYearlyDisclaimer.

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/constants/home_assets.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../features/subscription/providers/subscription_provider.dart';
 import '../../../in_app/paywall_routes.dart';
 
 class HomeHeader extends StatelessWidget {
@@ -55,13 +57,21 @@ class _HomeTitleRow extends StatelessWidget {
             ],
           ),
         ),
-        _ProLottieButton(),
+        Selector<SubscriptionProvider, bool>(
+          selector: (_, provider) => provider.isPro,
+          builder: (context, isPro, _) {
+            if (isPro) return const SizedBox.shrink();
+            return const _ProLottieButton();
+          },
+        ),
       ],
     );
   }
 }
 
 class _ProLottieButton extends StatelessWidget {
+  const _ProLottieButton();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

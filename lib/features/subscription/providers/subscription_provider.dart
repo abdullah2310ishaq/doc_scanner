@@ -66,6 +66,12 @@ class SubscriptionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Debug builds only — simulate Pro without a real purchase.
+  Future<void> debugSetPro(bool value) async {
+    assert(kDebugMode, 'debugSetPro is only available in debug builds');
+    await _setPro(value);
+  }
+
   String? displayPriceForPlan(BillingPlan plan) {
     return _billingService.displayPriceForPlan(plan);
   }

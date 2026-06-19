@@ -247,7 +247,7 @@
   "proTrialPlanTitle": "3-Day Full Access",
   "proYearlyPlanTitle": "Yearly",
   "proContinue": "Continue",
-  "proTrialDisclaimer": "After 3 days free - then weekly subscription for {price} will start. Cancel anytime 24 hours before renewal.",
+  "proTrialDisclaimer": "After 3 days - then weekly subscription for {price} will start. Cancel anytime 24 hours before renewal.",
   "@proTrialDisclaimer": {
     "placeholders": {
       "price": { "type": "String" }

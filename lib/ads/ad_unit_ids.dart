@@ -1,5 +1,3 @@
-/// Google official demo ad unit IDs for development and testing.
-/// Replace with production IDs before release.
 abstract final class AdUnitIds {
   static const String _androidAppOpen =
       'ca-app-pub-3940256099942544/9257395921';

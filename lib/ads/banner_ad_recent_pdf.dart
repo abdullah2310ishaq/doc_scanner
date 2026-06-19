@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:provider/provider.dart';
 
+import '../features/subscription/providers/subscription_provider.dart';
 import 'ad_unit_ids.dart';
 
 class AdBannerWidget extends StatefulWidget {
@@ -19,7 +21,24 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
   @override
   void initState() {
     super.initState();
-    _loadAd();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (context.read<SubscriptionProvider>().isPro) {
+      _disposeAd();
+      return;
+    }
+    if (_bannerAd == null && !_isLoaded) {
+      _loadAd();
+    }
+  }
+
+  void _disposeAd() {
+    _bannerAd?.dispose();
+    _bannerAd = null;
+    _isLoaded = false;
   }
 
   void _loadAd() {
@@ -42,12 +61,16 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
 
   @override
   void dispose() {
-    _bannerAd?.dispose();
+    _disposeAd();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (context.watch<SubscriptionProvider>().isPro) {
+      return const SizedBox.shrink();
+    }
+
     if (!_isLoaded || _bannerAd == null) {
       return const SizedBox.shrink(); // Agar ad load na ho to space zaya na ho
     }

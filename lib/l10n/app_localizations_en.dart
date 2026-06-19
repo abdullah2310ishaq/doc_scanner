@@ -677,7 +677,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String proTrialDisclaimer(String price) {
-    return 'After 3 days free - then weekly subscription for $price will start. Cancel anytime 24 hours before renewal.';
+    return 'After 3 days - then weekly subscription for $price will start. Cancel anytime 24 hours before renewal.';
   }
 
   @override

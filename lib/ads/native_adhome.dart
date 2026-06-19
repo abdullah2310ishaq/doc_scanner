@@ -5,6 +5,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import '../core/providers/connectivity_provider.dart';
+import '../features/subscription/providers/subscription_provider.dart';
 import 'ad_unit_ids.dart';
 import 'native_ad_sizes.dart';
 
@@ -25,9 +26,27 @@ class _NativeAdHomeState extends State<NativeAdHome> {
   @override
   void initState() {
     super.initState();
-    if (Platform.isAndroid) {
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!Platform.isAndroid) {
+      return;
+    }
+    if (context.read<SubscriptionProvider>().isPro) {
+      _disposeAd();
+      return;
+    }
+    if (_nativeAd == null && !_isLoaded) {
       _loadAd();
     }
+  }
+
+  void _disposeAd() {
+    _nativeAd?.dispose();
+    _nativeAd = null;
+    _isLoaded = false;
   }
 
   void _loadAd() {
@@ -50,12 +69,16 @@ class _NativeAdHomeState extends State<NativeAdHome> {
 
   @override
   void dispose() {
-    _nativeAd?.dispose();
+    _disposeAd();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (context.watch<SubscriptionProvider>().isPro) {
+      return const SizedBox.shrink();
+    }
+
     final isOnline = context.watch<ConnectivityProvider>().isOnline;
     if (!isOnline || !_isLoaded || _nativeAd == null) {
       return const SizedBox.shrink();

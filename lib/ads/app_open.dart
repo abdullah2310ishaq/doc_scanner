@@ -16,8 +16,16 @@ class AppOpenAdService {
   bool _hasHandledColdStart = false;
   bool _isInBackground = false;
   bool _blockNextForegroundShow = false;
+  bool Function()? _shouldShowAds;
 
   bool get isAdAvailable => _appOpenAd != null;
+
+  /// When this returns false (e.g. Pro user), app-open ads are skipped.
+  void configure({required bool Function() shouldShowAds}) {
+    _shouldShowAds = shouldShowAds;
+  }
+
+  bool get _canShowAds => _shouldShowAds?.call() ?? true;
 
   /// Skip the next foreground show (e.g. right after splash interstitial).
   void blockNextForegroundShow() {
@@ -45,10 +53,17 @@ class AppOpenAdService {
       return;
     }
 
+    if (!_canShowAds) {
+      return;
+    }
+
     showAdIfAvailable();
   }
 
   void loadAd() {
+    if (!_canShowAds) {
+      return;
+    }
     if (_appOpenAd != null || _isShowingAd) {
       return;
     }
@@ -68,6 +83,10 @@ class AppOpenAdService {
   }
 
   void showAdIfAvailable() {
+    if (!_canShowAds) {
+      return;
+    }
+
     if (!isAdAvailable) {
       loadAd();
       return;
