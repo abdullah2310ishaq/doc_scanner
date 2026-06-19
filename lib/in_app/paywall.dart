@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '../ads/app_open.dart';
@@ -35,6 +36,10 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
 
   static const Color _lightBgColor = Color(0xfff4f5f9);
 
+  void _log(String message) {
+    debugPrint('[ProAccessScreen] $message');
+  }
+
   @override
   void initState() {
     super.initState();
@@ -55,6 +60,11 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
       await subscription.initialize();
     }
     if (!mounted) return;
+
+    _log(
+      'Billing ready => storeAvailable=${subscription.isStoreAvailable}, hasProducts=${subscription.hasProducts}',
+    );
+
     setState(() {});
   }
 
@@ -88,7 +98,12 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
     final l10n = context.l10n;
     final subscription = context.read<SubscriptionProvider>();
 
+    _log(
+      'Continue tapped => plan=$_selectedPlan, trialEnabled=$_isTrialEnabled, storeAvailable=${subscription.isStoreAvailable}, hasProducts=${subscription.hasProducts}',
+    );
+
     if (!subscription.isStoreAvailable || !subscription.hasProducts) {
+      _log('Purchase blocked: store or products unavailable');
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(l10n.proStoreUnavailable)));
@@ -98,6 +113,7 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
     _wasPurchasing = true;
     final started = await subscription.purchasePlan(_selectedPlan);
     if (!mounted) return;
+    _log('Purchase launch result => started=$started, plan=$_selectedPlan');
     if (!started) {
       _wasPurchasing = false;
       ScaffoldMessenger.of(
@@ -152,9 +168,10 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
     final subscription = context.watch<SubscriptionProvider>();
     final primaryColor = AppColors.textLink;
 
-    const String dummyWeeklyPrice = "Rs 500.00";
-    const String dummyWeeklyThenPrice = "Rs 1,900.00";
-    const String dummyYearlyPrice = "Rs 9,900.00";
+    final weeklyTrialPrice = subscription.weeklySinglePaymentDisplayPrice();
+    final weeklyStandardPrice = subscription.weeklyStandardDisplayPrice();
+    final yearlyPrice = subscription.displayPriceForPlan(BillingPlan.yearly);
+    final yearlyPerWeekPrice = subscription.yearlyPerWeekDisplayPrice();
 
     final canPurchase =
         subscription.isStoreAvailable &&
@@ -171,23 +188,40 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
         backgroundColor: const Color(0xFFFFFFFF),
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Align(
                   alignment: Alignment.topLeft,
                   child: IconButton(
-                    icon: Icon(Icons.close, color: Colors.black, size: 28.w),
+                    padding: EdgeInsets.zero,
+                    constraints: BoxConstraints(
+                      minWidth: 36.w,
+                      minHeight: 36.w,
+                    ),
+                    icon: Icon(Icons.close, color: Colors.black, size: 22.w),
                     onPressed: _onClose,
                   ),
                 ),
-                const Spacer(flex: 1),
+                SizedBox(height: 4.h),
+                Center(
+                  child: SizedBox(
+                    height: 200.h,
+                    width: 220.w,
+                    child: Lottie.asset(
+                      'assets/in_app_animation.json',
+                      fit: BoxFit.contain,
+                      repeat: true,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 8.h),
 
                 RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
-                    style: TextStyle(fontSize: 32.sp, color: primaryColor),
+                    style: TextStyle(fontSize: 24.sp, color: primaryColor),
                     children: [
                       TextSpan(
                         text: '${l10n.proPaywallTitleGet} ',
@@ -204,18 +238,18 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 24.h),
+                SizedBox(height: 10.h),
 
                 _buildFeatureRow(l10n.proFeatureUnlimitedScans, primaryColor),
                 _buildFeatureRow(l10n.proFeatureOcr, primaryColor),
                 _buildFeatureRow(l10n.proFeaturePdf, primaryColor),
                 _buildFeatureRow(l10n.proFeatureAi, primaryColor),
-                SizedBox(height: 24.h),
+                SizedBox(height: 20.h),
 
                 Container(
                   padding: EdgeInsets.symmetric(
-                    horizontal: 12.w,
-                    vertical: 6.h,
+                    horizontal: 10.w,
+                    vertical: 4.h,
                   ),
                   decoration: BoxDecoration(
                     color: _lightBgColor,
@@ -228,23 +262,26 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                       Text(
                         l10n.proEnableTrial,
                         style: TextStyle(
-                          fontSize: 16.sp,
+                          fontSize: 13.sp,
                           fontWeight: FontWeight.bold,
                           color: Colors.black87,
                         ),
                       ),
-                      Switch(
-                        value: _isTrialEnabled,
-                        activeThumbColor: Colors.white,
-                        activeTrackColor: primaryColor,
-                        onChanged: (value) {
-                          setState(() => _isTrialEnabled = value);
-                        },
+                      Transform.scale(
+                        scale: 0.85,
+                        child: Switch(
+                          value: _isTrialEnabled,
+                          activeThumbColor: Colors.white,
+                          activeTrackColor: primaryColor,
+                          onChanged: (value) {
+                            setState(() => _isTrialEnabled = value);
+                          },
+                        ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 20.h),
+                SizedBox(height: 10.h),
 
                 Stack(
                   clipBehavior: Clip.none,
@@ -252,15 +289,18 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                     GestureDetector(
                       onTap: () => setState(() => _isTrialEnabled = true),
                       child: Container(
-                        padding: EdgeInsets.all(16.w),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12.w,
+                          vertical: 14.h,
+                        ),
                         decoration: BoxDecoration(
                           color: _isTrialEnabled ? Colors.white : _lightBgColor,
-                          borderRadius: BorderRadius.circular(12.r),
+                          borderRadius: BorderRadius.circular(10.r),
                           border: Border.all(
                             color: _isTrialEnabled
                                 ? primaryColor
                                 : Colors.black12,
-                            width: _isTrialEnabled ? 2.w : 1.w,
+                            width: _isTrialEnabled ? 1.5.w : 1.w,
                           ),
                         ),
                         child: Row(
@@ -273,61 +313,65 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                                   Text(
                                     l10n.proTrialPlanTitle,
                                     style: TextStyle(
-                                      fontSize: 18.sp,
+                                      fontSize: 14.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   SizedBox(height: 4.h),
+                                  if (weeklyStandardPrice != null)
+                                    Text(
+                                      l10n.proTrialThenPrice(
+                                        weeklyStandardPrice,
+                                      ),
+                                      style: TextStyle(
+                                        color: Colors.grey[600],
+                                        fontSize: 11.sp,
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                            if (weeklyTrialPrice != null)
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
                                   Text(
-                                    "then $dummyWeeklyThenPrice/week",
+                                    weeklyTrialPrice,
+                                    style: TextStyle(
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    l10n.proPerWeek,
                                     style: TextStyle(
                                       color: Colors.grey[600],
-                                      fontSize: 13.sp,
+                                      fontSize: 10.sp,
                                     ),
                                   ),
                                 ],
                               ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  dummyWeeklyPrice,
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  l10n.proPerWeek,
-                                  style: TextStyle(
-                                    color: Colors.grey[600],
-                                    fontSize: 12.sp,
-                                  ),
-                                ),
-                              ],
-                            ),
                           ],
                         ),
                       ),
                     ),
                     Positioned(
-                      right: 12.w,
-                      top: -12.h,
+                      right: 10.w,
+                      top: -10.h,
                       child: Container(
                         padding: EdgeInsets.symmetric(
-                          horizontal: 10.w,
-                          vertical: 4.h,
+                          horizontal: 8.w,
+                          vertical: 3.h,
                         ),
                         decoration: BoxDecoration(
                           color: primaryColor,
-                          borderRadius: BorderRadius.circular(20.r),
+                          borderRadius: BorderRadius.circular(16.r),
                         ),
                         child: Text(
                           l10n.proSaveBadge,
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 12.sp,
+                            fontSize: 10.sp,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -335,18 +379,21 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 14.h),
+                SizedBox(height: 10.h),
 
                 GestureDetector(
                   onTap: () => setState(() => _isTrialEnabled = false),
                   child: Container(
-                    padding: EdgeInsets.all(16.w),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12.w,
+                      vertical: 14.h,
+                    ),
                     decoration: BoxDecoration(
                       color: !_isTrialEnabled ? Colors.white : _lightBgColor,
-                      borderRadius: BorderRadius.circular(12.r),
+                      borderRadius: BorderRadius.circular(10.r),
                       border: Border.all(
                         color: !_isTrialEnabled ? primaryColor : Colors.black12,
-                        width: !_isTrialEnabled ? 2.w : 1.w,
+                        width: !_isTrialEnabled ? 1.5.w : 1.w,
                       ),
                     ),
                     child: Row(
@@ -359,64 +406,62 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                               Text(
                                 l10n.proYearlyPlanTitle,
                                 style: TextStyle(
-                                  fontSize: 18.sp,
+                                  fontSize: 14.sp,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               SizedBox(height: 4.h),
+                              if (yearlyPrice != null)
+                                Text(
+                                  l10n.proYearlySubtitle(yearlyPrice),
+                                  style: TextStyle(
+                                    color: Colors.grey[600],
+                                    fontSize: 11.sp,
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                        if (yearlyPerWeekPrice != null)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
                               Text(
-                                "just $dummyYearlyPrice per year",
+                                yearlyPerWeekPrice,
+                                style: TextStyle(
+                                  fontSize: 13.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                l10n.proPerWeek,
                                 style: TextStyle(
                                   color: Colors.grey[600],
-                                  fontSize: 13.sp,
+                                  fontSize: 10.sp,
                                 ),
                               ),
                             ],
                           ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              "Rs 190.38",
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              l10n.proPerWeek,
-                              style: TextStyle(
-                                color: Colors.grey[600],
-                                fontSize: 12.sp,
-                              ),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   ),
                 ),
-                const Spacer(flex: 2),
+                const Spacer(),
 
                 if (subscription.isPurchasing)
                   Padding(
-                    padding: EdgeInsets.only(bottom: 12.h),
+                    padding: EdgeInsets.only(bottom: 8.h),
                     child: const Center(child: CircularProgressIndicator()),
                   ),
 
-                // 7. Gradient Continue Button Wrap Integration
                 Container(
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
-                      colors: [
-                        Color(0xFF1966FE), // 0%
-                        Color(0xFF635CF1), // 99.62%
-                      ],
+                      colors: [Color(0xFF1966FE), Color(0xFF635CF1)],
                     ),
-                    borderRadius: BorderRadius.circular(14.r),
+                    borderRadius: BorderRadius.circular(12.r),
                   ),
                   child: ElevatedButton(
                     onPressed: canPurchase ? _onContinue : null,
@@ -428,35 +473,45 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                         alpha: 0.5,
                       ),
                       shadowColor: Colors.transparent,
-                      padding: EdgeInsets.symmetric(vertical: 16.h),
+                      padding: EdgeInsets.symmetric(vertical: 12.h),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14.r),
+                        borderRadius: BorderRadius.circular(12.r),
                       ),
                       elevation: 0,
                     ),
                     child: Text(
                       l10n.proContinue,
                       style: TextStyle(
-                        fontSize: 22.sp,
+                        fontSize: 17.sp,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 16.h),
+                SizedBox(height: 8.h),
 
-                Text(
-                  _isTrialEnabled
-                      ? "After 3 days free - then weekly subscription for $dummyYearlyPrice will start. Cancel anytime 24 hours before renewal"
-                      : "Yearly subscription for $dummyWeeklyThenPrice/year. Cancel anytime at least 24 hours before renewal.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: primaryColor.withValues(alpha: 0.8),
-                    fontSize: 12.sp,
-                    height: 1.3,
+                if (_isTrialEnabled && weeklyStandardPrice != null)
+                  Text(
+                    l10n.proTrialDisclaimer(weeklyStandardPrice),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: primaryColor.withValues(alpha: 0.8),
+                      fontSize: 9.sp,
+                      height: 1.25,
+                    ),
+                  )
+                else if (!_isTrialEnabled && yearlyPrice != null)
+                  Text(
+                    l10n.proYearlyDisclaimer(yearlyPrice),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: primaryColor.withValues(alpha: 0.8),
+                      fontSize: 9.sp,
+                      height: 1.25,
+                    ),
                   ),
-                ),
+                SizedBox(height: 4.h),
               ],
             ),
           ),
@@ -467,16 +522,16 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
 
   Widget _buildFeatureRow(String text, Color iconColor) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(36.w, 6.h, 8.w, 6.h),
+      padding: EdgeInsets.fromLTRB(80.w, 3.h, 4.w, 3.h),
       child: Row(
         children: [
-          Icon(Icons.check_circle, color: iconColor, size: 22.w),
-          SizedBox(width: 14.w),
+          Icon(Icons.check_circle, color: iconColor, size: 16.w),
+          SizedBox(width: 10.w),
           Expanded(
             child: Text(
               text,
               style: TextStyle(
-                fontSize: 16.sp,
+                fontSize: 13.sp,
                 fontWeight: FontWeight.w600,
                 color: iconColor.withValues(alpha: 0.9),
               ),

@@ -242,6 +242,48 @@
   "proLimitLive": "Мгновенный перевод доступен в версии Pro",
   "proPurchaseSuccess": "Добро пожаловать в Pro!",
   "proPurchaseFailed": "Не удалось завершить покупку",
+  "proPaywallTitle": "Получите доступ Pro",
+  "proPaywallTitleGet": "Получите",
+  "proPaywallTitlePro": "Pro",
+  "proPaywallTitleAccess": "доступ",
+  "proEnableTrial": "Включить пробный период",
+  "proTrialPlanTitle": "Полный доступ на 3 дня",
+  "proYearlyPlanTitle": "Годовой",
+  "proContinue": "Продолжить",
+  "proTrialDisclaimer": "После 3 бесплатных дней начнётся еженедельная подписка за {price}. Отмените за 24 часа до продления.",
+  "@proTrialDisclaimer": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proYearlyDisclaimer": "Годовая подписка за {price}/год. Отмените минимум за 24 часа до продления.",
+  "@proYearlyDisclaimer": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proTrialThenPrice": "затем {price}/нед.",
+  "@proTrialThenPrice": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proPerWeek": "в неделю",
+  "proYearlySubtitle": "всего {price} в год",
+  "@proYearlySubtitle": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proSaveBadge": "Экономия 86%",
+  "proFeatureUnlimitedScans": "Неограниченное сканирование",
+  "proFeatureOcr": "Точное OCR-распознавание",
+  "proFeaturePdf": "Расширенные PDF-инструменты",
+  "proFeatureAi": "Умная помощь ИИ",
+  "proStoreUnavailable": "Магазин сейчас недоступен. Попробуйте позже.",
+  "proSplashEnable": "Включить",
+  "proSplashTrialDays": "3-дневная проба",
+  "proSplashTrialEnabled": "включена!",
   "exportPdf": "Экспорт в PDF",
   "exportImage": "Экспорт в изображение",
   "exportSuccess": "Экспорт завершен",

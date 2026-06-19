@@ -242,6 +242,48 @@
   "proLimitLive": "A tradução ao vivo está disponível no Pro",
   "proPurchaseSuccess": "Bem-vindo ao Pro!",
   "proPurchaseFailed": "A compra não pôde ser concluída",
+  "proPaywallTitle": "Obtenha acesso Pro",
+  "proPaywallTitleGet": "Obtenha",
+  "proPaywallTitlePro": "Pro",
+  "proPaywallTitleAccess": "acesso",
+  "proEnableTrial": "Ativar teste",
+  "proTrialPlanTitle": "Acesso completo de 3 dias",
+  "proYearlyPlanTitle": "Anual",
+  "proContinue": "Continuar",
+  "proTrialDisclaimer": "Após 3 dias grátis, a assinatura semanal de {price} começará. Cancele a qualquer momento 24 horas antes da renovação.",
+  "@proTrialDisclaimer": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proYearlyDisclaimer": "Assinatura anual por {price}/ano. Cancele pelo menos 24 horas antes da renovação.",
+  "@proYearlyDisclaimer": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proTrialThenPrice": "depois {price}/semana",
+  "@proTrialThenPrice": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proPerWeek": "por semana",
+  "proYearlySubtitle": "apenas {price} por ano",
+  "@proYearlySubtitle": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proSaveBadge": "Economize 86%",
+  "proFeatureUnlimitedScans": "Digitalizações ilimitadas",
+  "proFeatureOcr": "OCR preciso",
+  "proFeaturePdf": "Ferramentas PDF avançadas",
+  "proFeatureAi": "Assistência inteligente com IA",
+  "proStoreUnavailable": "A loja não está disponível no momento. Tente novamente mais tarde.",
+  "proSplashEnable": "Ativar",
+  "proSplashTrialDays": "Teste de 3 dias",
+  "proSplashTrialEnabled": "está ativado!",
   "exportPdf": "Exportar PDF",
   "exportImage": "Exportar imagem",
   "exportSuccess": "Exportação concluída",

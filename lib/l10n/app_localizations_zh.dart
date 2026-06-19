@@ -633,79 +633,78 @@ class AppLocalizationsZh extends AppLocalizations {
   String get proPurchaseFailed => '无法完成购买';
 
   @override
-  String get proPaywallTitle => 'Get Pro Access';
+  String get proPaywallTitle => '获取 Pro 访问权限';
 
   @override
-  String get proPaywallTitleGet => 'Get';
+  String get proPaywallTitleGet => '获取';
 
   @override
   String get proPaywallTitlePro => 'Pro';
 
   @override
-  String get proPaywallTitleAccess => 'Access';
+  String get proPaywallTitleAccess => '访问权限';
 
   @override
-  String get proEnableTrial => 'Enable Trial';
+  String get proEnableTrial => '启用试用';
 
   @override
-  String get proTrialPlanTitle => '3-Day Full Access';
+  String get proTrialPlanTitle => '3 天完整访问';
 
   @override
-  String get proYearlyPlanTitle => 'Yearly';
+  String get proYearlyPlanTitle => '年度';
 
   @override
-  String get proContinue => 'Continue';
+  String get proContinue => '继续';
 
   @override
   String proTrialDisclaimer(String price) {
-    return 'After 3 days free - then weekly subscription for $price will start. Cancel anytime 24 hours before renewal.';
+    return '3 天免费试用后，将开始每周 $price 的订阅。可在续订前 24 小时随时取消。';
   }
 
   @override
   String proYearlyDisclaimer(String price) {
-    return 'Yearly subscription for $price/year. Cancel anytime at least 24 hours before renewal.';
+    return '年度订阅 $price/年。请在续订前至少 24 小时取消。';
   }
 
   @override
   String proTrialThenPrice(String price) {
-    return 'then $price/week';
+    return '之后 $price/周';
   }
 
   @override
-  String get proPerWeek => 'per week';
+  String get proPerWeek => '每周';
 
   @override
   String proYearlySubtitle(String price) {
-    return 'just $price per year';
+    return '每年仅需 $price';
   }
 
   @override
-  String get proSaveBadge => 'Save 86%';
+  String get proSaveBadge => '节省 86%';
 
   @override
-  String get proFeatureUnlimitedScans => 'Unlimited Document Scans';
+  String get proFeatureUnlimitedScans => '无限文档扫描';
 
   @override
-  String get proFeatureOcr => 'Accurate OCR Recognition';
+  String get proFeatureOcr => '精准 OCR 识别';
 
   @override
-  String get proFeaturePdf => 'Advanced PDF Tools';
+  String get proFeaturePdf => '高级 PDF 工具';
 
   @override
-  String get proFeatureAi => 'Smart AI Assistance';
+  String get proFeatureAi => '智能 AI 助手';
 
   @override
-  String get proStoreUnavailable =>
-      'Store is not available right now. Please try again later.';
+  String get proStoreUnavailable => '商店当前不可用，请稍后再试。';
 
   @override
-  String get proSplashEnable => 'Enable';
+  String get proSplashEnable => '启用';
 
   @override
-  String get proSplashTrialDays => '3-day trial';
+  String get proSplashTrialDays => '3 天试用';
 
   @override
-  String get proSplashTrialEnabled => 'is enabled!';
+  String get proSplashTrialEnabled => '已启用！';
 
   @override
   String get exportPdf => '导出 PDF';

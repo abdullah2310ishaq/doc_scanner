@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 
 import '../models/translate_language.dart';
@@ -11,14 +13,21 @@ class TranslateResultProvider extends ChangeNotifier {
     required this.sourceText,
     TranslateService? translateService,
     this.sourceLanguageCode = 'en',
-    bool Function()? isOnline,
+    Future<bool> Function()? ensureOnline,
+    Stream<bool>? onConnectivityChanged,
   })  : _translateService = translateService ?? OpenAiTranslateService(),
-        _isOnline = isOnline ?? (() => true);
+        _ensureOnline = ensureOnline ?? (() async => true),
+        _onConnectivityChanged = onConnectivityChanged {
+    _listenForConnectivityRestore();
+  }
 
   final String sourceText;
   final String sourceLanguageCode;
   final TranslateService _translateService;
-  final bool Function() _isOnline;
+  final Future<bool> Function() _ensureOnline;
+  final Stream<bool>? _onConnectivityChanged;
+
+  StreamSubscription<bool>? _connectivitySub;
 
   TranslateLanguage? _selectedLanguage;
   String _translatedText = '';
@@ -31,6 +40,20 @@ class TranslateResultProvider extends ChangeNotifier {
   TranslateFailure? get translateFailure => _failure;
   String? get errorMessage => _failure?.name;
   bool get hasTranslation => _translatedText.isNotEmpty;
+
+  void _listenForConnectivityRestore() {
+    final stream = _onConnectivityChanged;
+    if (stream == null) return;
+
+    _connectivitySub = stream.listen((isOnline) {
+      if (!isOnline) return;
+      if (_failure != TranslateFailure.noInternet) return;
+      if (_selectedLanguage == null || _isTranslating) return;
+
+      _log('Internet restored — retrying translation');
+      unawaited(retryTranslation());
+    });
+  }
 
   Future<void> selectLanguage(TranslateLanguage? language) async {
     _selectedLanguage = language;
@@ -57,7 +80,8 @@ class TranslateResultProvider extends ChangeNotifier {
   }
 
   Future<void> _runTranslation(TranslateLanguage language) async {
-    if (!_isOnline()) {
+    final isOnline = await _ensureOnline();
+    if (!isOnline) {
       _translatedText = '';
       _failure = TranslateFailure.noInternet;
       notifyListeners();
@@ -113,6 +137,7 @@ class TranslateResultProvider extends ChangeNotifier {
 
   @override
   void dispose() {
+    _connectivitySub?.cancel();
     final service = _translateService;
     if (service is MlKitTranslateService) {
       service.dispose();

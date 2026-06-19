@@ -31,14 +31,6 @@ class PdfAssistantProcessingScreen extends StatefulWidget {
     required String displayName,
     required TranslateLanguage targetLanguage,
   }) async {
-    final isPro = context.read<SubscriptionProvider>().isPro;
-    if (!isPro) {
-      await PaywallRoutes.openFeatureGate(context);
-      if (!context.mounted) {
-        return;
-      }
-    }
-
     final l10n = AppLocalizations.of(context);
     await Navigator.of(context).push(
       MaterialPageRoute<void>(
@@ -77,10 +69,20 @@ class _PdfAssistantProcessingScreenState
       final session = provider.session!;
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute<void>(
-            builder: (_) => PdfAssistantResultScreen(session: session),
-          ),
+
+        final resultScreen = PdfAssistantResultScreen(session: session);
+        final isPro = context.read<SubscriptionProvider>().isPro;
+
+        if (isPro) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute<void>(builder: (_) => resultScreen),
+          );
+          return;
+        }
+
+        PaywallRoutes.replaceWithPostProcessGate(
+          context,
+          nextScreen: resultScreen,
         );
       });
     }
@@ -100,7 +102,10 @@ class _PdfAssistantProcessingScreenState
     }
   }
 
-  String _stepLabel(PdfAssistantProcessProvider provider, AppLocalizations l10n) {
+  String _stepLabel(
+    PdfAssistantProcessProvider provider,
+    AppLocalizations l10n,
+  ) {
     return switch (provider.currentStep) {
       PdfAssistantProcessStep.extracting => l10n.pdfAssistantStepExtracting,
       PdfAssistantProcessStep.translating => l10n.pdfAssistantStepTranslating,

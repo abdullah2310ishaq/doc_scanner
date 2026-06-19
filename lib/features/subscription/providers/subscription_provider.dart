@@ -72,6 +72,19 @@ class SubscriptionProvider extends ChangeNotifier {
 
   String? weeklyPaidMinPrice() => _billingService.weeklyPaidMinPrice();
 
+  String? weeklyStandardDisplayPrice() =>
+      _billingService.weeklyStandardDisplayPrice();
+
+  String? weeklySinglePaymentDisplayPrice() =>
+      _billingService.weeklySinglePaymentDisplayPrice();
+
+  String? yearlyPerWeekDisplayPrice() =>
+      _billingService.yearlyPerWeekDisplayPrice();
+
+  void logPaywallPriceSummary() => _billingService.logPaywallPriceSummary();
+
+  String? weeklyPaidMaxPrice() => _billingService.weeklyPaidMaxPrice();
+
   Future<bool> purchasePlan(BillingPlan plan) async {
     if (!_isInitialized) {
       await initialize();

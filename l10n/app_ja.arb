@@ -242,6 +242,48 @@
   "proLimitLive": "ライブ翻訳はProで利用可能です",
   "proPurchaseSuccess": "プロへようこそ!",
   "proPurchaseFailed": "購入を完了できませんでした",
+  "proPaywallTitle": "Proアクセスを取得",
+  "proPaywallTitleGet": "",
+  "proPaywallTitlePro": "Pro",
+  "proPaywallTitleAccess": "アクセスを取得",
+  "proEnableTrial": "トライアルを有効にする",
+  "proTrialPlanTitle": "3日間フルアクセス",
+  "proYearlyPlanTitle": "年間",
+  "proContinue": "続ける",
+  "proTrialDisclaimer": "3日間無料の後、週額{price}のサブスクリプションが開始されます。更新の24時間前までいつでもキャンセルできます。",
+  "@proTrialDisclaimer": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proYearlyDisclaimer": "年額{price}のサブスクリプション。更新の少なくとも24時間前までキャンセルできます。",
+  "@proYearlyDisclaimer": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proTrialThenPrice": "その後 {price}/週",
+  "@proTrialThenPrice": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proPerWeek": "週あたり",
+  "proYearlySubtitle": "年間わずか {price}",
+  "@proYearlySubtitle": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proSaveBadge": "86%お得",
+  "proFeatureUnlimitedScans": "無制限のドキュメントスキャン",
+  "proFeatureOcr": "高精度OCR認識",
+  "proFeaturePdf": "高度なPDFツール",
+  "proFeatureAi": "スマートAIアシスタンス",
+  "proStoreUnavailable": "ストアは現在利用できません。後でもう一度お試しください。",
+  "proSplashEnable": "有効にする",
+  "proSplashTrialDays": "3日間トライアル",
+  "proSplashTrialEnabled": "が有効になりました！",
   "exportPdf": "PDFをエクスポート",
   "exportImage": "画像のエクスポート",
   "exportSuccess": "エクスポートが完了しました",

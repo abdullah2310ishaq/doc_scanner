@@ -21,6 +21,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   final AppLaunchPrefsService _launchPrefs = AppLaunchPrefsService();
   int _pageIndex = 0;
+  bool _autoScrollEnabled = true;
   Timer? _autoScrollTimer;
 
   static const int _pageCount = 4;
@@ -37,13 +38,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   void dispose() {
-    _autoScrollTimer?.cancel();
+    _stopAutoScroll();
     _pageController.dispose();
     super.dispose();
   }
 
-  void _startAutoScroll() {
+  void _stopAutoScroll() {
     _autoScrollTimer?.cancel();
+    _autoScrollTimer = null;
+  }
+
+  void _startAutoScroll() {
+    if (!_autoScrollEnabled) {
+      return;
+    }
+    _stopAutoScroll();
     _autoScrollTimer = Timer.periodic(_autoScrollInterval, (_) {
       _autoAdvancePage();
     });
@@ -89,12 +98,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (_pageIndex >= _pageCount - 1) {
       return;
     }
+    _autoScrollEnabled = false;
+    _stopAutoScroll();
     _pageController.animateToPage(
       _pageCount - 1,
       duration: _pageAnimationDuration,
       curve: Curves.easeInOut,
     );
-    _startAutoScroll();
   }
 
   @override

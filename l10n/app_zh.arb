@@ -242,6 +242,48 @@
   "proLimitLive": "实时翻译在 Pro 版本中可用",
   "proPurchaseSuccess": "欢迎加入 Pro！",
   "proPurchaseFailed": "无法完成购买",
+  "proPaywallTitle": "获取 Pro 访问权限",
+  "proPaywallTitleGet": "获取",
+  "proPaywallTitlePro": "Pro",
+  "proPaywallTitleAccess": "访问权限",
+  "proEnableTrial": "启用试用",
+  "proTrialPlanTitle": "3 天完整访问",
+  "proYearlyPlanTitle": "年度",
+  "proContinue": "继续",
+  "proTrialDisclaimer": "3 天免费试用后，将开始每周 {price} 的订阅。可在续订前 24 小时随时取消。",
+  "@proTrialDisclaimer": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proYearlyDisclaimer": "年度订阅 {price}/年。请在续订前至少 24 小时取消。",
+  "@proYearlyDisclaimer": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proTrialThenPrice": "之后 {price}/周",
+  "@proTrialThenPrice": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proPerWeek": "每周",
+  "proYearlySubtitle": "每年仅需 {price}",
+  "@proYearlySubtitle": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proSaveBadge": "节省 86%",
+  "proFeatureUnlimitedScans": "无限文档扫描",
+  "proFeatureOcr": "精准 OCR 识别",
+  "proFeaturePdf": "高级 PDF 工具",
+  "proFeatureAi": "智能 AI 助手",
+  "proStoreUnavailable": "商店当前不可用，请稍后再试。",
+  "proSplashEnable": "启用",
+  "proSplashTrialDays": "3 天试用",
+  "proSplashTrialEnabled": "已启用！",
   "exportPdf": "导出 PDF",
   "exportImage": "导出图片",
   "exportSuccess": "导出完成",

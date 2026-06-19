@@ -15,13 +15,12 @@ class ConnectivityService {
   final Connectivity _connectivity;
   final InternetConnectionChecker _internetChecker;
 
-  static const Duration _debounceDuration = Duration(milliseconds: 800);
-  static const Duration _pollInterval = Duration(seconds: 30);
+  static const Duration _pollInterval = Duration(seconds: 5);
 
   bool _isOnline = true;
   bool _isStarted = false;
   StreamSubscription<List<ConnectivityResult>>? _connectivitySub;
-  Timer? _debounceTimer;
+  StreamSubscription<InternetConnectionStatus>? _internetSub;
   Timer? _pollTimer;
 
   final StreamController<bool> _statusController =
@@ -37,11 +36,21 @@ class ConnectivityService {
     _isOnline = await checkInternet();
     _statusController.add(_isOnline);
 
-    _connectivitySub = _connectivity.onConnectivityChanged.listen((_) {
-      _scheduleCheck();
+    _internetSub = _internetChecker.onStatusChange.listen((status) {
+      _setOnline(status == InternetConnectionStatus.connected);
     });
 
-    _pollTimer = Timer.periodic(_pollInterval, (_) => _scheduleCheck());
+    _connectivitySub = _connectivity.onConnectivityChanged.listen((results) {
+      if (_hasNoConnection(results)) {
+        _setOnline(false);
+        return;
+      }
+      unawaited(_recheckInternet());
+    });
+
+    _pollTimer = Timer.periodic(_pollInterval, (_) {
+      unawaited(_recheckInternet());
+    });
   }
 
   Future<bool> checkInternet() async {
@@ -60,20 +69,25 @@ class ConnectivityService {
   }
 
   Future<bool> ensureOnline() async {
-    _isOnline = await checkInternet();
+    final online = await checkInternet();
+    _setOnline(online);
     return _isOnline;
   }
 
-  void _scheduleCheck() {
-    _debounceTimer?.cancel();
-    _debounceTimer = Timer(_debounceDuration, () async {
-      final wasOnline = _isOnline;
-      _isOnline = await checkInternet();
+  Future<void> _recheckInternet() async {
+    final online = await checkInternet();
+    _setOnline(online);
+  }
 
-      if (wasOnline != _isOnline) {
-        _statusController.add(_isOnline);
-      }
-    });
+  void _setOnline(bool online) {
+    if (_isOnline == online) return;
+    _isOnline = online;
+    if (kDebugMode) {
+      debugPrint('[ConnectivityService] status => ${online ? "online" : "offline"}');
+    }
+    if (!_statusController.isClosed) {
+      _statusController.add(_isOnline);
+    }
   }
 
   bool _hasNoConnection(List<ConnectivityResult> results) {
@@ -83,7 +97,7 @@ class ConnectivityService {
 
   void dispose() {
     _connectivitySub?.cancel();
-    _debounceTimer?.cancel();
+    _internetSub?.cancel();
     _pollTimer?.cancel();
     _statusController.close();
     _isStarted = false;

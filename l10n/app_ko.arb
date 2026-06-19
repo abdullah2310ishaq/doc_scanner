@@ -242,6 +242,48 @@
   "proLimitLive": "라이브 번역은 Pro에서만 사용할 수 있습니다",
   "proPurchaseSuccess": "Pro 플랜에 오신 것을 환영합니다!",
   "proPurchaseFailed": "구매를 완료할 수 없습니다",
+  "proPaywallTitle": "Pro 액세스 받기",
+  "proPaywallTitleGet": "",
+  "proPaywallTitlePro": "Pro",
+  "proPaywallTitleAccess": "액세스 받기",
+  "proEnableTrial": "체험판 활성화",
+  "proTrialPlanTitle": "3일 전체 액세스",
+  "proYearlyPlanTitle": "연간",
+  "proContinue": "계속",
+  "proTrialDisclaimer": "3일 무료 체험 후 주간 구독 {price}이(가) 시작됩니다. 갱신 24시간 전까지 언제든지 취소할 수 있습니다.",
+  "@proTrialDisclaimer": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proYearlyDisclaimer": "연간 구독 {price}/년. 갱신 최소 24시간 전까지 취소 가능합니다.",
+  "@proYearlyDisclaimer": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proTrialThenPrice": "이후 {price}/주",
+  "@proTrialThenPrice": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proPerWeek": "주당",
+  "proYearlySubtitle": "연 {price}",
+  "@proYearlySubtitle": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proSaveBadge": "86% 절약",
+  "proFeatureUnlimitedScans": "무제한 문서 스캔",
+  "proFeatureOcr": "정확한 OCR 인식",
+  "proFeaturePdf": "고급 PDF 도구",
+  "proFeatureAi": "스마트 AI 지원",
+  "proStoreUnavailable": "스토어를 현재 사용할 수 없습니다. 나중에 다시 시도해 주세요.",
+  "proSplashEnable": "활성화",
+  "proSplashTrialDays": "3일 체험",
+  "proSplashTrialEnabled": "활성화되었습니다!",
   "exportPdf": "PDF 내보내기",
   "exportImage": "이미지 내보내기",
   "exportSuccess": "내보내기 완료",

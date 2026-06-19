@@ -651,79 +651,79 @@ class AppLocalizationsAr extends AppLocalizations {
   String get proPurchaseFailed => 'لا يمكن إكمال عملية الشراء';
 
   @override
-  String get proPaywallTitle => 'Get Pro Access';
+  String get proPaywallTitle => 'احصل على وصول Pro';
 
   @override
-  String get proPaywallTitleGet => 'Get';
+  String get proPaywallTitleGet => 'احصل على';
 
   @override
   String get proPaywallTitlePro => 'Pro';
 
   @override
-  String get proPaywallTitleAccess => 'Access';
+  String get proPaywallTitleAccess => 'الوصول';
 
   @override
-  String get proEnableTrial => 'Enable Trial';
+  String get proEnableTrial => 'تفعيل التجربة';
 
   @override
-  String get proTrialPlanTitle => '3-Day Full Access';
+  String get proTrialPlanTitle => 'وصول كامل لمدة 3 أيام';
 
   @override
-  String get proYearlyPlanTitle => 'Yearly';
+  String get proYearlyPlanTitle => 'سنوي';
 
   @override
-  String get proContinue => 'Continue';
+  String get proContinue => 'متابعة';
 
   @override
   String proTrialDisclaimer(String price) {
-    return 'After 3 days free - then weekly subscription for $price will start. Cancel anytime 24 hours before renewal.';
+    return 'بعد 3 أيام مجانية، ستبدأ الاشتراك الأسبوعي بـ $price. يمكنك الإلغاء في أي وقت قبل 24 ساعة من التجديد.';
   }
 
   @override
   String proYearlyDisclaimer(String price) {
-    return 'Yearly subscription for $price/year. Cancel anytime at least 24 hours before renewal.';
+    return 'اشتراك سنوي بـ $price/سنة. ألغِ قبل 24 ساعة على الأقل من التجديد.';
   }
 
   @override
   String proTrialThenPrice(String price) {
-    return 'then $price/week';
+    return 'ثم $price/أسبوع';
   }
 
   @override
-  String get proPerWeek => 'per week';
+  String get proPerWeek => 'في الأسبوع';
 
   @override
   String proYearlySubtitle(String price) {
-    return 'just $price per year';
+    return 'فقط $price سنوياً';
   }
 
   @override
-  String get proSaveBadge => 'Save 86%';
+  String get proSaveBadge => 'وفّر 86%';
 
   @override
-  String get proFeatureUnlimitedScans => 'Unlimited Document Scans';
+  String get proFeatureUnlimitedScans => 'مسح مستندات غير محدود';
 
   @override
-  String get proFeatureOcr => 'Accurate OCR Recognition';
+  String get proFeatureOcr => 'تعرف OCR دقيق';
 
   @override
-  String get proFeaturePdf => 'Advanced PDF Tools';
+  String get proFeaturePdf => 'أدوات PDF متقدمة';
 
   @override
-  String get proFeatureAi => 'Smart AI Assistance';
+  String get proFeatureAi => 'مساعد ذكاء اصطناعي ذكي';
 
   @override
   String get proStoreUnavailable =>
-      'Store is not available right now. Please try again later.';
+      'المتجر غير متاح حالياً. يرجى المحاولة لاحقاً.';
 
   @override
-  String get proSplashEnable => 'Enable';
+  String get proSplashEnable => 'تفعيل';
 
   @override
-  String get proSplashTrialDays => '3-day trial';
+  String get proSplashTrialDays => 'تجربة 3 أيام';
 
   @override
-  String get proSplashTrialEnabled => 'is enabled!';
+  String get proSplashTrialEnabled => 'مفعّلة!';
 
   @override
   String get exportPdf => 'تصدير قوات الدفاع الشعبي';

@@ -35,13 +35,17 @@ class TranslateResultScreen extends StatelessWidget {
   static Future<void> open(BuildContext context, {required String sourceText}) {
     return Navigator.of(context).push(
       MaterialPageRoute<void>(
-        builder: (routeContext) => ChangeNotifierProvider(
-          create: (_) => TranslateResultProvider(
-            sourceText: sourceText,
-            isOnline: () => routeContext.read<ConnectivityProvider>().isOnline,
-          ),
-          child: TranslateResultScreen(sourceText: sourceText),
-        ),
+        builder: (routeContext) {
+          final connectivity = routeContext.read<ConnectivityProvider>();
+          return ChangeNotifierProvider(
+            create: (_) => TranslateResultProvider(
+              sourceText: sourceText,
+              ensureOnline: connectivity.refresh,
+              onConnectivityChanged: connectivity.onStatusChanged,
+            ),
+            child: TranslateResultScreen(sourceText: sourceText),
+          );
+        },
       ),
     );
   }
@@ -125,7 +129,9 @@ class TranslateResultScreen extends StatelessWidget {
     final l10n = context.l10n;
     final connectivity = context.read<ConnectivityProvider>();
 
-    if (!NetworkGuard.canProceed(connectivity)) {
+    final isOnline = await NetworkGuard.ensureOnline(connectivity);
+    if (!context.mounted) return;
+    if (!isOnline) {
       AppToast.show(
         context,
         l10n.errorNoInternetFeatures,
@@ -212,8 +218,11 @@ class TranslateResultScreen extends StatelessWidget {
   void _openLanguageSheet(
     BuildContext context,
     TranslateResultProvider provider,
-  ) {
+  ) async {
     final l10n = context.l10n;
+    final connectivity = context.read<ConnectivityProvider>();
+    await NetworkGuard.ensureOnline(connectivity);
+    if (!context.mounted) return;
 
     showTranslateLanguageSheet(
       context,

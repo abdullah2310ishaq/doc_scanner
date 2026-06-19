@@ -18,6 +18,23 @@ class PaywallRoutes {
     );
   }
 
+  /// Paywall + interstitial on close, then [nextScreen] (e.g. after processing).
+  static void replaceWithPostProcessGate(
+    BuildContext context, {
+    required Widget nextScreen,
+  }) {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute<void>(
+        builder: (_) => ProAccessScreen(
+          nextScreen: nextScreen,
+          initialTrialEnabled: false,
+          showAdOnClose: true,
+          replaceOnExit: true,
+        ),
+      ),
+    );
+  }
+
   /// Paywall then interstitial on close — used before gated features.
   static Future<void> openFeatureGate(BuildContext context) {
     return Navigator.of(context).push<void>(

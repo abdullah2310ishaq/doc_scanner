@@ -198,6 +198,48 @@
   "proLimitLive": "الترجمة المباشرة متاحة في Pro",
   "proPurchaseSuccess": "مرحبا بكم في برو!",
   "proPurchaseFailed": "لا يمكن إكمال عملية الشراء",
+  "proPaywallTitle": "احصل على وصول Pro",
+  "proPaywallTitleGet": "احصل على",
+  "proPaywallTitlePro": "Pro",
+  "proPaywallTitleAccess": "الوصول",
+  "proEnableTrial": "تفعيل التجربة",
+  "proTrialPlanTitle": "وصول كامل لمدة 3 أيام",
+  "proYearlyPlanTitle": "سنوي",
+  "proContinue": "متابعة",
+  "proTrialDisclaimer": "بعد 3 أيام مجانية، ستبدأ الاشتراك الأسبوعي بـ {price}. يمكنك الإلغاء في أي وقت قبل 24 ساعة من التجديد.",
+  "@proTrialDisclaimer": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proYearlyDisclaimer": "اشتراك سنوي بـ {price}/سنة. ألغِ قبل 24 ساعة على الأقل من التجديد.",
+  "@proYearlyDisclaimer": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proTrialThenPrice": "ثم {price}/أسبوع",
+  "@proTrialThenPrice": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proPerWeek": "في الأسبوع",
+  "proYearlySubtitle": "فقط {price} سنوياً",
+  "@proYearlySubtitle": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proSaveBadge": "وفّر 86%",
+  "proFeatureUnlimitedScans": "مسح مستندات غير محدود",
+  "proFeatureOcr": "تعرف OCR دقيق",
+  "proFeaturePdf": "أدوات PDF متقدمة",
+  "proFeatureAi": "مساعد ذكاء اصطناعي ذكي",
+  "proStoreUnavailable": "المتجر غير متاح حالياً. يرجى المحاولة لاحقاً.",
+  "proSplashEnable": "تفعيل",
+  "proSplashTrialDays": "تجربة 3 أيام",
+  "proSplashTrialEnabled": "مفعّلة!",
   "exportPdf": "تصدير قوات الدفاع الشعبي",
   "exportImage": "تصدير الصورة",
   "exportSuccess": "اكتمل التصدير",

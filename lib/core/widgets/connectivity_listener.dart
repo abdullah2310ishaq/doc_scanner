@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -43,6 +45,7 @@ class _ConnectivityListenerState extends State<ConnectivityListener>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       _offlineToastShown = false;
+      unawaited(_provider?.refresh());
     }
   }
 

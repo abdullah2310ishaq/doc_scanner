@@ -242,6 +242,48 @@
   "proLimitLive": "Live-Übersetzung ist in Pro verfügbar",
   "proPurchaseSuccess": "Willkommen bei Pro!",
   "proPurchaseFailed": "Der Kauf konnte nicht abgeschlossen werden",
+  "proPaywallTitle": "Pro-Zugang erhalten",
+  "proPaywallTitleGet": "Hol dir",
+  "proPaywallTitlePro": "Pro",
+  "proPaywallTitleAccess": "Zugang",
+  "proEnableTrial": "Testversion aktivieren",
+  "proTrialPlanTitle": "3 Tage voller Zugang",
+  "proYearlyPlanTitle": "Jährlich",
+  "proContinue": "Weiter",
+  "proTrialDisclaimer": "Nach 3 kostenlosen Tagen startet das wöchentliche Abo für {price}. Jederzeit bis 24 Stunden vor Verlängerung kündbar.",
+  "@proTrialDisclaimer": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proYearlyDisclaimer": "Jährliches Abo für {price}/Jahr. Jederzeit mindestens 24 Stunden vor Verlängerung kündbar.",
+  "@proYearlyDisclaimer": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proTrialThenPrice": "danach {price}/Woche",
+  "@proTrialThenPrice": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proPerWeek": "pro Woche",
+  "proYearlySubtitle": "nur {price} pro Jahr",
+  "@proYearlySubtitle": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proSaveBadge": "86 % sparen",
+  "proFeatureUnlimitedScans": "Unbegrenzte Dokumentenscans",
+  "proFeatureOcr": "Präzise OCR-Erkennung",
+  "proFeaturePdf": "Erweiterte PDF-Tools",
+  "proFeatureAi": "Intelligente KI-Unterstützung",
+  "proStoreUnavailable": "Der Store ist derzeit nicht verfügbar. Bitte versuche es später erneut.",
+  "proSplashEnable": "Aktivieren",
+  "proSplashTrialDays": "3-Tage-Test",
+  "proSplashTrialEnabled": "ist aktiviert!",
   "exportPdf": "PDF exportieren",
   "exportImage": "Bild exportieren",
   "exportSuccess": "Export abgeschlossen",

@@ -638,79 +638,78 @@ class AppLocalizationsKo extends AppLocalizations {
   String get proPurchaseFailed => '구매를 완료할 수 없습니다';
 
   @override
-  String get proPaywallTitle => 'Get Pro Access';
+  String get proPaywallTitle => 'Pro 액세스 받기';
 
   @override
-  String get proPaywallTitleGet => 'Get';
+  String get proPaywallTitleGet => '';
 
   @override
   String get proPaywallTitlePro => 'Pro';
 
   @override
-  String get proPaywallTitleAccess => 'Access';
+  String get proPaywallTitleAccess => '액세스 받기';
 
   @override
-  String get proEnableTrial => 'Enable Trial';
+  String get proEnableTrial => '체험판 활성화';
 
   @override
-  String get proTrialPlanTitle => '3-Day Full Access';
+  String get proTrialPlanTitle => '3일 전체 액세스';
 
   @override
-  String get proYearlyPlanTitle => 'Yearly';
+  String get proYearlyPlanTitle => '연간';
 
   @override
-  String get proContinue => 'Continue';
+  String get proContinue => '계속';
 
   @override
   String proTrialDisclaimer(String price) {
-    return 'After 3 days free - then weekly subscription for $price will start. Cancel anytime 24 hours before renewal.';
+    return '3일 무료 체험 후 주간 구독 $price이(가) 시작됩니다. 갱신 24시간 전까지 언제든지 취소할 수 있습니다.';
   }
 
   @override
   String proYearlyDisclaimer(String price) {
-    return 'Yearly subscription for $price/year. Cancel anytime at least 24 hours before renewal.';
+    return '연간 구독 $price/년. 갱신 최소 24시간 전까지 취소 가능합니다.';
   }
 
   @override
   String proTrialThenPrice(String price) {
-    return 'then $price/week';
+    return '이후 $price/주';
   }
 
   @override
-  String get proPerWeek => 'per week';
+  String get proPerWeek => '주당';
 
   @override
   String proYearlySubtitle(String price) {
-    return 'just $price per year';
+    return '연 $price';
   }
 
   @override
-  String get proSaveBadge => 'Save 86%';
+  String get proSaveBadge => '86% 절약';
 
   @override
-  String get proFeatureUnlimitedScans => 'Unlimited Document Scans';
+  String get proFeatureUnlimitedScans => '무제한 문서 스캔';
 
   @override
-  String get proFeatureOcr => 'Accurate OCR Recognition';
+  String get proFeatureOcr => '정확한 OCR 인식';
 
   @override
-  String get proFeaturePdf => 'Advanced PDF Tools';
+  String get proFeaturePdf => '고급 PDF 도구';
 
   @override
-  String get proFeatureAi => 'Smart AI Assistance';
+  String get proFeatureAi => '스마트 AI 지원';
 
   @override
-  String get proStoreUnavailable =>
-      'Store is not available right now. Please try again later.';
+  String get proStoreUnavailable => '스토어를 현재 사용할 수 없습니다. 나중에 다시 시도해 주세요.';
 
   @override
-  String get proSplashEnable => 'Enable';
+  String get proSplashEnable => '활성화';
 
   @override
-  String get proSplashTrialDays => '3-day trial';
+  String get proSplashTrialDays => '3일 체험';
 
   @override
-  String get proSplashTrialEnabled => 'is enabled!';
+  String get proSplashTrialEnabled => '활성화되었습니다!';
 
   @override
   String get exportPdf => 'PDF 내보내기';

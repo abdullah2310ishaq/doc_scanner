@@ -639,79 +639,78 @@ class AppLocalizationsJa extends AppLocalizations {
   String get proPurchaseFailed => '購入を完了できませんでした';
 
   @override
-  String get proPaywallTitle => 'Get Pro Access';
+  String get proPaywallTitle => 'Proアクセスを取得';
 
   @override
-  String get proPaywallTitleGet => 'Get';
+  String get proPaywallTitleGet => '';
 
   @override
   String get proPaywallTitlePro => 'Pro';
 
   @override
-  String get proPaywallTitleAccess => 'Access';
+  String get proPaywallTitleAccess => 'アクセスを取得';
 
   @override
-  String get proEnableTrial => 'Enable Trial';
+  String get proEnableTrial => 'トライアルを有効にする';
 
   @override
-  String get proTrialPlanTitle => '3-Day Full Access';
+  String get proTrialPlanTitle => '3日間フルアクセス';
 
   @override
-  String get proYearlyPlanTitle => 'Yearly';
+  String get proYearlyPlanTitle => '年間';
 
   @override
-  String get proContinue => 'Continue';
+  String get proContinue => '続ける';
 
   @override
   String proTrialDisclaimer(String price) {
-    return 'After 3 days free - then weekly subscription for $price will start. Cancel anytime 24 hours before renewal.';
+    return '3日間無料の後、週額$priceのサブスクリプションが開始されます。更新の24時間前までいつでもキャンセルできます。';
   }
 
   @override
   String proYearlyDisclaimer(String price) {
-    return 'Yearly subscription for $price/year. Cancel anytime at least 24 hours before renewal.';
+    return '年額$priceのサブスクリプション。更新の少なくとも24時間前までキャンセルできます。';
   }
 
   @override
   String proTrialThenPrice(String price) {
-    return 'then $price/week';
+    return 'その後 $price/週';
   }
 
   @override
-  String get proPerWeek => 'per week';
+  String get proPerWeek => '週あたり';
 
   @override
   String proYearlySubtitle(String price) {
-    return 'just $price per year';
+    return '年間わずか $price';
   }
 
   @override
-  String get proSaveBadge => 'Save 86%';
+  String get proSaveBadge => '86%お得';
 
   @override
-  String get proFeatureUnlimitedScans => 'Unlimited Document Scans';
+  String get proFeatureUnlimitedScans => '無制限のドキュメントスキャン';
 
   @override
-  String get proFeatureOcr => 'Accurate OCR Recognition';
+  String get proFeatureOcr => '高精度OCR認識';
 
   @override
-  String get proFeaturePdf => 'Advanced PDF Tools';
+  String get proFeaturePdf => '高度なPDFツール';
 
   @override
-  String get proFeatureAi => 'Smart AI Assistance';
+  String get proFeatureAi => 'スマートAIアシスタンス';
 
   @override
-  String get proStoreUnavailable =>
-      'Store is not available right now. Please try again later.';
+  String get proStoreUnavailable => 'ストアは現在利用できません。後でもう一度お試しください。';
 
   @override
-  String get proSplashEnable => 'Enable';
+  String get proSplashEnable => '有効にする';
 
   @override
-  String get proSplashTrialDays => '3-day trial';
+  String get proSplashTrialDays => '3日間トライアル';
 
   @override
-  String get proSplashTrialEnabled => 'is enabled!';
+  String get proSplashTrialEnabled => 'が有効になりました！';
 
   @override
   String get exportPdf => 'PDFをエクスポート';

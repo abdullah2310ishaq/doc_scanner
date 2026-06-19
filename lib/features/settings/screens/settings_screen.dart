@@ -185,7 +185,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 _safeAction(() async {
                   // Direct mapping template inside your store context
                   await _launchURL(
-                    'https://play.google.com/store/apps/details?id=YOUR_APP_PACKAGE_ID_HERE',
+                    'https://play.google.com/store/apps/details?id=com.aidocumentscanner.pdfscanner.ocr.askpdf.smartcrop',
                   );
                 });
               },

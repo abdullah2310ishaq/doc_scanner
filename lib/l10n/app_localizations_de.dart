@@ -663,79 +663,79 @@ class AppLocalizationsDe extends AppLocalizations {
   String get proPurchaseFailed => 'Der Kauf konnte nicht abgeschlossen werden';
 
   @override
-  String get proPaywallTitle => 'Get Pro Access';
+  String get proPaywallTitle => 'Pro-Zugang erhalten';
 
   @override
-  String get proPaywallTitleGet => 'Get';
+  String get proPaywallTitleGet => 'Hol dir';
 
   @override
   String get proPaywallTitlePro => 'Pro';
 
   @override
-  String get proPaywallTitleAccess => 'Access';
+  String get proPaywallTitleAccess => 'Zugang';
 
   @override
-  String get proEnableTrial => 'Enable Trial';
+  String get proEnableTrial => 'Testversion aktivieren';
 
   @override
-  String get proTrialPlanTitle => '3-Day Full Access';
+  String get proTrialPlanTitle => '3 Tage voller Zugang';
 
   @override
-  String get proYearlyPlanTitle => 'Yearly';
+  String get proYearlyPlanTitle => 'Jährlich';
 
   @override
-  String get proContinue => 'Continue';
+  String get proContinue => 'Weiter';
 
   @override
   String proTrialDisclaimer(String price) {
-    return 'After 3 days free - then weekly subscription for $price will start. Cancel anytime 24 hours before renewal.';
+    return 'Nach 3 kostenlosen Tagen startet das wöchentliche Abo für $price. Jederzeit bis 24 Stunden vor Verlängerung kündbar.';
   }
 
   @override
   String proYearlyDisclaimer(String price) {
-    return 'Yearly subscription for $price/year. Cancel anytime at least 24 hours before renewal.';
+    return 'Jährliches Abo für $price/Jahr. Jederzeit mindestens 24 Stunden vor Verlängerung kündbar.';
   }
 
   @override
   String proTrialThenPrice(String price) {
-    return 'then $price/week';
+    return 'danach $price/Woche';
   }
 
   @override
-  String get proPerWeek => 'per week';
+  String get proPerWeek => 'pro Woche';
 
   @override
   String proYearlySubtitle(String price) {
-    return 'just $price per year';
+    return 'nur $price pro Jahr';
   }
 
   @override
-  String get proSaveBadge => 'Save 86%';
+  String get proSaveBadge => '86 % sparen';
 
   @override
-  String get proFeatureUnlimitedScans => 'Unlimited Document Scans';
+  String get proFeatureUnlimitedScans => 'Unbegrenzte Dokumentenscans';
 
   @override
-  String get proFeatureOcr => 'Accurate OCR Recognition';
+  String get proFeatureOcr => 'Präzise OCR-Erkennung';
 
   @override
-  String get proFeaturePdf => 'Advanced PDF Tools';
+  String get proFeaturePdf => 'Erweiterte PDF-Tools';
 
   @override
-  String get proFeatureAi => 'Smart AI Assistance';
+  String get proFeatureAi => 'Intelligente KI-Unterstützung';
 
   @override
   String get proStoreUnavailable =>
-      'Store is not available right now. Please try again later.';
+      'Der Store ist derzeit nicht verfügbar. Bitte versuche es später erneut.';
 
   @override
-  String get proSplashEnable => 'Enable';
+  String get proSplashEnable => 'Aktivieren';
 
   @override
-  String get proSplashTrialDays => '3-day trial';
+  String get proSplashTrialDays => '3-Tage-Test';
 
   @override
-  String get proSplashTrialEnabled => 'is enabled!';
+  String get proSplashTrialEnabled => 'ist aktiviert!';
 
   @override
   String get exportPdf => 'PDF exportieren';

@@ -242,6 +242,48 @@
   "proLimitLive": "La traduction en direct est disponible dans la version Pro",
   "proPurchaseSuccess": "Bienvenue dans la version Pro !",
   "proPurchaseFailed": "L'achat n'a pas pu être finalisé",
+  "proPaywallTitle": "Obtenir l'accès Pro",
+  "proPaywallTitleGet": "Obtenir",
+  "proPaywallTitlePro": "Pro",
+  "proPaywallTitleAccess": "l'accès",
+  "proEnableTrial": "Activer l'essai",
+  "proTrialPlanTitle": "Accès complet 3 jours",
+  "proYearlyPlanTitle": "Annuel",
+  "proContinue": "Continuer",
+  "proTrialDisclaimer": "Après 3 jours gratuits, l'abonnement hebdomadaire à {price} commencera. Annulez à tout moment 24 h avant le renouvellement.",
+  "@proTrialDisclaimer": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proYearlyDisclaimer": "Abonnement annuel à {price}/an. Annulez au moins 24 h avant le renouvellement.",
+  "@proYearlyDisclaimer": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proTrialThenPrice": "puis {price}/semaine",
+  "@proTrialThenPrice": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proPerWeek": "par semaine",
+  "proYearlySubtitle": "seulement {price} par an",
+  "@proYearlySubtitle": {
+    "placeholders": {
+      "price": { "type": "String" }
+    }
+  },
+  "proSaveBadge": "Économisez 86 %",
+  "proFeatureUnlimitedScans": "Scans de documents illimités",
+  "proFeatureOcr": "Reconnaissance OCR précise",
+  "proFeaturePdf": "Outils PDF avancés",
+  "proFeatureAi": "Assistance IA intelligente",
+  "proStoreUnavailable": "Le store n'est pas disponible pour le moment. Réessayez plus tard.",
+  "proSplashEnable": "Activer",
+  "proSplashTrialDays": "Essai de 3 jours",
+  "proSplashTrialEnabled": "est activé !",
   "exportPdf": "Exporter en PDF",
   "exportImage": "Exporter en image",
   "exportSuccess": "Exportation réussie",

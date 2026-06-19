@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 
 import '../services/connectivity_service.dart';
@@ -7,6 +9,7 @@ class ConnectivityProvider extends ChangeNotifier {
       : _service = service ?? ConnectivityService();
 
   final ConnectivityService _service;
+  StreamSubscription<bool>? _statusSubscription;
 
   bool _isOnline = true;
   bool _isInitialized = false;
@@ -14,6 +17,7 @@ class ConnectivityProvider extends ChangeNotifier {
   bool get isOnline => _isOnline;
   bool get isInitialized => _isInitialized;
   ConnectivityService get service => _service;
+  Stream<bool> get onStatusChanged => _service.onStatusChanged;
 
   Future<void> initialize() async {
     if (_isInitialized) return;
@@ -22,7 +26,7 @@ class ConnectivityProvider extends ChangeNotifier {
     _isOnline = _service.isOnline;
     _isInitialized = true;
 
-    _service.onStatusChanged.listen(_handleStatusChanged);
+    _statusSubscription = _service.onStatusChanged.listen(_handleStatusChanged);
     notifyListeners();
   }
 
@@ -40,6 +44,7 @@ class ConnectivityProvider extends ChangeNotifier {
 
   @override
   void dispose() {
+    _statusSubscription?.cancel();
     _service.dispose();
     super.dispose();
   }
