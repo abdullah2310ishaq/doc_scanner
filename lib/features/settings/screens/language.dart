@@ -121,15 +121,15 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
             Positioned.fill(
               child: GridView.builder(
                 padding: EdgeInsets.only(
-                  left: 20.w,
-                  right: 20.w,
-                  top: 12.h,
+                  left: 16.w,
+                  right: 16.w,
+                  top: 8.h,
                   bottom: 130.h,
                 ),
                 itemCount: appLanguageOptions.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 2.4,
+                  childAspectRatio: 2.65,
                   crossAxisSpacing: 12.w,
                   mainAxisSpacing: 12.h,
                 ),
@@ -137,38 +137,22 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                   final language = appLanguageOptions[index];
                   final isSelected = _selectedLanguage == language.code;
 
-                  return AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    curve: Curves.easeInOut,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.r),
-                      boxShadow: isSelected
-                          ? [
-                              BoxShadow(
-                                color: _accent.withOpacity(0.12),
-                                blurRadius: 16,
-                                offset: const Offset(0, 8),
-                              ),
-                            ]
-                          : [],
-                    ),
-                    child: LanguageOptionCard(
-                      language: language,
-                      isSelected: isSelected,
-                      accentColor: _accent,
-                      compact: true,
-                      onTap: () {
-                        setState(() => _selectedLanguage = language.code);
-                      },
-                    ),
+                  return LanguageOptionCard(
+                    language: language,
+                    isSelected: isSelected,
+                    accentColor: _accent,
+                    large: true,
+                    onTap: () {
+                      setState(() => _selectedLanguage = language.code);
+                    },
                   );
                 },
               ),
             ),
 
             Positioned(
-              left: 20.w,
-              right: 20.w,
+              left: 16.w,
+              right: 16.w,
               bottom: 16.h,
               child: const NativeAdLanguage(),
             ),

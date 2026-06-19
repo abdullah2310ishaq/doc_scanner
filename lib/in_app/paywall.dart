@@ -220,6 +220,8 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
 
                 RichText(
                   textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   text: TextSpan(
                     style: TextStyle(fontSize: 24.sp, color: primaryColor),
                     children: [
@@ -261,6 +263,8 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                     children: [
                       Text(
                         l10n.proEnableTrial,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 13.sp,
                           fontWeight: FontWeight.bold,
@@ -312,6 +316,8 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                                 children: [
                                   Text(
                                     l10n.proTrialPlanTitle,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.bold,
@@ -323,6 +329,8 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                                       l10n.proTrialThenPrice(
                                         weeklyStandardPrice,
                                       ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         color: Colors.grey[600],
                                         fontSize: 11.sp,
@@ -369,6 +377,8 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                         ),
                         child: Text(
                           l10n.proSaveBadge,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 10.sp,
@@ -405,6 +415,8 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                             children: [
                               Text(
                                 l10n.proYearlyPlanTitle,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.bold,
@@ -414,6 +426,8 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                               if (yearlyPrice != null)
                                 Text(
                                   l10n.proYearlySubtitle(yearlyPrice),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     color: Colors.grey[600],
                                     fontSize: 11.sp,
@@ -495,6 +509,8 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                   Text(
                     l10n.proTrialDisclaimer(weeklyStandardPrice),
                     textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: primaryColor.withValues(alpha: 0.8),
                       fontSize: 9.sp,
@@ -505,6 +521,8 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                   Text(
                     l10n.proYearlyDisclaimer(yearlyPrice),
                     textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: primaryColor.withValues(alpha: 0.8),
                       fontSize: 9.sp,
@@ -530,6 +548,8 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
           Expanded(
             child: Text(
               text,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 13.sp,
                 fontWeight: FontWeight.w600,

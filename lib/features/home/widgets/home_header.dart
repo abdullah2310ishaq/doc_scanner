@@ -69,7 +69,7 @@ class _ProLottieButton extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       child: SizedBox(
         width: 65,
-        height: 50,
+        height: 48,
         child: Lottie.asset(
           'assets/pro_animation.json',
           fit: BoxFit.contain,
