@@ -1,10 +1,12 @@
 abstract final class AdUnitIds {
   static const String _androidAppOpen =
-      'ca-app-pub-3940256099942544/9257395921';
-  static const String _androidBanner = 'ca-app-pub-3940256099942544/6300978111';
+      'ca-app-pub-7182112310194934/1419326783';
+  static const String _androidBanner =
+      'ca-app-pub-7182112310194934/6710886760';
   static const String _androidInterstitial =
-      'ca-app-pub-3940256099942544/1033173712';
-  static const String _androidNative = 'ca-app-pub-3940256099942544/2247696110';
+      'ca-app-pub-7182112310194934/4045490125';
+  static const String _androidNative =
+      'ca-app-pub-7182112310194934/4683489221';
 
   static String get appOpen => _androidAppOpen;
 
