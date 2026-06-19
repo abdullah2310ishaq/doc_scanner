@@ -117,7 +117,6 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
       body: SafeArea(
         child: Stack(
           children: [
-            // Languages Grid Layout
             Positioned.fill(
               child: GridView.builder(
                 padding: EdgeInsets.only(

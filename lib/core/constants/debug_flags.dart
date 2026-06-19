@@ -1,1 +1,1 @@
-const bool kDebugForcePro = false;
+const bool kDebugForcePro = true;

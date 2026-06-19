@@ -7,6 +7,7 @@ import '../../../core/services/locale_service.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/app_exit_guard.dart';
 import '../../../in_app/in_app_splash_first.dart';
+import '../../../features/subscription/providers/subscription_provider.dart';
 import '../../home/screens/main_shell_screen.dart';
 import '../../launch/services/app_launch_prefs_service.dart';
 import '../models/app_language_option.dart';
@@ -47,9 +48,13 @@ class _FirstTimeLanguageSelectionScreenState
     if (!mounted) {
       return;
     }
+
+    final isPro = context.read<SubscriptionProvider>().isPro;
     Navigator.of(context).pushReplacement(
       MaterialPageRoute<void>(
-        builder: (_) => const SplashProScreen(nextScreen: MainShellScreen()),
+        builder: (_) => isPro
+            ? const MainShellScreen()
+            : const SplashProScreen(nextScreen: MainShellScreen()),
       ),
     );
   }

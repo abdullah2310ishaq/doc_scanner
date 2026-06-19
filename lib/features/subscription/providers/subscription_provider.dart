@@ -66,9 +66,9 @@ class SubscriptionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Debug builds only — simulate Pro without a real purchase.
+  /// Debug/profile builds only — simulate Pro without a real purchase.
   Future<void> debugSetPro(bool value) async {
-    assert(kDebugMode, 'debugSetPro is only available in debug builds');
+    assert(!kReleaseMode, 'debugSetPro is only available in non-release builds');
     await _setPro(value);
   }
 

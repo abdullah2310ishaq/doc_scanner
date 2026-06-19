@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 import '../core/theme/app_colors.dart';
 import '../core/utils/l10n_extension.dart';
+import '../features/subscription/providers/subscription_provider.dart';
 import 'paywall.dart';
 
 class SplashProScreen extends StatefulWidget {
@@ -20,6 +22,15 @@ class _SplashProScreenState extends State<SplashProScreen>
     with SingleTickerProviderStateMixin {
   Timer? _timer;
   late final AnimationController _controller;
+
+  void _goToNextScreen() {
+    if (!mounted) {
+      return;
+    }
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute<void>(builder: (_) => widget.nextScreen),
+    );
+  }
 
   void _goToPaywall() {
     if (!mounted) {
@@ -44,7 +55,16 @@ class _SplashProScreenState extends State<SplashProScreen>
       duration: const Duration(milliseconds: 2200),
     )..forward();
 
-    _timer = Timer(const Duration(seconds: 3), _goToPaywall);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
+      if (context.read<SubscriptionProvider>().isPro) {
+        _goToNextScreen();
+        return;
+      }
+      _timer = Timer(const Duration(seconds: 3), _goToPaywall);
+    });
   }
 
   @override

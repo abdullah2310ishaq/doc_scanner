@@ -31,7 +31,7 @@ Future<void> main() async {
   final subscriptionProvider = SubscriptionProvider();
   await subscriptionProvider.initialize();
 
-  if (kDebugMode && kDebugForcePro) {
+  if (!kReleaseMode && kDebugForcePro) {
     await subscriptionProvider.debugSetPro(true);
   }
 
