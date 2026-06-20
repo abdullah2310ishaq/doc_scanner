@@ -76,7 +76,7 @@ class ChatbotOpenAiService {
   Future<String> _completeWithMessages(
     List<Map<String, String>> messages,
   ) async {
-    final apiKey = OpenAiConfig.apiKey;
+    final apiKey = OpenAiConfig.askPdfKey;
     if (apiKey.isEmpty) {
       throw StateError('OpenAI API key is missing');
     }

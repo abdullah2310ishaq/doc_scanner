@@ -31,9 +31,9 @@ class OpenAiTranslateService implements TranslateService {
       return '';
     }
 
-    final apiKey = OpenAiConfig.apiKey;
+    final apiKey = OpenAiConfig.ocrTranslationKey;
     if (apiKey.isEmpty) {
-      _log('Missing API key — set secrets_local.dart or OPENAI_API_KEY');
+      _log('Missing API key — set secrets_local.dart or OCR_TRANSLATION_KEY');
       throw const TranslateException(TranslateFailure.translationFailed);
     }
 

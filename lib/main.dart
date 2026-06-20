@@ -14,12 +14,14 @@ import 'app.dart';
 import 'core/constants/debug_flags.dart';
 import 'core/providers/connectivity_provider.dart';
 import 'core/services/locale_service.dart';
+import 'core/services/remote_config_service.dart';
 import 'features/home/providers/recent_documents_provider.dart';
 import 'features/subscription/providers/subscription_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await RemoteConfigService.initialize();
   await MobileAds.instance.initialize();
 
   final connectivityProvider = ConnectivityProvider();
