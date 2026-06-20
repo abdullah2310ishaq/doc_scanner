@@ -26,8 +26,11 @@ abstract final class OpenAiConfig {
     return ocrTranslationKeyFallback;
   }
 
-  static const String model = String.fromEnvironment(
-    'OPENAI_MODEL',
-    defaultValue: 'gpt-5.4-mini',
-  );
+  static String get model {
+    const fromEnv = String.fromEnvironment('OPENAI_MODEL');
+    if (fromEnv.isNotEmpty) return fromEnv;
+    final remote = RemoteConfigService.apiModal;
+    if (remote.isNotEmpty) return remote;
+    return apiModalFallback;
+  }
 }

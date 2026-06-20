@@ -20,6 +20,7 @@ abstract final class RemoteConfigService {
       RemoteConfigKeys.pdfTranslationKey: '',
       RemoteConfigKeys.askPdfKey: '',
       RemoteConfigKeys.ocrTranslationKey: '',
+      RemoteConfigKeys.apiModal: 'gpt-5.4-mini',
     });
 
     try {
@@ -37,6 +38,10 @@ abstract final class RemoteConfigService {
         _logKeyStatus(
           RemoteConfigKeys.ocrTranslationKey,
           remoteConfig.getString(RemoteConfigKeys.ocrTranslationKey),
+        );
+        debugPrint(
+          '[RemoteConfig] ${RemoteConfigKeys.apiModal} — '
+          '${remoteConfig.getString(RemoteConfigKeys.apiModal)}',
         );
       }
     } catch (error, stack) {
@@ -56,6 +61,9 @@ abstract final class RemoteConfigService {
 
   static String get ocrTranslationKey =>
       _remoteConfig?.getString(RemoteConfigKeys.ocrTranslationKey) ?? '';
+
+  static String get apiModal =>
+      _remoteConfig?.getString(RemoteConfigKeys.apiModal) ?? '';
 
   static void _logKeyStatus(String name, String value) {
     debugPrint('[RemoteConfig] $name — ${value.isNotEmpty ? 'loaded' : 'empty'}');
