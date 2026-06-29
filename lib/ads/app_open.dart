@@ -9,7 +9,7 @@ class AppOpenAdService {
 
   static final AppOpenAdService instance = AppOpenAdService._();
 
-  final String _adUnitId = AdUnitIds.appOpen;
+  final String _adUnitId = AdIds.testAppOpenId;
 
   AppOpenAd? _appOpenAd;
   bool _isShowingAd = false;

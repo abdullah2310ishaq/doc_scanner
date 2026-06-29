@@ -21,7 +21,7 @@ class _NativeAdHomeState extends State<NativeAdHome> {
   NativeAd? _nativeAd;
   bool _isLoaded = false;
 
-  static final String _androidTestAdUnitId = AdUnitIds.native;
+  static final String _androidTestAdUnitId = AdIds.testNativeId;
 
   @override
   void initState() {

@@ -12,7 +12,7 @@ class ChatbotOpenAiService {
 
   final http.Client _client;
 
-  static const _chatUrl = 'https://api.openai.com/v1/chat/completions';
+  static const _chatUrl = 'https://api.deepseek.com/chat/completions';
   static const _maxDocumentChars = 12000;
 
   Future<String> summarizeDocument(String documentText) async {

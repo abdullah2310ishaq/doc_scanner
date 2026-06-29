@@ -16,7 +16,7 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
   BannerAd? _bannerAd;
   bool _isLoaded = false;
 
-  final String _adUnitId = AdUnitIds.banner;
+  final String _adUnitId = AdIds.testBannerId;
 
   @override
   void initState() {

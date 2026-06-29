@@ -46,3 +46,7 @@ app.*.map.json
 
 # Local API keys — copy secrets_local.example.dart to secrets_local.dart
 /lib/core/config/secrets_local.dart
+
+lib/core/config/secrets_local.dart
+
+lib/core/config/secrets_local.dart

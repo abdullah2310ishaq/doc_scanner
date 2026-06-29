@@ -1,5 +1,5 @@
+
 import '../services/remote_config_service.dart';
-import 'secrets_local.dart';
 
 abstract final class OpenAiConfig {
   static String get pdfTranslationKey {
@@ -7,7 +7,7 @@ abstract final class OpenAiConfig {
     if (fromEnv.isNotEmpty) return fromEnv;
     final remote = RemoteConfigService.pdfTranslationKey;
     if (remote.isNotEmpty) return remote;
-    return pdfTranslationKeyFallback;
+    return '';
   }
 
   static String get askPdfKey {
@@ -15,7 +15,7 @@ abstract final class OpenAiConfig {
     if (fromEnv.isNotEmpty) return fromEnv;
     final remote = RemoteConfigService.askPdfKey;
     if (remote.isNotEmpty) return remote;
-    return askPdfKeyFallback;
+    return '';
   }
 
   static String get ocrTranslationKey {
@@ -23,7 +23,7 @@ abstract final class OpenAiConfig {
     if (fromEnv.isNotEmpty) return fromEnv;
     final remote = RemoteConfigService.ocrTranslationKey;
     if (remote.isNotEmpty) return remote;
-    return ocrTranslationKeyFallback;
+    return '';
   }
 
   static String get model {
@@ -31,6 +31,6 @@ abstract final class OpenAiConfig {
     if (fromEnv.isNotEmpty) return fromEnv;
     final remote = RemoteConfigService.apiModal;
     if (remote.isNotEmpty) return remote;
-    return apiModalFallback;
+    return '';
   }
 }

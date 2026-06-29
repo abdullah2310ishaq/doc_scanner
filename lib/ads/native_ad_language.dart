@@ -15,7 +15,7 @@ class NativeAdLanguageCache {
 
   static final NativeAdLanguageCache instance = NativeAdLanguageCache._();
 
-  static final String _androidTestAdUnitId = AdUnitIds.native;
+  static final String _androidTestAdUnitId = AdIds.testNativeId;
 
   NativeAd? _nativeAd;
   bool _isLoaded = false;

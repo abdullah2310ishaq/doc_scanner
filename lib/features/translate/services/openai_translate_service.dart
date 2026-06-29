@@ -17,7 +17,7 @@ class OpenAiTranslateService implements TranslateService {
   final http.Client _client;
   final String defaultSourceLanguageCode;
 
-  static const _chatCompletionsUrl = 'https://api.openai.com/v1/chat/completions';
+  static const _chatCompletionsUrl = 'https://api.deepseek.com/chat/completions';
 
   @override
   Future<String> translate({

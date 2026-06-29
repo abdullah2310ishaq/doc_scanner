@@ -5,7 +5,7 @@ import '../core/theme/app_colors.dart';
 import 'ad_unit_ids.dart';
 
 class InterstitialAdService {
-  final String _adUnitId = AdUnitIds.interstitial;
+  final String _adUnitId = AdIds.testInterId;
 
   InterstitialAd? _interstitialAd;
   bool _isAvailable = false;

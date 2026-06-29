@@ -10,14 +10,16 @@ class PdfAssistantTranslateService {
       : _client = httpClient ?? http.Client();
 
   final http.Client _client;
-  static const _chatUrl = 'https://api.openai.com/v1/chat/completions';
+  // static const _chatUrl = 'https://api.openai.com/v1/chat/completions';
+  static const _chatUrl = 'https://api.deepseek.com/chat/completions';
   static const _chunkSize = 3500;
 
   Future<String> translateText({
     required String text,
     required String targetLanguageName,
     required String targetLanguageCode,
-  }) async {
+  })
+  async {
     final trimmed = text.trim();
     if (trimmed.isEmpty) return '';
 
@@ -74,7 +76,8 @@ class PdfAssistantTranslateService {
     String text,
     String targetLanguageName,
     String targetLanguageCode,
-  ) async {
+  )
+  async {
     final apiKey = OpenAiConfig.pdfTranslationKey;
     if (apiKey.isEmpty) {
       throw StateError('missing_api_key');
