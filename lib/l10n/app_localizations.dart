@@ -1370,6 +1370,12 @@ abstract class AppLocalizations {
   /// **'then {price}/week'**
   String proTrialThenPrice(String price);
 
+  /// No description provided for @proTrialDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'For 3 days'**
+  String get proTrialDuration;
+
   /// No description provided for @proPerWeek.
   ///
   /// In en, this message translates to:

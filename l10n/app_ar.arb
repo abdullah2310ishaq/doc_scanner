@@ -224,6 +224,7 @@
       "price": { "type": "String" }
     }
   },
+  "proTrialDuration": "لمدة 3 أيام",
   "proPerWeek": "في الأسبوع",
   "proYearlySubtitle": "فقط {price} سنوياً",
   "@proYearlySubtitle": {

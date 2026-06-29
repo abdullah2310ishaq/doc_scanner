@@ -703,6 +703,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get proTrialDuration => 'Durante 3 días';
+
+  @override
   String get proPerWeek => 'por semana';
 
   @override

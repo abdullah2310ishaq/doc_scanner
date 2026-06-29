@@ -265,6 +265,7 @@
       "price": { "type": "String" }
     }
   },
+  "proTrialDuration": "For 3 days",
   "proPerWeek": "per week",
   "proYearlySubtitle": "just {price} per year",
   "@proYearlySubtitle": {

@@ -705,6 +705,9 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String get proTrialDuration => 'На 3 дня';
+
+  @override
   String get proPerWeek => 'в неделю';
 
   @override

@@ -690,6 +690,9 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get proTrialDuration => 'لمدة 3 أيام';
+
+  @override
   String get proPerWeek => 'في الأسبوع';
 
   @override

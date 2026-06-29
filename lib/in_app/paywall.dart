@@ -354,7 +354,7 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                                     ),
                                   ),
                                   Text(
-                                    l10n.proPerWeek,
+                                    l10n.proTrialDuration,
                                     style: TextStyle(
                                       color: Colors.grey[600],
                                       fontSize: 10.sp,

@@ -672,6 +672,9 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String get proTrialDuration => '3 天内';
+
+  @override
   String get proPerWeek => '每周';
 
   @override

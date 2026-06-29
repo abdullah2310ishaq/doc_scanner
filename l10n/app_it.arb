@@ -268,6 +268,7 @@
       "price": { "type": "String" }
     }
   },
+  "proTrialDuration": "Per 3 giorni",
   "proPerWeek": "a settimana",
   "proYearlySubtitle": "solo {price} all'anno",
   "@proYearlySubtitle": {

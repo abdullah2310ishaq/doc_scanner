@@ -677,6 +677,9 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
+  String get proTrialDuration => '3일 동안';
+
+  @override
   String get proPerWeek => '주당';
 
   @override
