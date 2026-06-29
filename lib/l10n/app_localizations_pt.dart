@@ -822,6 +822,9 @@ class AppLocalizationsPt extends AppLocalizations {
       'Não foi possível abrir o PDF selecionado';
 
   @override
+  String get errorPdfFileTooLarge => 'Please select a PDF smaller than 5 MB';
+
+  @override
   String get chatbotAnalyzingTitle => 'Analisando seu documento…';
 
   @override

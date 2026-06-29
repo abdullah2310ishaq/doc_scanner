@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 
+import '../../../core/utils/pdf_size_validator.dart';
+
 class ChatbotPdfPickerService {
   Future<File?> pickPdf() async {
     final result = await FilePicker.platform.pickFiles(
@@ -18,6 +20,8 @@ class ChatbotPdfPickerService {
       return null;
     }
 
-    return File(path);
+    final file = File(path);
+    await validatePdfSize(file);
+    return file;
   }
 }

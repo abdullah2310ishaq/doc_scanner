@@ -8,6 +8,8 @@ import '../../../core/constants/chatbot_assets.dart';
 import '../../../core/constants/home_assets.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
+import '../../../core/utils/pdf_size_validator.dart';
+import '../../../core/widgets/toast.dart';
 import '../services/chatbot_pdf_picker_service.dart';
 import '../widgets/chatbot_upload_options_sheet.dart';
 import 'analyzing_scree.dart';
@@ -43,6 +45,15 @@ class _UploadNewPdfScreenState extends State<UploadNewPdfScreen> {
         return;
       }
       _onPdfSelected(file);
+    } on PdfTooLargeException {
+      if (!mounted) {
+        return;
+      }
+      AppToast.show(
+        context,
+        context.l10n.errorPdfFileTooLarge,
+        backgroundColor: AppToast.errorBackground,
+      );
     } catch (_) {
       if (!mounted) {
         return;

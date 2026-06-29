@@ -829,6 +829,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get errorChatbotPdfPickFailed => 'Не удалось открыть выбранный PDF';
 
   @override
+  String get errorPdfFileTooLarge => 'Please select a PDF smaller than 5 MB';
+
+  @override
   String get chatbotAnalyzingTitle => 'Анализ вашего документа…';
 
   @override

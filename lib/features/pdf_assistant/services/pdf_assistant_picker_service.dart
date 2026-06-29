@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 
+import '../../../core/utils/pdf_size_validator.dart';
+
 class PdfAssistantPickerService {
   Future<File?> pickPdf() async {
     final result = await FilePicker.platform.pickFiles(
@@ -14,6 +16,8 @@ class PdfAssistantPickerService {
     final path = result.files.single.path;
     if (path == null) return null;
 
-    return File(path);
+    final file = File(path);
+    await validatePdfSize(file);
+    return file;
   }
 }

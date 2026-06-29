@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/constants/home_assets.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
+import '../../../core/utils/pdf_size_validator.dart';
+import '../../../core/widgets/toast.dart';
 import '../screens/start_processing_screen.dart';
 import '../services/pdf_assistant_picker_service.dart';
 import '../services/pdf_assistant_storage_service.dart';
@@ -52,6 +54,13 @@ class _PdfAssistantSourceSheetState extends State<_PdfAssistantSourceSheet> {
         widget.parentContext,
         pdfPath: file.path,
         displayName: _storage.displayNameFromPath(file.path),
+      );
+    } on PdfTooLargeException {
+      if (!mounted) return;
+      AppToast.show(
+        context,
+        context.l10n.errorPdfFileTooLarge,
+        backgroundColor: AppToast.errorBackground,
       );
     } catch (_) {
       if (!mounted) return;

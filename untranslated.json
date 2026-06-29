@@ -1,1 +1,41 @@
-{}
+{
+  "ar": [
+    "errorPdfFileTooLarge"
+  ],
+
+  "de": [
+    "errorPdfFileTooLarge"
+  ],
+
+  "es": [
+    "errorPdfFileTooLarge"
+  ],
+
+  "fr": [
+    "errorPdfFileTooLarge"
+  ],
+
+  "it": [
+    "errorPdfFileTooLarge"
+  ],
+
+  "ja": [
+    "errorPdfFileTooLarge"
+  ],
+
+  "ko": [
+    "errorPdfFileTooLarge"
+  ],
+
+  "pt": [
+    "errorPdfFileTooLarge"
+  ],
+
+  "ru": [
+    "errorPdfFileTooLarge"
+  ],
+
+  "zh": [
+    "errorPdfFileTooLarge"
+  ]
+}

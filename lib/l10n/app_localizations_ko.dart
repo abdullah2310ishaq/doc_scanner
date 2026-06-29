@@ -797,6 +797,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get errorChatbotPdfPickFailed => '선택한 PDF를 열 수 없습니다';
 
   @override
+  String get errorPdfFileTooLarge => 'Please select a PDF smaller than 5 MB';
+
+  @override
   String get chatbotAnalyzingTitle => '문서 분석 중…';
 
   @override

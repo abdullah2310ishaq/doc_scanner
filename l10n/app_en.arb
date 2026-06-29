@@ -312,6 +312,7 @@
   "chatbotRecentFilesTitle": "Recent Files",
   "chatbotRecentFilesDescription": "Choose from your recent files",
   "errorChatbotPdfPickFailed": "Could not open the selected PDF",
+  "errorPdfFileTooLarge": "Please select a PDF smaller than 5 MB",
 
   "chatbotAnalyzingTitle": "Analyzing Your Document...",
   "chatbotAnalyzingSubtitle": "Please wait while we read and\nunderstand your PDF",

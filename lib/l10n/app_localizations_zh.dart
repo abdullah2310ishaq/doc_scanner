@@ -791,6 +791,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get errorChatbotPdfPickFailed => '无法打开所选的 PDF';
 
   @override
+  String get errorPdfFileTooLarge => 'Please select a PDF smaller than 5 MB';
+
+  @override
   String get chatbotAnalyzingTitle => '正在分析您的文档…';
 
   @override

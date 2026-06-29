@@ -1604,6 +1604,12 @@ abstract class AppLocalizations {
   /// **'Could not open the selected PDF'**
   String get errorChatbotPdfPickFailed;
 
+  /// No description provided for @errorPdfFileTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a PDF smaller than 5 MB'**
+  String get errorPdfFileTooLarge;
+
   /// No description provided for @chatbotAnalyzingTitle.
   ///
   /// In en, this message translates to:
