@@ -680,7 +680,13 @@ class AppLocalizationsKo extends AppLocalizations {
   String get proTrialDuration => '3일 동안';
 
   @override
+  String get proTrialFreePrice => 'Free';
+
+  @override
   String get proPerWeek => '주당';
+
+  @override
+  String get proPerYear => 'per year';
 
   @override
   String proYearlySubtitle(String price) {

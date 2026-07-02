@@ -708,7 +708,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get proTrialDuration => 'На 3 дня';
 
   @override
+  String get proTrialFreePrice => 'Free';
+
+  @override
   String get proPerWeek => 'в неделю';
+
+  @override
+  String get proPerYear => 'per year';
 
   @override
   String proYearlySubtitle(String price) {

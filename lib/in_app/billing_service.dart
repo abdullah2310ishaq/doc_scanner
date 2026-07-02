@@ -7,10 +7,12 @@ import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 
 /// Play Console subscription product ID (used in [InAppPurchase.queryProductDetails]).
-const String kProWeeklyProductId = 'documentsingle';
+// const String kProWeeklyProductId = 'documentsingle';
+const String kProWeeklyProductId = 'documentweekly';
 
 /// Weekly base plan — auto-renewing.
-const String kProWeeklyBasePlanId = 'documentsingle';
+// const String kProWeeklyBasePlanId = 'documentsingle';
+const String kProWeeklyBasePlanId = 'documentweekly';
 
 /// Weekly offer on [kProWeeklyBasePlanId].
 const String kProWeeklyOfferId = 'singlepayment';

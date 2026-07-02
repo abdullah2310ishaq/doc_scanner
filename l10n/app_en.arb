@@ -244,10 +244,10 @@
   "proPaywallTitlePro": "Pro",
   "proPaywallTitleAccess": "Access",
   "proEnableTrial": "Enable Trial",
-  "proTrialPlanTitle": "3-Day Full Access",
+  "proTrialPlanTitle": "3-Day Free Trial",
   "proYearlyPlanTitle": "Yearly",
   "proContinue": "Continue",
-  "proTrialDisclaimer": "After 3 days - then weekly subscription for {price} will start. Cancel anytime 24 hours before renewal.",
+  "proTrialDisclaimer": "After 3 days Free trial - then weekly subscription for {price} will start. Cancel anytime 24 hours before renewal.",
   "@proTrialDisclaimer": {
     "placeholders": {
       "price": { "type": "String" }
@@ -266,7 +266,9 @@
     }
   },
   "proTrialDuration": "For 3 days",
+  "proTrialFreePrice": "Free",
   "proPerWeek": "per week",
+  "proPerYear": "per year",
   "proYearlySubtitle": "just {price} per year",
   "@proYearlySubtitle": {
     "placeholders": {

@@ -1337,7 +1337,7 @@ abstract class AppLocalizations {
   /// No description provided for @proTrialPlanTitle.
   ///
   /// In en, this message translates to:
-  /// **'3-Day Full Access'**
+  /// **'3-Day Free Trial'**
   String get proTrialPlanTitle;
 
   /// No description provided for @proYearlyPlanTitle.
@@ -1355,7 +1355,7 @@ abstract class AppLocalizations {
   /// No description provided for @proTrialDisclaimer.
   ///
   /// In en, this message translates to:
-  /// **'After 3 days - then weekly subscription for {price} will start. Cancel anytime 24 hours before renewal.'**
+  /// **'After 3 days Free trial - then weekly subscription for {price} will start. Cancel anytime 24 hours before renewal.'**
   String proTrialDisclaimer(String price);
 
   /// No description provided for @proYearlyDisclaimer.
@@ -1376,11 +1376,23 @@ abstract class AppLocalizations {
   /// **'For 3 days'**
   String get proTrialDuration;
 
+  /// No description provided for @proTrialFreePrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get proTrialFreePrice;
+
   /// No description provided for @proPerWeek.
   ///
   /// In en, this message translates to:
   /// **'per week'**
   String get proPerWeek;
+
+  /// No description provided for @proPerYear.
+  ///
+  /// In en, this message translates to:
+  /// **'per year'**
+  String get proPerYear;
 
   /// No description provided for @proYearlySubtitle.
   ///

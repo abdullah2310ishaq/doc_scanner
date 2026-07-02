@@ -1,41 +1,61 @@
 {
   "ar": [
+    "proTrialFreePrice",
+    "proPerYear",
     "errorPdfFileTooLarge"
   ],
 
   "de": [
+    "proTrialFreePrice",
+    "proPerYear",
     "errorPdfFileTooLarge"
   ],
 
   "es": [
+    "proTrialFreePrice",
+    "proPerYear",
     "errorPdfFileTooLarge"
   ],
 
   "fr": [
+    "proTrialFreePrice",
+    "proPerYear",
     "errorPdfFileTooLarge"
   ],
 
   "it": [
+    "proTrialFreePrice",
+    "proPerYear",
     "errorPdfFileTooLarge"
   ],
 
   "ja": [
+    "proTrialFreePrice",
+    "proPerYear",
     "errorPdfFileTooLarge"
   ],
 
   "ko": [
+    "proTrialFreePrice",
+    "proPerYear",
     "errorPdfFileTooLarge"
   ],
 
   "pt": [
+    "proTrialFreePrice",
+    "proPerYear",
     "errorPdfFileTooLarge"
   ],
 
   "ru": [
+    "proTrialFreePrice",
+    "proPerYear",
     "errorPdfFileTooLarge"
   ],
 
   "zh": [
+    "proTrialFreePrice",
+    "proPerYear",
     "errorPdfFileTooLarge"
   ]
 }

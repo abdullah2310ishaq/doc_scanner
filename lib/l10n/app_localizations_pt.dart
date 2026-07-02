@@ -700,7 +700,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get proTrialDuration => 'Por 3 dias';
 
   @override
+  String get proTrialFreePrice => 'Free';
+
+  @override
   String get proPerWeek => 'por semana';
+
+  @override
+  String get proPerYear => 'per year';
 
   @override
   String proYearlySubtitle(String price) {

@@ -171,10 +171,8 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
     final subscription = context.watch<SubscriptionProvider>();
     final primaryColor = AppColors.textLink;
 
-    final weeklyTrialPrice = subscription.weeklySinglePaymentDisplayPrice();
     final weeklyStandardPrice = subscription.weeklyStandardDisplayPrice();
     final yearlyPrice = subscription.displayPriceForPlan(BillingPlan.yearly);
-    final yearlyPerWeekPrice = subscription.yearlyPerWeekDisplayPrice();
 
     final canPurchase =
         subscription.isStoreAvailable &&
@@ -342,54 +340,53 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                                 ],
                               ),
                             ),
-                            if (weeklyTrialPrice != null)
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    weeklyTrialPrice,
-                                    style: TextStyle(
-                                      fontSize: 13.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  l10n.proTrialFreePrice,
+                                  style: TextStyle(
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  Text(
-                                    l10n.proTrialDuration,
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                      fontSize: 10.sp,
-                                    ),
+                                ),
+                                Text(
+                                  l10n.proTrialDuration,
+                                  style: TextStyle(
+                                    color: Colors.grey[600],
+                                    fontSize: 10.sp,
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
                     ),
-                    Positioned(
-                      right: 10.w,
-                      top: -10.h,
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 8.w,
-                          vertical: 3.h,
-                        ),
-                        decoration: BoxDecoration(
-                          color: primaryColor,
-                          borderRadius: BorderRadius.circular(16.r),
-                        ),
-                        child: Text(
-                          l10n.proSaveBadge,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Positioned(
+                    //   right: 10.w,
+                    //   top: -10.h,
+                    //   child: Container(
+                    //     padding: EdgeInsets.symmetric(
+                    //       horizontal: 8.w,
+                    //       vertical: 3.h,
+                    //     ),
+                    //     decoration: BoxDecoration(
+                    //       color: primaryColor,
+                    //       borderRadius: BorderRadius.circular(16.r),
+                    //     ),
+                    //     child: Text(
+                    //       l10n.proSaveBadge,
+                    //       maxLines: 1,
+                    //       overflow: TextOverflow.ellipsis,
+                    //       style: TextStyle(
+                    //         color: Colors.white,
+                    //         fontSize: 10.sp,
+                    //         fontWeight: FontWeight.bold,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
                 SizedBox(height: 10.h),
@@ -425,33 +422,22 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(height: 4.h),
-                              if (yearlyPrice != null)
-                                Text(
-                                  l10n.proYearlySubtitle(yearlyPrice),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: Colors.grey[600],
-                                    fontSize: 11.sp,
-                                  ),
-                                ),
                             ],
                           ),
                         ),
-                        if (yearlyPerWeekPrice != null)
+                        if (yearlyPrice != null)
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                yearlyPerWeekPrice,
+                                yearlyPrice,
                                 style: TextStyle(
                                   fontSize: 13.sp,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                l10n.proPerWeek,
+                                l10n.proPerYear,
                                 style: TextStyle(
                                   color: Colors.grey[600],
                                   fontSize: 10.sp,

@@ -681,7 +681,13 @@ class AppLocalizationsJa extends AppLocalizations {
   String get proTrialDuration => '3日間';
 
   @override
+  String get proTrialFreePrice => 'Free';
+
+  @override
   String get proPerWeek => '週あたり';
+
+  @override
+  String get proPerYear => 'per year';
 
   @override
   String proYearlySubtitle(String price) {

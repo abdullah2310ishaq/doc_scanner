@@ -667,7 +667,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get proEnableTrial => 'Enable Trial';
 
   @override
-  String get proTrialPlanTitle => '3-Day Full Access';
+  String get proTrialPlanTitle => '3-Day Free Trial';
 
   @override
   String get proYearlyPlanTitle => 'Yearly';
@@ -677,7 +677,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String proTrialDisclaimer(String price) {
-    return 'After 3 days - then weekly subscription for $price will start. Cancel anytime 24 hours before renewal.';
+    return 'After 3 days Free trial - then weekly subscription for $price will start. Cancel anytime 24 hours before renewal.';
   }
 
   @override
@@ -694,7 +694,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get proTrialDuration => 'For 3 days';
 
   @override
+  String get proTrialFreePrice => 'Free';
+
+  @override
   String get proPerWeek => 'per week';
+
+  @override
+  String get proPerYear => 'per year';
 
   @override
   String proYearlySubtitle(String price) {

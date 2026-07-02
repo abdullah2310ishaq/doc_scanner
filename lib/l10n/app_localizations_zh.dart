@@ -675,7 +675,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get proTrialDuration => '3 天内';
 
   @override
+  String get proTrialFreePrice => 'Free';
+
+  @override
   String get proPerWeek => '每周';
+
+  @override
+  String get proPerYear => 'per year';
 
   @override
   String proYearlySubtitle(String price) {
