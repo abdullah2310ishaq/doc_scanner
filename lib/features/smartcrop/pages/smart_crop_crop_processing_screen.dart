@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/utils/credit_gate.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/toast.dart';
 import '../../../in_app/paywall_routes.dart';
+import '../../subscription/models/feature_type.dart';
 import '../../subscription/providers/subscription_provider.dart';
 import '../models/smart_crop_page_model.dart';import '../../home/providers/recent_documents_provider.dart';
 import '../../home/services/recent_documents_service.dart';
@@ -58,6 +60,16 @@ class _SmartCropCropProcessingScreenState
       return;
     }
 
+    final canGenerate = await CreditGate.ensureCanGenerate(
+      context,
+      feature: FeatureType.smartCrop,
+    );
+    if (!mounted) return;
+    if (!canGenerate) {
+      Navigator.of(context).pop();
+      return;
+    }
+
     try {
       _updateProgress(ProcessingStep.reading, 0.2, 0.15);
       _updateProgress(ProcessingStep.detecting, 0.45, 0.35);
@@ -73,6 +85,9 @@ class _SmartCropCropProcessingScreenState
       _updateProgress(ProcessingStep.generating, 0.9, 0.85);
       _updateProgress(ProcessingStep.completed, 1.0, 1.0);
 
+      if (!mounted) return;
+
+      await CreditGate.recordGeneration(context, feature: FeatureType.smartCrop);
       if (!mounted) return;
 
       await _goToFiltersAfterGate(croppedPaths);

@@ -17,6 +17,7 @@ import 'core/services/locale_service.dart';
 import 'core/services/remote_config_service.dart';
 import 'features/home/providers/recent_documents_provider.dart';
 import 'features/subscription/providers/subscription_provider.dart';
+import 'features/credits/providers/credit_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +33,11 @@ Future<void> main() async {
 
   final subscriptionProvider = SubscriptionProvider();
   await subscriptionProvider.initialize();
+
+  final creditProvider = CreditProvider(
+    subscriptionProvider: subscriptionProvider,
+  );
+  await creditProvider.initialize();
 
   if (!kReleaseMode && kDebugForcePro) {
     await subscriptionProvider.debugSetPro(true);
@@ -76,6 +82,7 @@ Future<void> main() async {
           create: (_) => RecentDocumentsProvider()..loadSummary(),
         ),
         ChangeNotifierProvider.value(value: subscriptionProvider),
+        ChangeNotifierProvider.value(value: creditProvider),
       ],
       // Root par fuzool MediaQuery hata kar AppLifecycleObserver ko clean wrap kiya
       child: const AppLifecycleObserver(child: DocScannerApp()),

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../core/providers/connectivity_provider.dart';
 import '../features/subscription/providers/subscription_provider.dart';
+import 'ad_banner_loading_placeholder.dart';
 import 'ad_unit_ids.dart';
 import 'native_ad_sizes.dart';
 
@@ -20,15 +21,18 @@ class NativeAdLanguageCache {
   NativeAd? _nativeAd;
   bool _isLoaded = false;
   bool _isLoading = false;
+  bool _hasFailed = false;
   final List<VoidCallback> _listeners = [];
 
   bool get isLoaded => _isLoaded && _nativeAd != null;
+  bool get isLoading => _isLoading;
+  bool get hasFailed => _hasFailed;
 
   NativeAd? get nativeAd => _nativeAd;
 
   void addListener(VoidCallback listener) {
     _listeners.add(listener);
-    if (isLoaded) {
+    if (isLoaded || _hasFailed) {
       listener();
     }
   }
@@ -43,6 +47,9 @@ class NativeAdLanguageCache {
     }
 
     _isLoading = true;
+    _hasFailed = false;
+    _notifyListeners();
+
     _nativeAd = NativeAd(
       adUnitId: _androidTestAdUnitId,
       factoryId: 'listTileLanguage',
@@ -51,6 +58,7 @@ class NativeAdLanguageCache {
         onAdLoaded: (ad) {
           _isLoaded = true;
           _isLoading = false;
+          _hasFailed = false;
           _notifyListeners();
         },
         onAdFailedToLoad: (ad, error) {
@@ -58,6 +66,8 @@ class NativeAdLanguageCache {
           _nativeAd = null;
           _isLoaded = false;
           _isLoading = false;
+          _hasFailed = true;
+          _notifyListeners();
         },
       ),
     )..load();
@@ -85,7 +95,12 @@ class _NativeAdLanguageState extends State<NativeAdLanguage> {
   void initState() {
     super.initState();
     _cache.addListener(_onCacheUpdated);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _tryLoadAd());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _tryLoadAd();
   }
 
   void _tryLoadAd() {
@@ -125,17 +140,21 @@ class _NativeAdLanguageState extends State<NativeAdLanguage> {
     }
 
     final ad = _cache.nativeAd;
-    if (!_cache.isLoaded || ad == null) {
+    if (_cache.isLoaded && ad != null) {
+      return SizedBox(
+        height: NativeAdSizes.bannerHeight,
+        width: double.infinity,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: AdWidget(ad: ad),
+        ),
+      );
+    }
+
+    if (_cache.hasFailed) {
       return const SizedBox.shrink();
     }
 
-    return SizedBox(
-      height: NativeAdSizes.bannerHeight,
-      width: double.infinity,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(8),
-        child: AdWidget(ad: ad),
-      ),
-    );
+    return const AdBannerLoadingPlaceholder();
   }
 }

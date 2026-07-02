@@ -5,10 +5,12 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/credit_gate.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/delete_dialog.dart';
 import '../../../core/widgets/toast.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../subscription/models/feature_type.dart';
 import '../models/chatbot_message_model.dart';
 import '../providers/chatbot_chat_provider.dart';
 import '../providers/chatbot_history_provider.dart';
@@ -77,6 +79,13 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
   Future<void> _sendMessage(ChatbotChatProvider provider, String text) async {
     if (text.trim().isEmpty) return;
     final messageText = text.trim();
+
+    final canGenerate = await CreditGate.ensureCanGenerate(
+      context,
+      feature: FeatureType.askPdf,
+    );
+    if (!mounted || !canGenerate) return;
+
     _inputController.clear();
 
     // Trigger the asynchronous send operation.
@@ -88,6 +97,11 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
 
     // Wait for the chatbot service to fetch the OpenAI reply and save it.
     await sendFuture;
+
+    if (!mounted) return;
+    if (provider.errorMessage == null) {
+      await CreditGate.recordGeneration(context, feature: FeatureType.askPdf);
+    }
 
     // Scroll to bottom again to show the complete AI reply.
     _scrollToBottom();

@@ -10,11 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/credit_gate.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../l10n/app_localizations.dart';
 import '../constants/dummy_languages.dart';
+import '../../subscription/models/feature_type.dart';
 import '../models/translate_export_data.dart';
 import '../models/translate_export_scope.dart';
+import '../models/translate_language.dart';
 import '../providers/translate_result_provider.dart';
 import '../services/translate_errors.dart';
 import '../services/translate_save_pdf_service.dart';
@@ -232,8 +235,19 @@ class TranslateResultScreen extends StatelessWidget {
       emptyLabel: l10n.translateNoLanguagesFound,
       languages: DummyLanguages.all(l10n),
       selected: provider.selectedLanguage,
-      onSelected: provider.selectLanguage,
+      onSelected: (language) => _onLanguageSelected(context, provider, language),
     );
+  }
+
+  Future<void> _onLanguageSelected(
+    BuildContext context,
+    TranslateResultProvider provider,
+    TranslateLanguage language,
+  ) async {
+    await provider.selectLanguage(language);
+    if (!context.mounted) return;
+    if (!provider.hasTranslation || provider.translateFailure != null) return;
+    await CreditGate.recordGeneration(context, feature: FeatureType.ocrScan);
   }
 
   @override

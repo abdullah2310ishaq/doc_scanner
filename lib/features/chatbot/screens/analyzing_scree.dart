@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/utils/credit_gate.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/toast.dart';
 import '../../../in_app/paywall_routes.dart';
+import '../../subscription/models/feature_type.dart';
 import '../../subscription/providers/subscription_provider.dart';
 import '../providers/chatbot_analyze_provider.dart';
 import '../providers/chatbot_chat_provider.dart';
@@ -21,8 +23,7 @@ class AnalyzeScreen extends StatefulWidget {
     return Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => ChangeNotifierProvider(
-          create: (_) =>
-              ChatbotAnalyzeProvider(sourcePdfPath: pdfPath)..start(),
+          create: (_) => ChatbotAnalyzeProvider(sourcePdfPath: pdfPath),
           child: AnalyzeScreen(pdfPath: pdfPath),
         ),
       ),
@@ -37,6 +38,30 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
   bool _navigated = false;
   bool _paywallGatePassed = false;
   bool _paywallGateStarted = false;
+  bool _analysisStarted = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _startAnalysisIfAllowed());
+  }
+
+  Future<void> _startAnalysisIfAllowed() async {
+    if (_analysisStarted || !mounted) return;
+
+    final canGenerate = await CreditGate.ensureCanGenerate(
+      context,
+      feature: FeatureType.askPdf,
+    );
+    if (!mounted) return;
+    if (!canGenerate) {
+      Navigator.of(context).pop();
+      return;
+    }
+
+    _analysisStarted = true;
+    await context.read<ChatbotAnalyzeProvider>().start();
+  }
 
   Future<void> _runPaywallGateIfNeeded(ChatbotAnalyzeProvider provider) async {
     if (_paywallGateStarted || _paywallGatePassed) {
@@ -51,6 +76,9 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
       setState(() => _paywallGatePassed = true);
       return;
     }
+
+    await CreditGate.recordGeneration(context, feature: FeatureType.askPdf);
+    if (!mounted) return;
 
     _paywallGateStarted = true;
     await PaywallRoutes.openFeatureGate(context);

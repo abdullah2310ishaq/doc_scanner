@@ -3,11 +3,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/constants/home_assets.dart';
+import '../../../core/utils/credit_gate.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../in_app/paywall_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../core/widgets/toast.dart';
+import '../../subscription/models/feature_type.dart';
 import '../../subscription/providers/subscription_provider.dart';
 import '../../translate/models/translate_language.dart';
 import '../providers/pdf_assistant_process_provider.dart';
@@ -40,7 +42,7 @@ class PdfAssistantProcessingScreen extends StatefulWidget {
             displayName: displayName,
             targetLanguage: targetLanguage,
             pageLabelFor: l10n.pdfAssistantPageLabel,
-          )..start(),
+          ),
           child: PdfAssistantProcessingScreen(
             originalPath: originalPath,
             displayName: displayName,
@@ -59,6 +61,30 @@ class PdfAssistantProcessingScreen extends StatefulWidget {
 class _PdfAssistantProcessingScreenState
     extends State<PdfAssistantProcessingScreen> {
   bool _navigated = false;
+  bool _processingStarted = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _startProcessingIfAllowed());
+  }
+
+  Future<void> _startProcessingIfAllowed() async {
+    if (_processingStarted || !mounted) return;
+
+    final canGenerate = await CreditGate.ensureCanGenerate(
+      context,
+      feature: FeatureType.pdfAssistant,
+    );
+    if (!mounted) return;
+    if (!canGenerate) {
+      Navigator.of(context).pop();
+      return;
+    }
+
+    _processingStarted = true;
+    await context.read<PdfAssistantProcessProvider>().start();
+  }
 
   void _handleState(PdfAssistantProcessProvider provider) {
     if (_navigated) return;
@@ -67,7 +93,13 @@ class _PdfAssistantProcessingScreenState
         provider.session != null) {
       _navigated = true;
       final session = provider.session!;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (!mounted) return;
+
+        await CreditGate.recordGeneration(
+          context,
+          feature: FeatureType.pdfAssistant,
+        );
         if (!mounted) return;
 
         final resultScreen = PdfAssistantResultScreen(session: session);

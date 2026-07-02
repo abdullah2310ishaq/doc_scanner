@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/utils/credit_gate.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../in_app/paywall_routes.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../subscription/models/feature_type.dart';
 import '../../subscription/providers/subscription_provider.dart';
 import '../models/ocr_text_block.dart';
 import '../providers/ocr_analyze_provider.dart';
@@ -28,7 +30,7 @@ class OcrAnalyzeScreen extends StatefulWidget {
   }) {
     final route = MaterialPageRoute<void>(
       builder: (_) => ChangeNotifierProvider(
-        create: (_) => OcrAnalyzeProvider(imagePath: imagePath)..analyze(),
+        create: (_) => OcrAnalyzeProvider(imagePath: imagePath),
         child: const OcrAnalyzeScreen(),
       ),
     );
@@ -46,6 +48,30 @@ class OcrAnalyzeScreen extends StatefulWidget {
 class _OcrAnalyzeScreenState extends State<OcrAnalyzeScreen> {
   bool _paywallGatePassed = false;
   bool _paywallGateStarted = false;
+  bool _analysisStarted = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _startAnalysisIfAllowed());
+  }
+
+  Future<void> _startAnalysisIfAllowed() async {
+    if (_analysisStarted || !mounted) return;
+
+    final canGenerate = await CreditGate.ensureCanGenerate(
+      context,
+      feature: FeatureType.ocrScan,
+    );
+    if (!mounted) return;
+    if (!canGenerate) {
+      Navigator.of(context).pop();
+      return;
+    }
+
+    _analysisStarted = true;
+    await context.read<OcrAnalyzeProvider>().analyze();
+  }
 
   Future<void> _runPaywallGateIfNeeded(OcrAnalyzeProvider provider) async {
     if (_paywallGateStarted || _paywallGatePassed) {
@@ -60,6 +86,9 @@ class _OcrAnalyzeScreenState extends State<OcrAnalyzeScreen> {
       setState(() => _paywallGatePassed = true);
       return;
     }
+
+    await CreditGate.recordGeneration(context, feature: FeatureType.ocrScan);
+    if (!mounted) return;
 
     _paywallGateStarted = true;
     await PaywallRoutes.openOcrGate(context);
@@ -210,13 +239,21 @@ class _OcrAnalyzeBody extends StatelessWidget {
     AppToast.show(context, copySuccessMessage);
   }
 
-  void _onTranslate(BuildContext context) {
+  Future<void> _onTranslate(BuildContext context) async {
     if (fullText.isEmpty) {
       AppToast.show(context, emptyMessage);
       return;
     }
 
-    TranslateResultScreen.open(context, sourceText: fullText);
+    final canGenerate = await CreditGate.ensureCanGenerate(
+      context,
+      feature: FeatureType.ocrScan,
+    );
+    if (!context.mounted || !canGenerate) {
+      return;
+    }
+
+    await TranslateResultScreen.open(context, sourceText: fullText);
   }
 
   @override
