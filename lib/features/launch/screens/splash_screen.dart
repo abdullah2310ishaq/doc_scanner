@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
+import '../../../ads/app_open.dart';
+import '../../../ads/inter.dart';
+import '../../../core/config/openai_config.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../features/subscription/providers/subscription_provider.dart';
@@ -11,7 +14,7 @@ import '../../settings/screens/first_language.dart';
 import '../services/app_launch_prefs_service.dart';
 import 'onboarding_screen.dart';
 
-/// Shows branding, initializes prefs, then routes to onboarding or home.
+/// Shows branding, loads splash ads from remote config, then routes onward.
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -21,6 +24,12 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final AppLaunchPrefsService _launchPrefs = AppLaunchPrefsService();
+  final InterstitialAdService _splashInterService = InterstitialAdService();
+
+  static const Duration _minSplashDuration = Duration(seconds: 4);
+  static const Duration _maxAdLoadDuration = Duration(seconds: 10);
+
+  bool _showAdDisclaimer = false;
 
   @override
   void initState() {
@@ -28,20 +37,102 @@ class _SplashScreenState extends State<SplashScreen> {
     _startLaunchFlow();
   }
 
-  Future<void> _startLaunchFlow() async {
-    await Future<void>.delayed(const Duration(milliseconds: 1500));
+  bool _shouldShowSplashInter({required bool isPro, required bool isFirstLaunch}) {
+    if (isPro || isFirstLaunch) return false;
 
-    if (!mounted) {
-      return;
+    final showInter = OpenAiConfig.splashInterAd;
+    final showAppOpen = OpenAiConfig.splashAppOpenAd;
+    if (!showInter && !showAppOpen) return false;
+    if (showInter && showAppOpen) return true;
+    return showInter;
+  }
+
+  bool _shouldShowSplashAppOpen({required bool isPro, required bool isFirstLaunch}) {
+    if (isPro || isFirstLaunch) return false;
+
+    final showInter = OpenAiConfig.splashInterAd;
+    final showAppOpen = OpenAiConfig.splashAppOpenAd;
+    if (showInter && showAppOpen) return false;
+    return showAppOpen;
+  }
+
+  Future<void> _waitForSplashAndAds({
+    required bool isPro,
+    required bool isFirstLaunch,
+  }) async {
+    final showInter = _shouldShowSplashInter(
+      isPro: isPro,
+      isFirstLaunch: isFirstLaunch,
+    );
+    final showAppOpen = _shouldShowSplashAppOpen(
+      isPro: isPro,
+      isFirstLaunch: isFirstLaunch,
+    );
+    final shouldShowAds = showInter || showAppOpen;
+
+    final splashStartedAt = DateTime.now();
+
+    if (shouldShowAds) {
+      if (showInter) {
+        _splashInterService.loadAd();
+      } else {
+        AppOpenAdService.instance.loadAd();
+      }
     }
 
+    await Future<void>.delayed(_minSplashDuration);
+    if (!mounted) return;
+
+    if (shouldShowAds) {
+      final elapsed = DateTime.now().difference(splashStartedAt);
+      final remainingLoadTime = _maxAdLoadDuration - elapsed;
+      if (remainingLoadTime > Duration.zero) {
+        if (showInter) {
+          await _splashInterService.waitUntilReady(timeout: remainingLoadTime);
+        } else {
+          await AppOpenAdService.instance.waitUntilReady(
+            timeout: remainingLoadTime,
+          );
+        }
+      }
+
+      if (!mounted) return;
+
+      if (showInter && _splashInterService.isAdAvailable) {
+        await _splashInterService.showAdIfAvailable();
+        AppOpenAdService.instance.blockNextForegroundShow();
+      } else if (showAppOpen && AppOpenAdService.instance.isAdAvailable) {
+        await AppOpenAdService.instance.showSplashAdIfAvailable();
+      }
+    }
+  }
+
+  Future<void> _startLaunchFlow() async {
     final subscription = context.read<SubscriptionProvider>();
-    if (subscription.isPro) {
+    final isPro = subscription.isPro;
+    final isFirstLaunch = await _launchPrefs.isFirstLaunch();
+
+    final showInter = _shouldShowSplashInter(
+      isPro: isPro,
+      isFirstLaunch: isFirstLaunch,
+    );
+    final showAppOpen = _shouldShowSplashAppOpen(
+      isPro: isPro,
+      isFirstLaunch: isFirstLaunch,
+    );
+    if (mounted && (showInter || showAppOpen)) {
+      setState(() => _showAdDisclaimer = true);
+    }
+
+    await _waitForSplashAndAds(isPro: isPro, isFirstLaunch: isFirstLaunch);
+
+    if (!mounted) return;
+
+    if (isPro) {
       _goHome();
       return;
     }
 
-    final isFirstLaunch = await _launchPrefs.isFirstLaunch();
     final hasCompletedOnboarding = await _launchPrefs.hasCompletedOnboarding();
     final hasSelectedInitialLanguage = await _launchPrefs
         .hasSelectedInitialLanguage();
@@ -72,7 +163,7 @@ class _SplashScreenState extends State<SplashScreen> {
       return;
     }
 
-    _goPaywall(showAdOnClose: true);
+    _goPaywall(showAdOnClose: false);
   }
 
   void _navigateAfterSplash({
@@ -178,14 +269,14 @@ class _SplashScreenState extends State<SplashScreen> {
                 ],
               ),
             ),
-            const Positioned(
+            Positioned(
               bottom: 48,
               left: 0,
               right: 0,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 28,
                     height: 28,
                     child: CircularProgressIndicator(
@@ -195,6 +286,20 @@ class _SplashScreenState extends State<SplashScreen> {
                       ),
                     ),
                   ),
+                  if (_showAdDisclaimer) ...[
+                    const SizedBox(height: 12),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Text(
+                        l10n.splashAdDisclaimer,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),

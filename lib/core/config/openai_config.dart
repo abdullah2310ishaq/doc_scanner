@@ -33,4 +33,8 @@ abstract final class OpenAiConfig {
     if (remote.isNotEmpty) return remote;
     return '';
   }
+
+  static bool get splashInterAd => RemoteConfigService.splashInterAd;
+
+  static bool get splashAppOpenAd => RemoteConfigService.splashAppOpenAd;
 }

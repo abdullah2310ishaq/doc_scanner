@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'ad_unit_ids.dart';
@@ -115,5 +117,62 @@ class AppOpenAdService {
     );
 
     _appOpenAd!.show();
+  }
+
+  Future<bool> waitUntilReady({
+    Duration timeout = const Duration(seconds: 5),
+  }) async {
+    if (isAdAvailable) {
+      return true;
+    }
+
+    loadAd();
+
+    final deadline = DateTime.now().add(timeout);
+    while (DateTime.now().isBefore(deadline)) {
+      if (isAdAvailable) {
+        return true;
+      }
+      await Future<void>.delayed(const Duration(milliseconds: 200));
+    }
+
+    return isAdAvailable;
+  }
+
+  Future<void> showSplashAdIfAvailable() async {
+    if (!_canShowAds || !isAdAvailable || _isShowingAd) {
+      return;
+    }
+
+    final ad = _appOpenAd;
+    if (ad == null) {
+      return;
+    }
+
+    final completer = Completer<void>();
+    _hasHandledColdStart = true;
+
+    ad.fullScreenContentCallback = FullScreenContentCallback(
+      onAdShowedFullScreenContent: (shownAd) {
+        _isShowingAd = true;
+      },
+      onAdDismissedFullScreenContent: (dismissedAd) {
+        _isShowingAd = false;
+        dismissedAd.dispose();
+        _appOpenAd = null;
+        loadAd();
+        if (!completer.isCompleted) completer.complete();
+      },
+      onAdFailedToShowFullScreenContent: (failedAd, error) {
+        _isShowingAd = false;
+        failedAd.dispose();
+        _appOpenAd = null;
+        loadAd();
+        if (!completer.isCompleted) completer.complete();
+      },
+    );
+
+    ad.show();
+    return completer.future;
   }
 }

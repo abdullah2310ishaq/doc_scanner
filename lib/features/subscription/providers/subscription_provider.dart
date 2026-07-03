@@ -40,10 +40,12 @@ class SubscriptionProvider extends ChangeNotifier {
   BillingService get billingService => _billingService;
 
   Future<void> initialize() async {
+
+
+
     if (_isInitialized) {
       return;
     }
-
     _isPro = await _prefsService.isProUser();
     _activePlan = await _prefsService.getActivePlan();
     _planPeriodStart = await _prefsService.getPlanPeriodStart();
@@ -70,7 +72,7 @@ class SubscriptionProvider extends ChangeNotifier {
 
     await _billingService.restorePurchases();
 
-    _isInitialized = true;
+     _isInitialized = true;
     notifyListeners();
   }
 

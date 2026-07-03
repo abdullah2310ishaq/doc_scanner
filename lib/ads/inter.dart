@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -131,5 +133,35 @@ class InterstitialAdService {
 
       ad.show();
     });
+  }
+
+  Future<void> showAdIfAvailable() async {
+    final ad = _interstitialAd;
+    if (ad == null) {
+      loadAd();
+      return;
+    }
+
+    final completer = Completer<void>();
+
+    ad.fullScreenContentCallback = FullScreenContentCallback(
+      onAdDismissedFullScreenContent: (dismissedAd) {
+        dismissedAd.dispose();
+        _interstitialAd = null;
+        _isAvailable = false;
+        loadAd();
+        if (!completer.isCompleted) completer.complete();
+      },
+      onAdFailedToShowFullScreenContent: (failedAd, error) {
+        failedAd.dispose();
+        _interstitialAd = null;
+        _isAvailable = false;
+        loadAd();
+        if (!completer.isCompleted) completer.complete();
+      },
+    );
+
+    ad.show();
+    return completer.future;
   }
 }

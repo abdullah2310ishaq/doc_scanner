@@ -3,4 +3,6 @@ abstract final class RemoteConfigKeys {
   static const askPdfKey = 'ask_pdf_key';
   static const ocrTranslationKey = 'ocr_translation_key';
   static const apiModal = 'api_modal';
+  static const splashInterAd = 'splashInterAd';
+  static const splashAppOpenAd = 'splashAppOpenAd';
 }

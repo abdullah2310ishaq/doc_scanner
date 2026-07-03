@@ -2159,7 +2159,7 @@ abstract class AppLocalizations {
   /// No description provided for @splashAdDisclaimer.
   ///
   /// In en, this message translates to:
-  /// **'This action may lead to an ad'**
+  /// **'This action may perform an ad'**
   String get splashAdDisclaimer;
 
   /// No description provided for @adLoading.

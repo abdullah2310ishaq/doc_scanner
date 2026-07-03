@@ -21,6 +21,8 @@ abstract final class RemoteConfigService {
       RemoteConfigKeys.askPdfKey: '',
       RemoteConfigKeys.ocrTranslationKey: '',
       RemoteConfigKeys.apiModal: 'gpt-5.4-mini',
+      RemoteConfigKeys.splashInterAd: false,
+      RemoteConfigKeys.splashAppOpenAd: false,
     });
 
     try {
@@ -43,6 +45,14 @@ abstract final class RemoteConfigService {
           '[RemoteConfig] ${RemoteConfigKeys.apiModal} — '
           '${remoteConfig.getString(RemoteConfigKeys.apiModal)}',
         );
+        debugPrint(
+          '[RemoteConfig] ${RemoteConfigKeys.splashInterAd} — '
+          '${remoteConfig.getBool(RemoteConfigKeys.splashInterAd)}',
+        );
+        debugPrint(
+          '[RemoteConfig] ${RemoteConfigKeys.splashAppOpenAd} — '
+          '${remoteConfig.getBool(RemoteConfigKeys.splashAppOpenAd)}',
+        );
       }
     } catch (error, stack) {
       if (kDebugMode) {
@@ -64,6 +74,12 @@ abstract final class RemoteConfigService {
 
   static String get apiModal =>
       _remoteConfig?.getString(RemoteConfigKeys.apiModal) ?? '';
+
+  static bool get splashInterAd =>
+      _remoteConfig?.getBool(RemoteConfigKeys.splashInterAd) ?? false;
+
+  static bool get splashAppOpenAd =>
+      _remoteConfig?.getBool(RemoteConfigKeys.splashAppOpenAd) ?? false;
 
   static void _logKeyStatus(String name, String value) {
     debugPrint('[RemoteConfig] $name — ${value.isNotEmpty ? 'loaded' : 'empty'}');

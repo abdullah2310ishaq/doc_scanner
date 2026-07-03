@@ -1102,7 +1102,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get splashTagline => 'AI-powered document scanning';
 
   @override
-  String get splashAdDisclaimer => 'This action may lead to an ad';
+  String get splashAdDisclaimer => 'This action may perform an ad';
 
   @override
   String get adLoading => 'Ad loading...';

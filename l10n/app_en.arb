@@ -410,7 +410,7 @@
   "onboardingStart": "Get Started →",
 
   "splashTagline": "AI-powered document scanning",
-  "splashAdDisclaimer": "This action may lead to an ad",
+  "splashAdDisclaimer": "This action may perform an ad",
   "adLoading": "Ad loading...",
 
   "onboardingPage1Title": "Scan Text \nin Seconds",
