@@ -14,6 +14,7 @@ import '../../../core/utils/credit_gate.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../l10n/app_localizations.dart';
 import '../constants/dummy_languages.dart';
+import '../../home/providers/recent_documents_provider.dart';
 import '../../subscription/models/feature_type.dart';
 import '../models/translate_export_data.dart';
 import '../models/translate_export_scope.dart';
@@ -179,11 +180,16 @@ class TranslateResultScreen extends StatelessWidget {
             l10n: l10n,
           );
         case _TranslateSaveFormat.png:
-          await TranslateSavePngService().save(
+          final savedPath = await TranslateSavePngService().save(
             data: data,
             scope: scope,
             l10n: l10n,
           );
+          if (context.mounted) {
+            await context
+                .read<RecentDocumentsProvider>()
+                .registerImage(savedPath);
+          }
       }
 
       if (!context.mounted) return;

@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 
 import '../../../core/theme/app_colors.dart';
@@ -208,7 +212,22 @@ class TranslateSavePngService {
     );
 
     final fileName = _fileName(scope);
-    return TranslateExportStorage.saveBytes(bytes: pngBytes, fileName: fileName);
+    final exportPath = await TranslateExportStorage.saveBytes(
+      bytes: pngBytes,
+      fileName: fileName,
+    );
+
+    final exportFile = File(exportPath);
+    if (await exportFile.exists()) {
+      return exportPath;
+    }
+
+    final tempPath = p.join((await getTemporaryDirectory()).path, fileName);
+    if (await File(tempPath).exists()) {
+      return tempPath;
+    }
+
+    return exportPath;
   }
 
   Widget _buildTextSection({
