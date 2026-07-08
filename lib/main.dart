@@ -18,12 +18,13 @@ import 'core/services/remote_config_service.dart';
 import 'features/home/providers/recent_documents_provider.dart';
 import 'features/subscription/providers/subscription_provider.dart';
 import 'features/credits/providers/credit_provider.dart';
-
+import 'package:firebase_analytics/firebase_analytics.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await RemoteConfigService.initialize();
   await MobileAds.instance.initialize();
+  FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
 
   final connectivityProvider = ConnectivityProvider();
   await connectivityProvider.initialize();
