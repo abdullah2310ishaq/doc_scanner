@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../ads/native_adhome.dart';
+import '../../../ads/native_small_ad_view.dart';
 import '../../../core/constants/home_assets.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
@@ -115,7 +116,8 @@ class HomeScreen extends StatelessWidget {
                         onTap: () => _openSmartCropInputSheet(scaffoldContext),
                       ),
                       const SizedBox(height: 20),
-                      const NativeAdHome(),
+                      // const NativeAdHome(),
+                       const NativeMediumAdView(),
                       const HomeRecentFolders(),
                     ]),
                   ),

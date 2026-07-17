@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../../ads/native_ad_language.dart';
+import '../../../ads/native_small_ad_view.dart';
 import '../../../core/services/locale_service.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/app_exit_guard.dart';
@@ -146,7 +147,7 @@ class _FirstTimeLanguageSelectionScreenState
                 left: 16.w,
                 right: 16.w,
                 bottom: 16.h,
-                child: const NativeAdLanguage(),
+                child: const NativeMediumAdView(),
               ),
             ],
           ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+import '../../../ads/banner_ad_view.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/l10n_text.dart';
@@ -507,7 +508,7 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
                 // Static Persistent Ad banner jo hamesha lower most layer par active rehta hai
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 4),
-                  child: AdBannerWidget(),
+                  child: AdaptiveBannerAdView(),
                 ),
               ],
             ),

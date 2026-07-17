@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
+import '../../../ads/ad_unit_ids.dart';
 import '../../../ads/app_open.dart';
-import '../../../ads/inter.dart';
+import '../../../ads/interstitial_ad_manager.dart';
 import '../../../core/config/openai_config.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
@@ -24,7 +25,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final AppLaunchPrefsService _launchPrefs = AppLaunchPrefsService();
-  final InterstitialAdService _splashInterService = InterstitialAdService();
 
   static const Duration _minSplashDuration = Duration(seconds: 4);
   static const Duration _maxAdLoadDuration = Duration(seconds: 10);
@@ -72,37 +72,35 @@ class _SplashScreenState extends State<SplashScreen> {
 
     final splashStartedAt = DateTime.now();
 
-    if (shouldShowAds) {
-      if (showInter) {
-        _splashInterService.loadAd();
-      } else {
-        AppOpenAdService.instance.loadAd();
-      }
+    if (shouldShowAds && showAppOpen) {
+      AppOpenAdService.instance.loadAd();
     }
 
     await Future<void>.delayed(_minSplashDuration);
     if (!mounted) return;
 
     if (shouldShowAds) {
-      final elapsed = DateTime.now().difference(splashStartedAt);
-      final remainingLoadTime = _maxAdLoadDuration - elapsed;
-      if (remainingLoadTime > Duration.zero) {
-        if (showInter) {
-          await _splashInterService.waitUntilReady(timeout: remainingLoadTime);
-        } else {
+      if (showInter) {
+        await InterstitialAdManager.show(
+          context: context,
+          adUnitId: AdIds.testInterId,
+        );
+        if (!mounted) return;
+        AppOpenAdService.instance.blockNextForegroundShow();
+      } else {
+        final elapsed = DateTime.now().difference(splashStartedAt);
+        final remainingLoadTime = _maxAdLoadDuration - elapsed;
+        if (remainingLoadTime > Duration.zero) {
           await AppOpenAdService.instance.waitUntilReady(
             timeout: remainingLoadTime,
           );
         }
-      }
 
-      if (!mounted) return;
+        if (!mounted) return;
 
-      if (showInter && _splashInterService.isAdAvailable) {
-        await _splashInterService.showAdIfAvailable();
-        AppOpenAdService.instance.blockNextForegroundShow();
-      } else if (showAppOpen && AppOpenAdService.instance.isAdAvailable) {
-        await AppOpenAdService.instance.showSplashAdIfAvailable();
+        if (AppOpenAdService.instance.isAdAvailable) {
+          await AppOpenAdService.instance.showSplashAdIfAvailable();
+        }
       }
     }
   }

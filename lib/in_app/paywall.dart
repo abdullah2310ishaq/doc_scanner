@@ -3,8 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
+import '../ads/ad_unit_ids.dart';
 import '../ads/app_open.dart';
-import '../ads/inter.dart';
+import '../ads/interstitial_ad_manager.dart';
 import '../core/theme/app_colors.dart';
 import '../core/utils/l10n_extension.dart';
 import '../features/subscription/providers/subscription_provider.dart';
@@ -29,7 +30,6 @@ class ProAccessScreen extends StatefulWidget {
 }
 
 class _ProAccessScreenState extends State<ProAccessScreen> {
-  final InterstitialAdService _interstitialService = InterstitialAdService();
   late bool _isTrialEnabled;
   SubscriptionProvider? _subscription;
   bool _wasPurchasing = false;
@@ -44,9 +44,6 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
   void initState() {
     super.initState();
     _isTrialEnabled = widget.initialTrialEnabled;
-    if (widget.showAdOnClose) {
-      _interstitialService.loadAd();
-    }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _subscription = context.read<SubscriptionProvider>();
       _subscription?.addListener(_onSubscriptionChanged);
@@ -129,25 +126,21 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
     if (widget.showAdOnClose) {
       AppOpenAdService.instance.blockNextForegroundShow();
 
-      final navigator = Navigator.of(context);
-      final loadingMessage = context.l10n.adLoading;
-
-      _interstitialService.showAdWithLoading(
+      InterstitialAdManager.show(
         context: context,
-        loadingMessage: loadingMessage,
-        onLoadingDismissed: () {
-          if (!navigator.mounted) {
+        adUnitId: AdIds.testInterId,
+        onComplete: () {
+          if (!mounted) {
             return;
           }
           if (widget.replaceOnExit) {
-            navigator.pushReplacement(
+            Navigator.of(context).pushReplacement(
               MaterialPageRoute<void>(builder: (_) => widget.nextScreen),
             );
           } else {
-            navigator.pop();
+            Navigator.of(context).pop();
           }
         },
-        onAdDismissed: () {},
       );
       return;
     }
