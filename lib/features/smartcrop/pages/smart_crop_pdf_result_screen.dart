@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 
+import '../../../ads/back_inter_ad_service.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/delete_dialog.dart';
@@ -64,9 +65,15 @@ class _SmartCropPdfResultScreenState extends State<SmartCropPdfResultScreen> {
   }
 
   void _goHome() {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute<void>(builder: (_) => const MainShellScreen()),
-      (route) => false,
+    BackInterAdService.handleBackToHome(
+      context,
+      onComplete: () {
+        if (!mounted) return;
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute<void>(builder: (_) => const MainShellScreen()),
+          (route) => false,
+        );
+      },
     );
   }
 

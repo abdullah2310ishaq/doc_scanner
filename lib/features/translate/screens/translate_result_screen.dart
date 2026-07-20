@@ -1,3 +1,4 @@
+import 'package:doc_scanner/ads/back_inter_ad_service.dart';
 import 'package:doc_scanner/core/providers/connectivity_provider.dart';
 import 'package:doc_scanner/core/services/permission_service.dart';
 import 'package:doc_scanner/core/utils/network_guard.dart';
@@ -55,9 +56,15 @@ class TranslateResultScreen extends StatelessWidget {
   }
 
   void _goHome(BuildContext context) {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute<void>(builder: (_) => const MainShellScreen()),
-      (route) => false,
+    BackInterAdService.handleBackToHome(
+      context,
+      onComplete: () {
+        if (!context.mounted) return;
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute<void>(builder: (_) => const MainShellScreen()),
+          (route) => false,
+        );
+      },
     );
   }
 

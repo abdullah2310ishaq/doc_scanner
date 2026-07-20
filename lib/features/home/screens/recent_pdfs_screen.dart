@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../ads/banner_ad_view.dart';
+import '../../../ads/native_small_ad_view.dart';
+import '../../../core/services/remote_config_service.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/l10n_text.dart';
@@ -137,6 +139,22 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
     } catch (_) {
       if (mounted) AppToast.show(context, l10n.commonError);
     }
+  }
+
+  Widget _buildBottomAd() {
+    final showNative = RemoteConfigService.recentPdfNativeAd;
+    final showBanner = RemoteConfigService.recentPdfBannerAd;
+
+    if (showNative) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(vertical: 4),
+        child: NativeMediumAdView(),
+      );
+    }
+    if (showBanner) {
+      return AdaptiveBannerAdView();
+    }
+    return const SizedBox.shrink();
   }
 
   Future<void> _delete(RecentFileModel file) async {
@@ -505,11 +523,7 @@ class _RecentPdfsScreenState extends State<RecentPdfsScreen> {
                     ),
                   ),
 
-                // Static Persistent Ad banner jo hamesha lower most layer par active rehta hai
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 4),
-                  child: AdaptiveBannerAdView(),
-                ),
+                _buildBottomAd(),
               ],
             ),
           ),

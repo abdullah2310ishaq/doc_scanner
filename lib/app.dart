@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import 'ads/back_inter_ad_navigator_observer.dart';
 import 'core/navigation/app_navigator.dart';
 import 'core/services/locale_service.dart';
 import 'core/theme/app_theme.dart';
@@ -25,7 +26,10 @@ class DocScannerApp extends StatelessWidget {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               navigatorKey: appNavigatorKey,
-              navigatorObservers: [appRouteObserver],
+              navigatorObservers: [
+                appRouteObserver,
+                backInterAdNavigatorObserver,
+              ],
               locale: localeService.locale,
               onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
               theme: AppTheme.light,

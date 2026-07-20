@@ -23,6 +23,11 @@ abstract final class RemoteConfigService {
       RemoteConfigKeys.apiModal: 'gpt-5.4-mini',
       RemoteConfigKeys.splashInterAd: false,
       RemoteConfigKeys.splashAppOpenAd: false,
+      RemoteConfigKeys.recentPdfBannerAd: false,
+      RemoteConfigKeys.recentPdfNativeAd: false,
+      RemoteConfigKeys.ocrProcessingNativeAd: false,
+      RemoteConfigKeys.pdfProcessingNativeAd: false,
+      RemoteConfigKeys.backInterAd: false,
     });
 
     try {
@@ -53,6 +58,26 @@ abstract final class RemoteConfigService {
           '[RemoteConfig] ${RemoteConfigKeys.splashAppOpenAd} — '
           '${remoteConfig.getBool(RemoteConfigKeys.splashAppOpenAd)}',
         );
+        debugPrint(
+          '[RemoteConfig] ${RemoteConfigKeys.recentPdfBannerAd} — '
+          '${remoteConfig.getBool(RemoteConfigKeys.recentPdfBannerAd)}',
+        );
+        debugPrint(
+          '[RemoteConfig] ${RemoteConfigKeys.recentPdfNativeAd} — '
+          '${remoteConfig.getBool(RemoteConfigKeys.recentPdfNativeAd)}',
+        );
+        debugPrint(
+          '[RemoteConfig] ${RemoteConfigKeys.ocrProcessingNativeAd} — '
+          '${remoteConfig.getBool(RemoteConfigKeys.ocrProcessingNativeAd)}',
+        );
+        debugPrint(
+          '[RemoteConfig] ${RemoteConfigKeys.pdfProcessingNativeAd} — '
+          '${remoteConfig.getBool(RemoteConfigKeys.pdfProcessingNativeAd)}',
+        );
+        debugPrint(
+          '[RemoteConfig] ${RemoteConfigKeys.backInterAd} — '
+          '${remoteConfig.getBool(RemoteConfigKeys.backInterAd)}',
+        );
       }
     } catch (error, stack) {
       if (kDebugMode) {
@@ -80,6 +105,21 @@ abstract final class RemoteConfigService {
 
   static bool get splashAppOpenAd =>
       _remoteConfig?.getBool(RemoteConfigKeys.splashAppOpenAd) ?? false;
+
+  static bool get recentPdfBannerAd =>
+      _remoteConfig?.getBool(RemoteConfigKeys.recentPdfBannerAd) ?? false;
+
+  static bool get recentPdfNativeAd =>
+      _remoteConfig?.getBool(RemoteConfigKeys.recentPdfNativeAd) ?? false;
+
+  static bool get ocrProcessingNativeAd =>
+      _remoteConfig?.getBool(RemoteConfigKeys.ocrProcessingNativeAd) ?? false;
+
+  static bool get pdfProcessingNativeAd =>
+      _remoteConfig?.getBool(RemoteConfigKeys.pdfProcessingNativeAd) ?? false;
+
+  static bool get backInterAd =>
+      _remoteConfig?.getBool(RemoteConfigKeys.backInterAd) ?? false;
 
   static void _logKeyStatus(String name, String value) {
     debugPrint('[RemoteConfig] $name — ${value.isNotEmpty ? 'loaded' : 'empty'}');

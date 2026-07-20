@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+import '../../../ads/native_small_ad_view.dart';
 import '../../../core/constants/home_assets.dart';
+import '../../../core/services/remote_config_service.dart';
 import '../../../core/utils/credit_gate.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
@@ -147,6 +149,19 @@ class _PdfAssistantProcessingScreenState
     };
   }
 
+  Widget _buildProcessingNativeAd() {
+    if (!RemoteConfigService.pdfProcessingNativeAd) {
+      return const SizedBox.shrink();
+    }
+
+    return const SafeArea(
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 4),
+        child: NativeMediumAdView(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -222,6 +237,7 @@ class _PdfAssistantProcessingScreenState
               ),
             ),
           ),
+          bottomNavigationBar: _buildProcessingNativeAd(),
         );
       },
     );

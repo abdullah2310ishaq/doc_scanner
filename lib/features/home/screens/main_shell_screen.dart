@@ -12,6 +12,9 @@ import 'home_screen.dart';
 class MainShellScreen extends StatefulWidget {
   const MainShellScreen({super.key});
 
+  /// Active shell route — used to detect pops back to home.
+  static Route<void>? homeRoute;
+
   @override
   State<MainShellScreen> createState() => _MainShellScreenState();
 }
@@ -20,6 +23,7 @@ class _MainShellScreenState extends State<MainShellScreen>
     with RouteAware, WidgetsBindingObserver {
   AppNavItem _current = AppNavItem.home;
   bool _routeSubscribed = false;
+  PageRoute<void>? _shellRoute;
 
   @override
   void initState() {
@@ -39,6 +43,8 @@ class _MainShellScreenState extends State<MainShellScreen>
 
     final route = ModalRoute.of(context);
     if (route is PageRoute<void>) {
+      _shellRoute = route;
+      MainShellScreen.homeRoute = route;
       appRouteObserver.subscribe(this, route);
       _routeSubscribed = true;
     }
@@ -47,6 +53,9 @@ class _MainShellScreenState extends State<MainShellScreen>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    if (identical(MainShellScreen.homeRoute, _shellRoute)) {
+      MainShellScreen.homeRoute = null;
+    }
     if (_routeSubscribed) {
       appRouteObserver.unsubscribe(this);
     }

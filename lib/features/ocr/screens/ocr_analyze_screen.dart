@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../../../ads/native_small_ad_view.dart';
+import '../../../core/services/remote_config_service.dart';
 import '../../../core/utils/credit_gate.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
@@ -114,6 +116,10 @@ class _OcrAnalyzeScreenState extends State<OcrAnalyzeScreen> {
           });
         }
 
+        final isProcessing =
+            provider.status == OcrAnalyzeStatus.loading ||
+            (provider.status == OcrAnalyzeStatus.ready && !_paywallGatePassed);
+
         return Scaffold(
           backgroundColor: AppColors.scaffoldBackground,
           appBar: AppBar(
@@ -130,6 +136,7 @@ class _OcrAnalyzeScreenState extends State<OcrAnalyzeScreen> {
             elevation: 0,
           ),
           body: _buildBody(context, provider, l10n),
+          bottomNavigationBar: isProcessing ? _buildProcessingNativeAd() : null,
         );
       },
     );
@@ -188,6 +195,19 @@ class _OcrAnalyzeScreenState extends State<OcrAnalyzeScreen> {
           emptyMessage: l10n.ocrEmpty,
         );
     }
+  }
+
+  Widget _buildProcessingNativeAd() {
+    if (!RemoteConfigService.ocrProcessingNativeAd) {
+      return const SizedBox.shrink();
+    }
+
+    return const SafeArea(
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 4),
+        child: NativeMediumAdView(),
+      ),
+    );
   }
 
   Widget _buildProcessingView(AppLocalizations l10n) {
