@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../ads/banner_ad_view.dart';
+import '../../../ads/native_small_ad_view.dart';
+import '../../../core/services/remote_config_service.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/delete_dialog.dart';
@@ -158,6 +161,22 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
     } catch (_) {
       if (mounted) AppToast.show(context, l10n.commonError);
     }
+  }
+
+  Widget _buildBottomAd() {
+    final showNative = RemoteConfigService.recentImageNativeAd;
+    final showBanner = RemoteConfigService.recentImageBannerAd;
+
+    if (showNative) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(vertical: 4),
+        child: NativeMediumAdView(),
+      );
+    }
+    if (showBanner) {
+      return AdaptiveBannerAdView();
+    }
+    return const SizedBox.shrink();
   }
 
   @override
@@ -332,9 +351,12 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
                     ),
                   ],
                 ),
-          bottomNavigationBar: _selectMode
-              ? SafeArea(
-                  child: Container(
+          bottomNavigationBar: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (_selectMode)
+                  Container(
                     height: 56,
                     margin: const EdgeInsets.fromLTRB(16, 0, 16, 12),
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -369,8 +391,10 @@ class _RecentImagesScreenState extends State<RecentImagesScreen> {
                       ],
                     ),
                   ),
-                )
-              : null,
+                _buildBottomAd(),
+              ],
+            ),
+          ),
         );
       },
     );

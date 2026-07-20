@@ -11,9 +11,8 @@ abstract final class RemoteConfigService {
     await remoteConfig.setConfigSettings(
       RemoteConfigSettings(
         fetchTimeout: const Duration(seconds: 10),
-        minimumFetchInterval: kDebugMode
-            ? Duration.zero
-            : const Duration(hours: 1),
+        minimumFetchInterval: Duration.zero
+            // : const Duration(hours: 1),
       ),
     );
     await remoteConfig.setDefaults(const {
@@ -25,6 +24,8 @@ abstract final class RemoteConfigService {
       RemoteConfigKeys.splashAppOpenAd: false,
       RemoteConfigKeys.recentPdfBannerAd: false,
       RemoteConfigKeys.recentPdfNativeAd: false,
+      RemoteConfigKeys.recentImageBannerAd: false,
+      RemoteConfigKeys.recentImageNativeAd: false,
       RemoteConfigKeys.ocrProcessingNativeAd: false,
       RemoteConfigKeys.pdfProcessingNativeAd: false,
       RemoteConfigKeys.backInterAd: false,
@@ -65,6 +66,14 @@ abstract final class RemoteConfigService {
         debugPrint(
           '[RemoteConfig] ${RemoteConfigKeys.recentPdfNativeAd} — '
           '${remoteConfig.getBool(RemoteConfigKeys.recentPdfNativeAd)}',
+        );
+        debugPrint(
+          '[RemoteConfig] ${RemoteConfigKeys.recentImageBannerAd} — '
+          '${remoteConfig.getBool(RemoteConfigKeys.recentImageBannerAd)}',
+        );
+        debugPrint(
+          '[RemoteConfig] ${RemoteConfigKeys.recentImageNativeAd} — '
+          '${remoteConfig.getBool(RemoteConfigKeys.recentImageNativeAd)}',
         );
         debugPrint(
           '[RemoteConfig] ${RemoteConfigKeys.ocrProcessingNativeAd} — '
@@ -111,6 +120,12 @@ abstract final class RemoteConfigService {
 
   static bool get recentPdfNativeAd =>
       _remoteConfig?.getBool(RemoteConfigKeys.recentPdfNativeAd) ?? false;
+
+  static bool get recentImageBannerAd =>
+      _remoteConfig?.getBool(RemoteConfigKeys.recentImageBannerAd) ?? false;
+
+  static bool get recentImageNativeAd =>
+      _remoteConfig?.getBool(RemoteConfigKeys.recentImageNativeAd) ?? false;
 
   static bool get ocrProcessingNativeAd =>
       _remoteConfig?.getBool(RemoteConfigKeys.ocrProcessingNativeAd) ?? false;

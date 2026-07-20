@@ -7,6 +7,8 @@ abstract final class RemoteConfigKeys {
   static const splashAppOpenAd = 'splashAppOpenAd';
   static const recentPdfBannerAd = 'recent_pdf_banner_ad';
   static const recentPdfNativeAd = 'recent_pdf_native_ad';
+  static const recentImageBannerAd = 'recent_image_banner_ad';
+  static const recentImageNativeAd = 'recent_image_native_ad';
   static const ocrProcessingNativeAd = 'ocr_processing_native_ad';
   static const pdfProcessingNativeAd = 'pdf_processing_native_ad';
   static const backInterAd = 'back_inter_ad';
