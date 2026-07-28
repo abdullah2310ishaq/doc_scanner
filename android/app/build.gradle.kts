@@ -26,8 +26,8 @@ android {
         applicationId = "com.aidocumentscanner.pdfscanner.ocr.askpdf.smartcrop"
         minSdk = 24
         targetSdk = 36
-        versionCode = 93
-        versionName = "9.0.6"
+        versionCode = 94
+        versionName = "9.0.7"
     }
 
     signingConfigs {
