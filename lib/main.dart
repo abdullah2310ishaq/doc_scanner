@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:doc_scanner/ads/app_open.dart';
-import 'package:doc_scanner/ads/native_ad_language.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -51,11 +50,11 @@ Future<void> main() async {
   if (Platform.isAndroid) {
     await MediaStore.ensureInitialized();
     MediaStore.appFolder = 'DocScanner';
-    if (!subscriptionProvider.isPro) {
-      NativeAdLanguageCache.instance.ensureLoaded(
-        isOnline: connectivityProvider.isOnline,
-      );
-    }
+    // if (!subscriptionProvider.isPro) {
+    //   NativeAdLanguageCache.instance.ensureLoaded(
+    //     isOnline: connectivityProvider.isOnline,
+    //   );
+    // }
   }
 
   await SystemChrome.setPreferredOrientations([
@@ -106,8 +105,6 @@ class _AppLifecycleObserverState extends State<AppLifecycleObserver> {
   @override
   void initState() {
     super.initState();
-    AppOpenAdService.instance.loadAd();
-
     _lifecycleListener = AppLifecycleListener(
       onHide: AppOpenAdService.instance.onAppHidden,
       onShow: AppOpenAdService.instance.onAppShown,

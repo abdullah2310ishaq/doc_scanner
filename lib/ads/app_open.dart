@@ -4,8 +4,9 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'ad_unit_ids.dart';
 
-/// App open ads — only when user returns from background, not on cold start
-/// or right after splash interstitial.
+/// App open ads when returning from background or on splash (remote config).
+/// Preloads on background so resume can show; avoids cold-start loads that
+/// are never displayed.
 class AppOpenAdService {
   AppOpenAdService._();
 
@@ -36,6 +37,7 @@ class AppOpenAdService {
 
   void onAppHidden() {
     _isInBackground = true;
+    loadAd();
   }
 
   void onAppShown() {
@@ -89,12 +91,7 @@ class AppOpenAdService {
       return;
     }
 
-    if (!isAdAvailable) {
-      loadAd();
-      return;
-    }
-
-    if (_isShowingAd) {
+    if (!isAdAvailable || _isShowingAd) {
       return;
     }
 
