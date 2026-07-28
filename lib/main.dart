@@ -9,6 +9,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:media_store_plus/media_store_plus.dart';
 import 'package:provider/provider.dart';
 
+import 'ads/app_open_ad_manager.dart';
 import 'app.dart';
 import 'core/constants/debug_flags.dart';
 import 'core/providers/connectivity_provider.dart';
@@ -43,9 +44,16 @@ Future<void> main() async {
     await subscriptionProvider.debugSetPro(true);
   }
 
-  AppOpenAdService.instance.configure(
-    shouldShowAds: () => !subscriptionProvider.isPro,
-  );
+  // AppOpenAdService.instance.configure(
+  //   shouldShowAds: () => !subscriptionProvider.isPro,
+  // );
+
+  if(!subscriptionProvider.isPro){
+    AppOpenAdManager.instance.loadAd();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      AppOpenAdManager.instance.startListening();
+    });
+  }
 
   if (Platform.isAndroid) {
     await MediaStore.ensureInitialized();
@@ -85,7 +93,7 @@ Future<void> main() async {
         ChangeNotifierProvider.value(value: creditProvider),
       ],
       // Root par fuzool MediaQuery hata kar AppLifecycleObserver ko clean wrap kiya
-      child: const AppLifecycleObserver(child: DocScannerApp()),
+      child: DocScannerApp(),
     ),
   );
 }
