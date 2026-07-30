@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'dart:async';
 import 'package:doc_scanner/ads/app_open.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
@@ -19,13 +19,54 @@ import 'features/home/providers/recent_documents_provider.dart';
 import 'features/subscription/providers/subscription_provider.dart';
 import 'features/credits/providers/credit_provider.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+Future<void> requestConsentAndShowForm(VoidCallback onConsentHandled) async {
+  ConsentRequestParameters params = ConsentRequestParameters();
+  ConsentInformation consentInfo = ConsentInformation.instance;
+
+  consentInfo.requestConsentInfoUpdate(
+    params,
+        () async {
+      final status = await consentInfo.getConsentStatus();
+      final isConsentRequired = await consentInfo.isConsentFormAvailable();
+
+      if (isConsentRequired && status == ConsentStatus.required) {
+        // Show consent form and wait for user action
+        ConsentForm.loadConsentForm(
+              (ConsentForm consentForm) {
+            consentForm.show((FormError? formError) {
+              // User has accepted or rejected, or form error
+              onConsentHandled();
+            });
+          },
+              (formError) {
+            // Failed to load form, proceed but log error
+            print('Consent form load error: ${formError.message}');
+            onConsentHandled();
+          },
+        );
+      } else {
+        // Consent not required (non-EEA), or already handled
+        onConsentHandled();
+      }
+    },
+        (FormError error) {
+      // Handle consent info update error if needed
+      print('Consent info update error: \\${error.message}');
+      onConsentHandled();
+    },
+  );
+}
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await RemoteConfigService.initialize();
   await MobileAds.instance.initialize();
   FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
-
+  final completer = Completer<void>();
+  requestConsentAndShowForm(() {
+    completer.complete();
+  });
+  await completer.future;
   final connectivityProvider = ConnectivityProvider();
   await connectivityProvider.initialize();
 
