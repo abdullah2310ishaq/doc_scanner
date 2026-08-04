@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import '../../../ads/native_ad_language.dart';
 import '../../../ads/native_small_ad_view.dart';
 import '../../../core/services/locale_service.dart';
 import '../../../core/utils/l10n_extension.dart';
@@ -10,11 +9,12 @@ import '../../../core/widgets/app_exit_guard.dart';
 import '../../../in_app/in_app_splash_first.dart';
 import '../../../features/subscription/providers/subscription_provider.dart';
 import '../../home/screens/main_shell_screen.dart';
+import '../../launch/screens/onboarding_screen.dart';
 import '../../launch/services/app_launch_prefs_service.dart';
 import '../models/app_language_option.dart';
 import '../widgets/language_option_card.dart';
 
-/// First-time language picker shown after onboarding.
+/// First-time language picker shown before onboarding.
 class FirstTimeLanguageSelectionScreen extends StatefulWidget {
   const FirstTimeLanguageSelectionScreen({super.key});
 
@@ -47,6 +47,18 @@ class _FirstTimeLanguageSelectionScreenState
     await context.read<LocaleService>().setLocaleByCode(_selectedLanguage!);
     await _launchPrefs.setInitialLanguageSelected();
     if (!mounted) {
+      return;
+    }
+
+    final hasCompletedOnboarding = await _launchPrefs.hasCompletedOnboarding();
+    if (!mounted) {
+      return;
+    }
+
+    if (!hasCompletedOnboarding) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute<void>(builder: (_) => const OnboardingScreen()),
+      );
       return;
     }
 

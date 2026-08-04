@@ -3,10 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
-import '../../settings/screens/first_language.dart';
+import '../../../in_app/in_app_splash_first.dart';
+import '../../home/screens/main_shell_screen.dart';
+import '../../subscription/providers/subscription_provider.dart';
 import '../services/app_launch_prefs_service.dart';
 
 /// Four-page intro shown on first launch ([PageView]).
@@ -76,9 +79,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     if (!mounted) {
       return;
     }
+
+    final isPro = context.read<SubscriptionProvider>().isPro;
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (_) => const FirstTimeLanguageSelectionScreen(),
+      MaterialPageRoute<void>(
+        builder: (_) => isPro
+            ? const MainShellScreen()
+            : const SplashProScreen(nextScreen: MainShellScreen()),
       ),
     );
   }

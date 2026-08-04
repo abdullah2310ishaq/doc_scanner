@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../ads/native_adhome.dart';
 import '../../../ads/native_small_ad_view.dart';
 import '../../../core/constants/home_assets.dart';
 import '../../../core/theme/app_colors.dart';

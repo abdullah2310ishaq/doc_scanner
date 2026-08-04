@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import '../../../ads/native_ad_language.dart';
 import '../../../ads/native_small_ad_view.dart';
 import '../../../core/services/locale_service.dart';
 import '../../../core/utils/l10n_extension.dart';

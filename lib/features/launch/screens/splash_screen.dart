@@ -141,23 +141,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (isFirstLaunch) {
       await _launchPrefs.markFirstLaunchSeen();
+    }
+
+    if (!hasSelectedInitialLanguage || !hasCompletedOnboarding) {
       _navigateAfterSplash(
         hasCompletedOnboarding: hasCompletedOnboarding,
         hasSelectedInitialLanguage: hasSelectedInitialLanguage,
       );
-      return;
-    }
-
-    if (!hasCompletedOnboarding) {
-      _navigateAfterSplash(
-        hasCompletedOnboarding: false,
-        hasSelectedInitialLanguage: hasSelectedInitialLanguage,
-      );
-      return;
-    }
-
-    if (!hasSelectedInitialLanguage) {
-      _goFirstLanguage();
       return;
     }
 
@@ -173,10 +163,10 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     final Widget nextScreen;
-    if (!hasCompletedOnboarding) {
-      nextScreen = const OnboardingScreen();
-    } else if (!hasSelectedInitialLanguage) {
+    if (!hasSelectedInitialLanguage) {
       nextScreen = const FirstTimeLanguageSelectionScreen();
+    } else if (!hasCompletedOnboarding) {
+      nextScreen = const OnboardingScreen();
     } else {
       nextScreen = const MainShellScreen();
     }
@@ -184,18 +174,6 @@ class _SplashScreenState extends State<SplashScreen> {
     Navigator.of(
       context,
     ).pushReplacement(MaterialPageRoute<void>(builder: (_) => nextScreen));
-  }
-
-  void _goFirstLanguage() {
-    if (!mounted) {
-      return;
-    }
-
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute<void>(
-        builder: (_) => const FirstTimeLanguageSelectionScreen(),
-      ),
-    );
   }
 
   void _goPaywall({required bool showAdOnClose}) {
