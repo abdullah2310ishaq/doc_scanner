@@ -9,6 +9,7 @@ import '../../../core/utils/credit_gate.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/delete_dialog.dart';
 import '../../../core/widgets/toast.dart';
+import '../../../in_app/paywall_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../subscription/models/feature_type.dart';
 import '../models/chatbot_message_model.dart';
@@ -150,6 +151,16 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
     );
   }
 
+  void _goBack() {
+    PaywallRoutes.openResultExitGate(
+      context,
+      onComplete: () {
+        if (!mounted) return;
+        Navigator.of(context).pop();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -158,7 +169,13 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
       builder: (context, provider, _) {
         final title = provider.session?.displayName ?? widget.displayName;
 
-        return Scaffold(
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, _) {
+            if (didPop) return;
+            _goBack();
+          },
+          child: Scaffold(
           backgroundColor: const Color(0xFFF9FAFD),
           appBar: AppBar(
             backgroundColor: const Color(0xFFF9FAFD),
@@ -167,7 +184,7 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
             centerTitle: true,
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: _goBack,
             ),
             title: Text(
               title,
@@ -275,6 +292,7 @@ class _ChatbotChatScreenState extends State<ChatbotChatScreen> {
                     ),
                   ],
                 ),
+          ),
         );
       },
     );

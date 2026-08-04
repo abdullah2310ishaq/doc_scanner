@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import '../theme/app_colors.dart';
 import '../constants/home_assets.dart';
 
-enum AppNavItem { home, settings }
+enum AppNavItem { home, history, settings }
 
 class AppNavbar extends StatelessWidget {
   const AppNavbar({
@@ -12,12 +12,14 @@ class AppNavbar extends StatelessWidget {
     required this.current,
     required this.onChanged,
     required this.homeLabel,
+    required this.historyLabel,
     required this.settingsLabel,
   });
 
   final AppNavItem current;
   final ValueChanged<AppNavItem> onChanged;
   final String homeLabel;
+  final String historyLabel;
   final String settingsLabel;
 
   @override
@@ -37,7 +39,7 @@ class AppNavbar extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _NavItem(
                 iconAsset: HomeAssets.navbariconn,
@@ -45,9 +47,11 @@ class AppNavbar extends StatelessWidget {
                 isSelected: current == AppNavItem.home,
                 onTap: () => onChanged(AppNavItem.home),
               ),
-              const SizedBox(
-                width:
-                    86, // ADJUSTMENT: Reduced from 110 to bring them a bit closer inside
+              _NavItem(
+                iconAsset: HomeAssets.historyIcon,
+                label: historyLabel,
+                isSelected: current == AppNavItem.history,
+                onTap: () => onChanged(AppNavItem.history),
               ),
               _NavItem(
                 iconData: Icons.settings_rounded,

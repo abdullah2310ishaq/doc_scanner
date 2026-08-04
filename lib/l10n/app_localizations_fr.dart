@@ -51,6 +51,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get navHome => 'Accueil';
 
   @override
+  String get navHistory => 'Historique';
+
+  @override
   String get navScan => 'Scanner';
 
   @override

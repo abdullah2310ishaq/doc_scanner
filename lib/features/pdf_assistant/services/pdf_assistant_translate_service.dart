@@ -78,7 +78,7 @@ class PdfAssistantTranslateService {
     String targetLanguageCode,
   )
   async {
-    final apiKey = OpenAiConfig.pdfTranslationKey;
+    final apiKey = OpenAiConfig.ocrTranslationKey;
     if (apiKey.isEmpty) {
       throw StateError('missing_api_key');
     }

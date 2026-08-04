@@ -20,6 +20,7 @@
   "commonError": "何か問題が発生しました",
   "commonTryAgain": "もう一度試してください",
   "navHome": "家",
+  "navHistory": "履歴",
   "navScan": "スキャン",
   "navDocuments": "書類",
   "navTranslate": "翻訳する",

@@ -8,11 +8,9 @@ import '../../../core/services/remote_config_service.dart';
 import '../../../core/utils/credit_gate.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
-import '../../../in_app/paywall_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../core/widgets/toast.dart';
 import '../../subscription/models/feature_type.dart';
-import '../../subscription/providers/subscription_provider.dart';
 import '../../translate/models/translate_language.dart';
 import '../providers/pdf_assistant_process_provider.dart';
 import 'pdf_assistant_result_screen.dart';
@@ -104,19 +102,10 @@ class _PdfAssistantProcessingScreenState
         );
         if (!mounted) return;
 
-        final resultScreen = PdfAssistantResultScreen(session: session);
-        final isPro = context.read<SubscriptionProvider>().isPro;
-
-        if (isPro) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute<void>(builder: (_) => resultScreen),
-          );
-          return;
-        }
-
-        PaywallRoutes.replaceWithPostProcessGate(
-          context,
-          nextScreen: resultScreen,
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute<void>(
+            builder: (_) => PdfAssistantResultScreen(session: session),
+          ),
         );
       });
     }

@@ -125,21 +125,26 @@ class _ProAccessScreenState extends State<ProAccessScreen> {
   void _onClose() {
     if (widget.showAdOnClose) {
       AppOpenAdService.instance.blockNextForegroundShow();
+      final navigator = Navigator.of(context);
+      final nextScreen = widget.nextScreen;
+      final replaceOnExit = widget.replaceOnExit;
 
       InterstitialAdManager.show(
         context: context,
         adUnitId: AdIds.testInterId,
         onComplete: () {
-          if (!mounted) {
-            return;
-          }
-          if (widget.replaceOnExit) {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute<void>(builder: (_) => widget.nextScreen),
-            );
-          } else {
-            Navigator.of(context).pop();
-          }
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (replaceOnExit) {
+              if (!mounted) return;
+              navigator.pushReplacement(
+                MaterialPageRoute<void>(builder: (_) => nextScreen),
+              );
+              return;
+            }
+            if (navigator.canPop()) {
+              navigator.pop();
+            }
+          });
         },
       );
       return;

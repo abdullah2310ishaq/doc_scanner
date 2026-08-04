@@ -13,7 +13,9 @@ import '../services/recent_documents_service.dart';
 
 /// Home — PDFs and Images folder cards (listens to global [RecentDocumentsProvider]).
 class HomeRecentFolders extends StatelessWidget {
-  const HomeRecentFolders({super.key});
+  const HomeRecentFolders({super.key, this.showSectionTitle = true});
+
+  final bool showSectionTitle;
 
   int _totalBytes(List<RecentFileModel> files) {
     return files.fold(0, (sum, f) => sum + f.sizeBytes);
@@ -31,15 +33,17 @@ class HomeRecentFolders extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              l10n.homeRecentDocuments,
-              style: const TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary,
+            if (showSectionTitle) ...[
+              Text(
+                l10n.homeRecentDocuments,
+                style: const TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textPrimary,
+                ),
               ),
-            ),
-            const SizedBox(height: 12),
+              const SizedBox(height: 12),
+            ],
             if (provider.isLoadingSummary)
               const Center(
                 child: Padding(

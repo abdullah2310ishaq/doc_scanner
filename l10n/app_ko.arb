@@ -20,6 +20,7 @@
   "commonError": "문제가 발생했습니다",
   "commonTryAgain": "다시 시도해 주세요",
   "navHome": "홈",
+  "navHistory": "기록",
   "navScan": "스캔",
   "navDocuments": "문서",
   "navTranslate": "번역",

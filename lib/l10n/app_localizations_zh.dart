@@ -51,6 +51,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get navHome => '首页';
 
   @override
+  String get navHistory => '历史记录';
+
+  @override
   String get navScan => '扫描';
 
   @override

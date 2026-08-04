@@ -1,4 +1,3 @@
-import 'package:doc_scanner/ads/back_inter_ad_service.dart';
 import 'package:doc_scanner/core/providers/connectivity_provider.dart';
 import 'package:doc_scanner/core/services/permission_service.dart';
 import 'package:doc_scanner/core/utils/network_guard.dart';
@@ -13,6 +12,7 @@ import 'package:provider/provider.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/credit_gate.dart';
 import '../../../core/utils/l10n_extension.dart';
+import '../../../in_app/paywall_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../constants/dummy_languages.dart';
 import '../../home/providers/recent_documents_provider.dart';
@@ -56,7 +56,7 @@ class TranslateResultScreen extends StatelessWidget {
   }
 
   void _goHome(BuildContext context) {
-    BackInterAdService.handleBackToHome(
+    PaywallRoutes.openResultExitGate(
       context,
       onComplete: () {
         if (!context.mounted) return;

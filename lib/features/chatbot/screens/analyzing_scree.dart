@@ -5,9 +5,7 @@ import '../../../core/utils/credit_gate.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/toast.dart';
-import '../../../in_app/paywall_routes.dart';
 import '../../subscription/models/feature_type.dart';
-import '../../subscription/providers/subscription_provider.dart';
 import '../providers/chatbot_analyze_provider.dart';
 import '../providers/chatbot_chat_provider.dart';
 import 'chatbot_chat_screen.dart';
@@ -36,8 +34,6 @@ class AnalyzeScreen extends StatefulWidget {
 
 class _AnalyzeScreenState extends State<AnalyzeScreen> {
   bool _navigated = false;
-  bool _paywallGatePassed = false;
-  bool _paywallGateStarted = false;
   bool _analysisStarted = false;
 
   @override
@@ -63,31 +59,6 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
     await context.read<ChatbotAnalyzeProvider>().start();
   }
 
-  Future<void> _runPaywallGateIfNeeded(ChatbotAnalyzeProvider provider) async {
-    if (_paywallGateStarted || _paywallGatePassed) {
-      return;
-    }
-    if (provider.status != ChatbotAnalyzeStatus.success) {
-      return;
-    }
-
-    final isPro = context.read<SubscriptionProvider>().isPro;
-    if (isPro) {
-      setState(() => _paywallGatePassed = true);
-      return;
-    }
-
-    await CreditGate.recordGeneration(context, feature: FeatureType.askPdf);
-    if (!mounted) return;
-
-    _paywallGateStarted = true;
-    await PaywallRoutes.openFeatureGate(context);
-    if (!mounted) {
-      return;
-    }
-    setState(() => _paywallGatePassed = true);
-  }
-
   void _onAnalyzeUpdate(ChatbotAnalyzeProvider provider) {
     if (_navigated || provider.status != ChatbotAnalyzeStatus.success) {
       return;
@@ -98,15 +69,13 @@ class _AnalyzeScreenState extends State<AnalyzeScreen> {
       return;
     }
 
-    if (!_paywallGatePassed) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _runPaywallGateIfNeeded(provider);
-      });
-      return;
-    }
-
     _navigated = true;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) {
+        return;
+      }
+
+      await CreditGate.recordGeneration(context, feature: FeatureType.askPdf);
       if (!mounted) {
         return;
       }

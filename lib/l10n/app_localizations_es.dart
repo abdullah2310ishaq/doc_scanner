@@ -51,6 +51,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get navHome => 'Inicio';
 
   @override
+  String get navHistory => 'Historial';
+
+  @override
   String get navScan => 'Escanear';
 
   @override

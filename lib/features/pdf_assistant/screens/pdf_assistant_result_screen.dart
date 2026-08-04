@@ -5,6 +5,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/delete_dialog.dart';
 import '../../../core/widgets/toast.dart';
+import '../../../in_app/paywall_routes.dart';
 import '../models/pdf_assistant_session_model.dart';
 import '../services/pdf_assistant_file_actions_service.dart';
 import '../services/pdf_assistant_storage_service.dart';
@@ -89,11 +90,27 @@ class PdfAssistantResultScreen extends StatelessWidget {
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
+  void _goBack(BuildContext context) {
+    PaywallRoutes.openResultExitGate(
+      context,
+      onComplete: () {
+        if (!context.mounted) return;
+        Navigator.maybePop(context);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
-    return Scaffold(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (didPop) return;
+        _goBack(context);
+      },
+      child: Scaffold(
       backgroundColor: AppColors.white,
       appBar: AppBar(
         centerTitle: true,
@@ -106,7 +123,7 @@ class PdfAssistantResultScreen extends StatelessWidget {
         foregroundColor: AppColors.textPrimary,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.maybePop(context),
+          onPressed: () => _goBack(context),
         ),
       ),
       body: SafeArea(
@@ -148,6 +165,7 @@ class PdfAssistantResultScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
       ),
     );
   }

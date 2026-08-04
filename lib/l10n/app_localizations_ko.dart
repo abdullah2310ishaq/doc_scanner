@@ -51,6 +51,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get navHome => '홈';
 
   @override
+  String get navHistory => '기록';
+
+  @override
   String get navScan => '스캔';
 
   @override

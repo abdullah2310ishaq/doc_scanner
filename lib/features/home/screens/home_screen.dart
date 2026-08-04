@@ -16,7 +16,7 @@ import '../widgets/home_drawer.dart';
 import '../widgets/home_feature_card.dart';
 import '../widgets/home_header_delegate.dart';
 import '../widgets/home_hero_card.dart';
-import '../widgets/home_recent_folders.dart';
+// import '../widgets/home_recent_folders.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key, this.onDrawerDestination});
@@ -118,7 +118,7 @@ class HomeScreen extends StatelessWidget {
                       const SizedBox(height: 20),
                       // const NativeAdHome(),
                        const NativeMediumAdView(),
-                      const HomeRecentFolders(),
+                      // const HomeRecentFolders(),
                     ]),
                   ),
                 ),

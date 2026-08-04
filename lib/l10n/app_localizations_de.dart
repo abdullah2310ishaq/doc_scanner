@@ -51,6 +51,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get navHome => 'Heim';
 
   @override
+  String get navHistory => 'Verlauf';
+
+  @override
   String get navScan => 'Scan';
 
   @override

@@ -200,6 +200,12 @@ abstract class AppLocalizations {
   /// **'Home'**
   String get navHome;
 
+  /// No description provided for @navHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get navHistory;
+
   /// No description provided for @navScan.
   ///
   /// In en, this message translates to:

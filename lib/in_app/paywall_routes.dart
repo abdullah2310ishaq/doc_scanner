@@ -72,4 +72,21 @@ class PaywallRoutes {
   /// Shown after OCR analysis for free users — paywall then interstitial on close.
   static Future<void> openOcrGate(BuildContext context) =>
       openFeatureGate(context);
+
+  /// Paywall + interstitial on close when leaving a result screen.
+  static Future<void> openResultExitGate(
+    BuildContext context, {
+    required VoidCallback onComplete,
+  }) async {
+    if (_isPro(context)) {
+      onComplete();
+      return;
+    }
+
+    await openFeatureGate(context);
+    if (!context.mounted) {
+      return;
+    }
+    onComplete();
+  }
 }

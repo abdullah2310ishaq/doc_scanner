@@ -51,6 +51,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get navHome => 'Início';
 
   @override
+  String get navHistory => 'Histórico';
+
+  @override
   String get navScan => 'Escanear';
 
   @override

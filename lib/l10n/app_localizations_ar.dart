@@ -51,6 +51,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navHome => 'بيت';
 
   @override
+  String get navHistory => 'السجل';
+
+  @override
   String get navScan => 'مسح';
 
   @override

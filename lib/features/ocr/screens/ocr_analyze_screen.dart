@@ -13,7 +13,6 @@ import '../../../core/utils/l10n_extension.dart';
 import '../../../in_app/paywall_routes.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../subscription/models/feature_type.dart';
-import '../../subscription/providers/subscription_provider.dart';
 import '../models/ocr_text_block.dart';
 import '../providers/ocr_analyze_provider.dart';
 import '../utils/ocr_image_layout.dart';
@@ -48,8 +47,7 @@ class OcrAnalyzeScreen extends StatefulWidget {
 }
 
 class _OcrAnalyzeScreenState extends State<OcrAnalyzeScreen> {
-  bool _paywallGatePassed = false;
-  bool _paywallGateStarted = false;
+  bool _generationRecorded = false;
   bool _analysisStarted = false;
 
   @override
@@ -75,29 +73,22 @@ class _OcrAnalyzeScreenState extends State<OcrAnalyzeScreen> {
     await context.read<OcrAnalyzeProvider>().analyze();
   }
 
-  Future<void> _runPaywallGateIfNeeded(OcrAnalyzeProvider provider) async {
-    if (_paywallGateStarted || _paywallGatePassed) {
+  void _recordGenerationOnce() {
+    if (_generationRecorded) {
       return;
     }
-    if (provider.status != OcrAnalyzeStatus.ready) {
-      return;
-    }
+    _generationRecorded = true;
+    CreditGate.recordGeneration(context, feature: FeatureType.ocrScan);
+  }
 
-    final isPro = context.read<SubscriptionProvider>().isPro;
-    if (isPro) {
-      setState(() => _paywallGatePassed = true);
-      return;
-    }
-
-    await CreditGate.recordGeneration(context, feature: FeatureType.ocrScan);
-    if (!mounted) return;
-
-    _paywallGateStarted = true;
-    await PaywallRoutes.openOcrGate(context);
-    if (!mounted) {
-      return;
-    }
-    setState(() => _paywallGatePassed = true);
+  void _exitWithGate() {
+    PaywallRoutes.openResultExitGate(
+      context,
+      onComplete: () {
+        if (!mounted) return;
+        Navigator.of(context).pop();
+      },
+    );
   }
 
   @override
@@ -110,17 +101,24 @@ class _OcrAnalyzeScreenState extends State<OcrAnalyzeScreen> {
           return const OcrNoTextScreen();
         }
 
-        if (provider.status == OcrAnalyzeStatus.ready && !_paywallGatePassed) {
+        if (provider.status == OcrAnalyzeStatus.ready) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            _runPaywallGateIfNeeded(provider);
+            _recordGenerationOnce();
           });
         }
 
-        final isProcessing =
-            provider.status == OcrAnalyzeStatus.loading ||
-            (provider.status == OcrAnalyzeStatus.ready && !_paywallGatePassed);
+        final isProcessing = provider.status == OcrAnalyzeStatus.loading;
+        final showResult = provider.status == OcrAnalyzeStatus.ready;
 
-        return Scaffold(
+        return PopScope(
+          canPop: !showResult,
+          onPopInvokedWithResult: (didPop, _) {
+            if (didPop || !showResult) {
+              return;
+            }
+            _exitWithGate();
+          },
+          child: Scaffold(
           backgroundColor: AppColors.scaffoldBackground,
           appBar: AppBar(
             title: Text(
@@ -137,6 +135,7 @@ class _OcrAnalyzeScreenState extends State<OcrAnalyzeScreen> {
           ),
           body: _buildBody(context, provider, l10n),
           bottomNavigationBar: isProcessing ? _buildProcessingNativeAd() : null,
+          ),
         );
       },
     );
@@ -177,9 +176,6 @@ class _OcrAnalyzeScreenState extends State<OcrAnalyzeScreen> {
           ),
         );
       case OcrAnalyzeStatus.ready:
-        if (!_paywallGatePassed) {
-          return _buildProcessingView(l10n);
-        }
         final result = provider.result;
         if (result == null) {
           return Center(child: Text(l10n.ocrEmpty));

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as p;
 
-import '../../../ads/back_inter_ad_service.dart';
+import '../../../in_app/paywall_routes.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/delete_dialog.dart';
@@ -65,7 +65,7 @@ class _SmartCropPdfResultScreenState extends State<SmartCropPdfResultScreen> {
   }
 
   void _goHome() {
-    BackInterAdService.handleBackToHome(
+    PaywallRoutes.openResultExitGate(
       context,
       onComplete: () {
         if (!mounted) return;

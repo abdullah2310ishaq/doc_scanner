@@ -5,6 +5,7 @@ import '../../../core/utils/home_offline_toast.dart';
 import '../../../core/utils/l10n_extension.dart';
 import '../../../core/widgets/app_exit_guard.dart';
 import '../../../core/widgets/app_navbar.dart';
+import '../../history/screens/history_screen.dart';
 import '../../settings/screens/settings_screen.dart';
 import '../widgets/home_drawer.dart';
 import 'home_screen.dart';
@@ -111,6 +112,7 @@ class _MainShellScreenState extends State<MainShellScreen>
           index: _current.index,
           children: [
             HomeScreen(onDrawerDestination: _onDrawerDestination),
+            const HistoryScreen(),
             const SettingsScreen(),
           ],
         ),
@@ -118,6 +120,7 @@ class _MainShellScreenState extends State<MainShellScreen>
           current: _current,
           onChanged: _onNavChanged,
           homeLabel: l10n.navHome,
+          historyLabel: l10n.navHistory,
           settingsLabel: l10n.navSettings,
         ),
       ),

@@ -20,6 +20,7 @@
   "commonError": "Algo salió mal",
   "commonTryAgain": "Por favor, inténtalo de nuevo",
   "navHome": "Inicio",
+  "navHistory": "Historial",
   "navScan": "Escanear",
   "navDocuments": "Documentos",
   "navTranslate": "Traducir",
